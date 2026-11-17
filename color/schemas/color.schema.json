@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://no-slop-color.local/schemas/color.schema.json",
+  "title": "Color",
+  "description": "A color stored as OKLCH (the source of truth) and HEX (its sRGB output).",
+  "$ref": "#/$defs/swatch",
+  "$defs": {
+    "hex": {
+      "type": "string",
+      "pattern": "^#[0-9A-F]{6}$"
+    },
+    "oklch": {
+      "type": "object",
+      "required": ["l", "c", "h"],
+      "additionalProperties": false,
+      "properties": {
+        "l": { "type": "number", "minimum": 0, "maximum": 1 },
+        "c": { "type": "number", "minimum": 0 },
+        "h": {
+          "description": "Hue in degrees. Null when the color is achromatic, matching CSS `none`.",
+          "oneOf": [
+            { "type": "number", "minimum": 0, "exclusiveMaximum": 360 },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "swatch": {
+      "type": "object",
+      "required": ["hex", "oklch"],
+      "properties": {
+        "name": { "type": "string" },
+        "hex": { "$ref": "#/$defs/hex" },
+        "oklch": { "$ref": "#/$defs/oklch" },
+        "css": { "type": "string", "pattern": "^oklch\\(" },
+        "relative_chroma": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "C divided by the sRGB maximum C at this L and h."
+        },
+        "srgb": {
+          "type": "object",
+          "required": ["status", "delta_e_ok"],
+          "properties": {
+            "status": { "enum": ["in-gamut", "gamut-mapped"] },
+            "delta_e_ok": { "type": "number", "minimum": 0, "description": "Distance between the authored OKLCH and the final HEX." }
+          }
+        }
+      }
+    }
+  }
+}
