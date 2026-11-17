@@ -14,28 +14,6 @@ Any agent (Claude Code, Cursor, Codex and others), with the [`npx skills`](https
 npx skills add https://github.com/victornasar/tasteskills --skill find-color
 ```
 
-<details>
-<summary>Claude Code plugin</summary>
-
-```
-/plugin marketplace add victornasar/tasteskills
-/plugin install color@tasteskills
-```
-
-`/plugin update` upgrades it later.
-
-</details>
-
-<details>
-<summary>Codex plugin</summary>
-
-```bash
-codex plugin marketplace add victornasar/tasteskills
-codex plugin add tasteskills@tasteskills
-```
-
-</details>
-
 No clone is needed. The skill needs only Node 18 or later: no install, no API keys and no network.
 
 ## Use it

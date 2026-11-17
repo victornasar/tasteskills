@@ -16,7 +16,8 @@ Work inside one area at a time and follow that area's `AGENTS.md`. Each area kee
 
 - Evidence before skills: a new skill or rule needs a finding in `lab/` or an area's evals behind it.
 - Evals check two things: the output avoids the known defaults, and opposite briefs get clearly different results. A catalog that sends every brief to the same picks has become a new default.
-- Root-only files (`.claude-plugin/`, `.codex-plugin/`, `.agents/`, `.github/`, `.githooks/`) serve the areas; keep their paths pointing into the area folders.
+- Root-only files (`.github/`, `.githooks/`) serve the areas; keep their paths pointing into the area folders.
+- No plugin manifests: apps install skills straight from this repo with `npx skills add`.
 
 ## Checks
 
