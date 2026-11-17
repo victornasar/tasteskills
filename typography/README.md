@@ -1,4 +1,4 @@
-# no-slop-type
+# typography
 
 A short, opinionated catalog of free typefaces that don't make a site look AI-generated, tagged by feel
 and use so an agent (or you) can pick the right one fast. Every font is free for commercial use and meant
@@ -25,15 +25,15 @@ to be **self-hosted**: no Google Fonts CDN, no third-party requests. The repo st
 ### Setup
 
 ```sh
-git clone https://github.com/victornasar/no-slop-type ~/code/no-slop-type
-mkdir -p ~/.claude/skills && cp -r ~/code/no-slop-type/skill/find-font ~/.claude/skills/
+git clone https://github.com/victornasar/tasteskills ~/Documents/tasteskills
+mkdir -p ~/.claude/skills && cp -r ~/Documents/tasteskills/typography/skill/find-font ~/.claude/skills/
 ```
 
 That gives Claude Code a `/find-font` skill in every project. The skill expects the repo at
-`~/code/no-slop-type`; if you clone it elsewhere, edit the paths in `~/.claude/skills/find-font/SKILL.md`.
+`~/Documents/tasteskills/typography`; if you clone it elsewhere, edit the paths in `~/.claude/skills/find-font/SKILL.md`.
 Other agents can be pointed at `AGENTS.md` directly.
 
-If you'll edit the catalog, run `git config core.hooksPath .githooks` once. The pre-commit hook then blocks commits with an
+If you'll edit the catalog, run `git config core.hooksPath .githooks` once from the tasteskills root. The pre-commit hook then blocks commits with an
 invalid or out-of-date catalog.
 
 **When to run what:** the hook covers every commit. Run `scripts/eval.py` after changing `AGENTS.md`, the tag

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://no-slop-color.local/schemas/pair-classification.schema.json",
+  "$id": "https://tasteskills.local/color/schemas/pair-classification.schema.json",
   "title": "Pair classification",
   "description": "The structured classification of a ground and figure pair, with an optional accent. Field names follow the classifier specification in prompts/classify-pair.md.",
   "type": "object",

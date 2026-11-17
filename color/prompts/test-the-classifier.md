@@ -1,14 +1,14 @@
-# Test the no-slop-color classifier
+# Test the tasteskills color classifier
 
-You are testing **no-slop-color**, a color classification system for AI agents:
-https://github.com/victornasar/no-slop-color
+You are testing **tasteskills** (its `color/` folder), a color classification system for AI agents:
+https://github.com/victornasar/tasteskills
 
 Your job is to use it as an agent would, then report what worked, what broke and what was confusing. Do not modify the repository. Put all your work in a separate scratch folder.
 
 ## Setup
 
-1. Clone the repo: `git clone https://github.com/victornasar/no-slop-color.git`
-2. Read, in this order:
+1. Clone the repo: `git clone https://github.com/victornasar/tasteskills.git`
+2. `cd tasteskills/color`, then read, in this order:
    1. `README.md`
    2. `docs/02-classification-system.md`
    3. `prompts/classify-pair.md`, which are your instructions for classifying

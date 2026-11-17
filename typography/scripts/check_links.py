@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = json.loads((ROOT / "fonts.json").read_text())
-UA = {"User-Agent": "no-slop-type link check"}
+UA = {"User-Agent": "tasteskills link check"}
 # Final URLs that mean "the site is up, but this isn't the font page".
 SOFT_FAIL = ["velvetyne.fr/greve", "parked", "domain-for-sale"]
 

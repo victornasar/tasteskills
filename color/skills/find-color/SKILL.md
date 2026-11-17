@@ -1,6 +1,6 @@
 ---
 name: find-color
-description: Pick tasteful color pairs (ground + figure, in OKLCH) for a brand, website or product from the curated no-slop-color library, and apply them as CSS, Tailwind or design tokens. Use when choosing colors or a palette for a project, or replacing a generic default palette.
+description: Pick tasteful color pairs (ground + figure, in OKLCH) for a brand, website or product from the curated tasteskills color library, and apply them as CSS, Tailwind or design tokens. Use when choosing colors or a palette for a project, or replacing a generic default palette.
 argument-hint: <brief, e.g. "premium halal fine-dining restaurant">
 ---
 

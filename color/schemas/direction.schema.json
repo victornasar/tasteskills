@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://no-slop-color.local/schemas/direction.schema.json",
+  "$id": "https://tasteskills.local/color/schemas/direction.schema.json",
   "title": "Color direction",
   "description": "One usable color direction. Its identity is a classified ground and figure pair, or, for an Image-Led direction, a type color and scrim on imagery with no ground. Everything else explains or applies it.",
   "type": "object",

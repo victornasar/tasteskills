@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://no-slop-color.local/schemas/image-led-classification.schema.json",
+  "$id": "https://tasteskills.local/color/schemas/image-led-classification.schema.json",
   "title": "Image-Led classification",
   "description": "A direction carried by imagery: a type color set on imagery with a scrim, and no ground. Built by classifyImageLed in tools/classify.mjs. Provisional: the model is unvalidated (research/data/analysis/image-led-test.md).",
   "type": "object",

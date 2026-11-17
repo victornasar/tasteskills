@@ -15,7 +15,7 @@ import { apply } from './apply.mjs';
 import { classifyPair, classifyImageLed } from './classify.mjs';
 import { data } from './lib/data.mjs';
 
-const HELP = `no-slop-color: curated color pairs for agents. Every color comes from the curated library.
+const HELP = `tasteskills color: curated color pairs for agents. Every color comes from the curated library.
 
 Commands:
   recommend  --domains <ids> | --brief "<text>"  [--foundation light|dark] [--avoid-hues 70-110,...]

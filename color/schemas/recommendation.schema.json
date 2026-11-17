@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://no-slop-color.local/schemas/recommendation.schema.json",
+  "$id": "https://tasteskills.local/color/schemas/recommendation.schema.json",
   "title": "Color recommendation",
   "description": "The structured response to a project description. A future agent interface would return this shape.",
   "type": "object",

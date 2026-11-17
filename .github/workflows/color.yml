@@ -1,11 +1,13 @@
 # Runs the full library build on every pull request and on main. Branch protection on main
 # requires the "build" job, so a failing check blocks the merge.
-name: build
+name: color
 
 on:
   pull_request:
+    paths: ["color/**", ".github/workflows/color.yml"]
   push:
     branches: [main]
+    paths: ["color/**", ".github/workflows/color.yml"]
 
 permissions:
   contents: read
@@ -13,6 +15,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: color
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5

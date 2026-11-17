@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://no-slop-color.local/schemas/domain.schema.json",
+  "$id": "https://tasteskills.local/color/schemas/domain.schema.json",
   "title": "Domain coverage set",
   "type": "object",
   "required": [

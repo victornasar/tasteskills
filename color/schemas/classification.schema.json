@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://no-slop-color.local/schemas/classification.schema.json",
+  "$id": "https://tasteskills.local/color/schemas/classification.schema.json",
   "title": "Classification files",
   "$defs": {
     "status": { "enum": ["provisional", "adopted", "retired"] },

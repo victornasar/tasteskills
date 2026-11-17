@@ -1,4 +1,4 @@
-# no-slop-color
+# color
 
 A context-aware color intelligence system for AI agents. An agent describes what it is building and receives curated color directions it can use directly.
 
@@ -11,15 +11,15 @@ A direction is built around a **pair**: a ground color and a figure color, with 
 Any agent (Claude Code, Cursor, Codex and others), with the [`npx skills`](https://github.com/vercel-labs/agent-skills) CLI. Only the skill folder is installed, about 280 KB:
 
 ```bash
-npx skills add https://github.com/victornasar/no-slop-color --skill find-color
+npx skills add https://github.com/victornasar/tasteskills --skill find-color
 ```
 
 <details>
 <summary>Claude Code plugin</summary>
 
 ```
-/plugin marketplace add victornasar/no-slop-color
-/plugin install no-slop-color@no-slop-color
+/plugin marketplace add victornasar/tasteskills
+/plugin install color@tasteskills
 ```
 
 `/plugin update` upgrades it later.
@@ -30,8 +30,8 @@ npx skills add https://github.com/victornasar/no-slop-color --skill find-color
 <summary>Codex plugin</summary>
 
 ```bash
-codex plugin marketplace add victornasar/no-slop-color
-codex plugin add no-slop-color@no-slop-color
+codex plugin marketplace add victornasar/tasteskills
+codex plugin add tasteskills@tasteskills
 ```
 
 </details>

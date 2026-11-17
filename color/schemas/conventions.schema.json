@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://no-slop-color.local/schemas/conventions.schema.json",
+  "$id": "https://tasteskills.local/color/schemas/conventions.schema.json",
   "title": "Category conventions",
   "type": "object",
   "required": ["schemaVersion", "rule", "conventions", "unverified"],

@@ -1,6 +1,6 @@
 # Color principles
 
-This is the research behind no-slop-color. Every claim carries one of four labels, because the system must never present taste as science.
+This is the research behind the tasteskills color library. Every claim carries one of four labels, because the system must never present taste as science.
 
 | Label | Meaning | How the system may use it |
 | --- | --- | --- |

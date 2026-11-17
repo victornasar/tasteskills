@@ -1,4 +1,4 @@
-# no-slop-color
+# color
 
 Curated color pairs for agents.
 

@@ -44,8 +44,8 @@ const dataModule = `// ---- embedded data (${Object.values(DATA_FILES).join(', '
 
 const parts = MODULES.map(([name, file]) => (file ? wrap(name, file) : dataModule));
 const out = `#!/usr/bin/env node
-// no-slop-color find-color engine, bundled by tools/bundle.mjs. Do not edit: edit the repo and rebuild.
-// Library: ${embedded.library.count} directions. Data hash: ${hash}. Source: https://github.com/victornasar/no-slop-color
+// tasteskills find-color engine, bundled by tools/bundle.mjs. Do not edit: edit the repo and rebuild.
+// Library: ${embedded.library.count} directions. Data hash: ${hash}. Source: https://github.com/victornasar/tasteskills/tree/main/color
 const __m = {};
 ${parts.join('\n')}`;
 fs.mkdirSync(path.dirname(OUT), { recursive: true });

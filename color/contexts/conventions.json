@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/conventions.schema.json",
   "schemaVersion": "0.1.0",
-  "rule": "A convention is context, not an assignment. Domains still never pick a color. Each convention says how strong it is, how well it is evidenced, and how no-slop-color treats it: 'context' conventions are shown and represented by at most one direction; 'preferred' patterns rank higher because they are the tasteful default; 'cliche-risk' patterns stay available but are never boosted and are always flagged.",
+  "rule": "A convention is context, not an assignment. Domains still never pick a color. Each convention says how strong it is, how well it is evidenced, and how the color library treats it: 'context' conventions are shown and represented by at most one direction; 'preferred' patterns rank higher because they are the tasteful default; 'cliche-risk' patterns stay available but are never boosted and are always flagged.",
   "conventions": [
     {
       "id": "finance-blue",

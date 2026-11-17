@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://no-slop-color.local/schemas/library.schema.json",
+  "$id": "https://tasteskills.local/color/schemas/library.schema.json",
   "title": "Curated library",
   "description": "Built by tools/build.mjs from library/source/*.json.",
   "type": "object",

@@ -44,7 +44,7 @@ export function applyDirection(d, format = 'css', prefix = 'color') {
   const roles = d.usage.assignments.map((a) => ({ element: a.element, token: `--${prefix}-${a.color}`, on: a.on ? `--${prefix}-${a.on}` : null }));
   const contrast = d.accessibility.pairs.map((p) => ({ foreground: `--${prefix}-${p.foreground}`, background: `--${prefix}-${p.background}`, use: p.intended_use, ratio: p.ratio, required: p.required }));
   const p = d.classification.primary;
-  const header = `no-slop-color: ${d.name} (${d.id}) · ${p.display_label} · ${p.foundation ? `${p.foundation} foundation · ${p.structure} structure` : 'no ground: set the figure on imagery over the scrim'}`;
+  const header = `tasteskills color: ${d.name} (${d.id}) · ${p.display_label} · ${p.foundation ? `${p.foundation} foundation · ${p.structure} structure` : 'no ground: set the figure on imagery over the scrim'}`;
   // The scrim keeps its opacity: CSS and Tailwind get an alpha channel, tokens get an alpha component.
   const value = (t) => (t.opacity != null ? css(t.oklch).replace(')', ` / ${t.opacity})`) : css(t.oklch));
 
