@@ -20,7 +20,7 @@ The nine checks live in [`skills/check-layout/scripts/patterns.mjs`](skills/chec
    fix a false positive, add the case to `clean.html` so it stays fixed.
 4. Spot-check against real screenshots (`lab/corpus/shots/` after running the lab detector) before trusting a
    new check's rate.
-5. Run `node --test tests/` and `cd ../lab/tools && npm test`. After changing a check, rerun the corpus report
+5. Run `node --test tests/*.test.mjs` and `cd ../lab/tools && npm test`. After changing a check, rerun the corpus report
    (`lab/corpus/README.md`) so the rates in `SKILL.md` stay true.
 
 ## Rules

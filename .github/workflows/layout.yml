@@ -24,4 +24,4 @@ jobs:
           node-version: 24
       # ubuntu-latest ships Google Chrome; check_layout.mjs finds it on PATH.
       - name: Calibration
-        run: node --test tests/
+        run: node --test tests/*.test.mjs

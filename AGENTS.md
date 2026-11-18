@@ -24,5 +24,5 @@ Work inside one area at a time and follow that area's `AGENTS.md`. Each area kee
 
 - Typography: `cd typography && python3 scripts/build.py --check && python3 -m unittest discover -s tests -q` (also CI and the pre-commit hook; enable the hook with `git config core.hooksPath .githooks`).
 - Color: `cd color && node tools/build.mjs all`, then `git diff --exit-code` (also CI).
-- Layout: `cd layout && node --test tests/` (needs Chrome and Node 22+; also CI).
+- Layout: `cd layout && node --test tests/*.test.mjs` (needs Chrome and Node 22+; also CI).
 - Lab: `cd lab/tools && npm test` (the lab detector's calibration; needs Google Chrome).

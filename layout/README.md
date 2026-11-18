@@ -49,4 +49,4 @@ Example output:
 | `skills/check-layout/SKILL.md` | The skill: plan, check, decide, re-check |
 | `skills/check-layout/scripts/check_layout.mjs` | Renders a page in Chrome and reports the patterns. Talks to Chrome directly; no npm packages |
 | `skills/check-layout/scripts/patterns.mjs` | The nine checks, shared with the lab's detector |
-| `tests/` | Calibration pages (one with every pattern, one with none) and the tests: `node --test tests/` |
+| `tests/` | Calibration pages (one with every pattern, one with none) and the tests: `node --test tests/*.test.mjs` |

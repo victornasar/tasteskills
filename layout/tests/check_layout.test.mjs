@@ -1,5 +1,5 @@
 // The checker must catch every pattern on the slop fixture and none on the clean one, through the same script
-// the skill ships. Run: node --test tests/   (needs Chrome and Node 22+)
+// the skill ships. Run: node --test tests/*.test.mjs   (needs Chrome and Node 22+)
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
