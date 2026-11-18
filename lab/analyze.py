@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Automatic measures for lab runs, across conditions (A no skills, B font + color skills, C B + check-layout).
+"""Automatic measures for lab runs, across conditions (A no skills, B font + color skills, C B + check-layout,
+D C + taste in fast mode).
 
 Usage:
   node lab/tools/detect.mjs lab/runs --out lab/runs/detect.json --shots lab/runs/shots --full
@@ -22,7 +23,7 @@ from pathlib import Path
 
 LAB = Path(__file__).resolve().parent
 AVOID = {a["name"].lower() for a in json.loads((LAB.parent / "typography" / "fonts.json").read_text())["avoid"]}
-NAMES = {"A": "no skills", "B": "font + color skills", "C": "B + check-layout"}
+NAMES = {"A": "no skills", "B": "font + color skills", "C": "B + check-layout", "D": "C + taste (fast)"}
 
 
 def load():

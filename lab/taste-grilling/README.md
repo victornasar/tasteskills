@@ -1,9 +1,10 @@
 # taste-grilling
 
-Design for a skill that helps people work out what they want their website to look like, before and during
-building, without the agent swapping in its own taste.
+Design and discovery tests for `/taste`, the design-director skill in [`direction/`](../../direction/).
 
-**Status:** design documents only. There is no skill to install and no experiment has run.
+**Status:** the skill ships under `direction/skills/taste/` (fast mode primary; guided mode experimental). The
+documents here are the discovery test design. Persona-B calibration has not run; guided mode stays labelled
+experimental until those transcripts are reviewed by hand.
 
 ## The idea
 
@@ -24,7 +25,8 @@ Read them in this order:
 
 | File | What it is | Who reads it |
 | --- | --- | --- |
-| [`direction-spec.md`](direction-spec.md) | The creative direction format: five principles, who may change what, a one-page template and writing rules | Anyone; the eventual skill |
+| [`direction-spec.md`](direction-spec.md) | Pointer to the skill's creative-direction template | Anyone |
+| [`../../direction/skills/taste/references/direction-template.md`](../../direction/skills/taste/references/direction-template.md) | The live format: principles, provenance, template, writing rules | The skill and anyone editing the format |
 | [`examples.md`](examples.md) | Three worked examples: one brief, one fictional product (Tallyroll), three clients whose wants differ | Graders only |
 | [`persona-b.md`](persona-b.md) | A test: a simulated client whose words and references disagree, and how to grade the agent | Client simulator and graders only |
 
@@ -45,4 +47,6 @@ the client did) and **intent preservation** (did the finished site still match o
 2. Build the client simulator and three scripted agents (leading, careful but unhelpful, curious) to calibrate
    it.
 3. Read the calibration transcripts by hand before trusting any score.
-4. Only then write the skill.
+4. Drop the experimental label on guided mode only after that review.
+5. Lab condition **D** (`/taste` in fast mode) against C measures orchestration on the existing briefs; see
+   [`lab/README.md`](../README.md).

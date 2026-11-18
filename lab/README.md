@@ -7,8 +7,8 @@ AI agent from an acceptable website to a distinctive one, and how much of that i
 and process around it?**
 
 **Status:** a 90-site corpus of AI defaults is measured; 54 runs across three conditions (no skills, font and
-color skills, plus check-layout) are measured automatically; blind human ratings are open. Results so far are in
-[`findings.md`](findings.md).
+color skills, plus check-layout) are measured automatically; condition D (`/taste` fast mode) is wired and ready
+to run against C; blind human ratings are open. Results so far are in [`findings.md`](findings.md).
 
 ## What's here
 
@@ -22,7 +22,7 @@ color skills, plus check-layout) are measured automatically; blind human ratings
 | [`analyze.py`](analyze.py) | Automatic measures for the runs → [`runs/measures.md`](runs/measures.md) |
 | [`ratings/`](ratings/) | The blind rating page (A vs B and B vs C), its answer key and the scoring script |
 | [`tools/`](tools/) | Renders pages in Chrome and detects layout slop; calibrated on fixtures |
-| [`taste-grilling/`](taste-grilling/) | Design for a skill that questions the client before building (designed, not run) |
+| [`taste-grilling/`](taste-grilling/) | Discovery-test design for `/taste` (persona B not yet calibrated; guided mode experimental) |
 
 ## Run it yourself
 
@@ -37,7 +37,14 @@ python3 lab/analyze.py
 ```
 
 Conditions so far: **A**, no skills; **B**, `find-font` and `find-color` installed and asked for; **C**, B plus
-`check-layout`. Add a condition by extending `run.py` and rerun; existing runs are kept.
+`check-layout`; **D**, C plus `/taste` in fast mode (writes `DIRECTION.md`, coordinates siblings, two-round
+critique). Default matrix stays `A,B,C`. Run D explicitly, for example:
+
+```bash
+python3 lab/run.py --briefs tallyroll,fennel-street --conditions D --models claude-sonnet-5-5 --runs 1
+```
+
+Add a condition by extending `run.py` and rerun; existing runs are kept.
 
 ## How an experiment runs
 
