@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Bread at seven, tarts by nine, gone by two. A neighbourhood bakery on Fennel Street, London E8.">
+<style>
+/* Fonts: Synonym and Sentient are Fontshare (FFL) fonts. Self-host them:
+   download from fontshare.com and place the .woff2 files in ./fonts/ next to this page.
+   Never link to api.fontshare.com or Google Fonts. Until the files are present, the fallbacks below are used. */
+@font-face {
+  font-family: "Synonym";
+  src: url("fonts/Synonym.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sentient";
+  src: url("fonts/Sentient.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --ground: #F5EDE4;
+  --figure: #8D5951;
+  --text: #3D3832;
+  --muted: #6C6761;
+  --display: "Synonym", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body: "Sentient", Georgia, "Times New Roman", serif;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font: 400 1.0625rem/1.6 var(--body);
+  overflow-wrap: break-word;
+}
+img { max-width: 100%; }
+a { color: var(--figure); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--figure); outline-offset: 3px; }
+
+.wrap {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Header */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding-top: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--muted);
+}
+.mark {
+  font: 600 1.25rem/1.1 var(--display);
+  color: var(--text);
+  text-decoration: none;
+}
+.top nav { display: flex; flex-wrap: wrap; gap: 4px 18px; font: 500 0.95rem/1 var(--display); }
+.top nav a { color: var(--text); text-decoration: none; padding: 8px 0; min-height: 44px; display: inline-flex; align-items: center; }
+.top nav a:hover { color: var(--figure); text-decoration: underline; }
+
+/* Hero */
+.hero { padding-top: 24px; padding-bottom: 32px; }
+.photo {
+  margin: 0;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1.5px dashed var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  color: var(--muted);
+  font: 500 0.9rem/1.4 var(--display);
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 8px;
+  font: 500 1rem/1.4 var(--display);
+}
+.status::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--figure);
+  flex: none;
+}
+h1 {
+  margin: 0;
+  font: 600 clamp(2.4rem, 9vw, 4.25rem)/1 var(--display);
+  letter-spacing: -0.01em;
+  color: var(--figure);
+}
+.line {
+  margin: 14px 0 22px;
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  max-width: 28ch;
+}
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--figure);
+  color: var(--ground);
+  font: 600 1rem/1 var(--display);
+  text-decoration: none;
+}
+.btn:hover { filter: brightness(0.92); }
+.btn.ghost { background: transparent; color: var(--figure); box-shadow: inset 0 0 0 1.5px var(--figure); }
+
+/* Sections */
+section { padding: 36px 0; border-top: 1px solid var(--muted); }
+h2 {
+  margin: 0 0 18px;
+  font: 600 1.6rem/1.15 var(--display);
+  color: var(--figure);
+}
+.sub { margin: -10px 0 18px; color: var(--muted); font-size: 0.95rem; }
+
+/* Menu lists */
+.menu { list-style: none; margin: 0; padding: 0; }
+.menu li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dotted var(--muted);
+}
+.menu .name { font: 500 1.05rem/1.3 var(--display); }
+.menu .price { font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--body); }
+.menu .price small { color: var(--muted); }
+
+/* Cake panel */
+.cake-panel {
+  border: 1.5px solid var(--figure);
+  border-radius: 6px;
+  padding: 20px;
+}
+.cake-panel p { margin: 0 0 16px; }
+.cake-panel .lead { font: 500 1.15rem/1.4 var(--display); margin-bottom: 6px; }
+
+/* About */
+.about { display: grid; gap: 24px; }
+.about p { margin: 0 0 14px; max-width: 60ch; }
+.sign { font: 500 1rem/1.4 var(--display); color: var(--figure); }
+
+/* Find us */
+.find { display: grid; gap: 28px; }
+.find dl { margin: 0; }
+.find dt { font: 600 0.9rem/1.2 var(--display); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-top: 16px; }
+.find dt:first-child { margin-top: 0; }
+.find dd { margin: 4px 0 0; font-size: 1.1rem; }
+
+/* Footer */
+footer {
+  background: var(--figure);
+  color: var(--ground);
+  padding: 28px 0 32px;
+  margin-top: 16px;
+}
+footer .links { display: flex; flex-wrap: wrap; gap: 8px 22px; font: 500 1rem/1 var(--display); }
+footer a { color: var(--ground); text-decoration: underline; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
+footer .copy { margin: 18px 0 0; font-size: 0.9rem; opacity: 1; }
+
+/* Wider screens */
+@media (min-width: 760px) {
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding-top: 40px; padding-bottom: 48px; }
+  .hero .photo { order: 2; }
+  .hero .copy { order: 1; }
+  .hero .photo { aspect-ratio: 5 / 4; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .about { grid-template-columns: 1fr 1fr; align-items: start; }
+  .find { grid-template-columns: 1fr 1fr; align-items: start; }
+  section { padding: 48px 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#top">Fennel Street Bakery</a>
+    <nav aria-label="Page sections">
+      <a href="#daily">Daily</a>
+      <a href="#season">This season</a>
+      <a href="#cakes">Cake orders</a>
+      <a href="#find">Find us</a>
+    </nav>
+  </header>
+
+  <div class="hero" id="top">
+    <figure class="photo" role="img" aria-label="Placeholder for a photo of bread and tarts on the counter">
+      <span>Photo placeholder: bread and tarts on the counter</span>
+    </figure>
+    <div class="copy">
+      <p class="status" id="status">Wednesday to Sunday, 7:00 to 14:00, or until we sell out.</p>
+      <h1>Fennel Street Bakery</h1>
+      <p class="line">Bread at seven, tarts by nine, gone by two.</p>
+      <div class="actions">
+        <a class="btn" href="#cakes">Order a cake</a>
+        <a class="btn ghost" href="#find">Find us</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="split">
+    <section id="daily">
+      <h2>Daily</h2>
+      <ul class="menu">
+        <li><span class="name">Country sourdough</span><span class="price">£5.20</span></li>
+        <li><span class="name">Seeded rye</span><span class="price">£5.60</span></li>
+        <li><span class="name">Pastel de nata</span><span class="price">£2.10 <small>or six for £11</small></span></li>
+        <li><span class="name">Cardamom buns</span><span class="price">£3.00</span></li>
+        <li><span class="name">Olive oil focaccia, by the slice</span><span class="price">£2.80</span></li>
+      </ul>
+    </section>
+
+    <section id="season">
+      <h2>This season</h2>
+      <ul class="menu">
+        <li><span class="name">Orange and almond cake</span><span class="price">whole £28 <small>· slice £4</small></span></li>
+        <li><span class="name">Fig and walnut loaf</span><span class="price">£6.40</span></li>
+      </ul>
+    </section>
+  </div>
+
+  <section id="cakes">
+    <h2>Cake orders</h2>
+    <div class="cake-panel">
+      <p class="lead">Whole cakes with 48 hours' notice.</p>
+      <p>Message us or call to order.</p>
+      <a class="btn" href="tel:+442079460381">Call 020 7946 0381</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about">
+      <figure class="photo" role="img" aria-label="Placeholder for a photo of Ana or Rita at work" style="aspect-ratio: 4 / 5;">
+        <span>Photo placeholder: Ana or Rita at work</span>
+      </figure>
+      <div>
+        <h2>About</h2>
+        <p>Ana bakes the bread. Rita does everything with custard. We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+        <p class="sign">Ana and Rita Duarte</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="find">
+    <div class="find">
+      <div>
+        <h2>Hours</h2>
+        <dl>
+          <dt>Open</dt>
+          <dd>Wednesday to Sunday, 7:00 to 14:00, or until we sell out.</dd>
+          <dt>Closed</dt>
+          <dd>Monday and Tuesday</dd>
+        </dl>
+      </div>
+      <div>
+        <h2>Find us</h2>
+        <dl>
+          <dt>Address</dt>
+          <dd>14 Fennel Street, London E8</dd>
+        </dl>
+        <p style="margin-top:16px;"><a href="https://www.google.com/maps/search/?api=1&amp;query=14+Fennel+Street+London+E8">Open in maps</a></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <nav class="links" aria-label="Footer">
+      <a href="#" title="Instagram link to be added">Instagram</a>
+      <a href="#cakes">Order a cake</a>
+      <a href="#find">Find us</a>
+    </nav>
+    <p class="copy">© 2026 Fennel Street Bakery.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var el = document.getElementById('status');
+  if (!el) return;
+  var names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var openDays = [0, 3, 4, 5, 6]; // Sun, Wed, Thu, Fri, Sat
+  var OPEN = 7 * 60, CLOSE = 14 * 60;
+  try {
+    var f = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/London', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    });
+    var p = {};
+    f.formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+    var day = short.indexOf(p.weekday);
+    var mins = parseInt(p.hour, 10) * 60 + parseInt(p.minute, 10);
+    if (day < 0 || isNaN(mins)) return;
+    var isOpenDay = openDays.indexOf(day) !== -1;
+    if (isOpenDay && mins >= OPEN && mins < CLOSE) {
+      el.textContent = 'Open now, until 14:00 or until we sell out.';
+      return;
+    }
+    if (isOpenDay && mins < OPEN) {
+      el.textContent = 'Closed right now. Opens today at 7:00.';
+      return;
+    }
+    var next = 0;
+    for (var i = 1; i <= 7; i++) {
+      var d = (day + i) % 7;
+      if (openDays.indexOf(d) !== -1) { next = i; break; }
+    }
+    var when = next === 1 ? 'tomorrow' : 'on ' + names[(day + next) % 7];
+    el.textContent = 'Closed right now. Opens ' + when + ' at 7:00.';
+  } catch (e) {
+    /* keep the static hours line */
+  }
+})();
+</script>
+</body>
+</html>

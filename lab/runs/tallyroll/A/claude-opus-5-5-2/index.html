@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyroll — Usage-based billing API</title>
+<meta name="description" content="Tallyroll turns raw usage into invoices your finance team can reconcile line by line.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f5f1; --surface:#fdfcf9; --ink:#1b1d1f; --ink-2:#4a4f55; --ink-3:#7a8087;
+    --rule:#dcd9d0; --rule-2:#e9e6de; --accent:#1f5f4a; --accent-ink:#ffffff; --accent-soft:#e3ece7;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --max:1080px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121416; --surface:#181b1e; --ink:#e7e5df; --ink-2:#b2b5b8; --ink-3:#83888d;
+      --rule:#2c3034; --rule-2:#23272a; --accent:#7cc4a6; --accent-ink:#0e1a15; --accent-soft:#1c2a24;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121416; --surface:#181b1e; --ink:#e7e5df; --ink-2:#b2b5b8; --ink-3:#83888d;
+    --rule:#2c3034; --rule-2:#23272a; --accent:#7cc4a6; --accent-ink:#0e1a15; --accent-soft:#1c2a24;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans);font-feature-settings:"tnum" 1}
+  a{color:inherit}
+  code,.mono{font-family:var(--mono);font-size:.92em}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  @media (max-width:560px){.wrap{padding:0 16px}}
+
+  /* header */
+  header.top{border-bottom:1px solid var(--rule)}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em;text-decoration:none}
+  .mark{width:18px;height:18px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .mark::before,.mark::after{content:"";position:absolute;left:3px;right:3px;height:1.5px;background:var(--ink)}
+  .mark::before{top:5px}.mark::after{top:10px;right:7px}
+  nav.top{display:flex;gap:22px;font-size:14px;color:var(--ink-2)}
+  nav.top a{text-decoration:none}
+  nav.top a:hover{color:var(--ink)}
+  @media (max-width:640px){nav.top .hide-sm{display:none}}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:6px;font:500 15px var(--sans);text-decoration:none;border:1px solid transparent;transition:background .15s,border-color .15s}
+  .btn-primary{background:var(--accent);color:var(--accent-ink)}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-secondary{border-color:var(--rule);color:var(--ink);background:var(--surface)}
+  .btn-secondary:hover{border-color:var(--ink-3)}
+  .btn:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* hero */
+  .hero{padding:88px 0 40px}
+  .eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 20px}
+  h1{font-weight:600;font-size:clamp(34px,5.4vw,56px);line-height:1.08;letter-spacing:-.025em;margin:0 0 20px;max-width:15ch}
+  .sub{font-size:clamp(17px,2vw,20px);color:var(--ink-2);max-width:40ch;margin:0 0 32px}
+  .actions{display:flex;flex-wrap:wrap;gap:12px}
+
+  /* invoice */
+  .invoice{margin:56px 0 0;background:var(--surface);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+  .inv-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding:14px 20px;border-bottom:1px solid var(--rule);font:400 13px var(--mono);color:var(--ink-3)}
+  .inv-cols{display:grid;grid-template-columns:1fr auto;gap:16px;padding:10px 20px;border-bottom:1px solid var(--rule-2);font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+  details.line{border-bottom:1px solid var(--rule-2)}
+  details.line:last-of-type{border-bottom:0}
+  details.line>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;padding:18px 20px}
+  details.line>summary::-webkit-details-marker{display:none}
+  details.line>summary:hover{background:var(--accent-soft)}
+  .line-name{display:flex;gap:12px;align-items:baseline;min-width:0}
+  .chev{font:500 13px var(--mono);color:var(--accent);width:12px;flex:none;transition:transform .15s}
+  details[open] .chev{transform:rotate(90deg)}
+  .line-name b{font-weight:500}
+  .calc{display:block;font:400 13px var(--mono);color:var(--ink-2);margin-top:4px;overflow-wrap:anywhere}
+  .amt{font:500 16px var(--mono);white-space:nowrap}
+  .hint{font:400 12px var(--mono);color:var(--accent);margin-left:auto;white-space:nowrap}
+  @media (max-width:560px){.hint{display:none}}
+  .days{padding:4px 20px 20px 44px}
+  @media (max-width:560px){.days{padding-left:20px}}
+  .days-meta{font:400 12px var(--mono);color:var(--ink-3);margin:0 0 10px}
+  table.daily{width:100%;border-collapse:collapse;font:400 13px var(--mono)}
+  table.daily td{padding:3px 0;border-top:1px dashed var(--rule-2);vertical-align:middle}
+  table.daily td.d{width:84px;color:var(--ink-3)}
+  table.daily td.n{text-align:right;width:96px}
+  table.daily td.bar{padding:0 14px}
+  .barfill{height:6px;background:var(--accent);opacity:.55;border-radius:1px}
+  table.daily tr.we td.d{color:var(--ink-3);opacity:.7}
+  table.daily tfoot td{border-top:1px solid var(--rule);padding-top:10px;font-weight:500}
+  .daily-wrap{columns:2;column-gap:36px}
+  @media (max-width:760px){.daily-wrap{columns:1}}
+  .daily-wrap table{break-inside:auto}
+  .inv-foot{display:grid;grid-template-columns:1fr auto;gap:16px;padding:14px 20px;border-top:1px solid var(--rule);font:400 13px var(--mono);color:var(--ink-3)}
+  .inv-note{font:400 12px var(--mono);color:var(--ink-3);margin:12px 2px 0}
+
+  /* sections */
+  section.block{padding:88px 0;border-top:1px solid var(--rule)}
+  h2{font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-.02em;line-height:1.2;margin:0 0 40px}
+  .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+  .steps li{padding:22px 24px 0 0}
+  .steps li+li{padding-left:24px;border-left:1px solid var(--rule)}
+  .num{font:500 12px var(--mono);color:var(--ink-3);display:block;margin-bottom:14px}
+  .steps h3{font-size:18px;font-weight:600;margin:0 0 8px}
+  .steps p{margin:0;color:var(--ink-2)}
+  .steps code{display:inline-block;margin-top:12px;padding:4px 8px;background:var(--surface);border:1px solid var(--rule);border-radius:4px;color:var(--ink)}
+  @media (max-width:760px){
+    .steps{grid-template-columns:1fr}
+    .steps li,.steps li+li{padding:22px 0;border-left:0}
+    .steps li+li{border-top:1px solid var(--rule)}
+  }
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+  .split>div{padding:32px}
+  .split>div+div{border-left:1px solid var(--rule)}
+  @media (max-width:760px){.split{grid-template-columns:1fr}.split>div+div{border-left:0;border-top:1px solid var(--rule)}.split>div{padding:24px}}
+  .split h3{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 20px}
+  .split ul{list-style:none;margin:0;padding:0}
+  .split li{padding:14px 0;border-top:1px solid var(--rule-2);display:flex;gap:14px}
+  .split li:first-child{border-top:0;padding-top:0}
+  .split li::before{content:"—";color:var(--accent);font-family:var(--mono)}
+
+  .pricing{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end}
+  @media (max-width:760px){.pricing{grid-template-columns:1fr;gap:28px}}
+  .rate{font:500 clamp(56px,9vw,96px)/1 var(--mono);letter-spacing:-.04em;margin:0}
+  .rate small{font:400 18px var(--sans);letter-spacing:0;color:var(--ink-2);margin-left:10px}
+  .terms{margin:0;padding:0;list-style:none;border-top:1px solid var(--ink)}
+  .terms li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)}
+  .terms li span:first-child{color:var(--ink-2)}
+  .terms li span:last-child{font-family:var(--mono);text-align:right}
+
+  .cta{padding:88px 0;border-top:1px solid var(--rule)}
+  .cta .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+  .cta h2{margin:0;max-width:20ch}
+
+  footer{border-top:1px solid var(--rule);padding:28px 0 40px;font-size:14px;color:var(--ink-3)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  footer nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><span class="mark" aria-hidden="true"></span>Tallyroll</a>
+    <nav class="top" aria-label="Primary">
+      <a class="hide-sm" href="#how">How it works</a>
+      <a class="hide-sm" href="#pricing">Pricing</a>
+      <a href="#docs">Docs</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Usage-based billing API</p>
+      <h1>Every cent traces back to an event.</h1>
+      <p class="sub">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#docs">Read the docs <span aria-hidden="true">→</span></a>
+        <a class="btn btn-secondary" href="#demo">Book a demo</a>
+      </div>
+
+      <div class="invoice" role="region" aria-label="Example invoice">
+        <div class="inv-head">
+          <span>Invoice · March 2026</span>
+          <span>Example</span>
+        </div>
+        <div class="inv-cols"><span>Line item</span><span>Amount</span></div>
+        <details class="line" open>
+          <summary>
+            <span class="line-name">
+              <span class="chev" aria-hidden="true">›</span>
+              <span><b>API calls, March</b>
+                <span class="calc">1,204,388 calls × $0.0004 = $481.76</span></span>
+              <span class="hint">31 daily totals</span>
+            </span>
+            <span class="amt">$481.76</span>
+          </summary>
+          <div class="days">
+            <p class="days-meta">Daily totals, 1–31 March. Each row opens to the events behind it.</p>
+            <div class="daily-wrap" id="daily"></div>
+          </div>
+        </details>
+        <div class="inv-foot"><span>1,204,388 events → 31 days → 1 line</span><span>$481.76</span></div>
+      </div>
+      <p class="inv-note">Illustration. Daily figures are sample data that sum to the line total.</p>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>
+          <span class="num">01</span>
+          <h3>Send events</h3>
+          <p>Post usage events from your product as they happen.</p>
+          <code>POST /v1/events</code>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <h3>Define pricing</h3>
+          <p>Tiers, minimums, credits and commitments, written as rules you can read.</p>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <h3>Invoice</h3>
+          <p>Each line on an invoice opens up into the events that produced it.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>Built for both sides of the sign-off</h2>
+      <div class="split">
+        <div>
+          <h3>For finance</h3>
+          <ul>
+            <li>Line-level audit trail</li>
+            <li>Exports to NetSuite and QuickBooks</li>
+            <li>Revenue recognition schedules</li>
+          </ul>
+        </div>
+        <div>
+          <h3>For engineering</h3>
+          <ul>
+            <li>Idempotent event ingestion</li>
+            <li>Webhooks for every invoice state</li>
+            <li>SDKs for TypeScript, Python and Go</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="pricing">
+    <div class="wrap pricing">
+      <div>
+        <h2 style="margin-bottom:20px">Pricing</h2>
+        <p class="rate">0.5%<small>of billed revenue</small></p>
+      </div>
+      <ul class="terms">
+        <li><span>Platform fee</span><span>None</span></li>
+        <li><span>Billing under $10,000 / month</span><span>Free</span></li>
+        <li><span>Billing over $10,000 / month</span><span>0.5%</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <h2>See how an invoice is built, from the first event.</h2>
+      <div class="actions">
+        <a class="btn btn-primary" href="#docs" id="docs">Read the docs <span aria-hidden="true">→</span></a>
+        <a class="btn btn-secondary" href="#demo" id="demo">Book a demo</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="#docs">Docs</a><a href="#pricing">Pricing</a><a href="#">Status</a><a href="#">Security</a><a href="#">Contact</a>
+    </nav>
+    <span>© 2026 Tallyroll</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Sample daily totals for March 2026 that sum exactly to 1,204,388.
+  var TOTAL = 1204388, N = 31;
+  var w = [], sum = 0;
+  for (var i = 0; i < N; i++){
+    var dow = (i + 0) % 7;                // 1 March 2026 is a Sunday (dow 0)
+    var weekend = dow === 0 || dow === 6;
+    var v = (weekend ? 0.62 : 1) * (1 + i * 0.006) * (1 + 0.05 * Math.sin(i * 1.7));
+    w.push(v); sum += v;
+  }
+  var days = w.map(function(v){ return Math.floor(v / sum * TOTAL); });
+  var rem = TOTAL - days.reduce(function(a,b){return a+b;}, 0);
+  for (var k = 0; rem > 0; k = (k + 1) % N, rem--) days[k]++;
+  var max = Math.max.apply(null, days);
+  var fmt = function(n){ return n.toLocaleString('en-US'); };
+  var names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  function table(from, to, foot){
+    var h = '<table class="daily"><tbody>';
+    for (var i = from; i < to; i++){
+      var dow = i % 7, we = dow === 0 || dow === 6;
+      h += '<tr' + (we ? ' class="we"' : '') + '><td class="d">' + names[dow] + ' ' + String(i+1).padStart(2,'0') +
+           '</td><td class="bar"><div class="barfill" style="width:' + (days[i]/max*100).toFixed(1) + '%"></div></td>' +
+           '<td class="n">' + fmt(days[i]) + '</td></tr>';
+    }
+    h += '</tbody>';
+    if (foot) h += '<tfoot><tr><td class="d">Σ</td><td class="bar" style="font-weight:400;color:var(--ink-3)">× $0.0004 = $481.76</td><td class="n">' + fmt(TOTAL) + '</td></tr></tfoot>';
+    return h + '</table>';
+  }
+  document.getElementById('daily').innerHTML = table(0, 16) + table(16, 31, true);
+})();
+</script>
+</body>
+</html>

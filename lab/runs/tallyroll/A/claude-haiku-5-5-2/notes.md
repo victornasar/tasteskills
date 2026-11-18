@@ -1,0 +1,4 @@
+- Light and dark themes come from colour tokens on `:root`, with one muted teal accent and no imagery, to match the calm, precise register.
+- The invoice line is built in HTML as a monospace ledger row; the `<details>` expands to 31 day cells with no values, since the copy gives no daily figures.
+- Copy is used as written, with no added figures, logos or testimonials. Links are relative paths (`/docs`, `/demo`, etc.), so swap in real URLs.
+- Fonts: IBM Plex Sans and IBM Plex Mono via Google Fonts, the only external request; system fallbacks apply if it's blocked.

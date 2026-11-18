@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyroll — Every cent traces back to an event</title>
+<meta name="description" content="Tallyroll is a usage-based billing API. It turns raw usage into invoices your finance team can reconcile line by line.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f2; --surface:#fff; --ink:#1b1f23; --muted:#5b636b; --line:#dcdad2;
+  --accent:#1f5f4a; --accent-ink:#fff; --tint:#e8f0ec;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#111513; --surface:#181d1a; --ink:#e8ebe7; --muted:#9aa49d; --line:#2b332e;
+    --accent:#6cc4a1; --accent-ink:#0c1410; --tint:#1a2822}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+code,.mono{font-family:var(--mono)}
+code{font-size:.88em;background:var(--tint);padding:.1em .4em;border-radius:3px}
+
+header{border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:600;letter-spacing:-.01em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{display:block;width:18px;height:18px;border:2px solid var(--accent);border-radius:3px;
+  background:repeating-linear-gradient(var(--accent) 0 2px,transparent 2px 5px) center/10px 100% no-repeat}
+nav a{font-size:15px;color:var(--muted);text-decoration:none;margin-left:22px}
+nav a:hover{color:var(--ink)}
+
+.btn{display:inline-block;font:500 16px/1 var(--sans);padding:14px 20px;border-radius:4px;text-decoration:none;border:1px solid var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.secondary{color:var(--ink);border-color:var(--ink);background:transparent}
+.btn.secondary:hover{background:var(--surface)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+.hero{padding:72px 0 80px;display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
+h1{font-size:clamp(34px,5vw,52px);line-height:1.08;letter-spacing:-.025em;margin:0 0 20px;font-weight:600}
+.sub{font-size:19px;color:var(--muted);margin:0;max-width:30em}
+
+/* invoice */
+.invoice{background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 1px 0 var(--line)}
+.inv-head{display:flex;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--line);font:500 12px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+details.line summary{list-style:none;cursor:pointer;padding:18px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+details.line summary::-webkit-details-marker{display:none}
+.chev{width:16px;height:16px;margin-top:5px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg) scale(.7);transition:transform .15s}
+details[open] .chev{transform:rotate(45deg) scale(.7)}
+.eq{font:400 15px/1.6 var(--mono)}
+.eq b{font-weight:500}
+.eq .tot{color:var(--accent);font-weight:500}
+.hint{display:block;font:400 13px var(--sans);color:var(--muted);margin-top:4px}
+.days{border-top:1px solid var(--line);max-height:300px;overflow:auto;background:var(--bg)}
+.days table{width:100%;border-collapse:collapse;font:400 13.5px var(--mono)}
+.days th,.days td{padding:6px 18px;text-align:right;border-bottom:1px solid var(--line)}
+.days th:first-child,.days td:first-child{text-align:left}
+.days thead th{position:sticky;top:0;background:var(--bg);color:var(--muted);font-weight:500}
+.days tfoot td{font-weight:500;border-bottom:0}
+.cap{font-size:13px;color:var(--muted);margin:10px 2px 0}
+
+section{padding:72px 0;border-top:1px solid var(--line)}
+h2{font-size:30px;letter-spacing:-.02em;line-height:1.2;margin:0 0 36px;font-weight:600}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid var(--ink);padding-top:16px}
+.steps li::before{content:"0" counter(s);font:500 13px var(--mono);color:var(--accent)}
+.steps h3{margin:6px 0 8px;font-size:20px;font-weight:600}
+.steps p{margin:0;color:var(--muted)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:28px}
+.card h3{margin:0 0 4px;font-size:13px;font:500 13px var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--accent)}
+.card ul{margin:14px 0 0;padding:0;list-style:none}
+.card li{padding:12px 0;border-top:1px solid var(--line)}
+.card li:first-child{border-top:0}
+
+.price{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.big{font:500 clamp(44px,7vw,72px)/1 var(--mono);letter-spacing:-.04em}
+.price p{margin:12px 0 0;color:var(--muted)}
+.price .free{font-size:19px;color:var(--ink)}
+
+.cta{background:var(--tint)}
+.cta .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+.cta h2{margin:0}
+.cta .actions{margin:0}
+
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+footer a{text-decoration:none;margin-right:16px}
+footer a:hover{color:var(--ink);text-decoration:underline}
+
+@media(max-width:820px){
+  .hero,.two,.price{grid-template-columns:1fr}
+  .hero{padding:48px 0;gap:40px}
+  .steps{grid-template-columns:1fr;gap:28px}
+  section{padding:56px 0}
+  nav a:not(.keep){display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#"><i aria-hidden="true"></i>Tallyroll</a>
+    <nav aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a class="keep" href="#docs">Docs</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <div>
+    <h1>Every cent traces back to an event.</h1>
+    <p class="sub">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+    <div class="actions">
+      <a class="btn primary" href="#docs">Read the docs</a>
+      <a class="btn secondary" href="#demo">Book a demo</a>
+    </div>
+  </div>
+
+  <div>
+    <div class="invoice" role="group" aria-label="Example invoice">
+      <div class="inv-head"><span>Invoice · March</span><span>Example</span></div>
+      <details class="line">
+        <summary>
+          <span class="chev" aria-hidden="true"></span>
+          <span>
+            <span class="eq">API calls, March:<br><b>1,204,388</b> calls × <b>$0.0004</b> = <span class="tot">$481.76</span></span>
+            <span class="hint">Select the line to see the 31 daily totals behind it</span>
+          </span>
+        </summary>
+        <div class="days">
+          <table>
+            <thead><tr><th scope="col">Day</th><th scope="col">Calls</th></tr></thead>
+            <tbody id="days"></tbody>
+            <tfoot><tr><td>Total</td><td>1,204,388</td></tr></tfoot>
+          </table>
+        </div>
+      </details>
+    </div>
+    <p class="cap">The line total is exact: 1,204,388 × $0.0004 = $481.7552, shown rounded to the cent. Daily figures here are illustrative and sum to the monthly count.</p>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><h3>Send events.</h3><p>Post usage events from your product as they happen: <code>POST /v1/events</code>.</p></li>
+      <li><h3>Define pricing.</h3><p>Tiers, minimums, credits and commitments, written as rules you can read.</p></li>
+      <li><h3>Invoice.</h3><p>Each line on an invoice opens up into the events that produced it.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two">
+    <div class="card">
+      <h3>For finance</h3>
+      <ul>
+        <li>Line-level audit trail</li>
+        <li>Exports to NetSuite and QuickBooks</li>
+        <li>Revenue recognition schedules</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>For engineering</h3>
+      <ul>
+        <li>Idempotent event ingestion</li>
+        <li>Webhooks for every invoice state</li>
+        <li>SDKs for TypeScript, Python and Go</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap price">
+    <div>
+      <h2 style="margin-bottom:0">Pricing</h2>
+    </div>
+    <div>
+      <div class="big">0.5%</div>
+      <p class="free">of billed revenue, no platform fee.</p>
+      <p>Free until you bill $10,000 a month.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="demo">
+  <div class="wrap">
+    <h2 id="docs">Read how it works, or see it on your data.</h2>
+    <div class="actions">
+      <a class="btn primary" href="#docs">Read the docs</a>
+      <a class="btn secondary" href="#demo">Book a demo</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a href="#">Docs</a><a href="#">Pricing</a><a href="#">Status</a><a href="#">Security</a><a href="#">Contact</a></div>
+    <div>© 2026 Tallyroll</div>
+  </div>
+</footer>
+
+<script>
+// Illustrative daily totals; the last day is derived so the 31 rows sum exactly to 1,204,388.
+(function(){
+  var total=1204388, offs=[-2100,-900,1800,3400,4200,-6100,-7300,-1500,900,2600,3900,4800,-5800,-6900,-300,1700,3100,4100,5200,-6200,-7100,-800,1200,2900,3800,4600,-5500,-6600,-400,2200];
+  var vals=offs.map(function(o){return 38851+o}), sum=vals.reduce(function(a,b){return a+b},0);
+  vals.push(total-sum);
+  var tb=document.getElementById('days'), html='';
+  vals.forEach(function(v,i){html+='<tr><td>Mar '+(i+1)+'</td><td>'+v.toLocaleString('en-US')+'</td></tr>'});
+  tb.innerHTML=html;
+})();
+</script>
+</body>
+</html>

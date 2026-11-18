@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Blog</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f7f8fa;
+      --text: #1a1d23;
+      --muted: #5c6370;
+      --accent: #2563eb;
+      --border: #e3e6eb;
+      --code-bg: #0f172a;
+      --code-text: #e2e8f0;
+      --max-width: 1080px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1117;
+        --surface: #171a22;
+        --text: #e6e8ec;
+        --muted: #9aa3b2;
+        --accent: #60a5fa;
+        --border: #262b36;
+        --code-bg: #0b0e14;
+        --code-text: #e2e8f0;
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header.site-header {
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    .search {
+      flex: 0 1 260px;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.9rem;
+    }
+
+    .search input:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+    /* Hero / featured */
+    .hero {
+      padding: 56px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.2;
+      margin: 12px 0 16px;
+      max-width: 780px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 640px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 48px;
+      padding: 40px 0 80px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .tag-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .tag-btn.active,
+    .tag-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Post list */
+    .post {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post:first-child { padding-top: 0; }
+
+    .post h2 {
+      font-size: 1.4rem;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .post h2 a { color: var(--text); }
+    .post h2 a:hover { color: var(--accent); }
+
+    .post p {
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .post-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 2px 9px;
+      border-radius: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 40px 0;
+      text-align: center;
+      display: none;
+    }
+
+    /* Sidebar */
+    aside {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .widget {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .widget h3 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .widget p, .widget li {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .widget ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .widget li a {
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .subscribe input {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font: inherit;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn:hover { opacity: 0.92; }
+
+    .thanks {
+      display: none;
+      color: var(--accent);
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    /* Article view */
+    .article {
+      display: none;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 0 80px;
+    }
+
+    .article.visible { display: block; }
+
+    .back {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font: inherit;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 28px;
+    }
+
+    .back:hover { color: var(--accent); }
+
+    .article h1 {
+      font-size: clamp(1.9rem, 4vw, 2.5rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .article .lede {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .article h2 {
+      font-size: 1.5rem;
+      margin: 40px 0 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .article h3 {
+      font-size: 1.15rem;
+      margin: 28px 0 10px;
+    }
+
+    .article p {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+    }
+
+    .article ul, .article ol {
+      margin: 0 0 18px 22px;
+      font-size: 1.05rem;
+    }
+
+    .article li { margin-bottom: 6px; }
+
+    .article blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 4px 0 4px 18px;
+      color: var(--muted);
+      margin: 24px 0;
+      font-style: italic;
+    }
+
+    .article pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 18px 20px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 24px 0;
+    }
+
+    .article code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .article :not(pre) > code {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-size: 0.9em;
+    }
+
+    .article img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 24px 0;
+    }
+
+    .article-meta-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; gap: 32px; }
+      .nav { height: auto; padding: 14px 0; }
+      .search { flex: 1 1 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="#" class="brand" id="home-link">
+      <span class="brand-mark"></span>
+      <span>Acme Engineering</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#" data-home>Blog</a>
+      <a href="#">Careers</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="search">
+      <input type="search" id="search" placeholder="Search posts…" aria-label="Search posts">
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Listing view -->
+  <div id="listing">
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Engineering at Acme</div>
+        <h1>How we build, scale, and ship software</h1>
+        <p>Deep dives, postmortems, and lessons learned from the teams building Acme's platform, infrastructure, and products.</p>
+        <div class="meta">
+          <span><span class="avatar">JD</span>Jordan Diaz, Staff Engineer</span>
+          <span>Updated weekly</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="container layout">
+      <div>
+        <div class="tags" id="tag-filters"></div>
+        <div id="post-list"></div>
+        <p class="empty" id="empty-state">No posts match your search.</p>
+      </div>
+
+      <aside>
+        <div class="widget">
+          <h3>About this blog</h3>
+          <p>Written by the engineers who build and operate Acme. We share what works, what doesn't, and what we're learning along the way.</p>
+        </div>
+
+        <div class="widget subscribe">
+          <h3>Subscribe</h3>
+          <p style="margin-bottom:12px;">Get new engineering posts in your inbox. No spam.</p>
+          <form id="subscribe-form">
+            <input type="email" placeholder="you@company.com" required aria-label="Email address">
+            <button type="submit" class="btn">Subscribe</button>
+          </form>
+          <div class="thanks" id="thanks">Thanks for subscribing!</div>
+        </div>
+
+        <div class="widget">
+          <h3>Popular posts</h3>
+          <ul id="popular"></ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Article view -->
+  <div id="article-view" class="article">
+    <div class="container">
+      <button class="back" id="back-btn">← Back to all posts</button>
+      <div class="eyebrow" id="article-tag"></div>
+      <h1 id="article-title"></h1>
+      <p class="lede" id="article-lede"></p>
+      <div class="article-meta-bar" id="article-meta"></div>
+      <div id="article-body"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Acme, Inc. Engineering Blog.</span>
+    <span>Built with care by the Acme engineering team.</span>
+  </div>
+</footer>
+
+<script>
+  const posts = [
+    {
+      id: "scaling-postgres",
+      title: "Scaling Postgres to 10 billion rows without downtime",
+      excerpt: "How we migrated our largest table online using logical replication, dual writes, and a carefully staged cutover.",
+      lede: "A look at the six-month project that moved our event store to partitioned tables with zero customer-visible downtime.",
+      author: "Priya Natarajan",
+      initials: "PN",
+      date: "2026-10-28",
+      readTime: "12 min read",
+      tags: ["Databases", "Infrastructure"],
+      body: `
+        <p>Our event store had been growing steadily for three years. By early this year, a single table held more than ten billion rows, and routine maintenance like vacuuming had started to take hours. We needed to partition it, but a naive migration would have meant a long write lock. This post walks through how we avoided that.</p>
+        <h2>The constraints</h2>
+        <ul>
+          <li>No more than a few seconds of write unavailability during cutover.</li>
+          <li>Full data consistency, verified continuously.</li>
+          <li>A rollback path at every stage.</li>
+        </ul>
+        <h2>Logical replication as the bridge</h2>
+        <p>We stood up a new partitioned table and used logical replication to keep it in sync with the old one. Each partition was created ahead of time based on the write pattern, so the new table never needed rebalancing under load.</p>
+        <pre><code>CREATE TABLE events_v2 (
+  id BIGINT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL,
+  payload JSONB,
+  PRIMARY KEY (id, created_at)
+) PARTITION BY RANGE (created_at);</code></pre>
+        <h2>Dual writes and verification</h2>
+        <p>While replication caught up, the application wrote to both tables. A background job compared row counts and checksums per partition every hour. Any mismatch paged the on-call engineer, and we fixed two subtle bugs this way before cutover.</p>
+        <blockquote>The verification job was the most valuable thing we built. It turned a scary migration into a boring one.</blockquote>
+        <h2>The cutover</h2>
+        <p>On cutover day, we paused writes for under four seconds, flushed the replication lag, swapped the table names inside a single transaction, and resumed. Latency graphs showed a brief blip and nothing else.</p>
+        <h3>What we'd do differently</h3>
+        <p>We underestimated how long index builds would take on the new partitions. Next time we'd build indexes concurrently before the cutover window opens.</p>
+      `
+    },
+    {
+      id: "rate-limiter",
+      title: "Designing a distributed rate limiter that doesn't fall over",
+      excerpt: "Token buckets, sliding windows, and the tradeoffs we made to keep our API responsive under abuse.",
+      lede: "Rate limiting sounds simple until you run it across dozens of nodes with clock skew and partial failures.",
+      author: "Marcus Oyelaran",
+      initials: "MO",
+      date: "2026-10-09",
+      readTime: "9 min read",
+      tags: ["Backend", "Architecture"],
+      body: `
+        <p>Every public API needs rate limiting. Ours started as a single-node in-memory counter, which worked until we added a fleet of forty gateway nodes. Suddenly a client could make forty times its allowed requests by spreading them across the fleet.</p>
+        <h2>Options we considered</h2>
+        <ol>
+          <li><strong>Central Redis counters</strong> — accurate, but every request pays a network round trip.</li>
+          <li><strong>Local buckets with periodic sync</strong> — fast, but allows bursts up to the sync interval.</li>
+          <li><strong>Hybrid</strong> — local token buckets that borrow from a shared pool.</li>
+        </ol>
+        <h2>The hybrid approach</h2>
+        <p>Each node holds a small local allowance and requests more from Redis in batches. When a node runs low, it leases tokens in chunks of 5% of the client's limit. This cut Redis traffic by roughly 95% while keeping the global limit within a few percent of exact.</p>
+        <pre><code>def acquire(client_id, n=1):
+    if local[client_id].tokens >= n:
+        local[client_id].tokens -= n
+        return True
+    lease = redis.lease(client_id, chunk=limit(client_id) * 0.05)
+    local[client_id].tokens += lease
+    return local[client_id].tokens >= n</code></pre>
+        <h2>Failure modes</h2>
+        <p>If Redis is unreachable, we fail open for read endpoints and fail closed for write endpoints. That decision was made with product and security, and it is documented in our runbook.</p>
+        <blockquote>A rate limiter that fails closed on everything is an outage generator.</blockquote>
+      `
+    },
+    {
+      id: "deploy-pipeline",
+      title: "From 45-minute builds to under 6: our CI overhaul",
+      excerpt: "Caching strategies, test sharding, and the boring fixes that made the biggest difference.",
+      lede: "Most of our speedup came from removing work, not from faster hardware.",
+      author: "Sam Whitaker",
+      initials: "SW",
+      date: "2026-09-21",
+      readTime: "7 min read",
+      tags: ["DevEx", "CI/CD"],
+      body: `
+        <p>Our main pipeline had grown to 45 minutes. Engineers were context-switching during every build, and merge queues backed up by mid-morning. Over two quarters we brought it under six minutes. Here is what worked.</p>
+        <h2>Measure before you change anything</h2>
+        <p>We added timing spans to every step and found that 60% of build time was spent re-downloading dependencies and rebuilding unchanged modules.</p>
+        <h2>Caching that actually hits</h2>
+        <p>Our cache keys included the commit SHA, so the cache never hit. Switching to keys based on lockfile hashes raised our hit rate from near zero to above 90%.</p>
+        <h2>Test sharding</h2>
+        <p>We split the integration suite into twelve shards balanced by historical runtime. Slow tests were isolated into their own job so they no longer blocked fast feedback.</p>
+        <ul>
+          <li>Fast unit tests run on every push.</li>
+          <li>Integration tests run on PR update.</li>
+          <li>Full end-to-end suite runs nightly and on release branches.</li>
+        </ul>
+      `
+    },
+    {
+      id: "incident-review",
+      title: "Postmortem: the cache stampede that took down checkout",
+      excerpt: "A blameless review of a 22-minute outage, what caused it, and the safeguards we added.",
+      lede: "A single expired key triggered a cascade. Here is how we traced it and what we changed.",
+      author: "Lena Hoffmann",
+      initials: "LH",
+      date: "2026-08-14",
+      readTime: "8 min read",
+      tags: ["Reliability", "Postmortem"],
+      body: `
+        <p>On a Tuesday afternoon, a popular product's cache entry expired at the same moment a promotion went live. Thousands of requests missed the cache simultaneously and hammered the database, which saturated its connection pool. Checkout was unavailable for 22 minutes.</p>
+        <h2>Timeline</h2>
+        <ul>
+          <li><strong>14:02</strong> — Cache key expires.</li>
+          <li><strong>14:03</strong> — Database CPU and connection count spike.</li>
+          <li><strong>14:05</strong> — Checkout error rate exceeds 40%; on-call paged.</li>
+          <li><strong>14:24</strong> — Traffic shed, cache warmed manually, service recovered.</li>
+        </ul>
+        <h2>Contributing factors</h2>
+        <p>Cache entries had identical TTLs, so popular keys expired together. We had no request coalescing, meaning every miss went straight to the database.</p>
+        <h2>Changes</h2>
+        <ol>
+          <li>Added TTL jitter of ±10% to all cache entries.</li>
+          <li>Implemented single-flight request coalescing for cache misses.</li>
+          <li>Introduced serve-stale-on-error for product catalog reads.</li>
+        </ol>
+        <blockquote>Nobody did anything wrong here. The system let one expired key become an outage, and that is what we fixed.</blockquote>
+      `
+    }
+  ];
+
+  let activeTag = "All";
+  let query = "";
+
+  const $ = (sel) => document.querySelector(sel);
+
+  function allTags() {
+    const set = new Set();
+    posts.forEach(p => p.tags.forEach(t => set.add(t)));
+    return ["All", ...Array.from(set).sort()];
+  }
+
+  function formatDate(iso) {
+    return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
+      year: "numeric", month: "short", day: "numeric"
+    });
+  }
+
+  function renderTags() {
+    $("#tag-filters").innerHTML = allTags().map(t =>
+      `<button class="tag-btn ${t === activeTag ? "active" : ""}" data-tag="${t}">${t}</button>`
+    ).join("");
+  }
+
+  function filteredPosts() {
+    const q = query.trim().toLowerCase();
+    return posts
+      .filter(p => activeTag === "All" || p.tags.includes(activeTag))
+      .filter(p => !q || (p.title + " " + p.excerpt + " " + p.tags.join(" ")).toLowerCase().includes(q))
+      .sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  function renderPosts() {
+    const list = filteredPosts();
+    $("#post-list").innerHTML = list.map(p => `
+      <article class="post">
+        <div class="meta">
+          <span>${formatDate(p.date)}</span>
+          <span>·</span>
+          <span>${p.readTime}</span>
+        </div>
+        <h2><a href="#post/${p.id}" data-post="${p.id}">${p.title}</a></h2>
+        <p>${p.excerpt}</p>
+        <div class="post-tags">${p.tags.map(t => `<span class="pill">${t}</span>`).join("")}</div>
+      </article>
+    `).join("");
+    $("#empty-state").style.display = list.length ? "none" : "block";
+  }
+
+  function renderPopular() {
+    $("#popular").innerHTML = posts.slice(0, 3).map(p =>
+      `<li><a href="#post/${p.id}" data-post="${p.id}">${p.title}</a></li>`
+    ).join("");
+  }
+
+  function showListing() {
+    $("#listing").style.display = "block";
+    $("#article-view").classList.remove("visible");
+    window.scrollTo(0, 0);
+  }
+
+  function showArticle(id) {
+    const p = posts.find(x => x.id === id);
+    if (!p) return showListing();
+    $("#listing").style.display = "none";
+    $("#article-tag").textContent = p.tags.join(" · ");
+    $("#article-title").textContent = p.title;
+    $("#article-lede").textContent = p.lede;
+    $("#article-meta").innerHTML = `
+      <span class="avatar">${p.initials}</span>
+      <span><strong>${p.author}</strong></span>
+      <span class="meta">·</span>
+      <span class="meta">${formatDate(p.date)}</span>
+      <span class="meta">·</span>
+      <span class="meta">${p.readTime}</span>
+    `;
+    $("#article-body").innerHTML = p.body;
+    $("#article-view").classList.add("visible");
+    window.scrollTo(0, 0);
+  }
+
+  function route() {
+    const hash = location.hash;
+    if (hash.startsWith("#post/")) {
+      showArticle(hash.slice(6));
+    } else {
+      showListing();
+    }
+  }
+
+  // Events
+  $("#tag-filters").addEventListener("click", e => {
+    const btn = e.target.closest("[data-tag]");
+    if (!btn) return;
+    activeTag = btn.dataset.tag;
+    renderTags();
+    renderPosts();
+  });
+
+  $("#search").addEventListener("input", e => {
+    query = e.target.value;
+    renderPosts();
+  });
+
+  document.addEventListener("click", e => {
+    const postLink = e.target.closest("[data-post]");
+    if (postLink) {
+      e.preventDefault();
+      location.hash = "post/" + postLink.dataset.post;
+      return;
+    }
+    if (e.target.closest("[data-home]") || e.target.closest("#home-link") || e.target.closest("#back-btn")) {
+      e.preventDefault();
+      location.hash = "";
+    }
+  });
+
+  $("#subscribe-form").addEventListener("submit", e => {
+    e.preventDefault();
+    e.target.querySelector("input").value = "";
+    $("#thanks").style.display = "block";
+  });
+
+  window.addEventListener("hashchange", route);
+
+  // Init
+  renderTags();
+  renderPosts();
+  renderPopular();
+  route();
+</script>
+
+</body>
+</html>

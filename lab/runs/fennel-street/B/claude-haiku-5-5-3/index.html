@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Bread at seven, tarts by nine, gone by two. A neighbourhood bakery on Fennel Street, London E8.">
+<style>
+  /* Fonts: self-host these files next to the page (fonts/Cormorant.woff2, fonts/SourceSans3.woff2).
+     Until they are in place, the Georgia and system-ui fallbacks are used. */
+  @font-face {
+    font-family: "Cormorant";
+    src: url("./fonts/Cormorant.woff2") format("woff2");
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Source Sans 3";
+    src: url("./fonts/SourceSans3.woff2") format("woff2");
+    font-weight: 200 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --color-ground: #F5EDE4;
+    --color-ground: oklch(0.95 0.015 75);
+    --color-figure: #8D5951;
+    --color-figure: oklch(0.52 0.07 30);
+    --color-text: #3D3832;
+    --color-text: oklch(0.345 0.012 75);
+    --color-text-muted: #6C6761;
+    --color-text-muted: oklch(0.518 0.012 75);
+    --color-tint-2: #CBA199;
+    --color-tint-3: #E1CAC6;
+    --color-shade-2: #4A2D28;
+
+    --font-display: "Cormorant", Georgia, "Times New Roman", serif;
+    --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--color-ground);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  .wrap {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  a {
+    color: var(--color-figure);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  a:focus-visible, .btn:focus-visible {
+    outline: 2px solid var(--color-figure);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  /* Masthead */
+  .masthead {
+    padding: 1.5rem 0 0;
+  }
+  .masthead .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-figure);
+    text-decoration: none;
+  }
+  .nav {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.95rem;
+  }
+  .nav a { color: var(--color-text); }
+
+  /* Hero */
+  .hero {
+    padding: 2rem 0 2.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 9vw, 4rem);
+    color: var(--color-figure);
+    font-weight: 600;
+  }
+  .line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+    color: var(--color-shade-2);
+    margin: 0.75rem 0 1.5rem;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: var(--color-tint-3);
+    color: var(--color-shade-2);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  .status::before {
+    content: "";
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+  }
+  .status[data-open="true"]::before { background: var(--color-figure); }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 1.25rem;
+    border-radius: 999px;
+    background: var(--color-figure);
+    color: var(--color-ground);
+    font-weight: 600;
+    text-decoration: none;
+    min-height: 2.75rem;
+  }
+  .btn.ghost {
+    background: transparent;
+    color: var(--color-figure);
+    box-shadow: inset 0 0 0 1.5px var(--color-figure);
+  }
+
+  /* Photo placeholder */
+  .photo {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    border-radius: 4px;
+    background:
+      repeating-linear-gradient(135deg, var(--color-tint-3) 0 12px, var(--color-ground) 12px 24px);
+    border: 1.5px dashed var(--color-tint-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    color: var(--color-shade-2);
+    font-size: 0.95rem;
+  }
+  .photo span {
+    background: var(--color-ground);
+    padding: 0.35rem 0.7rem;
+    border-radius: 4px;
+  }
+
+  section {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--color-tint-2);
+  }
+  section h2 {
+    font-size: clamp(1.9rem, 6vw, 2.5rem);
+    color: var(--color-figure);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .about p { margin: 0 0 1rem; }
+  .about p:last-child { margin-bottom: 0; }
+
+  /* Menu lists */
+  .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .menu li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px dotted var(--color-tint-2);
+  }
+  .menu li:last-child { border-bottom: 0; }
+  .menu .name {
+    font-weight: 600;
+  }
+  .menu .note {
+    display: block;
+    font-weight: 400;
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+  }
+  .menu .price {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-shade-2);
+    text-align: right;
+  }
+
+  .menu-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 0.25rem;
+  }
+
+  /* Cake orders */
+  .order p { margin: 0 0 1rem; }
+  .order .tel {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-shade-2);
+    display: inline-block;
+    margin: 0.25rem 0 1.25rem;
+  }
+
+  /* Find us */
+  .find-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .address {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-shade-2);
+    margin: 0 0 0.5rem;
+  }
+  .hours {
+    margin: 0;
+  }
+  .hours div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px dotted var(--color-tint-2);
+  }
+  .hours dt { font-weight: 600; }
+  .hours dd { margin: 0; }
+  .hours-note {
+    margin-top: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  footer {
+    border-top: 1px solid var(--color-tint-2);
+    padding: 1.5rem 0 2.5rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+  footer .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  footer .links a { color: var(--color-figure); font-weight: 600; }
+
+  @media (min-width: 40rem) {
+    .find-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="#top">Fennel Street Bakery</a>
+    <nav class="nav" aria-label="Page sections">
+      <a href="#daily">Bakes</a>
+      <a href="#order">Cakes</a>
+      <a href="#find">Find us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="hero wrap">
+    <h1>Fennel Street Bakery</h1>
+    <p class="line">Bread at seven, tarts by nine, gone by two.</p>
+    <p class="status" id="open-status" data-open="false" role="status">Checking hours…</p>
+
+    <div class="actions">
+      <a class="btn" href="#order">Order a cake</a>
+      <a class="btn ghost" href="#find">Find us</a>
+    </div>
+
+    <figure class="photo" style="margin-top:2rem">
+      <span>Photo placeholder: Ana’s sourdough on the counter</span>
+    </figure>
+  </div>
+
+  <div class="wrap">
+
+    <section class="about" aria-labelledby="about-title">
+      <h2 id="about-title">About</h2>
+      <p>Ana bakes the bread. Rita does everything with custard.</p>
+      <p>We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+    </section>
+
+    <section id="daily" aria-labelledby="daily-title">
+      <h2 id="daily-title">Daily</h2>
+      <ul class="menu">
+        <li><span class="name">Country sourdough</span><span class="price">£5.20</span></li>
+        <li><span class="name">Seeded rye</span><span class="price">£5.60</span></li>
+        <li><span class="name">Pastel de nata</span><span class="price">£2.10<span class="note">or six for £11</span></span></li>
+        <li><span class="name">Cardamom buns</span><span class="price">£3.00</span></li>
+        <li><span class="name">Olive oil focaccia<span class="note">by the slice</span></span><span class="price">£2.80</span></li>
+      </ul>
+    </section>
+
+    <section id="season" aria-labelledby="season-title">
+      <h2 id="season-title">This season</h2>
+      <ul class="menu">
+        <li><span class="name">Orange and almond cake<span class="note">slice £4</span></span><span class="price">whole £28</span></li>
+        <li><span class="name">Fig and walnut loaf</span><span class="price">£6.40</span></li>
+      </ul>
+    </section>
+
+    <section class="order" id="order" aria-labelledby="order-title">
+      <h2 id="order-title">Cake orders</h2>
+      <p>Whole cakes with 48 hours’ notice.</p>
+      <p>Message us or call</p>
+      <a class="tel" href="tel:+442079460381">020 7946 0381</a>
+      <div>
+        <a class="btn" href="tel:+442079460381">Call to order</a>
+      </div>
+    </section>
+
+    <section class="find" id="find" aria-labelledby="find-title">
+      <h2 id="find-title">Find us</h2>
+      <div class="find-grid">
+        <div>
+          <p class="address">14 Fennel Street<br>London E8</p>
+          <p><a href="https://www.google.com/maps/search/?api=1&amp;query=14+Fennel+Street+London+E8">Open in Maps</a></p>
+        </div>
+        <div>
+          <dl class="hours">
+            <div><dt>Wednesday to Sunday</dt><dd>7:00 to 14:00</dd></div>
+            <div><dt>Monday and Tuesday</dt><dd>Closed</dd></div>
+          </dl>
+          <p class="hours-note">Or until we sell out.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav class="links" aria-label="Footer">
+      <!-- Replace # with the shop’s Instagram URL -->
+      <a href="#" aria-label="Fennel Street Bakery on Instagram">Instagram</a>
+      <a href="#order">Order a cake</a>
+      <a href="#find">Find us</a>
+    </nav>
+    <p>© 2026 Fennel Street Bakery.</p>
+  </div>
+</footer>
+
+<script>
+  // Shows whether the shop is open right now, using the stated hours in London time.
+  (function () {
+    var el = document.getElementById("open-status");
+    try {
+      var parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Europe/London",
+        weekday: "short",
+        hour: "numeric",
+        minute: "numeric",
+        hourCycle: "h23"
+      }).formatToParts(new Date());
+
+      var get = function (type) {
+        var p = parts.find(function (x) { return x.type === type; });
+        return p ? p.value : "";
+      };
+      var day = get("weekday");
+      var minutes = parseInt(get("hour"), 10) * 60 + parseInt(get("minute"), 10);
+      var openDays = ["Wed", "Thu", "Fri", "Sat", "Sun"];
+      var isOpen = openDays.indexOf(day) !== -1 && minutes >= 7 * 60 && minutes < 14 * 60;
+
+      el.setAttribute("data-open", isOpen ? "true" : "false");
+      el.textContent = isOpen
+        ? "Open now, until 14:00 or sold out"
+        : "Closed now. Wednesday to Sunday, 7:00 to 14:00";
+    } catch (e) {
+      el.textContent = "Wednesday to Sunday, 7:00 to 14:00, or until we sell out";
+    }
+  })();
+</script>
+
+</body>
+</html>

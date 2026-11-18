@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SaaS Revenue Analytics</title>
+<style>
+  :root{
+    --bg:#0f1420;--panel:#171d2c;--panel2:#1d2539;--border:#2a3350;
+    --text:#e6e9f2;--muted:#8d97b5;--accent:#6c8cff;--green:#3ddc97;--red:#ff6b81;--amber:#ffc857;--purple:#b78cff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--border);background:var(--panel)}
+  header h1{font-size:20px;font-weight:600}
+  header h1 span{color:var(--accent)}
+  .controls{display:flex;gap:10px;flex-wrap:wrap}
+  select,button{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer}
+  button.active,button:hover,select:hover{border-color:var(--accent)}
+  button.active{background:var(--accent);color:#fff}
+  main{padding:24px 28px;max-width:1400px;margin:0 auto}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .kpi .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  .kpi .value{font-size:28px;font-weight:700;margin:8px 0 4px}
+  .kpi .delta{font-size:13px}
+  .up{color:var(--green)}.down{color:var(--red)}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:16px}
+  .c8{grid-column:span 8}.c4{grid-column:span 4}.c6{grid-column:span 6}.c12{grid-column:span 12}
+  @media(max-width:960px){.c8,.c4,.c6{grid-column:span 12}}
+  .card h2{font-size:14px;font-weight:600;margin-bottom:4px}
+  .card .sub{font-size:12px;color:var(--muted);margin-bottom:12px}
+  svg{width:100%;height:auto;display:block;overflow:visible}
+  .axis text{fill:var(--muted);font-size:10px}
+  .axis line,.gridline{stroke:var(--border);stroke-width:1}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:12px;cursor:pointer;user-select:none}
+  td.num,th.num{text-align:right}
+  .pill{padding:2px 8px;border-radius:999px;font-size:11px}
+  .pill.enterprise{background:rgba(183,140,255,.15);color:var(--purple)}
+  .pill.business{background:rgba(108,140,255,.15);color:var(--accent)}
+  .pill.starter{background:rgba(61,220,151,.15);color:var(--green)}
+  .bar{height:6px;border-radius:3px;background:var(--panel2);overflow:hidden;min-width:60px}
+  .bar div{height:100%;background:var(--accent)}
+  #tip{position:fixed;pointer-events:none;background:#000c;border:1px solid var(--border);padding:8px 10px;border-radius:8px;font-size:12px;opacity:0;transition:opacity .1s;z-index:10;white-space:nowrap}
+  .heat td{padding:6px 4px;text-align:center;font-size:11px;border:none}
+  .heat th{cursor:default;text-align:center;padding:6px 4px}
+  .heat td:first-child{text-align:left;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Revenue <span>Analytics</span></h1>
+  <div class="controls">
+    <select id="plan">
+      <option value="all">All plans</option>
+      <option value="starter">Starter</option>
+      <option value="business">Business</option>
+      <option value="enterprise">Enterprise</option>
+    </select>
+    <div id="range">
+      <button data-m="6">6M</button>
+      <button data-m="12" class="active">12M</button>
+      <button data-m="24">24M</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="kpis" id="kpis"></section>
+
+  <section class="grid">
+    <div class="card c8">
+      <h2>Monthly Recurring Revenue</h2>
+      <div class="sub">MRR trend with movement breakdown</div>
+      <div id="mrrChart"></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>MRR</span></div>
+    </div>
+    <div class="card c4">
+      <h2>Revenue by Plan</h2>
+      <div class="sub">Share of current MRR</div>
+      <div id="donut"></div>
+      <div class="legend" id="donutLegend"></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card c6">
+      <h2>MRR Movement</h2>
+      <div class="sub">New, expansion, contraction and churn</div>
+      <div id="movement"></div>
+      <div class="legend">
+        <span><i style="background:var(--green)"></i>New</span>
+        <span><i style="background:var(--accent)"></i>Expansion</span>
+        <span><i style="background:var(--amber)"></i>Contraction</span>
+        <span><i style="background:var(--red)"></i>Churn</span>
+      </div>
+    </div>
+    <div class="card c6">
+      <h2>Cohort Retention</h2>
+      <div class="sub">Percent of customers retained by months since signup</div>
+      <div id="cohort"></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card c12">
+      <h2>Top Accounts</h2>
+      <div class="sub">Click a column header to sort</div>
+      <table id="accounts"></table>
+    </div>
+  </section>
+</main>
+<div id="tip"></div>
+
+<script>
+// ---------- Seeded data ----------
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const rand=rng(42);
+const PLANS=['starter','business','enterprise'];
+const COLORS={starter:'#3ddc97',business:'#6c8cff',enterprise:'#b78cff'};
+const MONTHS=24;
+const now=new Date(2026,10,1);
+const labels=[...Array(MONTHS)].map((_,i)=>{const d=new Date(now.getFullYear(),now.getMonth()-(MONTHS-1-i),1);return d.toLocaleString('en',{month:'short',year:'2-digit'})});
+
+const base={starter:{mrr:18000,g:.035,churn:.045},business:{mrr:42000,g:.045,churn:.025},enterprise:{mrr:70000,g:.05,churn:.012}};
+const data={};
+PLANS.forEach(p=>{
+  let m=base[p].mrr;data[p]=[];
+  for(let i=0;i<MONTHS;i++){
+    const nw=m*(base[p].g+rand()*.025);
+    const ex=m*(.008+rand()*.014);
+    const co=m*(.003+rand()*.006);
+    const ch=m*(base[p].churn*(.7+rand()*.6));
+    const start=m;m=m+nw+ex-co-ch;
+    data[p].push({start,new:nw,exp:ex,con:co,churn:ch,mrr:m});
+  }
+});
+
+const names=['Acme Corp','Globex','Initech','Umbrella','Hooli','Stark Labs','Wayne Ent.','Wonka Inc','Soylent','Cyberdyne','Tyrell','Aperture','Vandelay','Massive Dynamic','Pied Piper','Dunder Co','Oscorp','Gringotts','Nakatomi','Bluth Co'];
+const accounts=names.map((n,i)=>{
+  const plan=i<7?'enterprise':i<14?'business':'starter';
+  const mrr=Math.round((plan==='enterprise'?9000+rand()*14000:plan==='business'?2500+rand()*5000:500+rand()*1500));
+  return {name:n,plan,mrr,seats:Math.round(mrr/(plan==='enterprise'?60:plan==='business'?40:25)),growth:(rand()*50-12),since:2020+Math.floor(rand()*6)};
+});
+
+const cohortLabels=[...Array(8)].map((_,i)=>{const d=new Date(now.getFullYear(),now.getMonth()-(7-i),1);return d.toLocaleString('en',{month:'short',year:'2-digit'})});
+const cohorts=cohortLabels.map((l,i)=>{
+  const len=8-i;let r=100;const row=[100];
+  for(let k=1;k<len;k++){r=r*(.93+rand()*.05);row.push(Math.round(r))}
+  return {l,row};
+});
+
+// ---------- State & helpers ----------
+let state={plan:'all',range:12,sort:'mrr',dir:-1};
+const $=s=>document.querySelector(s);
+const fmt=n=>n>=1e6?'$'+(n/1e6).toFixed(2)+'M':n>=1e3?'$'+(n/1e3).toFixed(1)+'K':'$'+Math.round(n);
+const pct=n=>(n>=0?'+':'')+n.toFixed(1)+'%';
+const tip=$('#tip');
+function showTip(e,html){tip.innerHTML=html;tip.style.opacity=1;tip.style.left=Math.min(e.clientX+14,innerWidth-180)+'px';tip.style.top=(e.clientY+14)+'px'}
+function hideTip(){tip.style.opacity=0}
+
+function series(){
+  const ps=state.plan==='all'?PLANS:[state.plan];
+  return [...Array(MONTHS)].map((_,i)=>{
+    const o={label:labels[i],start:0,new:0,exp:0,con:0,churn:0,mrr:0};
+    ps.forEach(p=>{const d=data[p][i];['start','new','exp','con','churn','mrr'].forEach(k=>o[k]+=d[k])});
+    return o;
+  }).slice(-state.range);
+}
+
+// ---------- KPIs ----------
+function renderKPIs(){
+  const s=series(),last=s[s.length-1],prev=s[s.length-2],first=s[0];
+  const arr=last.mrr*12;
+  const churnRate=last.churn/last.start*100,prevChurn=prev.churn/prev.start*100;
+  const nrr=(last.start+last.exp-last.con-last.churn)/last.start*100;
+  const prevNrr=(prev.start+prev.exp-prev.con-prev.churn)/prev.start*100;
+  const custs=Math.round(last.mrr/ (state.plan==='all'?1450:state.plan==='starter'?420:state.plan==='business'?2100:11500));
+  const arpa=last.mrr/custs;
+  const items=[
+    ['MRR',fmt(last.mrr),(last.mrr/prev.mrr-1)*100,true],
+    ['ARR',fmt(arr),(last.mrr/first.mrr-1)*100,true,'vs period start'],
+    ['Net Revenue Retention',nrr.toFixed(1)+'%',nrr-prevNrr,true,'pts'],
+    ['Churn Rate',churnRate.toFixed(2)+'%',churnRate-prevChurn,false,'pts'],
+    ['Customers',custs.toLocaleString(),(last.mrr/prev.mrr-1)*100*.8,true],
+    ['ARPA',fmt(arpa),((last.mrr/prev.mrr)-1)*100*.3,true]
+  ];
+  $('#kpis').innerHTML=items.map(([l,v,d,goodUp,unit])=>{
+    const good=goodUp?d>=0:d<=0;
+    const dtxt=unit==='pts'?(d>=0?'+':'')+d.toFixed(2)+' pts':pct(d);
+    return `<div class="card kpi"><div class="label">${l}</div><div class="value">${v}</div><div class="delta ${good?'up':'down'}">${d>=0?'▲':'▼'} ${dtxt} <span style="color:var(--muted)">${unit&&unit!=='pts'?unit:'vs last month'}</span></div></div>`;
+  }).join('');
+}
+
+// ---------- Line/area chart ----------
+function renderMRR(){
+  const s=series(),W=700,H=300,m={l:50,r:12,t:10,b:28};
+  const iw=W-m.l-m.r,ih=H-m.t-m.b;
+  const max=Math.max(...s.map(d=>d.mrr))*1.08,min=0;
+  const x=i=>m.l+i*iw/(s.length-1),y=v=>m.t+ih-(v-min)/(max-min)*ih;
+  let g='';
+  for(let i=0;i<=4;i++){const v=max*i/4;g+=`<line class="gridline" x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}"/><text x="${m.l-8}" y="${y(v)+3}" text-anchor="end" fill="#8d97b5" font-size="10">${fmt(v)}</text>`}
+  const step=Math.ceil(s.length/8);
+  s.forEach((d,i)=>{if(i%step===0)g+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle" fill="#8d97b5" font-size="10">${d.label}</text>`});
+  const pts=s.map((d,i)=>`${x(i)},${y(d.mrr)}`).join(' ');
+  const area=`${m.l},${y(0)} ${pts} ${x(s.length-1)},${y(0)}`;
+  $('#mrrChart').innerHTML=`<svg viewBox="0 0 ${W} ${H}">
+    <defs><linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c8cff" stop-opacity=".4"/><stop offset="1" stop-color="#6c8cff" stop-opacity="0"/></linearGradient></defs>
+    ${g}<polygon points="${area}" fill="url(#gr)"/><polyline points="${pts}" fill="none" stroke="#6c8cff" stroke-width="2.5" stroke-linejoin="round"/>
+    <line id="cross" y1="${m.t}" y2="${m.t+ih}" stroke="#8d97b5" stroke-dasharray="3" opacity="0"/>
+    <circle id="dot" r="5" fill="#6c8cff" stroke="#fff" stroke-width="2" opacity="0"/>
+    <rect x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent" id="hit"/></svg>`;
+  const svg=$('#mrrChart svg'),hit=$('#hit');
+  hit.addEventListener('mousemove',e=>{
+    const r=svg.getBoundingClientRect(),px=(e.clientX-r.left)/r.width*W;
+    const i=Math.max(0,Math.min(s.length-1,Math.round((px-m.l)/iw*(s.length-1))));
+    const d=s[i];
+    $('#cross').setAttribute('x1',x(i));$('#cross').setAttribute('x2',x(i));$('#cross').setAttribute('opacity',1);
+    $('#dot').setAttribute('cx',x(i));$('#dot').setAttribute('cy',y(d.mrr));$('#dot').setAttribute('opacity',1);
+    showTip(e,`<b>${d.label}</b><br>MRR: ${fmt(d.mrr)}<br>New: ${fmt(d.new)}<br>Churn: ${fmt(d.churn)}`);
+  });
+  hit.addEventListener('mouseleave',()=>{hideTip();$('#cross').setAttribute('opacity',0);$('#dot').setAttribute('opacity',0)});
+}
+
+// ---------- Donut ----------
+function renderDonut(){
+  const tot=PLANS.reduce((a,p)=>a+data[p][MONTHS-1].mrr,0);
+  const R=80,r=52,cx=100,cy=100;let a0=-Math.PI/2,paths='';
+  PLANS.forEach(p=>{
+    const v=data[p][MONTHS-1].mrr,frac=v/tot,a1=a0+frac*2*Math.PI,large=frac>.5?1:0;
+    const pt=(rad,a)=>[cx+rad*Math.cos(a),cy+rad*Math.sin(a)];
+    const [x1,y1]=pt(R,a0),[x2,y2]=pt(R,a1),[x3,y3]=pt(r,a1),[x4,y4]=pt(r,a0);
+    const dim=state.plan!=='all'&&state.plan!==p?.25:1;
+    paths+=`<path d="M${x1},${y1} A${R},${R} 0 ${large} 1 ${x2},${y2} L${x3},${y3} A${r},${r} 0 ${large} 0 ${x4},${y4}Z" fill="${COLORS[p]}" opacity="${dim}" data-p="${p}" data-v="${v}" data-f="${(frac*100).toFixed(1)}"/>`;
+    a0=a1;
+  });
+  $('#donut').innerHTML=`<svg viewBox="0 0 200 200" style="max-width:240px;margin:0 auto">${paths}
+    <text x="100" y="96" text-anchor="middle" fill="#8d97b5" font-size="10">Total MRR</text>
+    <text x="100" y="114" text-anchor="middle" fill="#e6e9f2" font-size="16" font-weight="700">${fmt(tot)}</text></svg>`;
+  document.querySelectorAll('#donut path').forEach(el=>{
+    el.addEventListener('mousemove',e=>showTip(e,`<b style="text-transform:capitalize">${el.dataset.p}</b><br>${fmt(+el.dataset.v)} (${el.dataset.f}%)`));
+    el.addEventListener('mouseleave',hideTip);
+    el.addEventListener('click',()=>{$('#plan').value=state.plan===el.dataset.p?'all':el.dataset.p;state.plan=$('#plan').value;render()});
+  });
+  $('#donutLegend').innerHTML=PLANS.map(p=>`<span><i style="background:${COLORS[p]}"></i><span style="text-transform:capitalize">${p}</span> ${(data[p][MONTHS-1].mrr/tot*100).toFixed(0)}%</span>`).join('');
+}
+
+// ---------- MRR movement (stacked +/- bars) ----------
+function renderMovement(){
+  const s=series().slice(-12),W=600,H=280,m={l:50,r:8,t:10,b:28};
+  const iw=W-m.l-m.r,ih=H-m.t-m.b;
+  const posMax=Math.max(...s.map(d=>d.new+d.exp))*1.1,negMax=Math.max(...s.map(d=>d.con+d.churn))*1.15;
+  const y=v=>m.t+(posMax-v)/(posMax+negMax)*ih;
+  const bw=iw/s.length*.62;let g='';
+  [-negMax,-negMax/2,0,posMax/2,posMax].forEach(v=>{g+=`<line class="gridline" x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" ${v===0?'style="stroke:#8d97b5"':''}/><text x="${m.l-8}" y="${y(v)+3}" text-anchor="end" fill="#8d97b5" font-size="10">${fmt(Math.abs(v))}</text>`});
+  s.forEach((d,i)=>{
+    const cx=m.l+(i+.5)*iw/s.length,x0=cx-bw/2;
+    const seg=(v0,v1,c)=>`<rect x="${x0}" y="${Math.min(y(v0),y(v1))}" width="${bw}" height="${Math.abs(y(v0)-y(v1))}" fill="${c}" rx="1"/>`;
+    g+=seg(0,d.new,'#3ddc97')+seg(d.new,d.new+d.exp,'#6c8cff')+seg(0,-d.con,'#ffc857')+seg(-d.con,-d.con-d.churn,'#ff6b81');
+    g+=`<rect x="${x0-4}" y="${m.t}" width="${bw+8}" height="${ih}" fill="transparent" data-i="${i}"/>`;
+    g+=`<text x="${cx}" y="${H-8}" text-anchor="middle" fill="#8d97b5" font-size="9">${d.label}</text>`;
+  });
+  $('#movement').innerHTML=`<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+  document.querySelectorAll('#movement rect[data-i]').forEach(el=>{
+    const d=s[+el.dataset.i];
+    el.addEventListener('mousemove',e=>showTip(e,`<b>${d.label}</b><br>New: +${fmt(d.new)}<br>Expansion: +${fmt(d.exp)}<br>Contraction: −${fmt(d.con)}<br>Churn: −${fmt(d.churn)}<br><b>Net: ${fmt(d.new+d.exp-d.con-d.churn)}</b>`));
+    el.addEventListener('mouseleave',hideTip);
+  });
+}
+
+// ---------- Cohort heatmap ----------
+function renderCohort(){
+  const cols=8;
+  let h='<table class="heat"><tr><th>Cohort</th>'+[...Array(cols)].map((_,i)=>`<th>M${i}</th>`).join('')+'</tr>';
+  cohorts.forEach(c=>{
+    h+=`<tr><td>${c.l}</td>`;
+    for(let i=0;i<cols;i++){
+      if(i<c.row.length){const v=c.row[i],a=.15+(v-70)/30*.75;
+        h+=`<td style="background:rgba(108,140,255,${Math.max(.1,Math.min(.95,a))});color:#fff;border-radius:4px">${v}%</td>`}
+      else h+='<td></td>';
+    }
+    h+='</tr>';
+  });
+  $('#cohort').innerHTML=h+'</table>';
+}
+
+// ---------- Accounts table ----------
+function renderTable(){
+  let rows=accounts.filter(a=>state.plan==='all'||a.plan===state.plan);
+  rows.sort((a,b)=>{const x=a[state.sort],y=b[state.sort];return (typeof x==='string'?x.localeCompare(y):x-y)*state.dir});
+  rows=rows.slice(0,10);
+  const max=Math.max(...rows.map(r=>r.mrr),1);
+  const cols=[['name','Account'],['plan','Plan'],['mrr','MRR',1],['seats','Seats',1],['growth','90d Growth',1],['since','Customer Since',1],['share','Share']];
+  $('#accounts').innerHTML='<thead><tr>'+cols.map(([k,l,n])=>`<th class="${n?'num':''}" data-k="${k}">${l}${state.sort===k?(state.dir>0?' ↑':' ↓'):''}</th>`).join('')+'</tr></thead><tbody>'+
+    rows.map(r=>`<tr><td>${r.name}</td><td><span class="pill ${r.plan}">${r.plan}</span></td><td class="num">$${r.mrr.toLocaleString()}</td><td class="num">${r.seats}</td><td class="num ${r.growth>=0?'up':'down'}">${pct(r.growth)}</td><td class="num">${r.since}</td><td><div class="bar"><div style="width:${r.mrr/max*100}%"></div></div></td></tr>`).join('')+'</tbody>';
+  document.querySelectorAll('#accounts th').forEach(th=>th.addEventListener('click',()=>{
+    const k=th.dataset.k;if(k==='share')return;
+    if(state.sort===k)state.dir*=-1;else{state.sort=k;state.dir=k==='name'||k==='plan'?1:-1}
+    renderTable();
+  }));
+}
+
+function render(){renderKPIs();renderMRR();renderDonut();renderMovement();renderCohort();renderTable()}
+
+$('#plan').addEventListener('change',e=>{state.plan=e.target.value;render()});
+document.querySelectorAll('#range button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#range button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');state.range=+b.dataset.m;render();
+}));
+render();
+</script>
+</body>
+</html>

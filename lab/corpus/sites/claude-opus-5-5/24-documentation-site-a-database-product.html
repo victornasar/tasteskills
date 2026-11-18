@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basalt Docs — The distributed SQL database</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f8fa;
+    --bg-softer: #eef0f4;
+    --fg: #1b1f27;
+    --fg-muted: #5b6474;
+    --fg-faint: #8a93a3;
+    --border: #e3e6ec;
+    --accent: #e0592a;
+    --accent-soft: #fdeee8;
+    --accent-fg: #b9431a;
+    --code-bg: #0f1420;
+    --code-fg: #d8dee9;
+    --tok-k: #f0884d;
+    --tok-s: #a3d98b;
+    --tok-c: #6b7689;
+    --tok-n: #c79bff;
+    --note: #2f6fde;  --note-bg: #ecf3ff;
+    --warn: #b7791f;  --warn-bg: #fff7e6;
+    --tip:  #2f9e5b;  --tip-bg:  #eaf7ef;
+    --danger: #d23c3c; --danger-bg: #fdeeee;
+    --header-h: 60px;
+    --sidebar-w: 270px;
+    --toc-w: 230px;
+    --radius: 8px;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg: #0d1017;
+    --bg-soft: #141822;
+    --bg-softer: #1b2130;
+    --fg: #e6e9ef;
+    --fg-muted: #a1aabb;
+    --fg-faint: #6d7689;
+    --border: #252c3b;
+    --accent: #ff7a45;
+    --accent-soft: #2a1a13;
+    --accent-fg: #ff9a6e;
+    --code-bg: #080b11;
+    --note-bg: #13213a; --warn-bg: #2b2210; --tip-bg: #10271a; --danger-bg: #2d1414;
+    --note: #6ea1ff; --warn: #e3b04b; --tip: #5ccf8a; --danger: #ff7272;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: calc(var(--header-h) + 20px); }
+  body {
+    margin: 0; font-family: var(--sans); font-size: 16px; line-height: 1.65;
+    color: var(--fg); background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent-fg); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font: inherit; color: inherit; }
+
+  /* Header */
+  header {
+    position: fixed; inset: 0 0 auto 0; height: var(--header-h); z-index: 50;
+    display: flex; align-items: center; gap: 16px; padding: 0 20px;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+  }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--fg); }
+  .logo:hover { text-decoration: none; }
+  .logo svg { width: 28px; height: 28px; }
+  .version {
+    font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px;
+    background: var(--bg-softer); color: var(--fg-muted); border: 1px solid var(--border); cursor: pointer;
+  }
+  .search-trigger {
+    margin-left: auto; display: flex; align-items: center; gap: 10px; width: 300px; max-width: 40vw;
+    padding: 7px 12px; border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--bg-soft); color: var(--fg-faint); cursor: pointer; font-size: 14px; text-align: left;
+  }
+  .search-trigger:hover { border-color: var(--fg-faint); }
+  .search-trigger kbd { margin-left: auto; }
+  kbd {
+    font-family: var(--mono); font-size: 11px; padding: 2px 6px; border-radius: 4px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--fg-muted);
+  }
+  .header-links { display: flex; align-items: center; gap: 6px; }
+  .header-links a { color: var(--fg-muted); font-size: 14px; padding: 6px 10px; border-radius: 6px; }
+  .header-links a:hover { color: var(--fg); background: var(--bg-soft); text-decoration: none; }
+  .icon-btn {
+    width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg); cursor: pointer; color: var(--fg-muted);
+  }
+  .icon-btn:hover { color: var(--fg); background: var(--bg-soft); }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .menu-btn { display: none; }
+
+  /* Layout */
+  .layout { display: flex; padding-top: var(--header-h); }
+  aside.sidebar {
+    position: fixed; top: var(--header-h); bottom: 0; left: 0; width: var(--sidebar-w);
+    overflow-y: auto; padding: 24px 16px 40px; border-right: 1px solid var(--border); background: var(--bg);
+  }
+  .nav-group { margin-bottom: 22px; }
+  .nav-group h4 {
+    margin: 0 0 6px; padding: 0 10px; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--fg-faint); font-weight: 700;
+  }
+  .nav-group a {
+    display: block; padding: 5px 10px; margin: 1px 0; border-radius: 6px;
+    color: var(--fg-muted); font-size: 14.5px;
+  }
+  .nav-group a:hover { color: var(--fg); background: var(--bg-soft); text-decoration: none; }
+  .nav-group a.active { color: var(--accent-fg); background: var(--accent-soft); font-weight: 600; }
+
+  main {
+    flex: 1; min-width: 0; margin-left: var(--sidebar-w); margin-right: var(--toc-w);
+    padding: 40px 56px 80px; max-width: calc(860px + var(--sidebar-w) + var(--toc-w));
+  }
+  article { max-width: 760px; }
+  .page { display: none; }
+  .page.active { display: block; animation: fade .2s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  .breadcrumb { font-size: 13px; color: var(--fg-faint); margin-bottom: 8px; }
+  h1 { font-size: 36px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -.02em; }
+  .lead { font-size: 18px; color: var(--fg-muted); margin: 0 0 32px; }
+  h2 {
+    font-size: 24px; margin: 48px 0 14px; padding-top: 8px; letter-spacing: -.01em;
+    border-top: 1px solid var(--border); padding-top: 32px;
+  }
+  h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 32px; }
+  h3 { font-size: 18px; margin: 28px 0 10px; }
+  h2 .anchor, h3 .anchor { opacity: 0; margin-left: 8px; color: var(--fg-faint); font-weight: 400; }
+  h2:hover .anchor, h3:hover .anchor { opacity: 1; }
+  p, li { color: var(--fg); }
+  ul, ol { padding-left: 22px; }
+  li { margin: 4px 0; }
+
+  code {
+    font-family: var(--mono); font-size: .87em; padding: 2px 6px; border-radius: 5px;
+    background: var(--bg-softer); border: 1px solid var(--border);
+  }
+  pre code { padding: 0; border: 0; background: none; font-size: 13.5px; }
+
+  .code {
+    margin: 18px 0; border-radius: var(--radius); overflow: hidden;
+    background: var(--code-bg); border: 1px solid var(--border);
+  }
+  .code-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 8px 6px 14px; border-bottom: 1px solid #1e2533;
+    font-size: 12px; font-family: var(--mono); color: #8590a5;
+  }
+  .copy-btn {
+    background: transparent; border: 1px solid #2a3244; color: #9aa5ba; border-radius: 5px;
+    padding: 3px 9px; font-size: 12px; cursor: pointer; font-family: var(--sans);
+  }
+  .copy-btn:hover { color: #fff; border-color: #44506a; }
+  .copy-btn.done { color: #7fd99b; border-color: #2f6b45; }
+  pre { margin: 0; padding: 16px 18px; overflow-x: auto; color: var(--code-fg); line-height: 1.6; }
+  .tok-k { color: var(--tok-k); }
+  .tok-s { color: var(--tok-s); }
+  .tok-c { color: var(--tok-c); font-style: italic; }
+  .tok-n { color: var(--tok-n); }
+
+  .tabs { margin: 18px 0; }
+  .tab-list { display: flex; gap: 2px; border-bottom: 1px solid var(--border); }
+  .tab-list button {
+    background: none; border: 0; padding: 8px 14px; cursor: pointer; font-size: 14px;
+    color: var(--fg-muted); border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tab-list button:hover { color: var(--fg); }
+  .tab-list button.active { color: var(--accent-fg); border-bottom-color: var(--accent); font-weight: 600; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .tab-panel > .code { margin-top: 12px; }
+
+  .callout {
+    margin: 20px 0; padding: 14px 16px 14px 16px; border-radius: var(--radius);
+    border-left: 4px solid; font-size: 15px;
+  }
+  .callout strong:first-child { display: block; margin-bottom: 2px; }
+  .callout p { margin: 4px 0; }
+  .callout.note { background: var(--note-bg); border-color: var(--note); }
+  .callout.note strong:first-child { color: var(--note); }
+  .callout.warn { background: var(--warn-bg); border-color: var(--warn); }
+  .callout.warn strong:first-child { color: var(--warn); }
+  .callout.tip { background: var(--tip-bg); border-color: var(--tip); }
+  .callout.tip strong:first-child { color: var(--tip); }
+  .callout.danger { background: var(--danger-bg); border-color: var(--danger); }
+  .callout.danger strong:first-child { color: var(--danger); }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--bg-soft); font-weight: 600; font-size: 13px; color: var(--fg-muted); }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+  .table-wrap table { margin: 0; }
+  .table-wrap tr:last-child td { border-bottom: 0; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin: 24px 0; }
+  .card {
+    display: block; padding: 18px; border: 1px solid var(--border); border-radius: 10px;
+    background: var(--bg-soft); color: var(--fg); transition: border-color .15s, transform .15s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; }
+  .card .ico { font-size: 22px; margin-bottom: 6px; }
+  .card h5 { margin: 0 0 4px; font-size: 15px; }
+  .card p { margin: 0; font-size: 13.5px; color: var(--fg-muted); line-height: 1.5; }
+
+  .steps { counter-reset: step; list-style: none; padding-left: 0; }
+  .steps > li { position: relative; padding-left: 44px; margin: 22px 0; }
+  .steps > li::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 13px; font-weight: 700;
+    background: var(--accent-soft); color: var(--accent-fg); border: 1px solid var(--accent);
+  }
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent-fg); vertical-align: middle; margin-left: 6px;
+  }
+
+  .page-footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .feedback { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--fg-muted); margin-bottom: 24px; }
+  .feedback button {
+    border: 1px solid var(--border); background: var(--bg); border-radius: 6px; padding: 4px 12px; cursor: pointer;
+  }
+  .feedback button:hover { background: var(--bg-soft); }
+  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pager a {
+    display: block; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--fg);
+  }
+  .pager a:hover { border-color: var(--accent); text-decoration: none; }
+  .pager small { display: block; color: var(--fg-faint); font-size: 12px; }
+  .pager .next { text-align: right; grid-column: 2; }
+  .meta { font-size: 13px; color: var(--fg-faint); margin-top: 20px; }
+
+  /* TOC */
+  aside.toc {
+    position: fixed; top: var(--header-h); right: 0; width: var(--toc-w); bottom: 0;
+    padding: 40px 20px; overflow-y: auto; font-size: 13.5px;
+  }
+  aside.toc h4 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-faint); }
+  aside.toc a {
+    display: block; padding: 4px 0 4px 12px; color: var(--fg-muted); border-left: 2px solid var(--border);
+  }
+  aside.toc a:hover { color: var(--fg); text-decoration: none; }
+  aside.toc a.active { color: var(--accent-fg); border-left-color: var(--accent); }
+
+  /* Search modal */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(5, 8, 15, .55); z-index: 100;
+    display: none; align-items: flex-start; justify-content: center; padding-top: 12vh;
+  }
+  .overlay.open { display: flex; }
+  .search-box {
+    width: min(640px, 92vw); background: var(--bg); border: 1px solid var(--border);
+    border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,.35); overflow: hidden;
+  }
+  .search-input-wrap { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .search-input-wrap svg { width: 18px; height: 18px; color: var(--fg-faint); flex-shrink: 0; }
+  .search-input-wrap input {
+    flex: 1; border: 0; outline: 0; background: transparent; font-size: 16px; color: var(--fg);
+  }
+  .results { max-height: 55vh; overflow-y: auto; padding: 8px; }
+  .result { display: block; padding: 10px 12px; border-radius: 8px; color: var(--fg); cursor: pointer; }
+  .result:hover, .result.sel { background: var(--accent-soft); text-decoration: none; }
+  .result .r-title { font-weight: 600; font-size: 14.5px; }
+  .result .r-path { font-size: 12px; color: var(--fg-faint); }
+  .result .r-snip { font-size: 13px; color: var(--fg-muted); margin-top: 2px; }
+  .result mark { background: transparent; color: var(--accent-fg); font-weight: 700; }
+  .empty { padding: 28px; text-align: center; color: var(--fg-faint); font-size: 14px; }
+  .search-foot { display: flex; gap: 16px; padding: 10px 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--fg-faint); }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 8px; font-size: 14px;
+    opacity: 0; pointer-events: none; transition: all .25s; z-index: 200;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 1200px) {
+    aside.toc { display: none; }
+    main { margin-right: 0; }
+  }
+  @media (max-width: 860px) {
+    .menu-btn { display: grid; }
+    .header-links a { display: none; }
+    .search-trigger { width: auto; max-width: none; }
+    .search-trigger span, .search-trigger kbd { display: none; }
+    aside.sidebar { transform: translateX(-100%); transition: transform .2s; z-index: 40; box-shadow: 0 0 40px rgba(0,0,0,.2); }
+    body.nav-open aside.sidebar { transform: none; }
+    main { margin-left: 0; padding: 28px 20px 60px; }
+    h1 { font-size: 28px; }
+    .pager { grid-template-columns: 1fr; }
+    .pager .next { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Toggle navigation">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <a href="#intro" class="logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="M16 3 28 10v12L16 29 4 22V10z" fill="var(--accent)"/>
+      <path d="M16 3v26M4 10l12 7 12-7" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/>
+    </svg>
+    Basalt
+  </a>
+  <span class="version" title="Documentation version">v4.2</span>
+  <button class="search-trigger" id="searchTrigger" aria-label="Search documentation">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <span>Search docs…</span>
+    <kbd>⌘K</kbd>
+  </button>
+  <nav class="header-links">
+    <a href="#cli">API</a>
+    <a href="#config">Config</a>
+    <a href="#intro">Changelog</a>
+  </nav>
+  <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">
+    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg>
+  </button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="nav-group">
+      <h4>Getting Started</h4>
+      <a href="#intro" data-nav="intro">Introduction</a>
+      <a href="#install" data-nav="install">Installation</a>
+      <a href="#quickstart" data-nav="quickstart">Quickstart</a>
+    </div>
+    <div class="nav-group">
+      <h4>Core Concepts</h4>
+      <a href="#data-model" data-nav="data-model">Data Model</a>
+      <a href="#transactions" data-nav="transactions">Transactions</a>
+      <a href="#indexes" data-nav="indexes">Indexes</a>
+    </div>
+    <div class="nav-group">
+      <h4>Querying</h4>
+      <a href="#sql" data-nav="sql">SQL Reference</a>
+      <a href="#json" data-nav="json">JSON Documents</a>
+    </div>
+    <div class="nav-group">
+      <h4>Operations</h4>
+      <a href="#replication" data-nav="replication">Replication &amp; Clustering</a>
+      <a href="#backups" data-nav="backups">Backup &amp; Restore</a>
+      <a href="#config" data-nav="config">Configuration</a>
+    </div>
+    <div class="nav-group">
+      <h4>Reference</h4>
+      <a href="#cli" data-nav="cli">CLI</a>
+      <a href="#clients" data-nav="clients">Client Libraries</a>
+      <a href="#errors" data-nav="errors">Error Codes</a>
+    </div>
+  </aside>
+
+  <main>
+    <article id="content">
+
+<!-- ============ INTRO ============ -->
+<section class="page" data-page="intro" data-title="Introduction" data-group="Getting Started">
+  <h1>Introduction to Basalt</h1>
+  <p class="lead">Basalt is a distributed, PostgreSQL-compatible SQL database built for real-time workloads. It gives you strong consistency, automatic sharding, and sub-millisecond reads — without giving up the SQL you already know.</p>
+
+  <div class="cards">
+    <a class="card" href="#quickstart"><div class="ico">⚡</div><h5>Quickstart</h5><p>Spin up a local node and run your first query in under five minutes.</p></a>
+    <a class="card" href="#data-model"><div class="ico">🧱</div><h5>Core concepts</h5><p>Learn how Basalt stores, shards, and replicates your data.</p></a>
+    <a class="card" href="#clients"><div class="ico">🔌</div><h5>Client libraries</h5><p>Official drivers for Python, Node.js, Go, and Rust.</p></a>
+    <a class="card" href="#replication"><div class="ico">🌐</div><h5>Run a cluster</h5><p>Deploy a fault-tolerant, multi-region cluster.</p></a>
+  </div>
+
+  <h2>Why Basalt?</h2>
+  <ul>
+    <li><strong>Serializable by default.</strong> Every transaction runs at the strictest isolation level, across shards and regions.</li>
+    <li><strong>Horizontal scale.</strong> Tables split into <em>ranges</em> that rebalance automatically as you add nodes.</li>
+    <li><strong>Wire-compatible with PostgreSQL.</strong> Use <code>psql</code>, your existing ORM, and most Postgres drivers unchanged.</li>
+    <li><strong>Hybrid storage.</strong> Row-oriented storage for OLTP, with optional columnar projections for analytics.</li>
+    <li><strong>Survives failure.</strong> Raft-based replication tolerates node, zone, or region outages with zero data loss.</li>
+  </ul>
+
+  <h2>Architecture at a glance</h2>
+  <p>A Basalt cluster is a set of identical nodes. Each node runs the SQL layer, the distributed transaction coordinator, and a local storage engine. There is no primary node and no external coordinator to manage.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Layer</th><th>Responsibility</th></tr></thead>
+    <tbody>
+      <tr><td>SQL gateway</td><td>Parses, plans, and optimizes queries; speaks the Postgres wire protocol.</td></tr>
+      <tr><td>Transaction layer</td><td>Coordinates multi-range transactions using hybrid logical clocks.</td></tr>
+      <tr><td>Distribution layer</td><td>Maps keys to ranges and routes requests to range leaseholders.</td></tr>
+      <tr><td>Replication layer</td><td>Replicates each range across nodes with Raft consensus.</td></tr>
+      <tr><td>Storage engine</td><td>LSM-tree key-value store on local disk.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>What's new in 4.2</h2>
+  <ul>
+    <li>Columnar projections are now generally available.</li>
+    <li>Incremental backups to any S3-compatible bucket.</li>
+    <li><code>basalt doctor</code> diagnoses common cluster misconfigurations.</li>
+    <li>Up to 38% lower p99 write latency on multi-region tables.</li>
+  </ul>
+</section>
+
+<!-- ============ INSTALL ============ -->
+<section class="page" data-page="install" data-title="Installation" data-group="Getting Started">
+  <h1>Installation</h1>
+  <p class="lead">Basalt ships as a single static binary for Linux, macOS, and Windows, plus official container images.</p>
+
+  <h2>System requirements</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Resource</th><th>Development</th><th>Production (per node)</th></tr></thead>
+    <tbody>
+      <tr><td>CPU</td><td>2 cores</td><td>8+ cores</td></tr>
+      <tr><td>Memory</td><td>2 GB</td><td>32 GB+ (4 GB per core recommended)</td></tr>
+      <tr><td>Disk</td><td>Any</td><td>NVMe SSD, 150 GB+</td></tr>
+      <tr><td>OS</td><td colspan="2">Linux (kernel 5.4+), macOS 13+, Windows 11 / Server 2022</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Install the binary</h2>
+  <div class="tabs" data-sync="os">
+    <div class="tab-list"><button data-tab="macos">macOS</button><button data-tab="linux">Linux</button><button data-tab="windows">Windows</button><button data-tab="docker">Docker</button></div>
+    <div class="tab-panel" data-tab="macos">
+<pre data-lang="bash"><code>brew install basalt-db/tap/basalt
+basalt version</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="linux">
+<pre data-lang="bash"><code>curl -fsSL https://get.basalt.dev/install.sh | sh
+# or with a package manager
+sudo apt install basalt
+basalt version</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="windows">
+<pre data-lang="bash"><code># PowerShell
+winget install Basalt.Basalt
+basalt version</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="docker">
+<pre data-lang="bash"><code>docker pull basaltdb/basalt:4.2
+docker run -d --name basalt -p 5433:5433 -p 8080:8080 \
+  basaltdb/basalt:4.2 start --single-node --insecure</code></pre>
+    </div>
+  </div>
+
+  <div class="callout tip"><strong>Tip</strong>Verify downloads using the SHA-256 checksums published alongside every release.</div>
+
+  <h2>Verify the installation</h2>
+  <p>You should see output similar to the following:</p>
+<pre data-lang="text"><code>Basalt 4.2.1 (darwin/arm64)
+Build:  2026-10-28 a91f3c2
+Go:     go1.24.3</code></pre>
+
+  <h2>Upgrading</h2>
+  <p>Basalt supports rolling upgrades between adjacent minor versions. Upgrade one node at a time and wait for <code>basalt node status</code> to report all ranges healthy before moving on.</p>
+  <div class="callout warn"><strong>Warning</strong>Skipping minor versions (for example 4.0 → 4.2) is not supported. Upgrade to 4.1 first.</div>
+</section>
+
+<!-- ============ QUICKSTART ============ -->
+<section class="page" data-page="quickstart" data-title="Quickstart" data-group="Getting Started">
+  <h1>Quickstart</h1>
+  <p class="lead">Start a local Basalt node, create a table, and query it — all in about five minutes.</p>
+
+  <h2>Start a node</h2>
+  <ol class="steps">
+    <li>
+      <p>Start a single-node cluster in insecure mode (for local development only):</p>
+<pre data-lang="bash"><code>basalt start --single-node --insecure --store=./basalt-data</code></pre>
+    </li>
+    <li>
+      <p>In a new terminal, open the built-in SQL shell:</p>
+<pre data-lang="bash"><code>basalt sql --insecure</code></pre>
+    </li>
+    <li>
+      <p>Open the admin console at <code>http://localhost:8080</code> to watch metrics in real time.</p>
+    </li>
+  </ol>
+
+  <h2>Create your first table</h2>
+<pre data-lang="sql"><code>CREATE DATABASE shop;
+USE shop;
+
+CREATE TABLE products (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name       TEXT NOT NULL,
+  price      DECIMAL(10, 2) NOT NULL,
+  tags       TEXT[],
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+INSERT INTO products (name, price, tags) VALUES
+  ('Mechanical keyboard', 129.00, ARRAY['hardware', 'input']),
+  ('USB-C hub',            49.50, ARRAY['hardware']),
+  ('Desk lamp',            34.99, ARRAY['office']);</code></pre>
+
+  <h2>Query your data</h2>
+<pre data-lang="sql"><code>SELECT name, price
+FROM products
+WHERE 'hardware' = ANY(tags)
+ORDER BY price DESC;</code></pre>
+<pre data-lang="text"><code>        name         | price
+---------------------+--------
+  Mechanical keyboard | 129.00
+  USB-C hub           |  49.50
+(2 rows)</code></pre>
+
+  <h2>Connect from your app</h2>
+  <div class="tabs" data-sync="lang">
+    <div class="tab-list"><button data-tab="python">Python</button><button data-tab="node">Node.js</button><button data-tab="go">Go</button></div>
+    <div class="tab-panel" data-tab="python">
+<pre data-lang="python"><code>import basalt
+
+conn = basalt.connect("basalt://root@localhost:5433/shop?sslmode=disable")
+with conn.cursor() as cur:
+    cur.execute("SELECT name, price FROM products")
+    for name, price in cur:
+        print(name, price)</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="node">
+<pre data-lang="js"><code>import { Client } from "@basalt/client";
+
+const db = new Client("basalt://root@localhost:5433/shop?sslmode=disable");
+const { rows } = await db.query("SELECT name, price FROM products");
+console.table(rows);</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="go">
+<pre data-lang="go"><code>db, err := basalt.Open("basalt://root@localhost:5433/shop?sslmode=disable")
+if err != nil {
+    log.Fatal(err)
+}
+rows, _ := db.Query(ctx, "SELECT name, price FROM products")
+defer rows.Close()</code></pre>
+    </div>
+  </div>
+
+  <div class="callout note"><strong>Next steps</strong>Read about the <a href="#data-model">data model</a> to understand how Basalt distributes your tables, or deploy a <a href="#replication">three-node cluster</a>.</div>
+</section>
+
+<!-- ============ DATA MODEL ============ -->
+<section class="page" data-page="data-model" data-title="Data Model" data-group="Core Concepts">
+  <h1>Data Model</h1>
+  <p class="lead">Basalt presents a relational interface on top of a sorted, distributed key-value store. Understanding this mapping helps you design fast schemas.</p>
+
+  <h2>Ranges</h2>
+  <p>Every table and index is stored as a sorted sequence of key-value pairs. That keyspace is divided into contiguous chunks called <strong>ranges</strong>, each 512 MiB by default. When a range grows past its threshold, it splits; when ranges are small and adjacent, they merge.</p>
+  <p>Each range is replicated (three copies by default) and one replica holds the <strong>lease</strong>, which serves consistent reads and coordinates writes for that range.</p>
+
+  <h2>Primary keys</h2>
+  <p>The primary key determines the physical order of rows on disk and therefore how rows are distributed across ranges.</p>
+  <div class="callout warn"><strong>Avoid sequential primary keys</strong>Monotonically increasing keys (like <code>SERIAL</code> or timestamps) send every insert to the same range, creating a hotspot. Prefer <code>UUID</code> or a hash-sharded key.</div>
+<pre data-lang="sql"><code>-- Hash-sharded primary key spreads writes over 16 buckets
+CREATE TABLE events (
+  ts      TIMESTAMPTZ NOT NULL,
+  device  UUID NOT NULL,
+  payload JSONB,
+  PRIMARY KEY (ts, device) USING HASH WITH (bucket_count = 16)
+);</code></pre>
+
+  <h2>Supported types</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Category</th><th>Types</th></tr></thead>
+    <tbody>
+      <tr><td>Numeric</td><td><code>INT2</code>, <code>INT4</code>, <code>INT8</code>, <code>FLOAT4</code>, <code>FLOAT8</code>, <code>DECIMAL</code></td></tr>
+      <tr><td>Text</td><td><code>TEXT</code>, <code>VARCHAR(n)</code>, <code>CHAR(n)</code></td></tr>
+      <tr><td>Temporal</td><td><code>DATE</code>, <code>TIME</code>, <code>TIMESTAMP</code>, <code>TIMESTAMPTZ</code>, <code>INTERVAL</code></td></tr>
+      <tr><td>Structured</td><td><code>JSONB</code>, <code>ARRAY</code>, <code>ENUM</code>, composite types</td></tr>
+      <tr><td>Other</td><td><code>UUID</code>, <code>BOOL</code>, <code>BYTEA</code>, <code>INET</code>, <code>VECTOR(n)</code> <span class="badge">New</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Column families</h2>
+  <p>By default, all columns of a row are stored together. You can group frequently updated columns into a separate <em>column family</em> so updates don't rewrite large, rarely changing columns.</p>
+<pre data-lang="sql"><code>CREATE TABLE accounts (
+  id       UUID PRIMARY KEY,
+  profile  JSONB,
+  balance  DECIMAL,
+  FAMILY cold (id, profile),
+  FAMILY hot  (balance)
+);</code></pre>
+</section>
+
+<!-- ============ TRANSACTIONS ============ -->
+<section class="page" data-page="transactions" data-title="Transactions" data-group="Core Concepts">
+  <h1>Transactions</h1>
+  <p class="lead">Basalt provides fully ACID transactions with serializable isolation, even when a transaction touches data on many nodes in many regions.</p>
+
+  <h2>Isolation levels</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Level</th><th>Anomalies prevented</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>SERIALIZABLE</code></td><td>All</td><td>Default. Recommended for most workloads.</td></tr>
+      <tr><td><code>READ COMMITTED</code></td><td>Dirty reads</td><td>Fewer retries under heavy contention.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Explicit transactions</h2>
+<pre data-lang="sql"><code>BEGIN;
+UPDATE accounts SET balance = balance - 100 WHERE id = 'a1';
+UPDATE accounts SET balance = balance + 100 WHERE id = 'b2';
+COMMIT;</code></pre>
+
+  <h2>Handling retries</h2>
+  <p>Under serializable isolation, conflicting transactions may be aborted with error <code>40001</code>. Clients should retry these. The official drivers include a helper that does this automatically:</p>
+  <div class="tabs" data-sync="lang">
+    <div class="tab-list"><button data-tab="python">Python</button><button data-tab="node">Node.js</button><button data-tab="go">Go</button></div>
+    <div class="tab-panel" data-tab="python">
+<pre data-lang="python"><code>def transfer(tx, src, dst, amount):
+    tx.execute("UPDATE accounts SET balance = balance - %s WHERE id = %s", (amount, src))
+    tx.execute("UPDATE accounts SET balance = balance + %s WHERE id = %s", (amount, dst))
+
+conn.run_transaction(lambda tx: transfer(tx, "a1", "b2", 100))</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="node">
+<pre data-lang="js"><code>await db.runTransaction(async (tx) => {
+  await tx.query("UPDATE accounts SET balance = balance - $1 WHERE id = $2", [100, "a1"]);
+  await tx.query("UPDATE accounts SET balance = balance + $1 WHERE id = $2", [100, "b2"]);
+});</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="go">
+<pre data-lang="go"><code>err := basalt.RunTx(ctx, db, func(tx basalt.Tx) error {
+    if _, err := tx.Exec(ctx, "UPDATE accounts SET balance = balance - $1 WHERE id = $2", 100, "a1"); err != nil {
+        return err
+    }
+    _, err := tx.Exec(ctx, "UPDATE accounts SET balance = balance + $1 WHERE id = $2", 100, "b2")
+    return err
+})</code></pre>
+    </div>
+  </div>
+
+  <h2>Follower reads</h2>
+  <p>For queries that can tolerate slightly stale data, use <code>AS OF SYSTEM TIME</code> to read from the nearest replica instead of the leaseholder. This can dramatically lower latency in multi-region deployments.</p>
+<pre data-lang="sql"><code>SELECT * FROM products AS OF SYSTEM TIME follower_read_timestamp();</code></pre>
+  <div class="callout tip"><strong>Tip</strong>Follower reads never block on writes and never cause transaction retries.</div>
+</section>
+
+<!-- ============ INDEXES ============ -->
+<section class="page" data-page="indexes" data-title="Indexes" data-group="Core Concepts">
+  <h1>Indexes</h1>
+  <p class="lead">Secondary indexes let Basalt find rows without scanning a whole table. Every index is itself a distributed, replicated table.</p>
+
+  <h2>Creating indexes</h2>
+<pre data-lang="sql"><code>CREATE INDEX products_price_idx ON products (price);
+
+-- Covering index: avoids a lookup back to the primary table
+CREATE INDEX products_tag_idx ON products (created_at DESC) STORING (name, price);</code></pre>
+  <p>Index creation is online: reads and writes continue while the index backfills.</p>
+
+  <h2>Index types</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Type</th><th>Best for</th><th>Syntax</th></tr></thead>
+    <tbody>
+      <tr><td>B-tree</td><td>Equality and range lookups</td><td><code>CREATE INDEX … (col)</code></td></tr>
+      <tr><td>Inverted</td><td>JSONB, arrays, full-text</td><td><code>CREATE INVERTED INDEX … (col)</code></td></tr>
+      <tr><td>Partial</td><td>Queries on a subset of rows</td><td><code>… WHERE condition</code></td></tr>
+      <tr><td>Vector</td><td>Approximate nearest-neighbor search</td><td><code>CREATE VECTOR INDEX … (embedding)</code></td></tr>
+      <tr><td>Columnar projection</td><td>Analytics and aggregates</td><td><code>CREATE PROJECTION …</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Inspecting query plans</h2>
+<pre data-lang="sql"><code>EXPLAIN ANALYZE SELECT name FROM products WHERE price BETWEEN 30 AND 60;</code></pre>
+<pre data-lang="text"><code>  • index scan
+    table: products@products_price_idx
+    spans: [/30 - /60]
+    rows read: 2
+    execution time: 0.41ms</code></pre>
+  <div class="callout note"><strong>Note</strong>Every index adds write amplification. Use <code>SHOW INDEX USAGE</code> to find and drop unused indexes.</div>
+</section>
+
+<!-- ============ SQL ============ -->
+<section class="page" data-page="sql" data-title="SQL Reference" data-group="Querying">
+  <h1>SQL Reference</h1>
+  <p class="lead">Basalt implements a large subset of PostgreSQL's SQL dialect, plus extensions for distribution and time travel.</p>
+
+  <h2>Data definition</h2>
+<pre data-lang="sql"><code>CREATE TABLE IF NOT EXISTS orders (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  customer_id UUID NOT NULL REFERENCES customers (id),
+  total       DECIMAL(12, 2) CHECK (total >= 0),
+  status      TEXT DEFAULT 'pending'
+);
+
+ALTER TABLE orders ADD COLUMN shipped_at TIMESTAMPTZ;
+DROP TABLE IF EXISTS legacy_orders CASCADE;</code></pre>
+
+  <h2>Joins and aggregates</h2>
+<pre data-lang="sql"><code>SELECT c.name, count(o.id) AS orders, sum(o.total) AS revenue
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.id
+WHERE o.status = 'shipped'
+GROUP BY c.name
+HAVING sum(o.total) > 1000
+ORDER BY revenue DESC
+LIMIT 10;</code></pre>
+
+  <h2>Upserts</h2>
+<pre data-lang="sql"><code>INSERT INTO inventory (sku, qty) VALUES ('KB-01', 5)
+ON CONFLICT (sku) DO UPDATE SET qty = inventory.qty + excluded.qty;
+
+-- Basalt shorthand
+UPSERT INTO inventory (sku, qty) VALUES ('KB-01', 5);</code></pre>
+
+  <h2>Window functions</h2>
+<pre data-lang="sql"><code>SELECT day, revenue,
+       avg(revenue) OVER (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS rolling_7d
+FROM daily_sales;</code></pre>
+
+  <h2>Basalt extensions</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Statement</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>AS OF SYSTEM TIME</code></td><td>Query historical data or use follower reads.</td></tr>
+      <tr><td><code>SHOW RANGES FROM TABLE t</code></td><td>Inspect how a table is split and where replicas live.</td></tr>
+      <tr><td><code>ALTER TABLE t CONFIGURE ZONE</code></td><td>Set replication factor and placement constraints.</td></tr>
+      <tr><td><code>CHANGEFEED FOR t</code></td><td>Stream row-level changes to Kafka, webhooks, or cloud storage.</td></tr>
+      <tr><td><code>UPSERT</code></td><td>Insert or replace a row in a single round-trip.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Compatibility notes</h2>
+  <p>The following PostgreSQL features are not currently supported: stored procedures in languages other than PL/pgSQL, <code>LISTEN</code>/<code>NOTIFY</code> (use changefeeds instead), and table inheritance.</p>
+</section>
+
+<!-- ============ JSON ============ -->
+<section class="page" data-page="json" data-title="JSON Documents" data-group="Querying">
+  <h1>JSON Documents</h1>
+  <p class="lead">Store semi-structured data in <code>JSONB</code> columns and query it with full index support.</p>
+
+  <h2>Storing documents</h2>
+<pre data-lang="sql"><code>CREATE TABLE users (
+  id    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  data  JSONB NOT NULL
+);
+
+INSERT INTO users (data) VALUES
+  ('{"name": "Ada", "plan": "pro", "settings": {"theme": "dark"}}'),
+  ('{"name": "Linus", "plan": "free", "tags": ["beta"]}');</code></pre>
+
+  <h2>Operators</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Operator</th><th>Description</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><code>-&gt;</code></td><td>Get field as JSONB</td><td><code>data-&gt;'settings'</code></td></tr>
+      <tr><td><code>-&gt;&gt;</code></td><td>Get field as text</td><td><code>data-&gt;&gt;'name'</code></td></tr>
+      <tr><td><code>#&gt;</code></td><td>Get value at path</td><td><code>data#&gt;'{settings,theme}'</code></td></tr>
+      <tr><td><code>@&gt;</code></td><td>Contains</td><td><code>data @&gt; '{"plan":"pro"}'</code></td></tr>
+      <tr><td><code>?</code></td><td>Key exists</td><td><code>data ? 'tags'</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Indexing JSON</h2>
+<pre data-lang="sql"><code>CREATE INVERTED INDEX users_data_idx ON users (data);
+
+-- Uses the inverted index
+SELECT data->>'name' FROM users WHERE data @> '{"plan": "pro"}';</code></pre>
+  <div class="callout tip"><strong>Tip</strong>For a single hot field, an expression index such as <code>CREATE INDEX ON users ((data-&gt;&gt;'plan'))</code> is smaller and faster than a full inverted index.</div>
+</section>
+
+<!-- ============ REPLICATION ============ -->
+<section class="page" data-page="replication" data-title="Replication & Clustering" data-group="Operations">
+  <h1>Replication &amp; Clustering</h1>
+  <p class="lead">Deploy Basalt across machines, zones, and regions for scale and resilience.</p>
+
+  <h2>Start a three-node cluster</h2>
+  <ol class="steps">
+    <li>
+      <p>Start each node, pointing <code>--join</code> at all initial members:</p>
+<pre data-lang="bash"><code>basalt start --certs-dir=certs --store=/data/basalt \
+  --advertise-addr=node1.internal \
+  --join=node1.internal,node2.internal,node3.internal \
+  --locality=region=us-east,zone=us-east-1a</code></pre>
+    </li>
+    <li>
+      <p>Initialize the cluster once, from any node:</p>
+<pre data-lang="bash"><code>basalt init --certs-dir=certs --host=node1.internal</code></pre>
+    </li>
+    <li>
+      <p>Confirm all nodes are live:</p>
+<pre data-lang="bash"><code>basalt node status --certs-dir=certs --host=node1.internal</code></pre>
+    </li>
+  </ol>
+
+  <h2>Fault tolerance</h2>
+  <p>A range with <em>N</em> replicas tolerates the loss of <em>(N − 1) / 2</em> replicas.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Replication factor</th><th>Failures tolerated</th><th>Minimum nodes</th></tr></thead>
+    <tbody>
+      <tr><td>3</td><td>1</td><td>3</td></tr>
+      <tr><td>5</td><td>2</td><td>5</td></tr>
+      <tr><td>7</td><td>3</td><td>7</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Multi-region tables</h2>
+<pre data-lang="sql"><code>ALTER DATABASE shop SET PRIMARY REGION 'us-east';
+ALTER DATABASE shop ADD REGION 'eu-west';
+ALTER DATABASE shop ADD REGION 'ap-south';
+
+-- Rows live in the region of the user who owns them
+ALTER TABLE users SET LOCALITY REGIONAL BY ROW;
+
+-- Small, read-mostly tables: fast reads everywhere
+ALTER TABLE currencies SET LOCALITY GLOBAL;</code></pre>
+  <div class="callout note"><strong>Survival goals</strong>Use <code>ALTER DATABASE shop SURVIVE REGION FAILURE</code> to keep the database writable when an entire region goes offline. This requires at least three regions.</div>
+</section>
+
+<!-- ============ BACKUPS ============ -->
+<section class="page" data-page="backups" data-title="Backup & Restore" data-group="Operations">
+  <h1>Backup &amp; Restore</h1>
+  <p class="lead">Take consistent, distributed backups without pausing writes.</p>
+
+  <h2>Full backups</h2>
+<pre data-lang="sql"><code>BACKUP DATABASE shop INTO 's3://my-backups/shop?AUTH=implicit'
+  AS OF SYSTEM TIME '-10s';</code></pre>
+
+  <h2>Incremental backups</h2>
+  <p>Subsequent backups to the same collection only copy data that changed since the last backup.</p>
+<pre data-lang="sql"><code>BACKUP DATABASE shop INTO LATEST IN 's3://my-backups/shop?AUTH=implicit';</code></pre>
+
+  <h2>Scheduled backups</h2>
+<pre data-lang="sql"><code>CREATE SCHEDULE nightly
+  FOR BACKUP DATABASE shop INTO 's3://my-backups/shop?AUTH=implicit'
+  RECURRING '@daily'
+  FULL BACKUP '@weekly'
+  WITH SCHEDULE OPTIONS first_run = 'now';</code></pre>
+
+  <h2>Restoring</h2>
+<pre data-lang="sql"><code>-- Restore the most recent backup
+RESTORE DATABASE shop FROM LATEST IN 's3://my-backups/shop?AUTH=implicit';
+
+-- Point-in-time restore of a single table
+RESTORE TABLE shop.orders FROM LATEST IN 's3://my-backups/shop?AUTH=implicit'
+  AS OF SYSTEM TIME '2026-11-10 14:00:00'
+  WITH into_db = 'shop_recovery';</code></pre>
+  <div class="callout danger"><strong>Caution</strong>Restoring a database requires that no database with the same name exists. Use <code>into_db</code> or <code>new_db_name</code> to restore alongside existing data.</div>
+</section>
+
+<!-- ============ CONFIG ============ -->
+<section class="page" data-page="config" data-title="Configuration" data-group="Operations">
+  <h1>Configuration</h1>
+  <p class="lead">Basalt is configured through command-line flags, a TOML file, environment variables, and cluster settings — in that order of precedence.</p>
+
+  <h2>Configuration file</h2>
+<pre data-lang="toml"><code># /etc/basalt/basalt.toml
+[node]
+store       = "/data/basalt"
+listen-addr = "0.0.0.0:5433"
+http-addr   = "0.0.0.0:8080"
+locality    = "region=us-east,zone=us-east-1a"
+
+[cache]
+size = "25%"          # of system memory
+
+[sql]
+max-memory = "25%"
+max-connections = 2000
+
+[security]
+certs-dir = "/etc/basalt/certs"
+insecure  = false</code></pre>
+<pre data-lang="bash"><code>basalt start --config=/etc/basalt/basalt.toml</code></pre>
+
+  <h2>Environment variables</h2>
+  <p>Every flag can be set as an environment variable with the <code>BASALT_</code> prefix, upper-cased, with dashes replaced by underscores. For example, <code>--max-sql-memory</code> becomes <code>BASALT_MAX_SQL_MEMORY</code>.</p>
+
+  <h2>Cluster settings</h2>
+  <p>Cluster-wide settings are stored in the database and take effect on all nodes without a restart.</p>
+<pre data-lang="sql"><code>SHOW CLUSTER SETTING kv.rangefeed.enabled;
+SET CLUSTER SETTING kv.range_split.size = '1GiB';</code></pre>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Setting</th><th>Default</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>kv.range_split.size</code></td><td>512MiB</td><td>Size at which ranges split.</td></tr>
+      <tr><td><code>kv.rangefeed.enabled</code></td><td>true</td><td>Required for changefeeds.</td></tr>
+      <tr><td><code>sql.stats.automatic_collection.enabled</code></td><td>true</td><td>Collect table statistics for the optimizer.</td></tr>
+      <tr><td><code>gc.ttl</code></td><td>4h</td><td>How long old MVCC versions are retained.</td></tr>
+      <tr><td><code>server.shutdown.drain_wait</code></td><td>10s</td><td>Grace period before a draining node stops accepting work.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ CLI ============ -->
+<section class="page" data-page="cli" data-title="CLI" data-group="Reference">
+  <h1>CLI Reference</h1>
+  <p class="lead">The <code>basalt</code> binary includes the server, an interactive SQL shell, and cluster administration tools.</p>
+
+  <h2>Commands</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>basalt start</code></td><td>Start a node.</td></tr>
+      <tr><td><code>basalt init</code></td><td>Initialize a new multi-node cluster.</td></tr>
+      <tr><td><code>basalt sql</code></td><td>Open the interactive SQL shell.</td></tr>
+      <tr><td><code>basalt node status</code></td><td>Show liveness and range health for each node.</td></tr>
+      <tr><td><code>basalt node drain</code></td><td>Gracefully move leases and connections off a node.</td></tr>
+      <tr><td><code>basalt node decommission</code></td><td>Permanently remove a node from the cluster.</td></tr>
+      <tr><td><code>basalt cert</code></td><td>Create CA, node, and client certificates.</td></tr>
+      <tr><td><code>basalt doctor</code> <span class="badge">4.2</span></td><td>Diagnose common configuration and health issues.</td></tr>
+      <tr><td><code>basalt debug zip</code></td><td>Collect logs and diagnostics for support.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Common flags</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>--host</code></td><td>Address of the node to connect to.</td></tr>
+      <tr><td><code>--certs-dir</code></td><td>Directory containing TLS certificates.</td></tr>
+      <tr><td><code>--insecure</code></td><td>Disable TLS and authentication. Development only.</td></tr>
+      <tr><td><code>--url</code></td><td>Full connection URL; overrides other connection flags.</td></tr>
+      <tr><td><code>--format</code></td><td>Output format: <code>table</code>, <code>csv</code>, <code>json</code>, <code>tsv</code>.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>SQL shell shortcuts</h2>
+<pre data-lang="text"><code>\l              list databases
+\dt             list tables in the current database
+\d &lt;table&gt;      describe a table
+\timing         toggle query timing
+\x              toggle expanded output
+\q              quit</code></pre>
+
+  <h2>Examples</h2>
+<pre data-lang="bash"><code># Run a single statement and output JSON
+basalt sql --url "$BASALT_URL" -e "SELECT count(*) FROM orders" --format=json
+
+# Drain a node before maintenance
+basalt node drain 3 --certs-dir=certs --host=node1.internal</code></pre>
+</section>
+
+<!-- ============ CLIENTS ============ -->
+<section class="page" data-page="clients" data-title="Client Libraries" data-group="Reference">
+  <h1>Client Libraries</h1>
+  <p class="lead">Official drivers add automatic transaction retries, topology-aware load balancing, and connection pooling on top of the Postgres protocol.</p>
+
+  <h2>Installation</h2>
+  <div class="tabs" data-sync="lang">
+    <div class="tab-list"><button data-tab="python">Python</button><button data-tab="node">Node.js</button><button data-tab="go">Go</button></div>
+    <div class="tab-panel" data-tab="python"><pre data-lang="bash"><code>pip install basalt-client</code></pre></div>
+    <div class="tab-panel" data-tab="node"><pre data-lang="bash"><code>npm install @basalt/client</code></pre></div>
+    <div class="tab-panel" data-tab="go"><pre data-lang="bash"><code>go get github.com/basalt-db/basalt-go</code></pre></div>
+  </div>
+
+  <h2>Connection strings</h2>
+<pre data-lang="text"><code>basalt://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=verify-full&amp;sslrootcert=ca.crt</code></pre>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>sslmode</code></td><td><code>disable</code>, <code>require</code>, or <code>verify-full</code> (recommended).</td></tr>
+      <tr><td><code>application_name</code></td><td>Shown in the admin console and query logs.</td></tr>
+      <tr><td><code>load_balance</code></td><td>Distribute connections across discovered nodes. Default <code>true</code>.</td></tr>
+      <tr><td><code>prefer_region</code></td><td>Prefer nodes in the given region.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Connection pooling</h2>
+  <div class="tabs" data-sync="lang">
+    <div class="tab-list"><button data-tab="python">Python</button><button data-tab="node">Node.js</button><button data-tab="go">Go</button></div>
+    <div class="tab-panel" data-tab="python">
+<pre data-lang="python"><code>pool = basalt.Pool(os.environ["BASALT_URL"], min_size=4, max_size=20)
+with pool.connection() as conn:
+    conn.execute("SELECT 1")</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="node">
+<pre data-lang="js"><code>const pool = new Pool({ connectionString: process.env.BASALT_URL, max: 20 });
+const { rows } = await pool.query("SELECT 1");</code></pre>
+    </div>
+    <div class="tab-panel" data-tab="go">
+<pre data-lang="go"><code>cfg, _ := basalt.ParseConfig(os.Getenv("BASALT_URL"))
+cfg.MaxConns = 20
+pool, err := basalt.NewPool(ctx, cfg)</code></pre>
+    </div>
+  </div>
+  <div class="callout tip"><strong>Sizing your pool</strong>A good starting point is 4 connections per vCPU across the whole cluster, divided among your application instances.</div>
+
+  <h2>Community drivers</h2>
+  <p>Because Basalt speaks the PostgreSQL wire protocol, most Postgres drivers and ORMs work out of the box, including JDBC, psycopg, node-postgres, pgx, SQLAlchemy, Prisma, and Django. You'll need to implement retry handling for error <code>40001</code> yourself.</p>
+</section>
+
+<!-- ============ ERRORS ============ -->
+<section class="page" data-page="errors" data-title="Error Codes" data-group="Reference">
+  <h1>Error Codes</h1>
+  <p class="lead">Basalt uses standard SQLSTATE codes. The most common ones, and how to handle them, are listed below.</p>
+
+  <h2>Common errors</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>SQLSTATE</th><th>Name</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td><code>40001</code></td><td>serialization_failure</td><td>Retry the transaction. Use driver retry helpers.</td></tr>
+      <tr><td><code>40003</code></td><td>statement_completion_unknown</td><td>The commit outcome is ambiguous. Check whether the write applied before retrying.</td></tr>
+      <tr><td><code>23505</code></td><td>unique_violation</td><td>A row with this key already exists. Consider <code>UPSERT</code>.</td></tr>
+      <tr><td><code>23503</code></td><td>foreign_key_violation</td><td>The referenced row does not exist.</td></tr>
+      <tr><td><code>53200</code></td><td>out_of_memory</td><td>Increase <code>--max-sql-memory</code> or reduce query result size.</td></tr>
+      <tr><td><code>57014</code></td><td>query_canceled</td><td>Statement timeout reached or query canceled by user.</td></tr>
+      <tr><td><code>XXB01</code></td><td>range_unavailable</td><td>A range lost quorum. Check node health with <code>basalt node status</code>.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Retry errors in depth</h2>
+  <p>Serialization failures carry a reason in the error detail that helps you diagnose contention:</p>
+<pre data-lang="text"><code>ERROR: restart transaction: TransactionRetryWithProtoRefreshError: WriteTooOldError
+SQLSTATE: 40001
+HINT: See: https://docs.basalt.dev/transactions#handling-retries</code></pre>
+  <ul>
+    <li><strong>WriteTooOldError</strong> — another transaction wrote the same key at a later timestamp.</li>
+    <li><strong>ReadWithinUncertaintyInterval</strong> — clock skew between nodes made a value's ordering ambiguous.</li>
+    <li><strong>TransactionAbortedError</strong> — a higher-priority transaction pushed this one out.</li>
+  </ul>
+  <div class="callout note"><strong>Reducing contention</strong>Keep transactions short, avoid read-then-write patterns on hot rows, and use <code>SELECT … FOR UPDATE</code> to acquire locks early.</div>
+</section>
+
+    </article>
+
+    <div class="page-footer">
+      <div class="feedback">
+        Was this page helpful?
+        <button data-fb="yes">👍 Yes</button>
+        <button data-fb="no">👎 No</button>
+      </div>
+      <nav class="pager" id="pager"></nav>
+      <div class="meta">Last updated November 2026 · Basalt 4.2</div>
+    </div>
+  </main>
+
+  <aside class="toc" id="toc"></aside>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="search-box" role="dialog" aria-label="Search">
+    <div class="search-input-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="searchInput" type="text" placeholder="Search documentation…" autocomplete="off" spellcheck="false">
+      <kbd>esc</kbd>
+    </div>
+    <div class="results" id="results"></div>
+    <div class="search-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const pages = $$('.page');
+  const order = pages.map(p => p.dataset.page);
+
+  /* ---------- Theme ---------- */
+  const sun = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  const moon = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+  function setTheme(t) {
+    document.documentElement.dataset.theme = t;
+    $('#themeIcon').innerHTML = t === 'dark' ? sun : moon;
+    try { localStorage.setItem('basalt-theme', t); } catch (e) {}
+  }
+  let saved = null;
+  try { saved = localStorage.getItem('basalt-theme'); } catch (e) {}
+  setTheme(saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  $('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+
+  /* ---------- Toast ---------- */
+  let toastTimer;
+  function toast(msg) {
+    const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
+  /* ---------- Syntax highlighting ---------- */
+  const KW = {
+    sql: 'select from where and or not in is null as on join left right inner outer full cross create table database index inverted vector projection drop alter add column primary key references default unique check insert into values update set delete returning begin commit rollback group by order having limit offset desc asc distinct case when then else end exists if cascade use show explain analyze with over rows between preceding current row partition using hash storing family upsert conflict do excluded system time of backup restore latest schedule for recurring full options region locality regional global survive failure configure zone cluster setting changefeed any array text uuid int2 int4 int8 decimal timestamptz timestamp date jsonb bool true false count sum avg now'.split(' '),
+    python: 'import from def return with as for in if else elif class lambda try except finally raise None True False and or not print'.split(' '),
+    js: 'import from export const let var function return await async new if else for of in class try catch throw true false null undefined'.split(' '),
+    go: 'func return if err nil defer go package import var const type struct interface for range'.split(' '),
+    bash: 'basalt sudo apt brew curl sh docker pull run winget pip npm go get install'.split(' '),
+    toml: 'true false'.split(' ')
+  };
+  const COMMENT = { sql: '--[^\\n]*', js: '//[^\\n]*', go: '//[^\\n]*', python: '#[^\\n]*', bash: '#[^\\n]*', toml: '#[^\\n]*' };
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  function highlight(code, lang) {
+    if (!KW[lang]) return esc(code);
+    const kw = `\\b(?:${KW[lang].join('|')})\\b`;
+    const str = `'(?:[^'\\\\\\n]|\\\\.)*'|"(?:[^"\\\\\\n]|\\\\.)*"|\`[^\`]*\``;
+    const re = new RegExp(`(${COMMENT[lang]})|(${str})|(${kw})|(\\b\\d+(?:\\.\\d+)?\\b)`, lang === 'sql' ? 'gi' : 'g');
+    let out = '', last = 0, m;
+    while ((m = re.exec(code))) {
+      out += esc(code.slice(last, m.index));
+      const cls = m[1] ? 'c' : m[2] ? 's' : m[3] ? 'k' : 'n';
+      out += `<span class="tok-${cls}">${esc(m[0])}</span>`;
+      last = m.index + m[0].length;
+    }
+    return out + esc(code.slice(last));
+  }
+
+  $$('pre[data-lang]').forEach(pre => {
+    const lang = pre.dataset.lang;
+    const codeEl = pre.querySelector('code');
+    const raw = codeEl.textContent.replace(/^\n+|\s+$/g, '');
+    codeEl.innerHTML = highlight(raw, lang);
+    const wrap = document.createElement('div');
+    wrap.className = 'code';
+    wrap.innerHTML = `<div class="code-head"><span>${lang}</span><button class="copy-btn">Copy</button></div>`;
+    pre.replaceWith(wrap);
+    wrap.appendChild(pre);
+    const btn = wrap.querySelector('.copy-btn');
+    btn.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(raw);
+      } catch (e) {
+        const ta = document.createElement('textarea'); ta.value = raw; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); ta.remove();
+      }
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1500);
+    };
+  });
+
+  /* ---------- Tabs (synced across the site) ---------- */
+  function getPref(key, fallback) { try { return localStorage.getItem('basalt-tab-' + key) || fallback; } catch (e) { return fallback; } }
+  function activateTab(group, name) {
+    const buttons = $$('button[data-tab]', group);
+    if (!buttons.some(b => b.dataset.tab === name)) name = buttons[0].dataset.tab;
+    buttons.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+    $$('.tab-panel', group).forEach(p => p.classList.toggle('active', p.dataset.tab === name));
+  }
+  $$('.tabs').forEach(group => {
+    const key = group.dataset.sync;
+    activateTab(group, getPref(key, $('button[data-tab]', group).dataset.tab));
+    $$('button[data-tab]', group).forEach(btn => btn.onclick = () => {
+      const name = btn.dataset.tab;
+      try { localStorage.setItem('basalt-tab-' + key, name); } catch (e) {}
+      $$(`.tabs[data-sync="${key}"]`).forEach(g => activateTab(g, name));
+    });
+  });
+
+  /* ---------- Heading anchors ---------- */
+  const slug = s => s.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  pages.forEach(page => {
+    $$('h2, h3', page).forEach(h => {
+      const id = page.dataset.page + ':' + slug(h.textContent);
+      h.id = id;
+      const a = document.createElement('a');
+      a.className = 'anchor'; a.href = '#' + id; a.textContent = '#'; a.setAttribute('aria-hidden', 'true');
+      h.appendChild(a);
+    });
+  });
+
+  /* ---------- Router ---------- */
+  let current = null;
+  let tocObserver = null;
+
+  function buildToc(page) {
+    const toc = $('#toc');
+    const heads = $$('h2', page);
+    if (!heads.length) { toc.innerHTML = ''; return; }
+    toc.innerHTML = '<h4>On this page</h4>' + heads.map(h =>
+      `<a href="#${h.id}" data-toc="${h.id}">${esc(h.firstChild.textContent.trim())}</a>`).join('');
+    if (tocObserver) tocObserver.disconnect();
+    const visible = new Set();
+    tocObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id));
+      const first = heads.find(h => visible.has(h.id));
+      if (first) $$('a', toc).forEach(a => a.classList.toggle('active', a.dataset.toc === first.id));
+    }, { rootMargin: '-70px 0px -65% 0px' });
+    heads.forEach(h => tocObserver.observe(h));
+  }
+
+  function buildPager(id) {
+    const i = order.indexOf(id);
+    const prev = pages[i - 1], next = pages[i + 1];
+    $('#pager').innerHTML =
+      (prev ? `<a class="prev" href="#${prev.dataset.page}"><small>← Previous</small>${esc(prev.dataset.title)}</a>` : '') +
+      (next ? `<a class="next" href="#${next.dataset.page}"><small>Next →</small>${esc(next.dataset.title)}</a>` : '');
+  }
+
+  function route() {
+    const hash = decodeURIComponent(location.hash.slice(1)) || 'intro';
+    let [pageId] = hash.split(':');
+    if (!order.includes(pageId)) pageId = 'intro';
+    const page = pages[order.indexOf(pageId)];
+
+    if (current !== pageId) {
+      pages.forEach(p => p.classList.toggle('active', p === page));
+      $$('[data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === pageId));
+      buildToc(page);
+      buildPager(pageId);
+      document.title = `${page.dataset.title} — Basalt Docs`;
+      current = pageId;
+      if (!hash.includes(':')) window.scrollTo(0, 0);
+    }
+    if (hash.includes(':')) {
+      const target = document.getElementById(hash);
+      if (target) requestAnimationFrame(() => target.scrollIntoView());
+    }
+    document.body.classList.remove('nav-open');
+  }
+  window.addEventListener('hashchange', route);
+  route();
+
+  /* ---------- Mobile nav ---------- */
+  $('#menuBtn').onclick = () => document.body.classList.toggle('nav-open');
+  document.addEventListener('click', e => {
+    if (document.body.classList.contains('nav-open') && !e.target.closest('#sidebar, #menuBtn'))
+      document.body.classList.remove('nav-open');
+  });
+
+  /* ---------- Feedback ---------- */
+  $$('[data-fb]').forEach(b => b.onclick = () => toast(b.dataset.fb === 'yes' ? 'Thanks for your feedback!' : 'Thanks — we’ll work on improving this page.'));
+
+  /* ---------- Search ---------- */
+  const index = [];
+  pages.forEach(page => {
+    const base = { page: page.dataset.page, pageTitle: page.dataset.title, group: page.dataset.group };
+    index.push({ ...base, id: page.dataset.page, title: page.dataset.title, section: null,
+      text: ($('.lead', page) || {}).textContent || '' });
+    $$('h2', page).forEach(h => {
+      let text = '', n = h.nextElementSibling;
+      while (n && n.tagName !== 'H2') { text += ' ' + n.textContent; n = n.nextElementSibling; }
+      index.push({ ...base, id: h.id, title: h.firstChild.textContent.trim(), section: true, text: text.replace(/\s+/g, ' ') });
+    });
+  });
+
+  const overlay = $('#overlay'), input = $('#searchInput'), results = $('#results');
+  let sel = 0, hits = [];
+
+  function openSearch() { overlay.classList.add('open'); input.value = ''; renderResults(''); setTimeout(() => input.focus(), 10); }
+  function closeSearch() { overlay.classList.remove('open'); }
+
+  function mark(text, terms) {
+    let out = esc(text);
+    terms.forEach(t => { out = out.replace(new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>'); });
+    return out;
+  }
+
+  function renderResults(q) {
+    const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!terms.length) {
+      hits = index.filter(e => !e.section).slice(0, 8);
+    } else {
+      hits = index.map(e => {
+        const title = e.title.toLowerCase(), text = e.text.toLowerCase(), pt = e.pageTitle.toLowerCase();
+        let score = 0;
+        for (const t of terms) {
+          if (title.includes(t)) score += title.startsWith(t) ? 12 : 8;
+          else if (pt.includes(t)) score += 4;
+          else if (text.includes(t)) score += 2;
+          else return null;
+        }
+        if (!e.section) score += 1;
+        return { e, score };
+      }).filter(Boolean).sort((a, b) => b.score - a.score).slice(0, 12).map(r => r.e);
+    }
+    sel = 0;
+    if (!hits.length) { results.innerHTML = `<div class="empty">No results for “${esc(q)}”</div>`; return; }
+    results.innerHTML = hits.map((h, i) => {
+      let snip = '';
+      if (terms.length && h.text) {
+        const lower = h.text.toLowerCase();
+        const pos = Math.max(0, terms.map(t => lower.indexOf(t)).filter(p => p >= 0).sort((a, b) => a - b)[0] ?? 0);
+        const start = Math.max(0, pos - 40);
+        snip = (start > 0 ? '…' : '') + h.text.slice(start, start + 120).trim() + '…';
+      } else if (h.text) {
+        snip = h.text.slice(0, 110) + (h.text.length > 110 ? '…' : '');
+      }
+      return `<a class="result${i === 0 ? ' sel' : ''}" href="#${h.id}" data-i="${i}">
+        <div class="r-path">${esc(h.group)}${h.section ? ' › ' + esc(h.pageTitle) : ''}</div>
+        <div class="r-title">${mark(h.title, terms)}</div>
+        ${snip ? `<div class="r-snip">${mark(snip, terms)}</div>` : ''}
+      </a>`;
+    }).join('');
+  }
+
+  function moveSel(d) {
+    const items = $$('.result', results);
+    if (!items.length) return;
+    items[sel].classList.remove('sel');
+    sel = (sel + d + items.length) % items.length;
+    items[sel].classList.add('sel');
+    items[sel].scrollIntoView({ block: 'nearest' });
+  }
+
+  $('#searchTrigger').onclick = openSearch;
+  input.addEventListener('input', () => renderResults(input.value.trim()));
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); moveSel(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); moveSel(-1); }
+    else if (e.key === 'Enter' && hits[sel]) { location.hash = hits[sel].id; closeSearch(); }
+  });
+  results.addEventListener('click', e => { if (e.target.closest('.result')) closeSearch(); });
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); overlay.classList.contains('open') ? closeSearch() : openSearch(); }
+    else if (e.key === '/' && !overlay.classList.contains('open') && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); openSearch(); }
+    else if (e.key === 'Escape') closeSearch();
+  });
+})();
+</script>
+</body>
+</html>

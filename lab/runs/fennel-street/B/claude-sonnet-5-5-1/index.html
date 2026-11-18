@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Neighbourhood bakery on Fennel Street, London E8. Sourdough, Portuguese pastries and seasonal cakes. Wednesday to Sunday, 7:00 to 14:00.">
+<style>
+/* Fonts are self-hosted. Put the woff2 files in ./fonts/ (see the notes under the code). */
+@font-face{font-family:"Cormorant";src:local("Cormorant"),url("./fonts/Cormorant.woff2") format("woff2");font-weight:300 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:local("Source Sans 3"),url("./fonts/SourceSans3.woff2") format("woff2");font-weight:200 900;font-style:normal;font-display:swap}
+
+:root{
+  --color-ground:#F5EDE4;--color-ground:oklch(0.95 0.015 75);
+  --color-figure:#8D5951;--color-figure:oklch(0.52 0.07 30);
+  --color-text:#3D3832;--color-text:oklch(0.345 0.012 75);
+  --color-text-muted:#6C6761;--color-text-muted:oklch(0.518 0.012 75);
+  --color-tint-2:#CBA199;--color-tint-2:oklch(0.745 0.0521 30);
+  --color-tint-3:#E1CAC6;--color-tint-3:oklch(0.857 0.026 30);
+  --color-shade-1:#6A423C;--color-shade-1:oklch(0.425 0.0573 30);
+  --color-shade-2:#4A2D28;--color-shade-2:oklch(0.33 0.0445 30);
+  --serif:"Cormorant",Georgia,"Times New Roman",serif;
+  --sans:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--color-ground);color:var(--color-text);font:400 1.125rem/1.55 var(--sans)}
+a{color:var(--color-figure)}
+.wrap{max-width:46rem;margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:var(--serif);color:var(--color-figure);font-weight:600;line-height:1.05;margin:0}
+h2{font-size:clamp(2rem,7vw,2.6rem);margin-bottom:.6rem}
+section{padding:2.75rem 0;border-top:1px solid var(--color-tint-3)}
+
+/* header */
+.top{padding:1.25rem 0 0;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-weight:700;font-size:1.35rem;color:var(--color-shade-2);letter-spacing:.01em}
+.top a.call{font-weight:600;text-decoration:none;border-bottom:2px solid var(--color-tint-2)}
+
+/* hero */
+.hero{padding:2rem 0 2.75rem}
+.status{display:inline-flex;align-items:center;gap:.55rem;background:#fff8;border:1px solid var(--color-tint-3);border-radius:99px;padding:.4rem .95rem;font-weight:600;font-size:1rem;color:var(--color-text)}
+.dot{width:.6rem;height:.6rem;border-radius:50%;background:var(--color-text-muted)}
+.status.open .dot{background:var(--color-figure);box-shadow:0 0 0 4px var(--color-tint-3)}
+h1{font-size:clamp(3rem,13vw,5.6rem);font-weight:600;margin:1.1rem 0 .9rem;color:var(--color-shade-2);letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--color-figure)}
+.name{font-size:1.15rem;color:var(--color-text-muted);margin:0 0 1.6rem}
+.btns{display:flex;gap:.7rem;flex-wrap:wrap}
+.btn{display:inline-block;padding:.85rem 1.4rem;border-radius:6px;font-weight:700;text-decoration:none;font-size:1.05rem;min-height:48px}
+.btn.fill{background:var(--color-figure);color:var(--color-ground)}
+.btn.line{border:2px solid var(--color-figure);color:var(--color-figure)}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--color-shade-2);outline-offset:3px}
+
+/* photo placeholder */
+.ph{margin:1.6rem 0 0;aspect-ratio:4/3;border-radius:10px;background:
+  repeating-linear-gradient(45deg,var(--color-tint-3) 0 14px,#ead8d4 14px 28px);
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;
+  color:var(--color-shade-1);font-weight:600;font-size:.95rem;border:1px dashed var(--color-tint-2)}
+
+/* menu */
+.menu{list-style:none;margin:0;padding:0}
+.menu li{display:flex;align-items:baseline;gap:.5rem;padding:.6rem 0}
+.menu .item{font-family:var(--serif);font-weight:600;font-size:1.5rem;color:var(--color-text);line-height:1.15}
+.menu .item small{display:block;font-family:var(--sans);font-weight:400;font-size:.95rem;color:var(--color-text-muted)}
+.menu .lead{flex:1;border-bottom:2px dotted var(--color-tint-2);transform:translateY(-.3rem);min-width:1rem}
+.menu .price{font-weight:700;white-space:nowrap;color:var(--color-shade-1)}
+.sub{color:var(--color-text-muted);margin:0 0 1rem}
+
+/* order */
+.order{background:var(--color-shade-2);color:var(--color-ground);border-radius:12px;padding:1.8rem 1.4rem;margin-top:.5rem}
+.order h2{color:var(--color-ground)}
+.order p{margin:.4rem 0 1.2rem}
+.order .btn.fill{background:var(--color-ground);color:var(--color-shade-2)}
+.order .btn.line{border-color:var(--color-ground);color:var(--color-ground)}
+.order a:focus-visible{outline-color:var(--color-ground)}
+section.orderwrap{border-top:0}
+
+/* visit */
+.grid{display:grid;gap:1.6rem}
+table{border-collapse:collapse;width:100%}
+td{padding:.45rem 0;border-bottom:1px solid var(--color-tint-3)}
+td:last-child{text-align:right;font-weight:600}
+tr.today td{color:var(--color-figure);font-weight:700}
+.closed{color:var(--color-text-muted)}
+.map{aspect-ratio:16/10;border-radius:10px;background:var(--color-tint-3);border:1px dashed var(--color-tint-2);display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;color:var(--color-shade-1);font-weight:600;font-size:.95rem}
+address{font-style:normal;font-size:1.25rem}
+
+footer{border-top:1px solid var(--color-tint-3);padding:1.8rem 0 2.5rem;color:var(--color-text-muted);font-size:1rem}
+footer nav{display:flex;gap:1.4rem;flex-wrap:wrap;margin-bottom:.8rem}
+footer nav a{font-weight:600}
+
+@media(min-width:700px){
+  .wrap{padding:0 32px}
+  .grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .order{padding:2.4rem 2.2rem}
+}
+@media(prefers-reduced-motion:no-preference){.btn{transition:transform .12s}.btn:hover{transform:translateY(-2px)}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <span class="brand">Fennel Street Bakery</span>
+    <a class="call" href="tel:+442079460381">020 7946 0381</a>
+  </header>
+
+  <main>
+    <div class="hero">
+      <p class="status" id="status" role="status"><span class="dot"></span><span id="statusText">Wednesday to Sunday, 7:00 to 14:00</span></p>
+      <h1>Bread at seven, tarts by nine, <em>gone by two.</em></h1>
+      <p class="name">Fennel Street Bakery, 14 Fennel Street, London E8</p>
+      <div class="btns">
+        <a class="btn fill" href="#order">Order a cake</a>
+        <a class="btn line" href="#visit">Hours and address</a>
+      </div>
+      <div class="ph" role="img" aria-label="Photo placeholder">[ Photo placeholder: tray of pastéis de nata cooling on the counter ]</div>
+    </div>
+
+    <section id="baked">
+      <h2>Baked every day</h2>
+      <p class="sub">Ana bakes the bread. Rita does everything with custard.</p>
+      <ul class="menu">
+        <li><span class="item">Country sourdough</span><span class="lead"></span><span class="price">£5.20</span></li>
+        <li><span class="item">Seeded rye</span><span class="lead"></span><span class="price">£5.60</span></li>
+        <li><span class="item">Pastel de nata<small>or six for £11</small></span><span class="lead"></span><span class="price">£2.10</span></li>
+        <li><span class="item">Cardamom buns</span><span class="lead"></span><span class="price">£3.00</span></li>
+        <li><span class="item">Olive oil focaccia<small>by the slice</small></span><span class="lead"></span><span class="price">£2.80</span></li>
+      </ul>
+    </section>
+
+    <section id="season">
+      <h2>This season</h2>
+      <ul class="menu">
+        <li><span class="item">Orange and almond cake<small>whole £28, slice £4</small></span><span class="lead"></span><span class="price">£28</span></li>
+        <li><span class="item">Fig and walnut loaf</span><span class="lead"></span><span class="price">£6.40</span></li>
+      </ul>
+    </section>
+
+    <section class="orderwrap" id="order">
+      <div class="order">
+        <h2>Cake orders</h2>
+        <p>Whole cakes with 48 hours' notice. Message us or call 020 7946 0381.</p>
+        <div class="btns">
+          <a class="btn fill" href="tel:+442079460381">Call 020 7946 0381</a>
+          <a class="btn line" href="#">Message us on Instagram</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>Two sisters, one oven</h2>
+      <p>Ana bakes the bread. Rita does everything with custard. We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+      <div class="ph" role="img" aria-label="Photo placeholder">[ Photo placeholder: Ana and Rita Duarte at the bakery ]</div>
+    </section>
+
+    <section id="visit">
+      <h2>Find us</h2>
+      <div class="grid">
+        <div>
+          <table aria-label="Opening hours">
+            <tr data-d="1" class="closed"><td>Monday</td><td>Closed</td></tr>
+            <tr data-d="2" class="closed"><td>Tuesday</td><td>Closed</td></tr>
+            <tr data-d="3"><td>Wednesday</td><td>7:00 to 14:00</td></tr>
+            <tr data-d="4"><td>Thursday</td><td>7:00 to 14:00</td></tr>
+            <tr data-d="5"><td>Friday</td><td>7:00 to 14:00</td></tr>
+            <tr data-d="6"><td>Saturday</td><td>7:00 to 14:00</td></tr>
+            <tr data-d="0"><td>Sunday</td><td>7:00 to 14:00</td></tr>
+          </table>
+          <p class="sub" style="margin-top:.8rem">Or until we sell out.</p>
+        </div>
+        <div>
+          <address>14 Fennel Street<br>London E8</address>
+          <div class="map" role="img" aria-label="Map placeholder" style="margin-top:1rem">[ Map placeholder: 14 Fennel Street, London E8 ]</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <nav aria-label="Footer">
+      <a href="#">Instagram</a>
+      <a href="#order">Order a cake</a>
+      <a href="#visit">Find us</a>
+    </nav>
+    <div>© 2026 Fennel Street Bakery.</div>
+  </footer>
+</div>
+
+<script>
+/* Marks today's hours and shows a status line, using London time.
+   The shop may sell out before 14:00, so the wording stays cautious. */
+(function(){
+  try{
+    var p=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'short',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date());
+    var o={};p.forEach(function(x){o[x.type]=x.value});
+    var map={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+    var d=map[o.weekday],m=(+o.hour%24)*60+(+o.minute);
+    var row=document.querySelector('tr[data-d="'+d+'"]');if(row)row.classList.add('today');
+    var s=document.getElementById('status'),t=document.getElementById('statusText');
+    var days=d>=3||d===0;
+    if(days&&m>=420&&m<840){s.classList.add('open');t.textContent='Open today until 14:00, or until we sell out'}
+    else if(days&&m<420){t.textContent='Opens today at 7:00'}
+    else if(d===1||d===2){t.textContent='Closed today. Back Wednesday at 7:00'}
+    else{t.textContent='Closed for today. Open Wednesday to Sunday, 7:00 to 14:00'}
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

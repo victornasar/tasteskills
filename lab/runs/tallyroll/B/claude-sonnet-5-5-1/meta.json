@@ -1,0 +1,17 @@
+{
+  "brief": "tallyroll",
+  "condition": "B",
+  "model": "claude-sonnet-5-5",
+  "run": 1,
+  "repo_commit": "4905eaafec4e9b252138c59823e5b3c0cbf897ee",
+  "prompt": "Build the website described in this brief. Reply with the complete page as a single HTML file in one code block, then at most five short lines on your main design decisions. Before building, use the find-font skill to choose the typography and the find-color skill to choose the colors, and build with what they return.\n\n# Brief: Tallyroll\n\n**Register:** technical, calm, precise. The opposite of [fennel-street.md](fennel-street.md).\n\n**What it is:** Tallyroll is a usage-based billing API. It turns raw usage events into invoices. Engineers\nintegrate it; finance teams reconcile its line items every month.\n\n**Audience:** engineering leads at software companies with usage-based pricing, and the finance leads who sign\noff with them. They distrust marketing and want to see how it works.\n\n**The page must:** make a careful buyer trust Tallyroll with their revenue, and send them to the docs or to\nbook a demo.\n\n## Copy\n\nUse this copy. You may cut it, but don't add claims, numbers or testimonials that aren't here.\n\n- **Headline:** Every cent traces back to an event.\n- **Subhead:** Tallyroll turns raw usage into invoices your finance team can reconcile line by line.\n- **Primary action:** Read the docs. **Secondary action:** Book a demo.\n- **How it works:**\n  1. *Send events.* Post usage events from your product as they happen: `POST /v1/events`.\n  2. *Define pricing.* Tiers, minimums, credits and commitments, written as rules you can read.\n  3. *Invoice.* Each line on an invoice opens up into the events that produced it.\n- **Example invoice line:** \"API calls, March: 1,204,388 calls \u00d7 $0.0004 = $481.76\". Expands to the 31 daily\n  totals behind it.\n- **For finance:** Line-level audit trail. Exports to NetSuite and QuickBooks. Revenue recognition schedules.\n- **For engineering:** Idempotent event ingestion. Webhooks for every invoice state. SDKs for TypeScript, Python\n  and Go.\n- **Pricing:** 0.5% of billed revenue, no platform fee. Free until you bill $10,000 a month.\n- **Footer:** Docs \u00b7 Pricing \u00b7 Status \u00b7 Security \u00b7 Contact. \u00a9 2026 Tallyroll.\n\n## Constraints\n\n- One page, delivered as a single self-contained HTML file.\n- No external images. Where a picture or screenshot would go, build it in HTML and CSS (for example the invoice\n  line), or leave a clearly labelled placeholder.\n- Web fonts may be loaded or self-hosted; say which ones you used.\n",
+  "tools": [
+    "Read",
+    "Glob",
+    "Grep",
+    "Bash(python3:*)",
+    "Bash(node:*)"
+  ],
+  "seconds": 50,
+  "date": "2026-11-17"
+}

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quill — AI Note-Taking That Thinks With You</title>
+<meta name="description" content="Quill captures, organizes, and connects your notes automatically. Spend less time filing and more time thinking.">
+<style>
+  :root{
+    --bg:#0e0f13;
+    --bg-soft:#15171d;
+    --card:#1a1d25;
+    --border:#272b36;
+    --text:#eef0f5;
+    --muted:#9aa1b2;
+    --accent:#8b7bff;
+    --accent-2:#4de2c5;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* Nav */
+  nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(14,15,19,.75);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem;letter-spacing:-.02em}
+  .logo-mark{
+    width:28px;height:28px;border-radius:8px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:grid;place-items:center;color:#0e0f13;font-weight:800;font-size:.9rem;
+  }
+  .nav-links{display:flex;gap:32px;align-items:center;font-size:.95rem;color:var(--muted)}
+  .nav-links a:hover{color:var(--text)}
+  .btn{
+    display:inline-block;padding:11px 22px;border-radius:999px;font-weight:600;font-size:.95rem;
+    border:1px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent),#6a8cff);
+    color:#fff;box-shadow:0 8px 30px -8px rgba(139,123,255,.7);
+  }
+  .btn-ghost{border-color:var(--border);color:var(--text);background:transparent}
+  .btn-ghost:hover{background:var(--bg-soft)}
+
+  /* Hero */
+  .hero{
+    text-align:center;padding:96px 0 72px;position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+    width:900px;height:600px;
+    background:radial-gradient(closest-side,rgba(139,123,255,.28),transparent 70%);
+    z-index:0;pointer-events:none;
+  }
+  .hero .container{position:relative;z-index:1}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px;border:1px solid var(--border);border-radius:999px;
+    font-size:.82rem;color:var(--muted);background:var(--bg-soft);margin-bottom:28px;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 10px var(--accent-2)}
+  h1{
+    font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.08;letter-spacing:-.035em;font-weight:800;
+    max-width:820px;margin:0 auto 22px;
+  }
+  .grad{
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{font-size:1.2rem;color:var(--muted);max-width:600px;margin:0 auto 36px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .fine{margin-top:18px;font-size:.85rem;color:var(--muted)}
+
+  /* App mockup */
+  .mock{
+    margin:64px auto 0;max-width:960px;
+    background:var(--card);border:1px solid var(--border);border-radius:20px;
+    box-shadow:0 40px 100px -30px rgba(0,0,0,.8);overflow:hidden;text-align:left;
+  }
+  .mock-bar{display:flex;gap:7px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg-soft)}
+  .mock-bar span{width:11px;height:11px;border-radius:50%;background:#333845}
+  .mock-body{display:grid;grid-template-columns:220px 1fr 260px;min-height:340px}
+  .side{border-right:1px solid var(--border);padding:20px 16px;font-size:.88rem;color:var(--muted)}
+  .side h6{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;color:#6b7284}
+  .side li{list-style:none;padding:8px 10px;border-radius:8px;margin-bottom:2px}
+  .side li.active{background:rgba(139,123,255,.15);color:var(--text)}
+  .editor{padding:28px 32px}
+  .editor h3{font-size:1.4rem;margin-bottom:6px;letter-spacing:-.02em}
+  .editor .meta{font-size:.8rem;color:var(--muted);margin-bottom:18px}
+  .editor p{color:#c7ccd9;font-size:.95rem;margin-bottom:12px}
+  .editor .hl{background:rgba(77,226,197,.15);color:var(--accent-2);padding:1px 6px;border-radius:5px}
+  .ai{border-left:1px solid var(--border);padding:20px;background:rgba(139,123,255,.04);font-size:.85rem}
+  .ai h6{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:12px}
+  .chip{
+    background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;
+    padding:10px 12px;margin-bottom:10px;color:#c7ccd9;
+  }
+  .chip b{display:block;color:var(--text);font-size:.8rem;margin-bottom:2px}
+
+  /* Logos */
+  .trust{padding:48px 0;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:72px}
+  .trust p{font-size:.85rem;color:var(--muted);margin-bottom:20px}
+  .trust-row{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;color:#5d6475;font-weight:700;font-size:1.15rem;letter-spacing:-.02em}
+
+  /* Sections */
+  section{padding:96px 0}
+  .eyebrow{color:var(--accent);font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700;margin-bottom:14px}
+  h2{font-size:clamp(1.9rem,4vw,2.9rem);letter-spacing:-.03em;line-height:1.15;margin-bottom:16px}
+  .section-head{max-width:640px;margin-bottom:56px}
+  .section-head p{color:var(--muted);font-size:1.1rem}
+  .center{text-align:center;margin-left:auto;margin-right:auto}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;
+    transition:border-color .2s,transform .2s;
+  }
+  .card:hover{border-color:#3b4150;transform:translateY(-3px)}
+  .icon{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;margin-bottom:18px;
+    background:linear-gradient(135deg,rgba(139,123,255,.2),rgba(77,226,197,.15));
+    border:1px solid var(--border);
+  }
+  .card h3{font-size:1.1rem;margin-bottom:8px;letter-spacing:-.01em}
+  .card p{color:var(--muted);font-size:.95rem}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;counter-reset:s}
+  .step{position:relative;padding-top:56px}
+  .step::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;top:0;left:0;width:40px;height:40px;border-radius:50%;
+    display:grid;place-items:center;font-weight:700;
+    background:var(--bg-soft);border:1px solid var(--accent);color:var(--accent);
+  }
+  .step h3{margin-bottom:8px}
+  .step p{color:var(--muted)}
+
+  /* Testimonials */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .quote{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+  .quote p{font-size:1rem;margin-bottom:20px;color:#d6dae5}
+  .who{display:flex;align-items:center;gap:12px;font-size:.9rem}
+  .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#0e0f13;font-weight:700}
+  .who small{display:block;color:var(--muted)}
+
+  /* Pricing */
+  .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  .plan{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column}
+  .plan.featured{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 30px 80px -30px rgba(139,123,255,.5);position:relative}
+  .plan.featured::after{
+    content:"Most popular";position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:var(--accent);color:#fff;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:999px;
+  }
+  .plan h3{font-size:1.1rem;margin-bottom:6px}
+  .price{font-size:2.6rem;font-weight:800;letter-spacing:-.03em;margin:10px 0 4px}
+  .price span{font-size:1rem;color:var(--muted);font-weight:500}
+  .plan .desc{color:var(--muted);font-size:.92rem;margin-bottom:22px}
+  .plan ul{list-style:none;margin-bottom:28px;flex:1}
+  .plan li{padding:7px 0 7px 26px;position:relative;font-size:.94rem;color:#c7ccd9}
+  .plan li::before{content:"✓";position:absolute;left:0;color:var(--accent-2);font-weight:700}
+  .plan .btn{text-align:center}
+
+  /* FAQ */
+  .faq{max-width:760px;margin:0 auto}
+  details{border-bottom:1px solid var(--border);padding:20px 0}
+  summary{cursor:pointer;font-weight:600;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:1.4rem;color:var(--muted);transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{color:var(--muted);margin-top:12px}
+
+  /* Final CTA */
+  .final{
+    text-align:center;padding:80px 32px;border-radius:28px;border:1px solid var(--border);
+    background:radial-gradient(ellipse at top,rgba(139,123,255,.25),transparent 60%),var(--card);
+  }
+  .final p{color:var(--muted);font-size:1.1rem;max-width:520px;margin:0 auto 32px}
+
+  footer{padding:48px 0;color:var(--muted);font-size:.88rem;border-top:1px solid var(--border);margin-top:96px}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+  .foot nav{all:unset;display:flex;gap:24px}
+  .foot a:hover{color:var(--text)}
+
+  /* Responsive */
+  @media(max-width:900px){
+    .grid,.steps,.quotes,.pricing{grid-template-columns:1fr}
+    .mock-body{grid-template-columns:1fr}
+    .side,.ai{display:none}
+    .nav-links a:not(.btn){display:none}
+    section{padding:72px 0}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">Q</span> Quill</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#start" class="btn btn-primary">Get started free</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="badge"><span class="dot"></span> New: Meeting summaries with action items</div>
+    <h1>Notes that <span class="grad">organize themselves</span> and think with you</h1>
+    <p class="lead">Quill captures your ideas, links related thoughts, and answers questions from everything you've ever written. No folders. No filing. Just thinking.</p>
+    <div class="cta-row">
+      <a href="#start" class="btn btn-primary">Start writing for free</a>
+      <a href="#how" class="btn btn-ghost">See how it works</a>
+    </div>
+    <p class="fine">Free forever for personal use · No credit card required</p>
+
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-body">
+        <div class="side">
+          <h6>Recent</h6>
+          <ul>
+            <li class="active">Product roadmap Q1</li>
+            <li>Interview — Dana K.</li>
+            <li>Reading: Deep Work</li>
+            <li>Trip ideas: Lisbon</li>
+            <li>Weekly review</li>
+          </ul>
+        </div>
+        <div class="editor">
+          <h3>Product roadmap Q1</h3>
+          <div class="meta">Edited 2 min ago · 3 linked notes</div>
+          <p>Focus for the quarter: ship the <span class="hl">mobile offline mode</span> and tighten onboarding.</p>
+          <p>From the call with Dana: users abandon setup when asked to import more than one source. Consider a single "connect everything" step.</p>
+          <p>Open question — do we price by seats or by storage?</p>
+        </div>
+        <div class="ai">
+          <h6>✦ Quill AI</h6>
+          <div class="chip"><b>Summary</b>Two priorities: offline mode and simpler onboarding.</div>
+          <div class="chip"><b>Related</b>Interview — Dana K. mentions the same setup friction.</div>
+          <div class="chip"><b>Action item</b>Draft pricing comparison by Friday.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="trust">
+  <div class="container">
+    <p>Loved by thinkers, builders, and students everywhere</p>
+    <div class="trust-row">
+      <span>Northwind</span><span>Lumen</span><span>Parallax</span><span>Foundry</span><span>Octave</span>
+    </div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="container">
+    <div class="section-head center" style="text-align:center">
+      <div class="eyebrow">Features</div>
+      <h2>Everything you need to remember everything</h2>
+      <p>A calm, fast editor with an AI that does the tedious parts for you.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">✦</div>
+        <h3>Instant summaries</h3>
+        <p>Turn long notes, articles, and transcripts into crisp summaries with one keystroke.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔗</div>
+        <h3>Automatic linking</h3>
+        <p>Quill surfaces connections between notes so ideas build on each other, without manual tagging.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💬</div>
+        <h3>Ask your notes</h3>
+        <p>Chat with your whole library. Get answers with citations pointing back to the original note.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎙️</div>
+        <h3>Voice &amp; meeting capture</h3>
+        <p>Record conversations and get clean transcripts, summaries, and action items automatically.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔍</div>
+        <h3>Semantic search</h3>
+        <p>Search by meaning, not keywords. Find "that idea about pricing" even if you never used those words.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔒</div>
+        <h3>Private by design</h3>
+        <p>End-to-end encryption for stored notes, and your content is never used to train models.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>From scattered thoughts to clear thinking</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Capture anything</h3>
+        <p>Type, speak, clip from the web, or forward an email. Quill takes it all in.</p>
+      </div>
+      <div class="step">
+        <h3>Let AI organize</h3>
+        <p>Notes are titled, tagged, summarized, and linked to related ideas automatically.</p>
+      </div>
+      <div class="step">
+        <h3>Ask and create</h3>
+        <p>Query your knowledge, draft from your notes, and turn insights into action.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head center" style="text-align:center">
+      <div class="eyebrow">Testimonials</div>
+      <h2>People are thinking clearer</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote">
+        <p>"I stopped maintaining a folder system years ago in my head. Quill finally made that real. I just write and it all shows up when I need it."</p>
+        <div class="who"><div class="avatar">M</div><div>Maya R.<small>Product designer</small></div></div>
+      </div>
+      <div class="quote">
+        <p>"Asking my notes a question and getting a cited answer feels like cheating. It's saved me hours during research."</p>
+        <div class="who"><div class="avatar">J</div><div>Jordan T.<small>PhD student</small></div></div>
+      </div>
+      <div class="quote">
+        <p>"Meeting notes used to be a chore. Now I get action items the moment the call ends, and my team actually reads them."</p>
+        <div class="who"><div class="avatar">S</div><div>Sam P.<small>Engineering manager</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="padding-top:0">
+  <div class="container">
+    <div class="section-head center" style="text-align:center">
+      <div class="eyebrow">Pricing</div>
+      <h2>Simple pricing that scales with you</h2>
+      <p>Start free. Upgrade when you need more power.</p>
+    </div>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="price">$0<span>/mo</span></div>
+        <p class="desc">For personal notes and getting started.</p>
+        <ul>
+          <li>Unlimited notes</li>
+          <li>50 AI actions per month</li>
+          <li>Semantic search</li>
+          <li>Sync on 2 devices</li>
+        </ul>
+        <a href="#start" class="btn btn-ghost">Get started</a>
+      </div>
+      <div class="plan featured">
+        <h3>Pro</h3>
+        <div class="price">$10<span>/mo</span></div>
+        <p class="desc">For power users who think with AI daily.</p>
+        <ul>
+          <li>Unlimited AI actions</li>
+          <li>Voice &amp; meeting capture</li>
+          <li>Ask across your whole library</li>
+          <li>Unlimited devices</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#start" class="btn btn-primary">Try Pro free for 14 days</a>
+      </div>
+      <div class="plan">
+        <h3>Team</h3>
+        <div class="price">$18<span>/user/mo</span></div>
+        <p class="desc">For teams sharing knowledge.</p>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>Shared workspaces</li>
+          <li>Admin controls &amp; SSO</li>
+          <li>Team-wide search</li>
+        </ul>
+        <a href="#start" class="btn btn-ghost">Contact sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="container">
+    <div class="section-head center" style="text-align:center">
+      <div class="eyebrow">FAQ</div>
+      <h2>Questions, answered</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Is my data private?</summary>
+        <p>Yes. Notes are encrypted in transit and at rest, and we never use your content to train AI models.</p>
+      </details>
+      <details>
+        <summary>Can I import notes from other apps?</summary>
+        <p>Quill imports from Markdown, Notion, Evernote, Apple Notes, and plain text files in a few clicks.</p>
+      </details>
+      <details>
+        <summary>Does it work offline?</summary>
+        <p>Yes. You can read and write offline on every device, and changes sync when you reconnect. AI features require a connection.</p>
+      </details>
+      <details>
+        <summary>Can I export my notes?</summary>
+        <p>Anytime. Export your entire library to Markdown or PDF. Your notes are always yours.</p>
+      </details>
+      <details>
+        <summary>Can I cancel whenever I want?</summary>
+        <p>Of course. Cancel in two clicks from your settings, no questions asked.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="start" style="padding-top:0">
+  <div class="container">
+    <div class="final">
+      <h2>Your best thinking deserves a better home</h2>
+      <p>Join thousands of people who capture more, remember more, and create more with Quill.</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-primary">Start writing for free</a>
+        <a href="#pricing" class="btn btn-ghost">View pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container foot">
+    <div>© 2026 Quill. All rights reserved.</div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

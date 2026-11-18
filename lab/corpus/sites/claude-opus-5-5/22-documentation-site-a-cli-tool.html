@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kiln — Documentation</title>
+<meta name="description" content="kiln is a fast, declarative task runner for the command line.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f6f7f9;
+    --bg-code: #0f1419;
+    --fg: #1c2128;
+    --fg-muted: #57606a;
+    --border: #e1e4e8;
+    --accent: #e8590c;
+    --accent-soft: #fff1e6;
+    --code-fg: #e6edf3;
+    --inline-code-bg: #eff1f3;
+    --note: #0969da;
+    --note-bg: #ddf4ff;
+    --warn: #9a6700;
+    --warn-bg: #fff8c5;
+    --sidebar-w: 270px;
+    --header-h: 60px;
+    --radius: 8px;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg: #0d1117;
+    --bg-soft: #161b22;
+    --bg-code: #010409;
+    --fg: #e6edf3;
+    --fg-muted: #8d96a0;
+    --border: #30363d;
+    --accent: #ff8a3d;
+    --accent-soft: #2b1a0e;
+    --inline-code-bg: #262c36;
+    --note: #4493f8;
+    --note-bg: #0c2d6b55;
+    --warn: #d29922;
+    --warn-bg: #bb800926;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 20px); }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--fg);
+    background: var(--bg);
+    transition: background .2s, color .2s;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Header */
+  header.topbar {
+    position: fixed; inset: 0 0 auto 0;
+    height: var(--header-h);
+    display: flex; align-items: center; gap: 16px;
+    padding: 0 20px;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    z-index: 50;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--fg); }
+  .brand:hover { text-decoration: none; }
+  .brand-logo {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: linear-gradient(135deg, #ff922b, #e8590c 60%, #c92a2a);
+    display: grid; place-items: center;
+    color: #fff; font-family: var(--mono); font-size: 15px;
+  }
+  .version {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    padding: 2px 8px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .topbar-spacer { flex: 1; }
+  .topbar a.toplink { color: var(--fg-muted); font-size: 14px; }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg-soft);
+    color: var(--fg); cursor: pointer; display: grid; place-items: center;
+  }
+  .icon-btn:hover { border-color: var(--accent); }
+  .menu-btn { display: none; }
+
+  /* Layout */
+  .layout { display: flex; padding-top: var(--header-h); }
+  aside.sidebar {
+    position: fixed; top: var(--header-h); bottom: 0; left: 0;
+    width: var(--sidebar-w);
+    overflow-y: auto;
+    padding: 20px 16px 40px;
+    border-right: 1px solid var(--border);
+    background: var(--bg);
+    z-index: 40;
+  }
+  .search {
+    width: 100%; padding: 9px 12px; margin-bottom: 18px;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--bg-soft); color: var(--fg); font-size: 14px;
+  }
+  .search:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .nav-group { margin-bottom: 18px; }
+  .nav-group h4 {
+    margin: 0 0 6px 8px; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--fg-muted);
+  }
+  .nav-group a {
+    display: block; padding: 5px 10px; border-radius: 6px;
+    color: var(--fg); font-size: 14.5px; border-left: 2px solid transparent;
+  }
+  .nav-group a:hover { background: var(--bg-soft); text-decoration: none; }
+  .nav-group a.active { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+  .nav-group a code { font-size: 13px; }
+  .no-results { font-size: 14px; color: var(--fg-muted); padding: 0 8px; display: none; }
+
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1; min-width: 0;
+    padding: 40px 56px 100px;
+    max-width: calc(var(--sidebar-w) + 900px);
+  }
+  .content { max-width: 820px; }
+
+  /* Typography */
+  h1 { font-size: 42px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -.02em; }
+  h2 {
+    font-size: 28px; margin: 64px 0 16px; padding-top: 8px;
+    border-top: 1px solid var(--border); padding-top: 32px; letter-spacing: -.01em;
+  }
+  h3 { font-size: 20px; margin: 36px 0 10px; }
+  h2 .anchor, h3 .anchor { opacity: 0; margin-left: 8px; color: var(--fg-muted); font-weight: 400; }
+  h2:hover .anchor, h3:hover .anchor { opacity: 1; }
+  p { margin: 0 0 16px; }
+  .lead { font-size: 19px; color: var(--fg-muted); margin-bottom: 28px; }
+  code {
+    font-family: var(--mono); font-size: .88em;
+    background: var(--inline-code-bg); padding: 2px 6px; border-radius: 5px;
+  }
+  ul, ol { padding-left: 22px; margin: 0 0 16px; }
+  li { margin-bottom: 6px; }
+
+  /* Hero */
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: var(--radius); font-weight: 600; font-size: 15px;
+    border: 1px solid var(--border); color: var(--fg); background: var(--bg-soft);
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 28px 0; }
+  .feature { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; background: var(--bg-soft); }
+  .feature strong { display: block; margin-bottom: 4px; }
+  .feature span { color: var(--fg-muted); font-size: 14.5px; }
+
+  /* Code blocks */
+  .code {
+    position: relative; margin: 0 0 20px;
+    background: var(--bg-code); border-radius: var(--radius);
+    border: 1px solid #ffffff12; overflow: hidden;
+  }
+  .code-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 12px; font-family: var(--mono); font-size: 12px;
+    color: #8b949e; border-bottom: 1px solid #ffffff12; background: #ffffff06;
+  }
+  .code pre {
+    margin: 0; padding: 16px 18px; overflow-x: auto;
+    font-family: var(--mono); font-size: 14px; line-height: 1.6; color: var(--code-fg);
+  }
+  .code pre code { background: none; padding: 0; font-size: inherit; }
+  .copy-btn {
+    font-family: var(--sans); font-size: 12px; cursor: pointer;
+    background: transparent; color: #8b949e; border: 1px solid #ffffff22;
+    border-radius: 5px; padding: 2px 9px;
+  }
+  .copy-btn:hover { color: #fff; border-color: #ffffff55; }
+  .copy-btn.copied { color: #3fb950; border-color: #3fb950; }
+  .tok-prompt { color: #6e7681; user-select: none; }
+  .tok-cmd { color: #ffa657; }
+  .tok-flag { color: #79c0ff; }
+  .tok-str { color: #a5d6ff; }
+  .tok-com { color: #6e7681; font-style: italic; }
+  .tok-key { color: #ff7b72; }
+  .tok-ok { color: #3fb950; }
+  .tok-dim { color: #8b949e; }
+
+  /* Tabs */
+  .tabs { margin-bottom: 20px; }
+  .tab-list { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 12px; flex-wrap: wrap; }
+  .tab {
+    background: none; border: none; cursor: pointer; padding: 8px 14px;
+    font-size: 14px; font-weight: 500; color: var(--fg-muted);
+    border-bottom: 2px solid transparent; margin-bottom: -1px; font-family: inherit;
+  }
+  .tab:hover { color: var(--fg); }
+  .tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-panel[hidden] { display: none; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; border: 1px solid var(--border); border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--bg-soft); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--fg-muted); }
+  tr:last-child td { border-bottom: none; }
+  td code { white-space: nowrap; }
+
+  /* Callouts */
+  .callout {
+    border-left: 4px solid var(--note); background: var(--note-bg);
+    padding: 12px 16px; border-radius: 0 var(--radius) var(--radius) 0; margin: 0 0 20px; font-size: 15px;
+  }
+  .callout strong { color: var(--note); }
+  .callout.warn { border-color: var(--warn); background: var(--warn-bg); }
+  .callout.warn strong { color: var(--warn); }
+  .callout p:last-child { margin: 0; }
+
+  .cmd-sig {
+    font-family: var(--mono); font-size: 14px; background: var(--bg-soft);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 14px; margin-bottom: 16px; overflow-x: auto; white-space: nowrap;
+  }
+
+  .page-footer {
+    margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border);
+    color: var(--fg-muted); font-size: 14px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+
+  .back-top {
+    position: fixed; right: 24px; bottom: 24px; opacity: 0; pointer-events: none;
+    transition: opacity .2s; z-index: 30;
+  }
+  .back-top.show { opacity: 1; pointer-events: auto; }
+
+  .overlay { display: none; }
+
+  @media (max-width: 900px) {
+    .menu-btn { display: grid; }
+    aside.sidebar { transform: translateX(-100%); transition: transform .25s ease; box-shadow: none; }
+    body.nav-open aside.sidebar { transform: translateX(0); box-shadow: 8px 0 30px #0003; }
+    body.nav-open .overlay { display: block; position: fixed; inset: var(--header-h) 0 0 0; background: #0005; z-index: 35; }
+    main { margin-left: 0; padding: 28px 20px 80px; }
+    h1 { font-size: 32px; }
+    .topbar a.toplink { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Toggle navigation">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <a href="#top" class="brand"><span class="brand-logo">k</span>kiln</a>
+  <span class="version">v2.4.0</span>
+  <div class="topbar-spacer"></div>
+  <a class="toplink" href="#quick-start">Guide</a>
+  <a class="toplink" href="#cmd-run">Reference</a>
+  <a class="toplink" href="#changelog">Changelog</a>
+  <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle theme">
+    <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+  </button>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <input type="search" class="search" id="navSearch" placeholder="Filter docs…  ( / )" aria-label="Filter navigation">
+    <nav id="nav">
+      <div class="nav-group">
+        <h4>Getting Started</h4>
+        <a href="#introduction">Introduction</a>
+        <a href="#installation">Installation</a>
+        <a href="#quick-start">Quick start</a>
+      </div>
+      <div class="nav-group">
+        <h4>Guides</h4>
+        <a href="#kilnfile">The Kilnfile</a>
+        <a href="#dependencies">Task dependencies</a>
+        <a href="#caching">Caching</a>
+        <a href="#variables">Variables &amp; env</a>
+      </div>
+      <div class="nav-group">
+        <h4>Command Reference</h4>
+        <a href="#cmd-init"><code>kiln init</code></a>
+        <a href="#cmd-run"><code>kiln run</code></a>
+        <a href="#cmd-watch"><code>kiln watch</code></a>
+        <a href="#cmd-list"><code>kiln list</code></a>
+        <a href="#cmd-cache"><code>kiln cache</code></a>
+        <a href="#global-flags">Global flags</a>
+      </div>
+      <div class="nav-group">
+        <h4>More</h4>
+        <a href="#configuration">Configuration</a>
+        <a href="#exit-codes">Exit codes</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+        <a href="#changelog">Changelog</a>
+      </div>
+      <p class="no-results" id="noResults">No matching pages.</p>
+    </nav>
+  </aside>
+
+  <main id="top">
+    <div class="content">
+
+      <!-- Introduction -->
+      <section id="introduction">
+        <h1>Build anything, fire it once.</h1>
+        <p class="lead"><strong>kiln</strong> is a fast, declarative task runner for the command line. Describe your tasks in a single <code>Kilnfile</code>, and kiln figures out what to run, in what order, and what it can skip.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#installation">Install kiln →</a>
+          <a class="btn" href="#quick-start">Quick start</a>
+        </div>
+        <div class="features">
+          <div class="feature"><strong>⚡ Parallel by default</strong><span>Independent tasks run concurrently across all available cores.</span></div>
+          <div class="feature"><strong>🧊 Content-hashed cache</strong><span>Unchanged inputs mean instant, skipped tasks — locally or shared.</span></div>
+          <div class="feature"><strong>📄 One readable file</strong><span>Plain TOML. No plugins, no DSL, no surprise magic.</span></div>
+          <div class="feature"><strong>👀 Watch mode</strong><span>Re-run only the affected tasks when files change.</span></div>
+        </div>
+      </section>
+
+      <!-- Installation -->
+      <section id="installation">
+        <h2>Installation <a class="anchor" href="#installation">#</a></h2>
+        <p>kiln ships as a single static binary with no runtime dependencies. Pick your platform:</p>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-list" role="tablist">
+            <button class="tab" role="tab" aria-selected="true" data-tab="brew">Homebrew</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="curl">Shell script</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="win">Windows</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="cargo">From source</button>
+          </div>
+          <div class="tab-panel" data-panel="brew">
+            <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">brew</span> install kiln</code></pre></div>
+          </div>
+          <div class="tab-panel" data-panel="curl" hidden>
+            <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">curl</span> <span class="tok-flag">-fsSL</span> <span class="tok-str">https://kiln.example.dev/install.sh</span> | sh</code></pre></div>
+            <div class="callout"><p><strong>Tip:</strong> Inspect the script before piping it to a shell. It installs to <code>~/.local/bin</code> unless <code>KILN_INSTALL_DIR</code> is set.</p></div>
+          </div>
+          <div class="tab-panel" data-panel="win" hidden>
+            <div class="code"><div class="code-head"><span>powershell</span></div><pre><code><span class="tok-prompt">PS> </span><span class="tok-cmd">winget</span> install kiln.kiln
+<span class="tok-com"># or</span>
+<span class="tok-prompt">PS> </span><span class="tok-cmd">scoop</span> install kiln</code></pre></div>
+          </div>
+          <div class="tab-panel" data-panel="cargo" hidden>
+            <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">cargo</span> install kiln-cli <span class="tok-flag">--locked</span></code></pre></div>
+          </div>
+        </div>
+
+        <p>Verify the installation:</p>
+        <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> <span class="tok-flag">--version</span>
+<span class="tok-dim">kiln 2.4.0 (aarch64-apple-darwin)</span></code></pre></div>
+      </section>
+
+      <!-- Quick start -->
+      <section id="quick-start">
+        <h2>Quick start <a class="anchor" href="#quick-start">#</a></h2>
+        <ol>
+          <li>Create a Kilnfile in your project root:
+            <div class="code" style="margin-top:10px"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> init</code></pre></div>
+          </li>
+          <li>Open <code>Kilnfile</code> and define a task:
+            <div class="code" style="margin-top:10px"><div class="code-head"><span>Kilnfile</span></div><pre><code><span class="tok-key">[tasks.build]</span>
+run     = <span class="tok-str">"npm run build"</span>
+inputs  = [<span class="tok-str">"src/**"</span>, <span class="tok-str">"package.json"</span>]
+outputs = [<span class="tok-str">"dist/**"</span>]</code></pre></div>
+          </li>
+          <li>Run it:
+            <div class="code" style="margin-top:10px"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> run build
+<span class="tok-ok">✓</span> build <span class="tok-dim">(2.31s)</span>
+
+<span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> run build
+<span class="tok-ok">✓</span> build <span class="tok-dim">(cached, 4ms)</span></code></pre></div>
+          </li>
+        </ol>
+        <p>The second run is skipped because nothing in <code>inputs</code> changed. That's the core idea.</p>
+      </section>
+
+      <!-- Kilnfile -->
+      <section id="kilnfile">
+        <h2>The Kilnfile <a class="anchor" href="#kilnfile">#</a></h2>
+        <p>A Kilnfile is a TOML document. kiln searches the current directory and then each parent until it finds one, so you can run tasks from any subdirectory.</p>
+        <div class="code"><div class="code-head"><span>Kilnfile</span></div><pre><code><span class="tok-com"># Project-wide settings</span>
+<span class="tok-key">[kiln]</span>
+min_version = <span class="tok-str">"2.0"</span>
+default     = <span class="tok-str">"build"</span>
+
+<span class="tok-key">[tasks.lint]</span>
+run    = <span class="tok-str">"eslint src"</span>
+inputs = [<span class="tok-str">"src/**/*.ts"</span>, <span class="tok-str">".eslintrc"</span>]
+
+<span class="tok-key">[tasks.test]</span>
+run     = <span class="tok-str">"vitest run"</span>
+deps    = [<span class="tok-str">"build"</span>]
+inputs  = [<span class="tok-str">"src/**"</span>, <span class="tok-str">"test/**"</span>]
+
+<span class="tok-key">[tasks.build]</span>
+run     = [<span class="tok-str">"tsc -p ."</span>, <span class="tok-str">"node scripts/bundle.js"</span>]
+inputs  = [<span class="tok-str">"src/**"</span>, <span class="tok-str">"tsconfig.json"</span>]
+outputs = [<span class="tok-str">"dist/**"</span>]</code></pre></div>
+
+        <h3 id="task-fields">Task fields <a class="anchor" href="#task-fields">#</a></h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>run</code></td><td>string | string[]</td><td>Command(s) to execute. Arrays run sequentially and stop on the first failure.</td></tr>
+            <tr><td><code>deps</code></td><td>string[]</td><td>Tasks that must succeed before this one starts.</td></tr>
+            <tr><td><code>inputs</code></td><td>glob[]</td><td>Files hashed to determine whether the task is up to date.</td></tr>
+            <tr><td><code>outputs</code></td><td>glob[]</td><td>Files produced by the task; restored from cache on a hit.</td></tr>
+            <tr><td><code>env</code></td><td>table</td><td>Environment variables set for this task only.</td></tr>
+            <tr><td><code>cwd</code></td><td>string</td><td>Working directory, relative to the Kilnfile.</td></tr>
+            <tr><td><code>cache</code></td><td>bool</td><td>Set to <code>false</code> to always run. Default <code>true</code> when <code>inputs</code> is set.</td></tr>
+            <tr><td><code>description</code></td><td>string</td><td>Shown in <code>kiln list</code>.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- Dependencies -->
+      <section id="dependencies">
+        <h2>Task dependencies <a class="anchor" href="#dependencies">#</a></h2>
+        <p>kiln builds a directed acyclic graph from every task's <code>deps</code>. Tasks with no path between them run in parallel; everything else waits for its dependencies.</p>
+        <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> run test <span class="tok-flag">--graph</span>
+<span class="tok-dim">test
+└── build
+    ├── codegen
+    └── assets</span></code></pre></div>
+        <div class="callout warn"><p><strong>Warning:</strong> Cycles are a hard error. kiln will print the cycle path (e.g. <code>a → b → c → a</code>) and exit with code <code>3</code>.</p></div>
+      </section>
+
+      <!-- Caching -->
+      <section id="caching">
+        <h2>Caching <a class="anchor" href="#caching">#</a></h2>
+        <p>Before running a task, kiln computes a fingerprint from:</p>
+        <ul>
+          <li>The contents of every file matching <code>inputs</code></li>
+          <li>The task's <code>run</code> command and <code>env</code></li>
+          <li>The fingerprints of all its <code>deps</code></li>
+        </ul>
+        <p>If the fingerprint matches a previous successful run, kiln restores the recorded <code>outputs</code> and skips execution. The cache lives in <code>.kiln/cache</code> by default.</p>
+        <h3 id="remote-cache">Remote cache <a class="anchor" href="#remote-cache">#</a></h3>
+        <p>Share cache hits across machines and CI by pointing kiln at any S3-compatible bucket or HTTP endpoint:</p>
+        <div class="code"><div class="code-head"><span>Kilnfile</span></div><pre><code><span class="tok-key">[cache]</span>
+remote = <span class="tok-str">"s3://my-team-kiln-cache"</span>
+mode   = <span class="tok-str">"read-write"</span>   <span class="tok-com"># or "read-only" for local dev</span></code></pre></div>
+      </section>
+
+      <!-- Variables -->
+      <section id="variables">
+        <h2>Variables &amp; environment <a class="anchor" href="#variables">#</a></h2>
+        <p>Define reusable values under <code>[vars]</code> and reference them with <code>${name}</code>. Environment variables are available as <code>${env.NAME}</code>.</p>
+        <div class="code"><div class="code-head"><span>Kilnfile</span></div><pre><code><span class="tok-key">[vars]</span>
+out = <span class="tok-str">"dist"</span>
+
+<span class="tok-key">[tasks.deploy]</span>
+run  = <span class="tok-str">"rsync -a ${out}/ ${env.DEPLOY_HOST}:/srv/app"</span>
+deps = [<span class="tok-str">"build"</span>]
+env  = { NODE_ENV = <span class="tok-str">"production"</span> }</code></pre></div>
+        <p>Override any variable from the command line with <code>--var</code>:</p>
+        <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> run deploy <span class="tok-flag">--var</span> out=build</code></pre></div>
+      </section>
+
+      <!-- Commands -->
+      <section id="cmd-init">
+        <h2><code>kiln init</code> <a class="anchor" href="#cmd-init">#</a></h2>
+        <p>Create a starter Kilnfile in the current directory. kiln inspects the project and pre-fills tasks for detected tooling (npm, Cargo, Go, Make, Python).</p>
+        <div class="cmd-sig">kiln init [--template &lt;name&gt;] [--force]</div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>-t, --template &lt;name&gt;</code></td><td>Use a built-in template: <code>node</code>, <code>rust</code>, <code>go</code>, <code>python</code>, <code>blank</code>.</td></tr>
+            <tr><td><code>-f, --force</code></td><td>Overwrite an existing Kilnfile.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="cmd-run">
+        <h2><code>kiln run</code> <a class="anchor" href="#cmd-run">#</a></h2>
+        <p>Run one or more tasks and their dependencies. With no arguments, runs the task named in <code>kiln.default</code>.</p>
+        <div class="cmd-sig">kiln run [TASK...] [OPTIONS] [-- ARGS...]</div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>-j, --jobs &lt;n&gt;</code></td><td>Maximum parallel tasks. Defaults to the number of CPU cores.</td></tr>
+            <tr><td><code>--no-cache</code></td><td>Ignore cached results and run everything.</td></tr>
+            <tr><td><code>--only</code></td><td>Run the named tasks without their dependencies.</td></tr>
+            <tr><td><code>--dry-run</code></td><td>Print what would run, then exit.</td></tr>
+            <tr><td><code>--graph</code></td><td>Print the dependency tree and exit.</td></tr>
+            <tr><td><code>--var &lt;k=v&gt;</code></td><td>Override a variable. Repeatable.</td></tr>
+            <tr><td><code>-k, --keep-going</code></td><td>Continue running unrelated tasks after a failure.</td></tr>
+          </tbody>
+        </table></div>
+        <p>Arguments after <code>--</code> are appended to the final task's command:</p>
+        <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> run test <span class="tok-flag">--</span> <span class="tok-flag">--reporter=verbose</span></code></pre></div>
+      </section>
+
+      <section id="cmd-watch">
+        <h2><code>kiln watch</code> <a class="anchor" href="#cmd-watch">#</a></h2>
+        <p>Run tasks, then re-run them whenever any of their <code>inputs</code> change. Only affected tasks in the graph are re-executed.</p>
+        <div class="cmd-sig">kiln watch [TASK...] [--debounce &lt;ms&gt;] [--clear]</div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>--debounce &lt;ms&gt;</code></td><td>Wait this long after the last change before re-running. Default <code>150</code>.</td></tr>
+            <tr><td><code>-c, --clear</code></td><td>Clear the terminal before each run.</td></tr>
+            <tr><td><code>--restart</code></td><td>Kill and restart long-running tasks (e.g. dev servers) on change.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="cmd-list">
+        <h2><code>kiln list</code> <a class="anchor" href="#cmd-list">#</a></h2>
+        <p>Show every task in the Kilnfile with its description and dependencies.</p>
+        <div class="cmd-sig">kiln list [--json]</div>
+        <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> list
+<span class="tok-key">build</span>   <span class="tok-dim">Compile and bundle the app</span>
+<span class="tok-key">lint</span>    <span class="tok-dim">Check code style</span>
+<span class="tok-key">test</span>    <span class="tok-dim">Run unit tests        → build</span>
+<span class="tok-key">deploy</span>  <span class="tok-dim">Ship to production    → build</span></code></pre></div>
+      </section>
+
+      <section id="cmd-cache">
+        <h2><code>kiln cache</code> <a class="anchor" href="#cmd-cache">#</a></h2>
+        <p>Inspect and manage the local cache.</p>
+        <div class="cmd-sig">kiln cache &lt;status | clean | prune&gt; [OPTIONS]</div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Subcommand</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>status</code></td><td>Show cache size, entry count, and hit rate for recent runs.</td></tr>
+            <tr><td><code>clean [TASK]</code></td><td>Delete all cache entries, or only those for one task.</td></tr>
+            <tr><td><code>prune --older-than &lt;dur&gt;</code></td><td>Remove entries older than a duration such as <code>7d</code> or <code>12h</code>.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="global-flags">
+        <h2>Global flags <a class="anchor" href="#global-flags">#</a></h2>
+        <p>These work with every command.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>-f, --file &lt;path&gt;</code></td><td>Use a specific Kilnfile instead of searching.</td></tr>
+            <tr><td><code>-v, --verbose</code></td><td>Increase log output. Repeat for more (<code>-vv</code>).</td></tr>
+            <tr><td><code>-q, --quiet</code></td><td>Only print errors.</td></tr>
+            <tr><td><code>--color &lt;when&gt;</code></td><td><code>auto</code>, <code>always</code>, or <code>never</code>.</td></tr>
+            <tr><td><code>-h, --help</code></td><td>Print help for the command.</td></tr>
+            <tr><td><code>-V, --version</code></td><td>Print the version and exit.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- Configuration -->
+      <section id="configuration">
+        <h2>Configuration <a class="anchor" href="#configuration">#</a></h2>
+        <p>User-level defaults live in <code>~/.config/kiln/config.toml</code> (or <code>%APPDATA%\kiln\config.toml</code> on Windows). Project Kilnfile settings always take precedence.</p>
+        <div class="code"><div class="code-head"><span>config.toml</span></div><pre><code>jobs   = <span class="tok-str">8</span>
+color  = <span class="tok-str">"always"</span>
+
+<span class="tok-key">[cache]</span>
+dir      = <span class="tok-str">"~/.cache/kiln"</span>
+max_size = <span class="tok-str">"5GB"</span></code></pre></div>
+        <p>Every setting can also be provided via environment variable using the <code>KILN_</code> prefix, e.g. <code>KILN_JOBS=4</code> or <code>KILN_CACHE_DIR=/tmp/kiln</code>.</p>
+      </section>
+
+      <!-- Exit codes -->
+      <section id="exit-codes">
+        <h2>Exit codes <a class="anchor" href="#exit-codes">#</a></h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>0</code></td><td>All tasks succeeded (or were cached).</td></tr>
+            <tr><td><code>1</code></td><td>One or more tasks failed.</td></tr>
+            <tr><td><code>2</code></td><td>Invalid usage or unknown task.</td></tr>
+            <tr><td><code>3</code></td><td>Kilnfile parse error or dependency cycle.</td></tr>
+            <tr><td><code>130</code></td><td>Interrupted (Ctrl-C).</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- Troubleshooting -->
+      <section id="troubleshooting">
+        <h2>Troubleshooting <a class="anchor" href="#troubleshooting">#</a></h2>
+        <h3 id="ts-cache-miss">A task never hits the cache <a class="anchor" href="#ts-cache-miss">#</a></h3>
+        <p>Run with <code>-vv</code> to see which input changed. Common culprits are generated files inside an input glob, or timestamps embedded in outputs that feed another task.</p>
+        <div class="code"><div class="code-head"><span>bash</span></div><pre><code><span class="tok-prompt">$ </span><span class="tok-cmd">kiln</span> run build <span class="tok-flag">-vv</span>
+<span class="tok-dim">[debug] build: fingerprint changed
+[debug]   ~ src/generated/version.ts</span></code></pre></div>
+        <h3 id="ts-not-found">"No Kilnfile found" <a class="anchor" href="#ts-not-found">#</a></h3>
+        <p>kiln stops searching at your home directory and at filesystem roots. Pass <code>--file</code> explicitly, or run <code>kiln init</code>.</p>
+        <h3 id="ts-windows">Commands behave differently on Windows <a class="anchor" href="#ts-windows">#</a></h3>
+        <p>kiln uses <code>sh</code> on Unix and <code>cmd.exe</code> on Windows. Set <code>shell = "pwsh"</code> under <code>[kiln]</code> for consistent behavior, or keep commands to portable executables.</p>
+      </section>
+
+      <!-- Changelog -->
+      <section id="changelog">
+        <h2>Changelog <a class="anchor" href="#changelog">#</a></h2>
+        <h3 id="v2-4-0">2.4.0 <a class="anchor" href="#v2-4-0">#</a></h3>
+        <ul>
+          <li>Added <code>kiln watch --restart</code> for long-running processes.</li>
+          <li>Remote cache now supports HTTP endpoints in addition to S3.</li>
+          <li>Faster glob matching on large monorepos (~3× on 100k files).</li>
+        </ul>
+        <h3 id="v2-3-0">2.3.0 <a class="anchor" href="#v2-3-0">#</a></h3>
+        <ul>
+          <li>New <code>kiln cache prune</code> subcommand.</li>
+          <li><code>kiln list --json</code> for editor integrations.</li>
+        </ul>
+        <h3 id="v2-0-0">2.0.0 <a class="anchor" href="#v2-0-0">#</a></h3>
+        <ul>
+          <li><strong>Breaking:</strong> Kilnfile format moved from YAML to TOML. Run <code>kiln migrate</code> to convert.</li>
+        </ul>
+      </section>
+
+      <footer class="page-footer">
+        <span>kiln is released under the MIT License.</span>
+        <a href="#top">Back to top ↑</a>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<button class="icon-btn back-top" id="backTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+(function () {
+  const root = document.documentElement;
+
+  /* ---------- Theme ---------- */
+  const themeIcon = document.getElementById('themeIcon');
+  const sun = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+  const moon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    themeIcon.innerHTML = t === 'dark' ? sun : moon;
+    try { localStorage.setItem('kiln-theme', t); } catch (e) {}
+  }
+  let saved = null;
+  try { saved = localStorage.getItem('kiln-theme'); } catch (e) {}
+  setTheme(saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---------- Mobile nav ---------- */
+  const body = document.body;
+  document.getElementById('menuBtn').addEventListener('click', () => body.classList.toggle('nav-open'));
+  document.getElementById('overlay').addEventListener('click', () => body.classList.remove('nav-open'));
+  document.querySelectorAll('#nav a').forEach(a => a.addEventListener('click', () => body.classList.remove('nav-open')));
+
+  /* ---------- Copy buttons ---------- */
+  document.querySelectorAll('.code').forEach(block => {
+    const head = block.querySelector('.code-head');
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    head.appendChild(btn);
+    btn.addEventListener('click', async () => {
+      const clone = block.querySelector('pre code').cloneNode(true);
+      clone.querySelectorAll('.tok-prompt').forEach(p => p.remove());
+      let text = clone.textContent;
+      // For shell sessions, copy only command lines (those that had a prompt)
+      const raw = block.querySelector('pre code');
+      if (raw.querySelector('.tok-prompt')) {
+        text = raw.innerHTML.split('\n')
+          .filter(line => line.includes('tok-prompt'))
+          .map(line => { const d = document.createElement('div'); d.innerHTML = line; d.querySelectorAll('.tok-prompt').forEach(p => p.remove()); return d.textContent; })
+          .join('\n');
+      }
+      try {
+        await navigator.clipboard.writeText(text.trim());
+        btn.textContent = 'Copied!';
+      } catch (e) {
+        btn.textContent = 'Failed';
+      }
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1600);
+    });
+  });
+
+  /* ---------- Tabs ---------- */
+  document.querySelectorAll('[data-tabs]').forEach(group => {
+    const tabs = group.querySelectorAll('.tab');
+    const panels = group.querySelectorAll('.tab-panel');
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+      panels.forEach(p => p.hidden = p.dataset.panel !== tab.dataset.tab);
+    }));
+  });
+  // Auto-select Windows tab for Windows visitors
+  if (/Win/.test(navigator.platform || navigator.userAgent)) {
+    const winTab = document.querySelector('.tab[data-tab="win"]');
+    if (winTab) winTab.click();
+  }
+
+  /* ---------- Nav filter ---------- */
+  const search = document.getElementById('navSearch');
+  const groups = document.querySelectorAll('.nav-group');
+  const noResults = document.getElementById('noResults');
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    let any = false;
+    groups.forEach(g => {
+      let visible = 0;
+      g.querySelectorAll('a').forEach(a => {
+        const id = a.getAttribute('href').slice(1);
+        const sec = document.getElementById(id);
+        const hay = (a.textContent + ' ' + (sec ? sec.textContent : '')).toLowerCase();
+        const match = !q || hay.includes(q);
+        a.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+      g.style.display = visible ? '' : 'none';
+      if (visible) any = true;
+    });
+    noResults.style.display = any ? 'none' : 'block';
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== search && !/input|textarea/i.test(document.activeElement.tagName)) {
+      e.preventDefault();
+      if (window.innerWidth <= 900) body.classList.add('nav-open');
+      search.focus();
+    } else if (e.key === 'Escape') {
+      search.blur();
+      body.classList.remove('nav-open');
+    }
+  });
+
+  /* ---------- Scrollspy ---------- */
+  const links = Array.from(document.querySelectorAll('#nav a'));
+  const sections = links.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+  function updateActive() {
+    const y = window.scrollY + 120;
+    let current = sections[0];
+    for (const s of sections) { if (s.offsetTop <= y) current = s; }
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = sections[sections.length - 1];
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+    document.getElementById('backTop').classList.toggle('show', window.scrollY > 600);
+  }
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+
+  document.getElementById('backTop').addEventListener('click', () => window.scrollTo({ top: 0 }));
+})();
+</script>
+</body>
+</html>

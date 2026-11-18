@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>flux — CLI Documentation</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f6f8fa;
+    --text: #1f2328;
+    --muted: #656d76;
+    --border: #d0d7de;
+    --accent: #0969da;
+    --code-bg: #0d1117;
+    --code-text: #e6edf3;
+    --sidebar-w: 260px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --bg-alt: #161b22;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --code-bg: #010409;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    display: flex; align-items: center; gap: 16px;
+    padding: 0 24px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+  }
+  .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--text); }
+  .logo span { color: var(--accent); }
+  .version {
+    font-size: 0.75rem; padding: 2px 8px; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+  .spacer { flex: 1; }
+  #search {
+    width: 220px; padding: 7px 12px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--bg-alt); color: var(--text);
+    font-size: 0.9rem;
+  }
+  #menu-btn {
+    display: none; background: none; border: 1px solid var(--border);
+    color: var(--text); border-radius: 6px; padding: 6px 10px; font-size: 1rem; cursor: pointer;
+  }
+
+  nav {
+    position: fixed; top: 60px; bottom: 0; left: 0; width: var(--sidebar-w);
+    overflow-y: auto; padding: 24px 16px;
+    background: var(--bg-alt);
+    border-right: 1px solid var(--border);
+  }
+  nav h4 {
+    margin: 20px 0 6px; padding: 0 10px;
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+  }
+  nav h4:first-child { margin-top: 0; }
+  nav a {
+    display: block; padding: 5px 10px; border-radius: 6px;
+    color: var(--text); font-size: 0.92rem;
+  }
+  nav a:hover { background: var(--border); text-decoration: none; }
+  nav a.active { background: var(--accent); color: #fff; }
+  nav a.hidden { display: none; }
+
+  main {
+    margin-left: var(--sidebar-w);
+    padding: 90px 48px 80px;
+    max-width: calc(var(--sidebar-w) + 860px);
+  }
+  section { margin-bottom: 64px; }
+  h1 { font-size: 2.4rem; margin: 0 0 8px; letter-spacing: -0.03em; }
+  h2 {
+    font-size: 1.6rem; margin: 0 0 16px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border); letter-spacing: -0.02em;
+  }
+  h3 { font-size: 1.15rem; margin: 32px 0 8px; }
+  .lead { font-size: 1.15rem; color: var(--muted); margin-bottom: 24px; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em; background: var(--bg-alt);
+    border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px;
+  }
+  .code-block { position: relative; margin: 14px 0; }
+  pre {
+    margin: 0; padding: 16px 18px; overflow-x: auto;
+    background: var(--code-bg); color: var(--code-text);
+    border-radius: 8px; font-size: 0.88rem; line-height: 1.55;
+  }
+  pre code { background: none; border: none; padding: 0; color: inherit; font-size: inherit; }
+  .prompt { color: #7ee787; user-select: none; }
+  .comment { color: #8b949e; }
+  .copy {
+    position: absolute; top: 8px; right: 8px;
+    background: #21262d; color: #c9d1d9; border: 1px solid #30363d;
+    border-radius: 6px; font-size: 0.75rem; padding: 3px 9px; cursor: pointer;
+    opacity: 0; transition: opacity .15s;
+  }
+  .code-block:hover .copy, .copy:focus { opacity: 1; }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.93rem; }
+  th, td { text-align: left; padding: 9px 12px; border: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--bg-alt); }
+
+  .callout {
+    padding: 12px 16px; margin: 16px 0; border-left: 4px solid var(--accent);
+    background: var(--bg-alt); border-radius: 0 6px 6px 0;
+  }
+  .callout.warn { border-left-color: #d29922; }
+  .callout strong:first-child { display: block; margin-bottom: 2px; }
+
+  .tabs { margin: 14px 0; }
+  .tab-list { display: flex; gap: 4px; border-bottom: 1px solid var(--border); }
+  .tab-list button {
+    background: none; border: none; color: var(--muted);
+    padding: 8px 14px; cursor: pointer; font-size: 0.9rem;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tab-list button.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 20px 0; }
+  .card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; background: var(--bg-alt); }
+  .card h3 { margin: 0 0 4px; font-size: 1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+  footer { margin-left: var(--sidebar-w); padding: 24px 48px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+
+  @media (max-width: 860px) {
+    #menu-btn { display: block; }
+    #search { width: 130px; }
+    nav { transform: translateX(-100%); transition: transform .2s; z-index: 9; }
+    nav.open { transform: none; }
+    main, footer { margin-left: 0; padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button id="menu-btn" aria-label="Toggle navigation">☰</button>
+  <a class="logo" href="#top">flux<span>.</span></a>
+  <span class="version">v2.4.0</span>
+  <div class="spacer"></div>
+  <input id="search" type="search" placeholder="Filter docs…" aria-label="Filter navigation">
+</header>
+
+<nav id="sidebar">
+  <h4>Getting Started</h4>
+  <a href="#introduction">Introduction</a>
+  <a href="#installation">Installation</a>
+  <a href="#quickstart">Quickstart</a>
+  <h4>Reference</h4>
+  <a href="#commands">Commands</a>
+  <a href="#cmd-init">&nbsp;&nbsp;flux init</a>
+  <a href="#cmd-build">&nbsp;&nbsp;flux build</a>
+  <a href="#cmd-run">&nbsp;&nbsp;flux run</a>
+  <a href="#cmd-deploy">&nbsp;&nbsp;flux deploy</a>
+  <a href="#cmd-config">&nbsp;&nbsp;flux config</a>
+  <a href="#global-flags">Global Flags</a>
+  <h4>Guides</h4>
+  <a href="#configuration">Configuration File</a>
+  <a href="#env-vars">Environment Variables</a>
+  <a href="#ci">Using in CI</a>
+  <h4>More</h4>
+  <a href="#exit-codes">Exit Codes</a>
+  <a href="#troubleshooting">Troubleshooting</a>
+  <a href="#faq">FAQ</a>
+</nav>
+
+<main id="top">
+  <section id="introduction">
+    <h1>flux</h1>
+    <p class="lead">A fast, zero-config build and deploy tool for modern projects. One command to scaffold, build, run, and ship.</p>
+    <div class="cards">
+      <div class="card"><h3>⚡ Fast</h3><p>Incremental builds with content-addressed caching.</p></div>
+      <div class="card"><h3>🧩 Extensible</h3><p>Plugins and hooks for custom workflows.</p></div>
+      <div class="card"><h3>🔒 Reproducible</h3><p>Lockfile-driven builds that behave the same everywhere.</p></div>
+    </div>
+    <div class="callout">
+      <strong>Note</strong>
+      This documentation describes a sample CLI named <code>flux</code>. Replace the name, commands, and options with those of your own tool.
+    </div>
+  </section>
+
+  <section id="installation">
+    <h2>Installation</h2>
+    <p>flux requires <code>Node.js 18+</code> or a standalone binary. Choose your preferred method:</p>
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="active" data-tab="t-npm">npm</button>
+        <button data-tab="t-brew">Homebrew</button>
+        <button data-tab="t-curl">curl</button>
+      </div>
+      <div class="tab-panel active" id="t-npm">
+        <div class="code-block"><pre><code><span class="prompt">$ </span>npm install -g @flux/cli</code></pre><button class="copy">Copy</button></div>
+      </div>
+      <div class="tab-panel" id="t-brew">
+        <div class="code-block"><pre><code><span class="prompt">$ </span>brew install flux</code></pre><button class="copy">Copy</button></div>
+      </div>
+      <div class="tab-panel" id="t-curl">
+        <div class="code-block"><pre><code><span class="prompt">$ </span>curl -fsSL https://example.com/install.sh | sh</code></pre><button class="copy">Copy</button></div>
+      </div>
+    </div>
+    <p>Verify the installation:</p>
+    <div class="code-block"><pre><code><span class="prompt">$ </span>flux --version
+flux 2.4.0</code></pre><button class="copy">Copy</button></div>
+  </section>
+
+  <section id="quickstart">
+    <h2>Quickstart</h2>
+    <p>Create, build, and run a project in under a minute.</p>
+    <div class="code-block"><pre><code><span class="comment"># 1. Scaffold a new project</span>
+<span class="prompt">$ </span>flux init my-app
+<span class="prompt">$ </span>cd my-app
+
+<span class="comment"># 2. Build it</span>
+<span class="prompt">$ </span>flux build
+
+<span class="comment"># 3. Start the dev server</span>
+<span class="prompt">$ </span>flux run --watch</code></pre><button class="copy">Copy</button></div>
+    <p>Your app is now served at <code>http://localhost:3000</code>.</p>
+  </section>
+
+  <section id="commands">
+    <h2>Commands</h2>
+    <p>All commands follow the pattern <code>flux &lt;command&gt; [options]</code>.</p>
+    <table>
+      <thead><tr><th>Command</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>init</code></td><td>Scaffold a new project</td></tr>
+        <tr><td><code>build</code></td><td>Compile the project for production</td></tr>
+        <tr><td><code>run</code></td><td>Start a local development server</td></tr>
+        <tr><td><code>deploy</code></td><td>Publish a build to a target environment</td></tr>
+        <tr><td><code>config</code></td><td>Read and modify configuration</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="cmd-init">flux init</h3>
+    <p>Create a new project from a template.</p>
+    <div class="code-block"><pre><code>flux init [name] [--template &lt;tpl&gt;] [--no-git]</code></pre><button class="copy">Copy</button></div>
+    <table>
+      <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>--template, -t</code></td><td><code>default</code></td><td>Template to use (<code>default</code>, <code>minimal</code>, <code>api</code>)</td></tr>
+        <tr><td><code>--no-git</code></td><td>—</td><td>Skip git repository initialization</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="cmd-build">flux build</h3>
+    <p>Compile your project. Output goes to <code>./dist</code> by default.</p>
+    <div class="code-block"><pre><code>flux build [--out &lt;dir&gt;] [--minify] [--sourcemap] [--no-cache]</code></pre><button class="copy">Copy</button></div>
+    <table>
+      <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>--out, -o</code></td><td><code>dist</code></td><td>Output directory</td></tr>
+        <tr><td><code>--minify</code></td><td><code>true</code></td><td>Minify output</td></tr>
+        <tr><td><code>--sourcemap</code></td><td><code>false</code></td><td>Emit source maps</td></tr>
+        <tr><td><code>--no-cache</code></td><td>—</td><td>Disable the build cache</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="cmd-run">flux run</h3>
+    <p>Start a development server with optional live reload.</p>
+    <div class="code-block"><pre><code>flux run [--port &lt;n&gt;] [--host &lt;addr&gt;] [--watch] [--open]</code></pre><button class="copy">Copy</button></div>
+    <table>
+      <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>--port, -p</code></td><td><code>3000</code></td><td>Port to listen on</td></tr>
+        <tr><td><code>--host</code></td><td><code>localhost</code></td><td>Host address to bind</td></tr>
+        <tr><td><code>--watch, -w</code></td><td><code>false</code></td><td>Rebuild on file changes</td></tr>
+        <tr><td><code>--open</code></td><td><code>false</code></td><td>Open the browser on start</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="cmd-deploy">flux deploy</h3>
+    <p>Publish the current build to an environment defined in your config.</p>
+    <div class="code-block"><pre><code>flux deploy &lt;environment&gt; [--dry-run] [--yes]</code></pre><button class="copy">Copy</button></div>
+    <table>
+      <thead><tr><th>Option</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>--dry-run</code></td><td>Show what would be deployed without making changes</td></tr>
+        <tr><td><code>--yes, -y</code></td><td>Skip the confirmation prompt</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn">
+      <strong>Caution</strong>
+      Deploying to <code>production</code> is not reversible from the CLI. Use <code>--dry-run</code> first.
+    </div>
+
+    <h3 id="cmd-config">flux config</h3>
+    <p>Inspect or change configuration values.</p>
+    <div class="code-block"><pre><code><span class="prompt">$ </span>flux config list
+<span class="prompt">$ </span>flux config get build.out
+<span class="prompt">$ </span>flux config set build.out ./public</code></pre><button class="copy">Copy</button></div>
+  </section>
+
+  <section id="global-flags">
+    <h2>Global Flags</h2>
+    <p>These flags work with every command.</p>
+    <table>
+      <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>--config, -c &lt;path&gt;</code></td><td>Path to a config file</td></tr>
+        <tr><td><code>--verbose, -v</code></td><td>Enable verbose logging</td></tr>
+        <tr><td><code>--quiet, -q</code></td><td>Suppress non-error output</td></tr>
+        <tr><td><code>--no-color</code></td><td>Disable colored output</td></tr>
+        <tr><td><code>--help, -h</code></td><td>Show help for a command</td></tr>
+        <tr><td><code>--version</code></td><td>Print the version and exit</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="configuration">
+    <h2>Configuration File</h2>
+    <p>flux looks for <code>flux.config.json</code> in the current directory and walks up to find one. Command-line flags override file values.</p>
+    <div class="code-block"><pre><code>{
+  "name": "my-app",
+  "build": {
+    "out": "dist",
+    "minify": true,
+    "sourcemap": false
+  },
+  "run": {
+    "port": 3000
+  },
+  "environments": {
+    "staging":    { "target": "s3://my-bucket-staging" },
+    "production": { "target": "s3://my-bucket-prod" }
+  }
+}</code></pre><button class="copy">Copy</button></div>
+  </section>
+
+  <section id="env-vars">
+    <h2>Environment Variables</h2>
+    <table>
+      <thead><tr><th>Variable</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>FLUX_CONFIG</code></td><td>Path to the config file (same as <code>--config</code>)</td></tr>
+        <tr><td><code>FLUX_TOKEN</code></td><td>Auth token used by <code>flux deploy</code></td></tr>
+        <tr><td><code>FLUX_CACHE_DIR</code></td><td>Override the cache location</td></tr>
+        <tr><td><code>FLUX_LOG_LEVEL</code></td><td><code>debug</code>, <code>info</code>, <code>warn</code>, or <code>error</code></td></tr>
+        <tr><td><code>NO_COLOR</code></td><td>Disable colored output when set</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="ci">
+    <h2>Using in CI</h2>
+    <p>Example GitHub Actions workflow that builds and deploys on push to <code>main</code>:</p>
+    <div class="code-block"><pre><code>name: deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  ship:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install -g @flux/cli
+      - run: flux build --no-color
+      - run: flux deploy production --yes
+        env:
+          FLUX_TOKEN: ${{ secrets.FLUX_TOKEN }}</code></pre><button class="copy">Copy</button></div>
+    <div class="callout">
+      <strong>Tip</strong>
+      Store <code>FLUX_TOKEN</code> as an encrypted secret and never commit it to your repository.
+    </div>
+  </section>
+
+  <section id="exit-codes">
+    <h2>Exit Codes</h2>
+    <table>
+      <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>0</code></td><td>Success</td></tr>
+        <tr><td><code>1</code></td><td>General error</td></tr>
+        <tr><td><code>2</code></td><td>Invalid usage or arguments</td></tr>
+        <tr><td><code>3</code></td><td>Configuration error</td></tr>
+        <tr><td><code>4</code></td><td>Build failed</td></tr>
+        <tr><td><code>5</code></td><td>Deploy failed or authentication error</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="troubleshooting">
+    <h2>Troubleshooting</h2>
+    <h3>Port already in use</h3>
+    <p>Another process is using port 3000. Pick a different port with <code>flux run --port 4000</code>.</p>
+    <h3>Stale build output</h3>
+    <p>Clear the cache and rebuild:</p>
+    <div class="code-block"><pre><code><span class="prompt">$ </span>flux build --no-cache</code></pre><button class="copy">Copy</button></div>
+    <h3>Debugging unexpected behavior</h3>
+    <p>Run with verbose logging to see what flux is doing:</p>
+    <div class="code-block"><pre><code><span class="prompt">$ </span>FLUX_LOG_LEVEL=debug flux build --verbose</code></pre><button class="copy">Copy</button></div>
+  </section>
+
+  <section id="faq">
+    <h2>FAQ</h2>
+    <h3>Does flux support monorepos?</h3>
+    <p>Yes. Run commands from the package directory, or point to a package config with <code>--config</code>.</p>
+    <h3>Can I use a config format other than JSON?</h3>
+    <p>Not currently. Only <code>flux.config.json</code> is supported.</p>
+    <h3>How do I upgrade?</h3>
+    <p>Re-run your install command, e.g. <code>npm install -g @flux/cli@latest</code>.</p>
+  </section>
+</main>
+
+<footer>flux v2.4.0 · Documentation · MIT License</footer>
+
+<script>
+  // Copy buttons
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.parentElement.querySelector('code').innerText.replace(/^\$ /gm, '');
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = 'Copied!';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1400);
+      });
+    });
+  });
+
+  // Tabs
+  document.querySelectorAll('.tabs').forEach(function (tabs) {
+    tabs.querySelectorAll('.tab-list button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        tabs.querySelectorAll('.tab-list button').forEach(function (x) { x.classList.remove('active'); });
+        tabs.querySelectorAll('.tab-panel').forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+        tabs.querySelector('#' + b.dataset.tab).classList.add('active');
+      });
+    });
+  });
+
+  // Mobile menu
+  var sidebar = document.getElementById('sidebar');
+  document.getElementById('menu-btn').addEventListener('click', function () {
+    sidebar.classList.toggle('open');
+  });
+  sidebar.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') sidebar.classList.remove('open');
+  });
+
+  // Nav filter
+  document.getElementById('search').addEventListener('input', function (e) {
+    var q = e.target.value.toLowerCase().trim();
+    sidebar.querySelectorAll('a').forEach(function (a) {
+      a.classList.toggle('hidden', q && a.textContent.toLowerCase().indexOf(q) === -1);
+    });
+  });
+
+  // Active link highlighting
+  var links = Array.from(sidebar.querySelectorAll('a'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function onScroll() {
+    var y = window.scrollY + 100, idx = 0;
+    targets.forEach(function (t, i) { if (t && t.offsetTop <= y) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+</body>
+</html>

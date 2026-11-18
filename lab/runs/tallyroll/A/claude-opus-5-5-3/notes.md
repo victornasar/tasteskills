@@ -1,0 +1,5 @@
+- **Fonts:** IBM Plex Sans for text and IBM Plex Mono for numbers, endpoints and labels, both loaded from Google Fonts. Mono with tabular figures keeps the columns of money lined up.
+- **The invoice is the first proof:** right below the hero sits a working invoice line. Opening it shows 31 daily totals, and they add up to exactly 1,204,388 calls and $481.76. It's labelled "illustrative" because the daily numbers are made up to match the brief's total.
+- **Calm look:** warm off-white paper, ink-coloured text, one green accent and thin ledger-style rules. There are no gradients, no animation beyond a caret turning, and dark mode is supported.
+- **Copy kept as given:** I didn't add any claims, numbers or testimonials. Finance and engineering get matching side-by-side columns, and pricing is shown as a short list of terms.
+- **Two calls to action:** "Read the docs" (primary) and "Book a demo" (secondary) appear in the hero and again at the bottom, after the reader has seen how it works.

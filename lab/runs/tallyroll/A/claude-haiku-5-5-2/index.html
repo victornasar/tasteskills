@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyroll: Usage-based billing API</title>
+<meta name="description" content="Tallyroll turns raw usage into invoices your finance team can reconcile line by line.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --ink: #1a1c1e;
+    --muted: #5b6066;
+    --rule: #d9d7d0;
+    --accent: #1d5a68;
+    --on-accent: #ffffff;
+    --tint: #eeede7;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111315;
+      --surface: #181b1e;
+      --ink: #e7e8e9;
+      --muted: #9ca2a8;
+      --rule: #2b3035;
+      --accent: #7fc1d1;
+      --on-accent: #0d1012;
+      --tint: #1b1f22;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111315;
+    --surface: #181b1e;
+    --ink: #e7e8e9;
+    --muted: #9ca2a8;
+    --rule: #2b3035;
+    --accent: #7fc1d1;
+    --on-accent: #0d1012;
+    --tint: #1b1f22;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 16px/1.6 "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+  /* Header */
+  header.site { border-bottom: 1px solid var(--rule); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+  .mark { font-weight: 600; text-decoration: none; letter-spacing: -0.01em; }
+  nav a { text-decoration: none; color: var(--muted); margin-left: 20px; font-size: 0.9375rem; }
+  nav a:hover { color: var(--ink); }
+
+  /* Type */
+  .eyebrow {
+    font: 500 0.75rem/1.4 "IBM Plex Mono", ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+  code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.875em;
+    background: var(--tint);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  /* Hero */
+  .hero { padding: 56px 0 48px; }
+  @media (min-width: 720px) { .hero { padding: 80px 0 64px; } }
+  h1 {
+    font-size: clamp(2rem, 4.6vw, 3.25rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+    margin: 0 0 20px;
+    max-width: 18ch;
+  }
+  .lede { font-size: 1.125rem; color: var(--muted); max-width: 52ch; margin: 0 0 32px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 4px;
+    border: 1px solid var(--accent);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-secondary { background: transparent; color: var(--ink); border-color: var(--rule); }
+  .btn-secondary:hover { border-color: var(--muted); }
+
+  /* Sections */
+  .block { border-top: 1px solid var(--rule); padding: 48px 0; }
+  @media (min-width: 720px) { .block { padding: 56px 0; } }
+
+  /* How it works */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 32px; }
+  @media (min-width: 720px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
+  .n { font: 500 0.8125rem "IBM Plex Mono", monospace; color: var(--accent); }
+  .steps h3 { font-size: 1.125rem; margin: 8px 0; font-weight: 600; }
+  .steps p { margin: 0; color: var(--muted); }
+
+  /* Invoice line */
+  .invoice {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    max-width: 880px;
+  }
+  .invoice summary { list-style: none; cursor: pointer; padding: 24px; }
+  .invoice summary::-webkit-details-marker { display: none; }
+  .line {
+    font: 400 1rem/1.7 "IBM Plex Mono", ui-monospace, monospace;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .line strong { font-weight: 500; color: var(--accent); }
+  .more {
+    display: block;
+    margin-top: 14px;
+    font: 500 0.8125rem "IBM Plex Mono", monospace;
+    color: var(--muted);
+  }
+  .more::after { content: " +"; }
+  .invoice[open] .more::after { content: " \2212"; }
+  .days {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+    gap: 6px;
+    padding: 20px 24px 8px;
+    border-top: 1px solid var(--rule);
+  }
+  .days span {
+    font: 400 0.75rem/1 "IBM Plex Mono", monospace;
+    text-align: center;
+    padding: 10px 0;
+    background: var(--tint);
+    border-radius: 3px;
+    color: var(--muted);
+  }
+  .caption { margin: 0; padding: 12px 24px 20px; font-size: 0.875rem; color: var(--muted); }
+
+  /* For finance / engineering */
+  .split { display: grid; gap: 40px; }
+  @media (min-width: 720px) { .split { grid-template-columns: 1fr 1fr; gap: 64px; } }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { padding: 14px 0; border-top: 1px solid var(--rule); }
+  .list li:last-child { border-bottom: 1px solid var(--rule); }
+
+  /* Pricing */
+  .price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; margin-bottom: 12px; }
+  .rate {
+    font: 500 clamp(2.5rem, 6vw, 3.5rem)/1 "IBM Plex Mono", monospace;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--accent);
+  }
+  .price p:last-child { margin: 0; color: var(--muted); font-size: 1.125rem; }
+  .free { margin: 0 0 32px; }
+
+  /* Footer */
+  .site-foot { border-top: 1px solid var(--rule); padding: 32px 0; font-size: 0.875rem; color: var(--muted); }
+  .site-foot nav { margin-bottom: 8px; }
+  .site-foot nav a { margin: 0 8px 0 0; font-size: 0.875rem; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="mark" href="/">Tallyroll</a>
+    <nav aria-label="Primary">
+      <a href="/docs">Docs</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="wrap hero">
+    <p class="eyebrow">Usage-based billing API</p>
+    <h1>Every cent traces back to an event.</h1>
+    <p class="lede">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/docs">Read the docs</a>
+      <a class="btn btn-secondary" href="/demo">Book a demo</a>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="how">
+    <p class="eyebrow" id="how">How it works</p>
+    <ol class="steps">
+      <li>
+        <span class="n">01</span>
+        <h3>Send events</h3>
+        <p>Post usage events from your product as they happen: <code>POST /v1/events</code>.</p>
+      </li>
+      <li>
+        <span class="n">02</span>
+        <h3>Define pricing</h3>
+        <p>Tiers, minimums, credits and commitments, written as rules you can read.</p>
+      </li>
+      <li>
+        <span class="n">03</span>
+        <h3>Invoice</h3>
+        <p>Each line on an invoice opens up into the events that produced it.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="wrap block" aria-labelledby="invoice-label">
+    <p class="eyebrow" id="invoice-label">Example invoice line</p>
+    <details class="invoice">
+      <summary>
+        <p class="line">
+          <span>API calls, March:</span>
+          <span>1,204,388 calls</span>
+          <span>&times; $0.0004</span>
+          =
+          <strong>$481.76</strong>
+        </p>
+        <span class="more">Show the 31 daily totals behind it</span>
+      </summary>
+      <div class="days" role="list" aria-label="Daily totals, March 1 to 31">
+        <span role="listitem">01</span><span role="listitem">02</span><span role="listitem">03</span><span role="listitem">04</span><span role="listitem">05</span><span role="listitem">06</span><span role="listitem">07</span><span role="listitem">08</span><span role="listitem">09</span><span role="listitem">10</span><span role="listitem">11</span><span role="listitem">12</span><span role="listitem">13</span><span role="listitem">14</span><span role="listitem">15</span><span role="listitem">16</span><span role="listitem">17</span><span role="listitem">18</span><span role="listitem">19</span><span role="listitem">20</span><span role="listitem">21</span><span role="listitem">22</span><span role="listitem">23</span><span role="listitem">24</span><span role="listitem">25</span><span role="listitem">26</span><span role="listitem">27</span><span role="listitem">28</span><span role="listitem">29</span><span role="listitem">30</span><span role="listitem">31</span>
+      </div>
+      <p class="caption">One cell per day of March. Daily values are omitted in this illustration.</p>
+    </details>
+  </section>
+
+  <section class="wrap block split" aria-label="Who Tallyroll is for">
+    <div>
+      <p class="eyebrow">For finance</p>
+      <ul class="list">
+        <li>Line-level audit trail.</li>
+        <li>Exports to NetSuite and QuickBooks.</li>
+        <li>Revenue recognition schedules.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow">For engineering</p>
+      <ul class="list">
+        <li>Idempotent event ingestion.</li>
+        <li>Webhooks for every invoice state.</li>
+        <li>SDKs for TypeScript, Python and Go.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="pricing-label">
+    <p class="eyebrow" id="pricing-label">Pricing</p>
+    <div class="price">
+      <p class="rate">0.5%</p>
+      <p>of billed revenue, no platform fee.</p>
+    </div>
+    <p class="free">Free until you bill $10,000 a month.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/docs">Read the docs</a>
+      <a class="btn btn-secondary" href="/demo">Book a demo</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="/docs">Docs</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/status">Status</a>
+      <a href="/security">Security</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <p style="margin:0">&copy; 2026 Tallyroll.</p>
+  </div>
+</footer>
+
+</body>
+</html>

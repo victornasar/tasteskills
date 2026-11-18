@@ -66,7 +66,7 @@ Agent without skills support? Point it at the skill's `SKILL.md` (in [`color/ski
 | --- | --- | --- |
 | [`color/`](color/) | 51 curated color directions, a script that picks and applies them, and research on 6,295 award-winning sites | Ready to use |
 | [`typography/`](typography/) | 63 curated free fonts, an avoid list of 27 overused ones, and the `/find-font` skill | Ready to use |
-| [`lab/`](lab/) | Experiments on whole-page design: which interventions actually make an agent's sites better | Research, no results yet |
+| [`lab/`](lab/) | Experiments on whole-page design: a measured corpus of AI defaults, a with/without-skills experiment, blind ratings | First results in |
 
 Each folder works on its own, with its own data, scripts and checks. Start with the folder's `README.md`;
 agents start with its `AGENTS.md`.
@@ -76,8 +76,12 @@ agents start with its `AGENTS.md`.
 - **Proven:** the skills pick from the curated lists, avoid the overused defaults, and give different answers
   to different briefs. Both areas have automated checks for this, including tests that fail if one font or
   color starts winning most briefs.
-- **Not yet proven:** that sites built with these skills look better to people. That's what [`lab/`](lab/)
-  is for, and its first experiments haven't run.
+- **Measured:** in 90 AI-built sites, landing pages show rounded boxes everywhere 100% of the time, a pill badge
+  above the headline 93% and a decorative gradient 87%. With the skills, default fonts vanish (without them,
+  every bakery page in the experiment used Fraunces) and layout patterns drop by about a quarter. See
+  [`lab/findings.md`](lab/findings.md).
+- **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open. The skills
+  also don't change page structure, so layout is the next area to work on.
 
 ## Words used here
 

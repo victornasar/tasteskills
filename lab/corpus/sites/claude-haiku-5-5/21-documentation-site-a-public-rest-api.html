@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acme API Documentation</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --sidebar-bg: #f6f8fa;
+      --text: #24292f;
+      --muted: #57606a;
+      --border: #d0d7de;
+      --accent: #0969da;
+      --code-bg: #f6f8fa;
+      --get: #1a7f37;
+      --post: #0969da;
+      --put: #9a6700;
+      --patch: #8250df;
+      --delete: #cf222e;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Layout */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { font-weight: 600; font-size: 1.1rem; color: var(--text); }
+    .topbar nav a { margin-left: 1.25rem; color: var(--muted); }
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      min-height: calc(100vh - 52px);
+    }
+    .sidebar {
+      position: sticky;
+      top: 52px;
+      align-self: start;
+      height: calc(100vh - 52px);
+      overflow-y: auto;
+      padding: 1.5rem 1rem;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+    }
+    .sidebar h4 {
+      margin: 1.25rem 0 0.4rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+    .sidebar h4:first-child { margin-top: 0; }
+    .sidebar ul { list-style: none; margin: 0; padding: 0; }
+    .sidebar li a {
+      display: block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+    .sidebar li a:hover { background: #eaeef2; text-decoration: none; }
+    .sidebar li a.active { background: #ddf4ff; color: var(--accent); font-weight: 600; }
+
+    main { padding: 2rem 3rem 4rem; max-width: 880px; }
+    h1 { font-size: 2rem; margin-top: 0; }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 2.5rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 { font-size: 1.15rem; margin-top: 2rem; }
+    p, li { color: var(--text); }
+    .muted { color: var(--muted); }
+
+    /* Endpoint blocks */
+    .endpoint {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+    }
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--sidebar-bg);
+      border-bottom: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .endpoint-body { padding: 1rem; }
+    .method {
+      display: inline-block;
+      min-width: 64px;
+      text-align: center;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .method.get { background: var(--get); }
+    .method.post { background: var(--post); }
+    .method.put { background: var(--put); }
+    .method.patch { background: var(--patch); }
+    .method.delete { background: var(--delete); }
+    .path { font-size: 0.95rem; }
+
+    /* Tables */
+    table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; font-size: 0.92rem; }
+    th, td { text-align: left; padding: 0.5rem 0.75rem; border: 1px solid var(--border); vertical-align: top; }
+    th { background: var(--sidebar-bg); font-weight: 600; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+    }
+    pre {
+      background: #0d1117;
+      color: #e6edf3;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+
+    .tabs { display: flex; gap: 0.25rem; margin-bottom: -1px; }
+    .tab-btn {
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      background: var(--sidebar-bg);
+      border-radius: 6px 6px 0 0;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .tab-btn.active { background: #0d1117; color: #e6edf3; border-color: #0d1117; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: #ddf4ff;
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+    }
+    .callout.warn { border-color: var(--put); background: #fff8c5; }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+      main { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Acme API</div>
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#authentication">Authentication</a>
+    <a href="#errors">Errors</a>
+    <a href="#changelog">Changelog</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h4>Getting Started</h4>
+    <ul>
+      <li><a href="#overview" class="active">Overview</a></li>
+      <li><a href="#authentication">Authentication</a></li>
+      <li><a href="#rate-limits">Rate Limits</a></li>
+      <li><a href="#errors">Errors</a></li>
+      <li><a href="#pagination">Pagination</a></li>
+    </ul>
+
+    <h4>Resources</h4>
+    <ul>
+      <li><a href="#users">Users</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#tasks">Tasks</a></li>
+    </ul>
+
+    <h4>Reference</h4>
+    <ul>
+      <li><a href="#webhooks">Webhooks</a></li>
+      <li><a href="#changelog">Changelog</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <section id="overview">
+      <h1>Acme API Documentation</h1>
+      <p class="muted">Version 2.1 · Base URL: <code>https://api.acme.example/v2</code></p>
+      <p>
+        The Acme REST API lets you programmatically manage users, projects, and tasks.
+        All requests and responses use JSON over HTTPS. Resources are addressed by URL,
+        and standard HTTP methods and status codes describe the outcome of each call.
+      </p>
+
+      <h3>Quickstart</h3>
+      <p>Fetch the authenticated user with a single request:</p>
+      <div class="tabs">
+        <button class="tab-btn active" data-group="qs" data-tab="qs-curl">cURL</button>
+        <button class="tab-btn" data-group="qs" data-tab="qs-js">JavaScript</button>
+        <button class="tab-btn" data-group="qs" data-tab="qs-py">Python</button>
+      </div>
+      <div class="tab-panel active" data-group="qs" id="qs-curl">
+<pre><code>curl https://api.acme.example/v2/me \
+  -H "Authorization: Bearer $ACME_API_KEY" \
+  -H "Accept: application/json"</code></pre>
+      </div>
+      <div class="tab-panel" data-group="qs" id="qs-js">
+<pre><code>const res = await fetch("https://api.acme.example/v2/me", {
+  headers: {
+    "Authorization": `Bearer ${process.env.ACME_API_KEY}`,
+    "Accept": "application/json"
+  }
+});
+const user = await res.json();
+console.log(user);</code></pre>
+      </div>
+      <div class="tab-panel" data-group="qs" id="qs-py">
+<pre><code>import os
+import requests
+
+res = requests.get(
+    "https://api.acme.example/v2/me",
+    headers={
+        "Authorization": f"Bearer {os.environ['ACME_API_KEY']}",
+        "Accept": "application/json",
+    },
+)
+res.raise_for_status()
+print(res.json())</code></pre>
+      </div>
+    </section>
+
+    <section id="authentication">
+      <h2>Authentication</h2>
+      <p>
+        Authenticate every request by sending your API key in the <code>Authorization</code>
+        header as a bearer token. Keys are created in the dashboard under
+        <strong>Settings → API Keys</strong>.
+      </p>
+<pre><code>Authorization: Bearer sk_live_EXAMPLE_KEY_REDACTED</code></pre>
+      <div class="callout warn">
+        <strong>Keep your keys secret.</strong> Do not embed API keys in client-side code,
+        public repositories, or URLs. Rotate a key immediately if you suspect it has leaked.
+      </div>
+      <p>Keys come in two forms:</p>
+      <table>
+        <thead>
+          <tr><th>Prefix</th><th>Environment</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>sk_live_</code></td><td>Production</td><td>Real data and billing.</td></tr>
+          <tr><td><code>sk_test_</code></td><td>Sandbox</td><td>Safe for development and testing.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="rate-limits">
+      <h2>Rate Limits</h2>
+      <p>
+        Each key is limited to <strong>600 requests per minute</strong>. Every response includes
+        headers describing your current quota:
+      </p>
+      <table>
+        <thead><tr><th>Header</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>X-RateLimit-Limit</code></td><td>Maximum requests allowed in the window.</td></tr>
+          <tr><td><code>X-RateLimit-Remaining</code></td><td>Requests remaining in the current window.</td></tr>
+          <tr><td><code>X-RateLimit-Reset</code></td><td>Unix timestamp when the window resets.</td></tr>
+          <tr><td><code>Retry-After</code></td><td>Seconds to wait before retrying (sent with <code>429</code>).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="errors">
+      <h2>Errors</h2>
+      <p>Errors return a non-2xx status code and a JSON body with a stable machine-readable <code>code</code>:</p>
+<pre><code>{
+  "error": {
+    "code": "validation_failed",
+    "message": "The field 'email' must be a valid email address.",
+    "param": "email",
+    "request_id": "req_8f2a91c3"
+  }
+}</code></pre>
+      <table>
+        <thead><tr><th>Status</th><th>Code</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>400</td><td><code>bad_request</code></td><td>Malformed JSON or invalid query parameters.</td></tr>
+          <tr><td>401</td><td><code>unauthorized</code></td><td>Missing or invalid API key.</td></tr>
+          <tr><td>403</td><td><code>forbidden</code></td><td>Key lacks permission for this resource.</td></tr>
+          <tr><td>404</td><td><code>not_found</code></td><td>The resource does not exist.</td></tr>
+          <tr><td>409</td><td><code>conflict</code></td><td>The request conflicts with current state.</td></tr>
+          <tr><td>422</td><td><code>validation_failed</code></td><td>One or more fields failed validation.</td></tr>
+          <tr><td>429</td><td><code>rate_limited</code></td><td>Too many requests. Retry after <code>Retry-After</code>.</td></tr>
+          <tr><td>500</td><td><code>internal_error</code></td><td>Something went wrong on our side. Include the <code>request_id</code> when contacting support.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="pagination">
+      <h2>Pagination</h2>
+      <p>
+        List endpoints are paginated with cursors. Pass <code>limit</code> (1–100, default 20)
+        and the <code>cursor</code> from the previous response's <code>next_cursor</code> field.
+        When <code>next_cursor</code> is <code>null</code>, you have reached the last page.
+      </p>
+<pre><code>GET /v2/tasks?limit=50&amp;cursor=eyJpZCI6MTAwfQ
+
+{
+  "data": [ ... ],
+  "next_cursor": "eyJpZCI6MTUwfQ",
+  "has_more": true
+}</code></pre>
+    </section>
+
+    <section id="users">
+      <h2>Users</h2>
+      <p>Manage the people who belong to your organization.</p>
+
+      <div class="endpoint" id="get-user">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="path">/v2/users/{id}</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Retrieve a single user by ID.</p>
+          <table>
+            <thead><tr><th>Path parameter</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>id</code></td><td>string</td><td>The user's unique identifier.</td></tr>
+            </tbody>
+          </table>
+<pre><code>{
+  "id": "usr_4Kd9Lq",
+  "email": "jordan@example.com",
+  "name": "Jordan Lee",
+  "role": "admin",
+  "created_at": "2026-03-14T09:21:07Z"
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="endpoint" id="create-user">
+        <div class="endpoint-header">
+          <span class="method post">POST</span>
+          <span class="path">/v2/users</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Create a new user in your organization.</p>
+          <table>
+            <thead><tr><th>Body field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>email</code></td><td>string</td><td>yes</td><td>Must be unique within the organization.</td></tr>
+              <tr><td><code>name</code></td><td>string</td><td>yes</td><td>Display name, 1–120 characters.</td></tr>
+              <tr><td><code>role</code></td><td>string</td><td>no</td><td><code>member</code> (default) or <code>admin</code>.</td></tr>
+            </tbody>
+          </table>
+          <div class="tabs">
+            <button class="tab-btn active" data-group="cu" data-tab="cu-curl">cURL</button>
+            <button class="tab-btn" data-group="cu" data-tab="cu-js">JavaScript</button>
+          </div>
+          <div class="tab-panel active" data-group="cu" id="cu-curl">
+<pre><code>curl -X POST https://api.acme.example/v2/users \
+  -H "Authorization: Bearer $ACME_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"email": "sam@example.com", "name": "Sam Rivera", "role": "member"}'</code></pre>
+          </div>
+          <div class="tab-panel" data-group="cu" id="cu-js">
+<pre><code>const res = await fetch("https://api.acme.example/v2/users", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${process.env.ACME_API_KEY}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ email: "sam@example.com", name: "Sam Rivera", role: "member" })
+});
+const user = await res.json();</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint" id="delete-user">
+        <div class="endpoint-header">
+          <span class="method delete">DELETE</span>
+          <span class="path">/v2/users/{id}</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Remove a user from the organization. Returns <code>204 No Content</code> on success.</p>
+          <div class="callout">Deleting a user revokes all of their API keys. This action cannot be undone.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <p>Projects group related tasks together.</p>
+
+      <div class="endpoint" id="list-projects">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="path">/v2/projects</span>
+        </div>
+        <div class="endpoint-body">
+          <p>List projects. Supports pagination and the optional <code>status</code> filter (<code>active</code>, <code>archived</code>).</p>
+<pre><code>curl "https://api.acme.example/v2/projects?status=active&amp;limit=20" \
+  -H "Authorization: Bearer $ACME_API_KEY"</code></pre>
+        </div>
+      </div>
+
+      <div class="endpoint" id="update-project">
+        <div class="endpoint-header">
+          <span class="method patch">PATCH</span>
+          <span class="path">/v2/projects/{id}</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Partially update a project. Only include the fields you want to change.</p>
+<pre><code>curl -X PATCH https://api.acme.example/v2/projects/prj_9Xz2Qw \
+  -H "Authorization: Bearer $ACME_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Website Redesign v2"}'</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="tasks">
+      <h2>Tasks</h2>
+      <p>Tasks are the units of work inside a project.</p>
+
+      <div class="endpoint" id="create-task">
+        <div class="endpoint-header">
+          <span class="method post">POST</span>
+          <span class="path">/v2/tasks</span>
+        </div>
+        <div class="endpoint-body">
+          <table>
+            <thead><tr><th>Body field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>project_id</code></td><td>string</td><td>yes</td><td>The project the task belongs to.</td></tr>
+              <tr><td><code>title</code></td><td>string</td><td>yes</td><td>Short summary of the task.</td></tr>
+              <tr><td><code>assignee_id</code></td><td>string</td><td>no</td><td>User ID to assign the task to.</td></tr>
+              <tr><td><code>due_date</code></td><td>string</td><td>no</td><td>ISO 8601 date, e.g. <code>2026-12-01</code>.</td></tr>
+            </tbody>
+          </table>
+<pre><code>curl -X POST https://api.acme.example/v2/tasks \
+  -H "Authorization: Bearer $ACME_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": "prj_9Xz2Qw", "title": "Draft launch copy", "due_date": "2026-12-01"}'</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="webhooks">
+      <h2>Webhooks</h2>
+      <p>
+        Subscribe to events to receive a <code>POST</code> to your endpoint whenever something changes.
+        Each delivery includes an <code>X-Acme-Signature</code> header: an HMAC-SHA256 of the raw
+        request body, keyed with your webhook secret. Verify it before trusting the payload.
+      </p>
+<pre><code>{
+  "id": "evt_3Lm8Rt",
+  "type": "task.completed",
+  "created_at": "2026-11-17T14:02:55Z",
+  "data": { "id": "tsk_71Ab0c", "project_id": "prj_9Xz2Qw" }
+}</code></pre>
+      <p class="muted">Supported events: <code>user.created</code>, <code>user.deleted</code>, <code>project.updated</code>, <code>task.created</code>, <code>task.completed</code>.</p>
+    </section>
+
+    <section id="changelog">
+      <h2>Changelog</h2>
+      <h3>2.1.0 <span class="badge">2026-10-02</span></h3>
+      <ul>
+        <li>Added <code>due_date</code> to tasks.</li>
+        <li>Added the <code>status</code> filter to <code>GET /v2/projects</code>.</li>
+      </ul>
+      <h3>2.0.0 <span class="badge">2026-04-15</span></h3>
+      <ul>
+        <li>Cursor-based pagination replaces offset pagination.</li>
+        <li>Error responses now include a stable <code>code</code> field.</li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.dataset.group;
+      document.querySelectorAll(`.tab-btn[data-group="${group}"]`).forEach(b => b.classList.remove('active'));
+      document.querySelectorAll(`.tab-panel[data-group="${group}"]`).forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Highlight sidebar link for the section in view
+  const links = document.querySelectorAll('.sidebar li a');
+  const sections = [...document.querySelectorAll('main section')];
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

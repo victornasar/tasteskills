@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wandering Ink — A Travel Journal</title>
+<meta name="description" content="Stories, routes and small discoveries from a travel writer on the road.">
+<style>
+  :root{
+    --bg:#faf6ef;
+    --ink:#2a2622;
+    --muted:#7a6f63;
+    --accent:#c4552d;
+    --accent-dark:#9a3f1e;
+    --card:#fffdf9;
+    --line:#e6dccd;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.7;font-size:18px}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  header.site{
+    position:sticky;top:0;z-index:10;
+    background:rgba(250,246,239,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .logo{font-size:1.5rem;font-style:italic;letter-spacing:.5px}
+  .logo span{color:var(--accent)}
+  nav{display:flex;gap:24px;font-family:var(--sans);font-size:.85rem;text-transform:uppercase;letter-spacing:1.5px}
+  nav a{color:var(--muted);transition:color .2s}
+  nav a:hover{color:var(--accent)}
+
+  .hero{
+    min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:80px 24px;color:#fff;
+    background:
+      linear-gradient(180deg,rgba(30,20,10,.35),rgba(30,20,10,.65)),
+      linear-gradient(135deg,#e9a35b 0%,#c4552d 40%,#3b5a6b 100%);
+  }
+  .hero h1{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:400;line-height:1.1;max-width:14ch;margin:0 auto 20px}
+  .hero p{font-size:1.2rem;max-width:36ch;margin:0 auto 32px;opacity:.92;font-style:italic}
+  .btn{
+    display:inline-block;font-family:var(--sans);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;
+    padding:14px 30px;border:1.5px solid #fff;color:#fff;transition:.2s;
+  }
+  .btn:hover{background:#fff;color:var(--accent-dark)}
+
+  main{max-width:1100px;margin:0 auto;padding:72px 24px}
+  .section-title{
+    font-family:var(--sans);font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);
+    margin-bottom:32px;display:flex;align-items:center;gap:16px;
+  }
+  .section-title::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .featured{
+    display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;
+    background:var(--card);border:1px solid var(--line);margin-bottom:72px;
+  }
+  .featured .pic{min-height:360px;height:100%;background:linear-gradient(160deg,#6d8b74,#2f4a43 60%,#d9b26f)}
+  .featured .txt{padding:40px 40px 40px 0}
+  .meta{font-family:var(--sans);font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .meta b{color:var(--accent);font-weight:600}
+  .featured h2{font-size:2rem;font-weight:400;line-height:1.2;margin-bottom:16px}
+  .featured p{color:#4a433b;margin-bottom:20px}
+  .more{font-family:var(--sans);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border-bottom:1.5px solid var(--accent);padding-bottom:2px}
+  .more:hover{color:var(--accent-dark);border-color:var(--accent-dark)}
+
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;font-family:var(--sans)}
+  .filters button{
+    background:none;border:1px solid var(--line);padding:7px 16px;font-size:.78rem;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);cursor:pointer;transition:.2s;font-family:inherit
+  }
+  .filters button:hover,.filters button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:32px;margin-bottom:80px}
+  .card{background:var(--card);border:1px solid var(--line);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(60,40,20,.12)}
+  .card .pic{height:200px}
+  .card .body{padding:24px;display:flex;flex-direction:column;flex:1}
+  .card h3{font-size:1.3rem;font-weight:400;line-height:1.3;margin-bottom:10px}
+  .card p{font-size:.95rem;color:#5a5047;margin-bottom:16px;flex:1}
+  .card.hidden{display:none}
+
+  .about{
+    display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:center;
+    padding:48px;background:var(--card);border:1px solid var(--line);margin-bottom:80px
+  }
+  .avatar{
+    width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#f0c98f,#c4552d 70%);
+    display:flex;align-items:center;justify-content:center;font-size:4rem;color:#fff;font-style:italic
+  }
+  .about h2{font-weight:400;font-size:1.8rem;margin-bottom:12px}
+  .about p{color:#4a433b;margin-bottom:12px}
+
+  .newsletter{background:var(--ink);color:#f3ebdd;text-align:center;padding:64px 24px;margin:0 -24px}
+  .newsletter h2{font-weight:400;font-size:2rem;margin-bottom:10px}
+  .newsletter p{color:#cbbfae;margin-bottom:28px;font-style:italic}
+  .newsletter form{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .newsletter input{
+    padding:14px 18px;min-width:280px;border:1px solid #5a5047;background:transparent;color:#fff;
+    font-size:1rem;font-family:var(--sans)
+  }
+  .newsletter input::placeholder{color:#9a8f82}
+  .newsletter button{
+    padding:14px 28px;background:var(--accent);border:none;color:#fff;cursor:pointer;
+    font-family:var(--sans);font-size:.8rem;letter-spacing:2px;text-transform:uppercase
+  }
+  .newsletter button:hover{background:var(--accent-dark)}
+  #msg{margin-top:16px;font-family:var(--sans);font-size:.9rem;color:#e9a35b;min-height:1.2em}
+
+  footer{text-align:center;padding:40px 24px;font-family:var(--sans);font-size:.8rem;color:var(--muted);letter-spacing:1px}
+  footer a{margin:0 10px;color:var(--accent)}
+
+  @media(max-width:800px){
+    .featured{grid-template-columns:1fr}
+    .featured .txt{padding:0 28px 32px}
+    .featured .pic{min-height:240px}
+    .about{grid-template-columns:1fr;text-align:center;padding:32px}
+    .avatar{margin:0 auto}
+    nav{gap:16px}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a href="#top" class="logo">Wandering <span>Ink</span></a>
+    <nav>
+      <a href="#stories">Stories</a>
+      <a href="#about">About</a>
+      <a href="#subscribe">Subscribe</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div>
+    <h1>Notes from the long way round</h1>
+    <p>Slow journeys, strange meals and the people who make a place worth remembering.</p>
+    <a class="btn" href="#stories">Read the latest</a>
+  </div>
+</section>
+
+<main>
+  <div class="section-title" id="stories">Featured story</div>
+
+  <article class="featured">
+    <div class="pic" role="img" aria-label="Misty green mountains at dawn"></div>
+    <div class="txt">
+      <div class="meta"><b>Georgia</b> · Nov 10, 2026 · 12 min read</div>
+      <h2>Supra Season: A Month of Feasts in the Caucasus</h2>
+      <p>In the high villages of Svaneti, dinner is never just dinner. It is a toast, a song, a negotiation and, occasionally, a small act of diplomacy conducted over walnut sauce and homemade wine.</p>
+      <a href="#" class="more">Continue reading</a>
+    </div>
+  </article>
+
+  <div class="section-title">Recent dispatches</div>
+
+  <div class="filters" id="filters">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="asia">Asia</button>
+    <button data-filter="europe">Europe</button>
+    <button data-filter="africa">Africa</button>
+    <button data-filter="americas">Americas</button>
+  </div>
+
+  <div class="grid" id="grid">
+    <article class="card" data-region="asia">
+      <div class="pic" style="background:linear-gradient(135deg,#f2c879,#d96b3b)"></div>
+      <div class="body">
+        <div class="meta"><b>Japan</b> · Oct 28, 2026</div>
+        <h3>Walking the Nakasendō in the Rain</h3>
+        <p>Seventeen miles of old post-town road, one borrowed umbrella, and a ryokan innkeeper who refused to let me leave hungry.</p>
+        <a href="#" class="more">Read more</a>
+      </div>
+    </article>
+
+    <article class="card" data-region="europe">
+      <div class="pic" style="background:linear-gradient(135deg,#8fb4c9,#3b5a6b)"></div>
+      <div class="body">
+        <div class="meta"><b>Portugal</b> · Oct 14, 2026</div>
+        <h3>Lisbon's Last Tram Drivers</h3>
+        <p>Before sunrise on the 28 line, the city belongs to the people who have steered it uphill for forty years.</p>
+        <a href="#" class="more">Read more</a>
+      </div>
+    </article>
+
+    <article class="card" data-region="africa">
+      <div class="pic" style="background:linear-gradient(135deg,#e6b86a,#8a5a2b)"></div>
+      <div class="body">
+        <div class="meta"><b>Morocco</b> · Sep 30, 2026</div>
+        <h3>Getting Lost in Fez on Purpose</h3>
+        <p>A guide to the world's largest car-free urban zone, and why the best map is a willingness to take a wrong turn.</p>
+        <a href="#" class="more">Read more</a>
+      </div>
+    </article>
+
+    <article class="card" data-region="americas">
+      <div class="pic" style="background:linear-gradient(135deg,#7fa88a,#2f5a4a)"></div>
+      <div class="body">
+        <div class="meta"><b>Peru</b> · Sep 12, 2026</div>
+        <h3>Eleven Days Above 4,000 Metres</h3>
+        <p>Altitude, coca tea and the quiet generosity of a family who shared their only blanket on a freezing night.</p>
+        <a href="#" class="more">Read more</a>
+      </div>
+    </article>
+
+    <article class="card" data-region="asia">
+      <div class="pic" style="background:linear-gradient(135deg,#b9a3d6,#5c4a8a)"></div>
+      <div class="body">
+        <div class="meta"><b>Vietnam</b> · Aug 25, 2026</div>
+        <h3>The Night Train to Hue</h3>
+        <p>Sticky tea, shared mandarins and a sleeper bunk that made me believe in slow travel all over again.</p>
+        <a href="#" class="more">Read more</a>
+      </div>
+    </article>
+
+    <article class="card" data-region="europe">
+      <div class="pic" style="background:linear-gradient(135deg,#d9cfa8,#7a8a4a)"></div>
+      <div class="body">
+        <div class="meta"><b>Italy</b> · Aug 5, 2026</div>
+        <h3>Cheese, Snow and the Dolomites in Shoulder Season</h3>
+        <p>When the lifts close and the huts go quiet, the mountains finally start talking.</p>
+        <a href="#" class="more">Read more</a>
+      </div>
+    </article>
+  </div>
+
+  <section class="about" id="about">
+    <div class="avatar" aria-hidden="true">W</div>
+    <div>
+      <div class="section-title" style="margin-bottom:16px">About the writer</div>
+      <h2>Hello, I'm glad you're here.</h2>
+      <p>I've spent fifteen years chasing stories across forty-odd countries, mostly by train, bus and on foot. My work has appeared in magazines, newspapers and the occasional hostel guestbook.</p>
+      <p>This journal is where the longer, messier and more honest versions of those trips live.</p>
+    </div>
+  </section>
+
+  <section class="newsletter" id="subscribe">
+    <h2>Letters from the road</h2>
+    <p>One email a month. No spam, just stories and a few good recommendations.</p>
+    <form id="subForm">
+      <input type="email" id="email" placeholder="you@example.com" required aria-label="Email address">
+      <button type="submit">Subscribe</button>
+    </form>
+    <div id="msg" role="status"></div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Wandering Ink · <a href="#">Instagram</a> <a href="#">Twitter</a> <a href="#">RSS</a></p>
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('#filters button');
+  const cards = document.querySelectorAll('#grid .card');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c => c.classList.toggle('hidden', f !== 'all' && c.dataset.region !== f));
+    });
+  });
+
+  document.getElementById('subForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const msg = document.getElementById('msg');
+    msg.textContent = "Thank you — your first letter is on its way.";
+    e.target.reset();
+  });
+</script>
+</body>
+</html>

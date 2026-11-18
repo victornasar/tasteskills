@@ -6,41 +6,53 @@ The color and typography skills pick better parts. The lab asks the bigger quest
 AI agent from an acceptable website to a distinctive one, and how much of that is the model versus the tools
 and process around it?**
 
-**Status:** the protocol below is written, and one experiment is designed (taste-grilling). No runs, ratings
-or findings exist yet.
+**Status:** a 90-site corpus of AI defaults is measured, the first baseline experiment (36 runs, with and
+without the skills) is measured automatically, and blind human ratings are open. Results so far are in
+[`findings.md`](findings.md).
 
 ## What's here
 
-| Path | What it is | Status |
-| --- | --- | --- |
-| [`taste-grilling/`](taste-grilling/) | Design for a skill that questions the client about what they want before building, and a test for whether it works | Designed, not run |
-| `briefs/` | Project briefs written in opposite registers, with real copy, audience and constraints | Not created yet |
-| `runs/` | One folder per run: screenshots at fixed viewport sizes, plus the agent's notes | Not created yet |
-| `ratings/` | Blind pairwise picks and written critiques | Not created yet |
-| `findings.md` | What helped and what didn't, per intervention | Not created yet |
+| Path | What it is |
+| --- | --- |
+| [`findings.md`](findings.md) | What the lab has found, with evidence and limits. Start here |
+| [`corpus/`](corpus/) | 90 sites built by three models from generic briefs, and how often each layout pattern appears |
+| [`briefs/`](briefs/) | Two opposite-register briefs with real copy, audience and constraints |
+| [`run.py`](run.py) | Runs the experiment: each brief × model × condition, 3 times |
+| `runs/<brief>/<condition>/<model>-<n>/` | One folder per run: the page, the agent's notes and the exact prompt |
+| [`analyze.py`](analyze.py) | Automatic measures for the runs → [`runs/measures.md`](runs/measures.md) |
+| [`ratings/`](ratings/) | The blind rating page, its answer key and the scoring script |
+| [`tools/`](tools/) | Renders pages in Chrome and detects layout slop; calibrated on fixtures |
+| [`taste-grilling/`](taste-grilling/) | Design for a skill that questions the client before building (designed, not run) |
+
+## Run it yourself
+
+Needs Python 3, Node 18+, Google Chrome and the `claude` CLI.
+
+```bash
+cd lab/tools && npm install && npm test && cd ../..        # set up and calibrate the detector
+node lab/tools/resolve-fonts.mjs && node lab/tools/fetch-fonts.mjs   # fonts for faithful renders
+python3 lab/run.py                                          # 36 runs; skips ones that exist
+node lab/tools/detect.mjs lab/runs --out lab/runs/detect.json --shots lab/runs/shots --full
+python3 lab/analyze.py
+```
+
+Conditions so far: **A**, no skills; **B**, `find-font` and `find-color` installed and asked for. Add a
+condition by extending `run.py` (for example C, a screenshot critique loop) and rerun; existing runs are kept.
 
 ## How an experiment runs
 
-1. **Same starting point.** Every run starts from one frozen app commit. Record the repo and commit SHA in the
-   run folder. Run with and without shadcn/ui to measure what its default styling contributes.
-2. **Baseline first.** 2 briefs × 3 models × 3 runs each, with no skills. Use the same setup for every model
-   where possible.
-3. **Rate blind.** Remove model names, compare sites two at a time, and write down what's wrong in plain words.
-   Those critiques become the scoring rubric; don't write criteria in advance.
-4. **One change at a time.** Add interventions one by one: a written direction, then a design skill, then a
-   screenshot feedback loop, then a separate critic, then a pass that may only delete things.
+1. **Same starting point.** Every run starts from an empty project with personal settings, plugins and skills
+   off, and records the repo commit it ran from. Pages are single HTML files so they render identically.
+2. **Baseline first.** No-skills runs come before any intervention, with the same prompt for every model.
+3. **Rate blind.** People compare two sites at a time without knowing which condition made which, and write
+   what's wrong in plain words. Those critiques become the rubric.
+4. **One change at a time:** skills, then a screenshot feedback loop, then a separate critic, then a pass that
+   may only delete things.
 5. **What counts as better:** fewer corrections needed before you'd ship it.
 
 ## What gets measured
 
-- **Convergence:** the same model given opposite briefs. If the sites come out structurally similar, the model
-  isn't reasoning from the brief.
-- **Craft defects:** contrast, type scale, spacing rhythm, line length, alignment. Checked on the rendered page,
-  not just the screenshot.
-- **Coherence:** does each section follow the written direction?
-- **Fit and distinctiveness:** judged by people, blind, comparing two sites at a time.
-
-## Contributing a run
-
-Create `runs/<date>-<model>-<brief>/` with the starting commit SHA, the exact prompt, the agent's notes and
-screenshots at the fixed viewports. Don't rate your own runs; ratings happen blind, after the batch is done.
+- **Layout slop:** nine patterns detected on the rendered page (see [`tools/README.md`](tools/README.md)).
+- **Default fonts:** whether the page uses a font from typography's avoid list.
+- **Convergence:** how many different fonts nine runs of one brief used, and how alike opposite briefs came out.
+- **Fit and distinctiveness:** judged by people, blind, two at a time.

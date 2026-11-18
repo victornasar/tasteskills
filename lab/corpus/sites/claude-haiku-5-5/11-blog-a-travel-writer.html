@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wanderlust Journal — Travel Stories by [Writer Name]</title>
+  <meta name="description" content="Travel stories, field notes, and itineraries from the road.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #faf7f2;
+      --ink: #2b2521;
+      --muted: #7a6f66;
+      --accent: #c2622d;
+      --accent-soft: #f3e3d6;
+      --sea: #2f6f7e;
+      --line: #e6dfd5;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(43, 37, 33, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    h1, h2, h3, .serif {
+      font-family: "Playfair Display", Georgia, serif;
+      line-height: 1.2;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      font-size: 0.95rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--ink); }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 72vh;
+      display: flex;
+      align-items: flex-end;
+      background:
+        linear-gradient(to bottom, rgba(20, 30, 35, 0.15) 0%, rgba(20, 30, 35, 0.75) 100%),
+        url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat;
+      color: #fff;
+    }
+
+    .hero-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+      width: 100%;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      max-width: 14ch;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      max-width: 52ch;
+      font-size: 1.1rem;
+      opacity: 0.92;
+      margin-bottom: 1.8rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s, color 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #a84f22; }
+
+    .btn-outline {
+      border-color: rgba(255,255,255,0.7);
+      color: #fff;
+      margin-left: 0.6rem;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.12); }
+
+    /* ---------- Layout ---------- */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    section + section { margin-top: 5rem; }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .section-head h2 { font-size: 2rem; }
+    .section-head p { color: var(--muted); font-size: 0.95rem; }
+
+    /* ---------- Filters ---------- */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--line);
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.88rem;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+    .filter-btn.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    /* ---------- Post Grid ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(43, 37, 33, 0.14);
+    }
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1.4rem 1.5rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .card h3 {
+      font-size: 1.45rem;
+      margin-bottom: 0.6rem;
+    }
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex: 1;
+    }
+    .meta {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ---------- Featured ---------- */
+    .featured {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 0;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+    .featured img {
+      height: 100%;
+      min-height: 420px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .featured-body {
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-body h3 { font-size: 2.2rem; margin-bottom: 1rem; }
+    .featured-body p { color: var(--muted); margin-bottom: 1.5rem; }
+
+    /* ---------- Post Reader (modal-like view) ---------- */
+    .reader {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--paper);
+      z-index: 100;
+      overflow-y: auto;
+    }
+    .reader.open { display: block; animation: fade 0.3s ease; }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+    .reader-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
+    .back {
+      background: none;
+      border: none;
+      font: inherit;
+      color: var(--muted);
+      cursor: pointer;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    .back:hover { color: var(--ink); }
+
+    .reader h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      margin: 0.6rem 0 1rem;
+    }
+    .reader .dek {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .reader .byline {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 2.5rem;
+    }
+    .reader-hero {
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 2.5rem;
+    }
+    .reader .content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+    .reader .content p:first-child::first-letter {
+      font-family: "Playfair Display", serif;
+      float: left;
+      font-size: 4.2rem;
+      line-height: 0.9;
+      padding: 0.4rem 0.6rem 0 0;
+      color: var(--accent);
+    }
+    .reader .content h2 {
+      font-size: 1.8rem;
+      margin: 3rem 0 1rem;
+    }
+    .pullquote {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 1.7rem;
+      color: var(--sea);
+      border-left: 3px solid var(--accent);
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .info-box {
+      background: var(--accent-soft);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.8rem;
+      margin: 2.5rem 0;
+      font-size: 0.95rem;
+    }
+    .info-box h4 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+    }
+    .info-box ul { padding-left: 1.2rem; }
+    .info-box li { margin-bottom: 0.3rem; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    .gallery img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .post-footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .chip {
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ---------- About ---------- */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 3.5rem;
+      align-items: center;
+      background: #fff;
+      border-radius: 20px;
+      padding: 3.5rem;
+      box-shadow: var(--shadow);
+    }
+    .about img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      border-radius: var(--radius);
+    }
+    .about h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+    .about p { color: var(--muted); margin-bottom: 1rem; }
+
+    /* ---------- Newsletter ---------- */
+    .newsletter {
+      background: var(--sea);
+      color: #fff;
+      border-radius: 20px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+    }
+    .newsletter h2 { font-size: 2.1rem; margin-bottom: 0.6rem; }
+    .newsletter p { opacity: 0.9; margin-bottom: 1.8rem; }
+    .newsletter form {
+      display: flex;
+      gap: 0.6rem;
+      max-width: 460px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .newsletter input {
+      flex: 1;
+      min-width: 220px;
+      padding: 0.85rem 1.2rem;
+      border-radius: 999px;
+      border: none;
+      font: inherit;
+    }
+    .newsletter button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .newsletter button:hover { background: #a84f22; }
+    .form-msg { margin-top: 1rem; font-size: 0.92rem; min-height: 1.4em; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      border-top: 1px solid var(--line);
+      margin-top: 5rem;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.4rem;
+      margin-bottom: 1rem;
+      list-style: none;
+    }
+    .socials a:hover { color: var(--accent); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .featured { grid-template-columns: 1fr; }
+      .featured img { min-height: 260px; }
+      .about { grid-template-columns: 1fr; padding: 2rem; }
+      .reader-hero { height: 300px; }
+    }
+
+    @media (max-width: 680px) {
+      .menu-toggle { display: block; }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--paper);
+        padding: 1.2rem 1.5rem;
+        border-bottom: 1px solid var(--line);
+        display: none;
+        gap: 1rem;
+      }
+      .nav-links.open { display: flex; }
+      .btn-outline { margin-left: 0; margin-top: 0.6rem; display: inline-block; }
+      .gallery { grid-template-columns: 1fr; }
+      .hero { min-height: 80vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="nav">
+      <a href="#top" class="logo">Wander<span>lust</span> Journal</a>
+      <button class="menu-toggle" aria-label="Toggle menu" id="menuToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#stories" class="active">Stories</a></li>
+        <li><a href="#featured">Featured</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero" id="top">
+    <div class="hero-content">
+      <p class="eyebrow">Travel Writing · Field Notes · Slow Journeys</p>
+      <h1>Stories from the Places Between Here and There</h1>
+      <p>Notes on night trains, unmarked trails, long lunches, and the strangers who became the best part of the trip.</p>
+      <a href="#stories" class="btn btn-primary">Read the Stories</a>
+      <a href="#about" class="btn btn-outline">About the Writer</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- Featured -->
+    <section id="featured">
+      <div class="section-head">
+        <h2>Featured Story</h2>
+        <p>Our most-read dispatch this season</p>
+      </div>
+      <article class="featured" data-post="0">
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1400&q=80" alt="Mountain road winding through green valley">
+        <div class="featured-body">
+          <span class="tag">Patagonia · 14 days</span>
+          <h3>Three Days Lost on the Carretera Austral</h3>
+          <p>A rented pickup, a broken fuel pump, and a family running a roadside bakery who taught me more about patience than any guidebook ever could.</p>
+          <div class="meta"><span>By [Writer Name]</span><span>12 min read</span></div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Stories -->
+    <section id="stories">
+      <div class="section-head">
+        <h2>Latest Stories</h2>
+        <p>Dispatches from the road, newest first</p>
+      </div>
+
+      <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Asia">Asia</button>
+        <button class="filter-btn" data-filter="Europe">Europe</button>
+        <button class="filter-btn" data-filter="Americas">Americas</button>
+        <button class="filter-btn" data-filter="Africa">Africa</button>
+      </div>
+
+      <div class="grid" id="postGrid">
+        <!-- Cards injected by script below -->
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="about">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80" alt="Portrait of the travel writer">
+        <div>
+          <p class="eyebrow" style="color:var(--accent)">About the Writer</p>
+          <h2>Hello, I'm [Writer Name]</h2>
+          <p>I've spent the last decade writing from train platforms, guesthouse courtyards, and the back seats of overnight buses. I'm drawn to slow travel, local food, and the small moments that rarely make it into brochures.</p>
+          <p>My work has appeared in regional magazines and on the page of this journal, where I share honest itineraries, budget breakdowns, and the occasional mistake worth learning from.</p>
+          <p>Based in [City], currently somewhere between flights.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section id="newsletter">
+      <div class="newsletter">
+        <h2>Letters from the Road</h2>
+        <p>One story and one practical travel tip, delivered every other Sunday. No spam, unsubscribe anytime.</p>
+        <form id="subscribeForm">
+          <input type="email" id="email" placeholder="you@example.com" required aria-label="Email address">
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="form-msg" id="formMsg"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <ul class="socials">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Pinterest</a></li>
+      <li><a href="#">YouTube</a></li>
+      <li><a href="#">Email</a></li>
+    </ul>
+    <p>© <span id="year"></span> [Writer Name]. All words and photographs are the author's own.</p>
+  </footer>
+
+  <!-- Reader view -->
+  <div class="reader" id="reader" aria-hidden="true">
+    <div class="reader-inner">
+      <button class="back" id="closeReader">← Back to all stories</button>
+      <span class="tag" id="readerTag"></span>
+      <h1 id="readerTitle"></h1>
+      <p class="dek" id="readerDek"></p>
+      <div class="byline" id="readerByline"></div>
+      <img class="reader-hero" id="readerImg" src="" alt="">
+      <div class="content" id="readerContent"></div>
+      <div class="post-footer" id="readerChips"></div>
+    </div>
+  </div>
+
+  <script>
+    const posts = [
+      {
+        id: 1,
+        region: "Asia",
+        tag: "Vietnam · 9 days",
+        title: "The Night Train to Lào Cai",
+        dek: "Sleeper bunks, instant noodles, and a sunrise over the rice terraces of the northern highlands.",
+        date: "October 2, 2026",
+        readTime: "7 min read",
+        image: "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=80",
+        excerpt: "The train left Hanoi at 9:40 in the evening, and by midnight the carriage had settled into a quiet rhythm of snoring, rustling plastic bags, and the rattle of steel over old track.",
+        body: [
+          "The train left Hanoi at 9:40 in the evening, and by midnight the carriage had settled into a quiet rhythm of snoring, rustling plastic bags, and the rattle of steel over old track. I shared a six-berth cabin with a retired schoolteacher from Hải Phòng, a young couple on their honeymoon, and a man who never once took off his cap.",
+          "Sleeper trains in Vietnam are not glamorous, but they are honest. The sheets are thin, the air is close, and the toilet is best approached with a plan. Yet there is something about waking at dawn to the sight of misted hills that makes the discomfort feel like part of the deal.",
+          "At the first light stop, vendors appeared with baguettes and steaming bowls of phở. The schoolteacher insisted on sharing her oranges. We didn't speak the same language, but we managed a long conversation about her grandchildren using gestures and a shared fondness for bad jokes.",
+          "The highlands rise sharply after Lào Cai. Terraces cut into the hillsides catch the early sun, and the Hmong women working the fields wear indigo that looks almost black until the light hits it. I stood in the vestibule with the door open and let the cold air pour in."
+        ],
+        quote: "Sleeper trains are not glamorous, but they are honest. You arrive rumpled, changed, and a little more awake than you were.",
+        info: {
+          title: "Practical Notes",
+          items: [
+            "Book soft sleepers at least a week ahead in peak season.",
+            "Bring your own snacks, a torch, and a small amount of cash.",
+            "Lào Cai to Sa Pa is about 1 hour by minibus or taxi."
+          ]
+        },
+        gallery: [
+          "https://images.unsplash.com/photo-1557750255-c76072a7aad1?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80"
+        ],
+        tags: ["Vietnam", "Trains", "Highlands"]
+      },
+      {
+        id: 2,
+        region: "Europe",
+        tag: "Portugal · 6 days",
+        title: "Tiles, Tram Lines, and the Long Way Down",
+        dek: "Lisbon at its most unhurried, one hill at a time.",
+        date: "September 14, 2026",
+        readTime: "5 min read",
+        image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1200&q=80",
+        excerpt: "Lisbon rewards anyone willing to get lost. I spent six days walking its hills, chasing fado in Alfama and drinking ginjinha standing up in a doorway near Rossio.",
+        body: [
+          "Lisbon rewards anyone willing to get lost. I spent six days walking its hills, chasing fado in Alfama and drinking ginjinha standing up in a doorway near Rossio. The city does not hurry, and after a day or two, neither do you.",
+          "The yellow trams are the obvious choice, but the lines fill quickly by mid-morning. The Elevador da Glória is shorter and far less crowded, and it deposits you within reach of the miradouros where the whole city seems to unfold beneath you.",
+          "Tiles are everywhere: on façades, in metro stations, and tucked into the corners of tiny bakeries selling pastéis de nata still warm from the oven. I learned to order them the way locals do, with a coffee, standing at the counter."
+        ],
+        quote: "Lisbon does not ask you to see everything. It asks you to sit down somewhere and stay awhile.",
+        info: {
+          title: "Practical Notes",
+          items: [
+            "Get a Viva Viagem card for trams, metro, and buses.",
+            "Walk the Alfama in the morning before the tour groups arrive.",
+            "Eat dinner after 9pm; locals rarely sit before then."
+          ]
+        },
+        gallery: [
+          "https://images.unsplash.com/photo-1513735492246-483525079686?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1548707309-dcebeab9ea9b?auto=format&fit=crop&w=800&q=80"
+        ],
+        tags: ["Portugal", "City", "Food"]
+      },
+      {
+        id: 3,
+        region: "Americas",
+        tag: "Mexico · 11 days",
+        title: "Oaxaca Without a Plan",
+        dek: "Mole, mezcal, and markets that open before the sun is fully up.",
+        date: "August 3, 2026",
+        readTime: "9 min read",
+        image: "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=1200&q=80",
+        excerpt: "I came to Oaxaca for a single cooking class and stayed for three weeks. The markets, the mezcal palenques, and the slow pace of its plazas had other plans for me.",
+        body: [
+          "I came to Oaxaca for a single cooking class and stayed for three weeks. The markets, the mezcal palenques, and the slow pace of its plazas had other plans for me.",
+          "Mercado 20 de Noviembre is loud, crowded, and wonderful. Go early, bring small bills, and eat at the stalls where the cooks are watching the grill rather than the street. Chapulines are less intimidating once you've tasted them with lime and salt.",
+          "Outside the city, the valleys hold Zapotec ruins, weaving villages, and palenques where small-batch mezcal is distilled the old way. Each visit ended the same: a tiny glass, a long conversation, and an invitation to come back for the next harvest."
+        ],
+        quote: "In Oaxaca, time is not measured in hours but in tortillas, and there is always room for one more.",
+        info: {
+          title: "Practical Notes",
+          items: [
+            "Hire a driver for valley day trips; it saves hours and stress.",
+            "Mezcal is strong. Sip it slowly and ask questions.",
+            "The city is best between October and April for comfortable weather."
+          ]
+        },
+        gallery: [
+          "https://images.unsplash.com/photo-1512813498716-3e640fed3f39?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"
+        ],
+        tags: ["Mexico", "Food", "Markets"]
+      },
+      {
+        id: 4,
+        region: "Africa",
+        tag: "Morocco · 8 days",
+        title: "Dunes at Dawn in the Sahara",
+        dek: "Camels, cold nights, and the quiet that follows a long desert walk.",
+        date: "June 21, 2026",
+        readTime: "6 min read",
+        image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=1200&q=80",
+        excerpt: "We left Merzouga before the sun, the camels swaying in a slow line behind a guide who sang under his breath. By the time we reached the great dunes, the sky had turned the color of apricots.",
+        body: [
+          "We left Merzouga before the sun, the camels swaying in a slow line behind a guide who sang under his breath. By the time we reached the great dunes, the sky had turned the color of apricots.",
+          "Desert nights are colder than most visitors expect. Bring a warm layer, a headlamp, and a little more water than seems reasonable. The stars, when they come out, are so thick they seem to press against the sand.",
+          "Our camp was simple: canvas tents, a fire, a pot of mint tea, and a drum circle that lasted well past midnight. Nobody checked a watch. It was the kind of evening that makes a traveler quietly decide to come back."
+        ],
+        quote: "The desert doesn't give you answers. It gives you silence, and somehow that is enough.",
+        info: {
+          title: "Practical Notes",
+          items: [
+            "Choose a reputable operator with clear safety protocols.",
+            "Visit between October and April to avoid extreme heat.",
+            "Pack a scarf and sunscreen; the sand is relentless."
+          ]
+        },
+        gallery: [
+          "https://images.unsplash.com/photo-1539650116574-8efeb43e2750?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&w=800&q=80"
+        ],
+        tags: ["Morocco", "Desert", "Camping"]
+      },
+      {
+        id: 5,
+        region: "Asia",
+        tag: "Japan · 10 days",
+        title: "Kyoto Before the Crowds",
+        dek: "Five-thirty mornings, empty torii gates, and a bowl of miso that changed my week.",
+        date: "April 9, 2026",
+        readTime: "6 min read",
+        image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=80",
+        excerpt: "The best hour in Kyoto is the one before the buses arrive. I learned to wake early, walk slowly, and let the quiet temples speak for themselves.",
+        body: [
+          "The best hour in Kyoto is the one before the buses arrive. I learned to wake early, walk slowly, and let the quiet temples speak for themselves.",
+          "Fushimi Inari is famous for its thousands of vermilion gates, and for good reason. At 5:30 in the morning, the path belongs almost entirely to joggers, a few photographers, and the occasional stray cat.",
+          "Afterwards I ate breakfast at a tiny counter in Nishiki Market, where the owner served miso with a quiet nod. It was the simplest meal of the trip and the one I still think about most."
+        ],
+        quote: "Kyoto is best seen in the margins of the day, when the city is still deciding who it wants to be.",
+        info: {
+          title: "Practical Notes",
+          items: [
+            "Arrive at Fushimi Inari before 6am for the emptiest paths.",
+            "Many shops in Nishiki open around 9am; plan breakfast accordingly.",
+            "Use a rechargeable IC card for buses and subway."
+          ]
+        },
+        gallery: [
+          "https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=800&q=80"
+        ],
+        tags: ["Japan", "Temples", "Food"]
+      },
+      {
+        id: 6,
+        region: "Americas",
+        tag: "Peru · 12 days",
+        title: "Above the Clouds on the Inca Trail",
+        dek: "Four days of stone steps, altitude headaches, and a sunrise worth every breath.",
+        date: "February 18, 2026",
+        readTime: "10 min read",
+        image: "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=1200&q=80",
+        excerpt: "Dead Woman's Pass is not a figure of speech. Somewhere above four thousand meters, the trail becomes a test of lungs and patience, and the reward is Machu Picchu coming out of the cloud.",
+        body: [
+          "Dead Woman's Pass is not a figure of speech. Somewhere above four thousand meters, the trail becomes a test of lungs and patience, and the reward is Machu Picchu coming out of the cloud.",
+          "Our guide, Efraín, had walked the route more than three hundred times. He set a slow pace from the first step and never let us forget to drink water, eat, or stop and look back at the valley.",
+          "On the final morning we rose before four and joined the line at Intipunku. When the cloud finally lifted, the ruins appeared all at once, and for a few minutes no one said anything at all."
+        ],
+        quote: "The trail is hard on the body, but it has a way of rearranging the mind on the way up.",
+        info: {
+          title: "Practical Notes",
+          items: [
+            "Book permits months in advance; daily numbers are limited.",
+            "Acclimatize in Cusco for at least two days before the hike.",
+            "Trekking poles and broken-in boots matter more than you think."
+          ]
+        },
+        gallery: [
+          "https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1531065208531-4036c0dba3ca?auto=format&fit=crop&w=800&q=80"
+        ],
+        tags: ["Peru", "Hiking", "Ruins"]
+      }
+    ];
+
+    const grid = document.getElementById("postGrid");
+    const filters = document.querySelectorAll(".filter-btn");
+    const reader = document.getElementById("reader");
+
+    function renderCards(filter = "all") {
+      const list = filter === "all" ? posts : posts.filter(p => p.region === filter);
+      grid.innerHTML = list.map(p => `
+        <article class="card" data-id="${p.id}" tabindex="0">
+          <img src="${p.image}" alt="${p.title}" loading="lazy">
+          <div class="card-body">
+            <span class="tag">${p.tag}</span>
+            <h3>${p.title}</h3>
+            <p>${p.excerpt}</p>
+            <div class="meta"><span>${p.date}</span><span>${p.readTime}</span></div>
+          </div>
+        </article>
+      `).join("");
+
+      grid.querySelectorAll(".card").forEach(card => {
+        const open = () => openPost(Number(card.dataset.id));
+        card.addEventListener("click", open);
+        card.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+        });
+      });
+    }
+
+    function openPost(id) {
+      const p = posts.find(x => x.id === id);
+      if (!p) return;
+
+      document.getElementById("readerTag").textContent = p.tag;
+      document.getElementById("readerTitle").textContent = p.title;
+      document.getElementById("readerDek").textContent = p.dek;
+      document.getElementById("readerByline").textContent = `By [Writer Name] · ${p.date} · ${p.readTime}`;
+
+      const img = document.getElementById("readerImg");
+      img.src = p.image;
+      img.alt = p.title;
+
+      const content = p.body.map((para, i) => {
+        let html = `<p>${para}</p>`;
+        if (i === 1) html += `<blockquote class="pullquote">“${p.quote}”</blockquote>`;
+        if (i === 1) html += `
+          <div class="gallery">
+            ${p.gallery.map(g => `<img src="${g}" alt="Travel photo from ${p.title}" loading="lazy">`).join("")}
+          </div>`;
+        return html;
+      }).join("");
+
+      document.getElementById("readerContent").innerHTML = `
+        ${content}
+        <div class="info-box">
+          <h4>${p.info.title}</h4>
+          <ul>${p.info.items.map(i => `<li>${i}</li>`).join("")}</ul>
+        </div>
+      `;
+
+      document.getElementById("readerChips").innerHTML =
+        p.tags.map(t => `<span class="chip">#${t}</span>`).join("");
+
+      reader.classList.add("open");
+      reader.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      reader.scrollTop = 0;
+    }
+
+    function closePost() {
+      reader.classList.remove("open");
+      reader.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("closeReader").addEventListener("click", closePost);
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && reader.classList.contains("open")) closePost();
+    });
+
+    // Featured post opens the matching reader entry
+    document.querySelector(".featured").addEventListener("click", () => openPost(6));
+
+    // Filters
+    filters.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filters.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderCards(btn.dataset.filter);
+      });
+    });
+
+    // Mobile menu
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => navLinks.classList.toggle("open"));
+    navLinks.querySelectorAll("a").forEach(a =>
+      a.addEventListener("click", () => navLinks.classList.remove("open"))
+    );
+
+    // Newsletter (demo only — wire to your provider)
+    document.getElementById("subscribeForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const msg = document.getElementById("formMsg");
+      msg.textContent = `Thanks! ${email} is on the list for the next letter.`;
+      msg.style.color = "#f3e3d6";
+      e.target.reset();
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    renderCards();
+  </script>
+</body>
+</html>

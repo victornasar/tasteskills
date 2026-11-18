@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verde — Banking that works as hard as you do</title>
+<meta name="description" content="Verde is the mobile bank with no fees, instant transfers, smart savings and bank-grade security. Open an account in minutes.">
+<style>
+  :root{
+    --bg:#f6faf8;
+    --ink:#0b1f1a;
+    --muted:#52665f;
+    --green:#0f9d73;
+    --green-dark:#0a6e52;
+    --mint:#d9f5ea;
+    --card:#ffffff;
+    --line:#e2ece7;
+    --radius:20px;
+    --shadow:0 20px 50px -20px rgba(10,60,45,.25);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{line-height:1.15;letter-spacing:-.02em}
+
+  /* Nav */
+  header{position:sticky;top:0;z-index:50;background:rgba(246,250,248,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem}
+  .logo i{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--green),var(--green-dark));display:grid;place-items:center;color:#fff;font-style:normal;font-size:1rem}
+  .links{display:flex;gap:28px;font-size:.95rem;color:var(--muted)}
+  .links a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:.95rem;border:0;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s}
+  .btn-primary{background:var(--green);color:#fff;box-shadow:0 8px 20px -8px var(--green)}
+  .btn-primary:hover{background:var(--green-dark);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--green)}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{transform:translateY(-2px)}
+
+  /* Hero */
+  .hero{padding:72px 0 80px;background:radial-gradient(900px 400px at 85% 0%,var(--mint),transparent 70%)}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .pill{display:inline-block;background:var(--mint);color:var(--green-dark);font-weight:600;font-size:.8rem;padding:6px 14px;border-radius:999px;margin-bottom:20px}
+  h1{font-size:clamp(2.4rem,5.5vw,4rem);font-weight:800}
+  h1 span{color:var(--green)}
+  .hero p.lead{font-size:1.15rem;color:var(--muted);margin:22px 0 32px;max-width:480px}
+  .cta{display:flex;flex-wrap:wrap;gap:12px}
+  .trust{display:flex;align-items:center;gap:14px;margin-top:34px;font-size:.9rem;color:var(--muted)}
+  .stars{color:#f5a623;letter-spacing:2px}
+
+  /* Phone mockup */
+  .phone-wrap{display:flex;justify-content:center;position:relative}
+  .phone{width:290px;height:580px;background:#0b1f1a;border-radius:44px;padding:12px;box-shadow:var(--shadow);position:relative;transform:rotate(3deg)}
+  .screen{background:linear-gradient(180deg,#fff,#f1f9f5);border-radius:34px;height:100%;padding:22px 18px;overflow:hidden;position:relative}
+  .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#0b1f1a;border-radius:0 0 16px 16px}
+  .s-top{display:flex;justify-content:space-between;margin-top:20px;font-size:.8rem;color:var(--muted)}
+  .balance{margin:14px 0 18px}
+  .balance small{color:var(--muted);font-size:.78rem}
+  .balance strong{display:block;font-size:2rem;letter-spacing:-.03em}
+  .card-vis{background:linear-gradient(135deg,var(--green),#07533d);color:#fff;border-radius:18px;padding:16px;height:130px;display:flex;flex-direction:column;justify-content:space-between;font-size:.8rem}
+  .card-vis b{font-size:1rem;letter-spacing:.15em}
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+  .actions div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 0;text-align:center;font-size:.65rem;color:var(--muted)}
+  .actions div span{display:block;font-size:1.1rem;color:var(--green)}
+  .tx{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:.8rem}
+  .tx em{font-style:normal;font-weight:700}
+  .tx .in{color:var(--green)}
+  .float{position:absolute;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:12px 16px;font-size:.82rem;display:flex;gap:10px;align-items:center;animation:bob 5s ease-in-out infinite}
+  .float.a{left:-10px;top:90px}
+  .float.b{right:-6px;bottom:100px;animation-delay:-2.5s}
+  .float .dot{width:34px;height:34px;border-radius:50%;background:var(--mint);display:grid;place-items:center}
+  @keyframes bob{50%{transform:translateY(-10px)}}
+
+  /* Logos */
+  .press{padding:28px 0;border-block:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem}
+  .press div{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 44px;margin-top:10px;font-weight:700;font-size:1.05rem;color:#9ab0a8;letter-spacing:.02em}
+
+  /* Sections */
+  section{padding:88px 0}
+  .head{text-align:center;max-width:640px;margin:0 auto 52px}
+  .head h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800}
+  .head p{color:var(--muted);margin-top:14px;font-size:1.05rem}
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .feat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px;transition:transform .2s,box-shadow .2s}
+  .feat:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+  .ico{width:50px;height:50px;border-radius:14px;background:var(--mint);display:grid;place-items:center;font-size:1.4rem;margin-bottom:18px}
+  .feat h3{font-size:1.15rem;margin-bottom:8px}
+  .feat p{color:var(--muted);font-size:.95rem}
+
+  /* Steps */
+  .steps-bg{background:var(--ink);color:#fff;border-radius:36px;margin:0 16px}
+  .steps-bg .head p{color:#9fb8af}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .step{padding:8px}
+  .num{width:44px;height:44px;border-radius:50%;background:var(--green);display:grid;place-items:center;font-weight:800;margin-bottom:16px}
+  .step h3{margin-bottom:8px}
+  .step p{color:#9fb8af;font-size:.95rem}
+
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+  .stats strong{display:block;font-size:2.6rem;font-weight:800;color:var(--green);letter-spacing:-.03em}
+  .stats span{color:var(--muted);font-size:.95rem}
+
+  /* Testimonials */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .quote{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+  .quote p{margin:12px 0 20px}
+  .who{display:flex;align-items:center;gap:12px;font-size:.9rem}
+  .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;display:grid;place-items:center;font-weight:700}
+  .who small{display:block;color:var(--muted)}
+
+  /* FAQ */
+  .faq{max-width:760px;margin:0 auto}
+  details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 24px;margin-bottom:12px}
+  summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between}
+  summary::after{content:"+";color:var(--green);font-size:1.4rem;line-height:1}
+  details[open] summary::after{content:"–"}
+  details p{margin-top:12px;color:var(--muted);font-size:.95rem}
+
+  /* CTA */
+  .final{background:linear-gradient(135deg,var(--green),#07533d);color:#fff;border-radius:36px;padding:68px 32px;text-align:center;margin:0 16px}
+  .final h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800}
+  .final p{opacity:.85;margin:14px auto 30px;max-width:520px}
+  .final .cta{justify-content:center}
+  .final .btn-light{background:#fff;color:var(--green-dark)}
+  .final .btn-light:hover{transform:translateY(-2px)}
+
+  footer{padding:56px 0 36px;color:var(--muted);font-size:.88rem}
+  .foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+  .foot h4{color:var(--ink);margin-bottom:12px;font-size:.9rem}
+  .foot a{display:block;margin-bottom:8px}
+  .foot a:hover{color:var(--green)}
+  .legal{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:.78rem}
+
+  @media(max-width:900px){
+    .links{display:none}
+    .hero-grid{grid-template-columns:1fr;text-align:center}
+    .hero p.lead{margin-inline:auto}
+    .cta,.trust{justify-content:center}
+    .features,.steps,.quotes{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .foot{grid-template-columns:1fr 1fr}
+    section{padding:64px 0}
+    .float{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a href="#" class="logo"><i>V</i> Verde</a>
+      <div class="links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a href="#download" class="btn btn-primary">Get the app</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill">✨ New: Round-ups &amp; savings vaults</span>
+      <h1>Banking that works <span>as hard as you do.</span></h1>
+      <p class="lead">Spend, save and send money from one beautifully simple app. No monthly fees, no hidden charges, no queues. Open an account in under five minutes.</p>
+      <div class="cta">
+        <a href="#download" class="btn btn-dark">  Download for iOS</a>
+        <a href="#download" class="btn btn-ghost">▶ Get it on Android</a>
+      </div>
+      <div class="trust">
+        <span class="stars">★★★★★</span>
+        <span>4.8 average rating from 120,000+ reviews</span>
+      </div>
+    </div>
+
+    <div class="phone-wrap" aria-hidden="true">
+      <div class="float a"><div class="dot">💸</div><div><b>Transfer sent</b><br><small>$250.00 to Alex · just now</small></div></div>
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="s-top"><span>Good morning 👋</span><span>● ● ●</span></div>
+          <div class="balance"><small>Total balance</small><strong>$12,480.55</strong></div>
+          <div class="card-vis"><span>Verde Debit</span><b>•••• 4821</b><span>Valid thru 09/29</span></div>
+          <div class="actions">
+            <div><span>↑</span>Send</div><div><span>↓</span>Request</div><div><span>＋</span>Top up</div><div><span>⋯</span>More</div>
+          </div>
+          <div class="tx"><span>☕ Blue Bottle</span><em>-$5.40</em></div>
+          <div class="tx"><span>💼 Salary</span><em class="in">+$3,200</em></div>
+          <div class="tx"><span>🎧 Spotify</span><em>-$10.99</em></div>
+        </div>
+      </div>
+      <div class="float b"><div class="dot">🎯</div><div><b>Goal reached!</b><br><small>Holiday fund: 100%</small></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="press">
+  <div class="wrap">
+    As featured in
+    <div><span>TechDaily</span><span>FinanceWeekly</span><span>The Standard</span><span>Wired Money</span><span>AppReview</span></div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <div class="head">
+      <h2>Everything your money needs, in one place</h2>
+      <p>Powerful tools wrapped in an interface you'll actually enjoy using.</p>
+    </div>
+    <div class="features">
+      <article class="feat"><div class="ico">⚡</div><h3>Instant transfers</h3><p>Send money to friends or other banks in seconds, any time of day, with zero transfer fees.</p></article>
+      <article class="feat"><div class="ico">🔒</div><h3>Bank-grade security</h3><p>Biometric login, instant card freeze, real-time fraud alerts and 256-bit encryption protect every transaction.</p></article>
+      <article class="feat"><div class="ico">🐖</div><h3>Smart savings</h3><p>Round up purchases, set goals and earn 4.5% APY on your savings vaults automatically.</p></article>
+      <article class="feat"><div class="ico">📊</div><h3>Spending insights</h3><p>See where your money goes with automatic categories, monthly budgets and friendly nudges.</p></article>
+      <article class="feat"><div class="ico">🌍</div><h3>Travel without fees</h3><p>Spend in 150+ currencies at the real exchange rate with no foreign transaction fees.</p></article>
+      <article class="feat"><div class="ico">💬</div><h3>Human support 24/7</h3><p>Real people, real answers. Reach our team in the app any hour, any day of the year.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="padding-top:0">
+  <div class="steps-bg" style="padding:80px 0">
+    <div class="wrap">
+      <div class="head">
+        <h2>Up and running in three steps</h2>
+        <p>No paperwork. No branch visits. Just you and your phone.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h3>Download the app</h3><p>Get Verde free from the App Store or Google Play.</p></div>
+        <div class="step"><div class="num">2</div><h3>Verify your identity</h3><p>Snap a photo of your ID and a quick selfie. Most people are approved in minutes.</p></div>
+        <div class="step"><div class="num">3</div><h3>Start banking</h3><p>Add money, get your virtual card instantly and your physical card within days.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stats">
+    <div><strong>2.4M+</strong><span>Happy customers</span></div>
+    <div><strong>$0</strong><span>Monthly fees</span></div>
+    <div><strong>4.5%</strong><span>Savings APY</span></div>
+    <div><strong>99.99%</strong><span>Uptime</span></div>
+  </div>
+</section>
+
+<section id="reviews" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2>Loved by people who hate banks</h2><p>Don't just take our word for it.</p></div>
+    <div class="quotes">
+      <div class="quote"><span class="stars" style="color:#f5a623">★★★★★</span><p>"I switched from my old bank in an afternoon. The savings vaults helped me finally build an emergency fund."</p><div class="who"><div class="av">M</div><div>Maya R.<small>Freelance designer</small></div></div></div>
+      <div class="quote"><span class="stars" style="color:#f5a623">★★★★★</span><p>"Travelling for work, the no-fee currency conversion saves me hundreds every year. Absolute game changer."</p><div class="who"><div class="av">D</div><div>Daniel K.<small>Consultant</small></div></div></div>
+      <div class="quote"><span class="stars" style="color:#f5a623">★★★★★</span><p>"Support replied in two minutes when I lost my card. Froze it, ordered a new one, done. Unreal."</p><div class="who"><div class="av">S</div><div>Sofia L.<small>Nurse</small></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2>Questions, answered</h2></div>
+    <div class="faq">
+      <details><summary>Is my money safe with Verde?</summary><p>Yes. Eligible deposits are held at our partner banks and insured up to the maximum allowed by law. The app is protected by biometrics, encryption and continuous fraud monitoring.</p></details>
+      <details><summary>Are there any monthly fees?</summary><p>No. Verde has no monthly fees, no minimum balance and no hidden charges on everyday banking.</p></details>
+      <details><summary>How long does it take to open an account?</summary><p>Most customers are verified and ready to go in under five minutes.</p></details>
+      <details><summary>Can I deposit my paycheck directly?</summary><p>Absolutely. Set up direct deposit with your account and routing numbers and get paid up to two days early.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="download" style="padding-top:0">
+  <div class="final">
+    <h2>Ready for banking that's better?</h2>
+    <p>Join over 2 million people who've made the switch. Download Verde and open your account today.</p>
+    <div class="cta">
+      <a href="#" class="btn btn-light">  App Store</a>
+      <a href="#" class="btn btn-light">▶ Google Play</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#" class="logo" style="color:var(--ink)"><i>V</i> Verde</a>
+        <p style="margin-top:12px;max-width:280px">Modern banking for modern life. Simple, secure and built around you.</p>
+      </div>
+      <div><h4>Product</h4><a href="#features">Features</a><a href="#how">How it works</a><a href="#faq">FAQ</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Press</a></div>
+      <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
+    </div>
+    <p class="legal">© 2026 Verde Financial, Inc. Verde is a financial technology company, not a bank. Banking services are provided by our partner banks, Members FDIC. Savings APY is variable and may change at any time. This is a demo page with fictional content.</p>
+  </div>
+</footer>
+
+</body>
+</html>
