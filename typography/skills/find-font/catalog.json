@@ -379,7 +379,7 @@
       "weights": [300, 400, 500, 600, 700],
       "italics": true,
       "scripts": ["latin", "latin-ext", "cyrillic", "vietnamese"],
-      "caveats": "Too thin for body text on screens; use Cormorant Garamond or another serif for text."
+      "caveats": "Too thin for body text on screens; pair it with a sturdier body face. A sibling of Cormorant Garamond, which AI-built sites overuse, so the two read alike: don't offer it as a replacement for an overused serif."
     },
     {
       "id": "junicode",
@@ -1029,7 +1029,7 @@
       "license": "OFL",
       "url": "https://github.com/raphaelbastide/steps-mono",
       "feel": ["technical", "neutral"],
-      "use": ["headlines", "posters"],
+      "use": ["posters", "headlines"],
       "note": "Clean collaborative monospace made for the magazine étapes:. More restrained than most Velvetyne monos.",
       "variable": false,
       "weights": [100, 400],
@@ -1069,7 +1069,7 @@
     {
       "name": "Instrument Serif",
       "why": "The default 'tasteful serif' in AI landing pages.",
-      "instead": ["erode", "gambarino", "cormorant"],
+      "instead": ["erode", "gambarino", "linden-hill"],
       "ai_rate": 0.0,
       "google_rank": 73,
       "measured": "2026-11-17",
@@ -1204,7 +1204,7 @@
     {
       "name": "Playfair Display",
       "why": "The default 'elegant serif' of free templates.",
-      "instead": ["boska", "cormorant", "melodrama"],
+      "instead": ["boska", "melodrama", "zodiak"],
       "ai_rate": 0.056,
       "google_rank": 22,
       "measured": "2026-11-17",
@@ -1279,6 +1279,24 @@
       "instead": ["recursive", "author"],
       "ai_rate": 0.0,
       "google_rank": 28,
+      "measured": "2026-11-17",
+      "basis": "measured"
+    },
+    {
+      "name": "Cormorant Garamond",
+      "why": "Claude's default 'elegant serif': on 22% of AI-built pages that load a web font.",
+      "instead": ["linden-hill", "gambarino"],
+      "ai_rate": 0.222,
+      "google_rank": 61,
+      "measured": "2026-11-17",
+      "basis": "measured"
+    },
+    {
+      "name": "Jost",
+      "why": "A frequent geometric default in AI-built pages: on 17% of those that load a web font.",
+      "instead": ["supreme", "alpino"],
+      "ai_rate": 0.167,
+      "google_rank": 53,
       "measured": "2026-11-17",
       "basis": "measured"
     }
