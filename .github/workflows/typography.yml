@@ -1,0 +1,29 @@
+# Validates the font catalog, checks the generated files are current, and runs the validator and engine
+# tests (rules, eval briefs and diversity) on every pull request and on main. No Claude calls.
+name: typography
+
+on:
+  pull_request:
+    paths: ["typography/**", ".github/workflows/typography.yml"]
+  push:
+    branches: [main]
+    paths: ["typography/**", ".github/workflows/typography.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: typography
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Catalog valid and generated files current
+        run: python3 scripts/build.py --check
+      - name: Validator and engine tests
+        run: python3 -m unittest discover -s tests -q

@@ -1,41 +1,96 @@
 # color
 
-A context-aware color intelligence system for AI agents. An agent describes what it is building and receives curated color directions it can use directly.
+A library of 51 curated color directions, and a skill that picks the right ones for your project.
 
-A direction is built around a **pair**: a ground color and a figure color, with an optional small accent, the way award galleries summarize a site. Text colors, tints and shades are derived from the pair in OKLCH.
+Describe what you're building ("neighbourhood bakery", "dashboard for a fintech") and an AI agent gets back
+3–5 clearly different color directions, each one checked for contrast, plus a recommended pick. Pick one and
+the agent writes it into your project.
 
-**Status:** 51 curated directions and an engine that any agent can run. Phase 2 research tested the classifications and the library against Awwwards sites ([`research/report.md`](research/report.md)); the two-axis primary was adopted as a result. Everything stays provisional.
+## What a direction is
+
+Award galleries such as Awwwards summarize a site by its main colors. Each direction here is built the same
+way, around a **pair**:
+
+- **Ground:** the background and largest surfaces.
+- **Figure:** the main color on top of it: headings, type, logo.
+- **Accent** (optional): a small amount of a third color for prices, tags or highlights.
+
+Body text, muted text, tints and shades are derived from the pair. Colors are stored in
+[OKLCH](https://oklch.com), a format that matches how people see lightness, and output as HEX too.
+
+Every color comes from the library. The agent is told never to invent or adjust one, and every contrast
+number comes from the script.
 
 ## Install
 
-Any agent (Claude Code, Cursor, Codex and others), with the [`npx skills`](https://github.com/vercel-labs/agent-skills) CLI. Only the skill folder is installed, about 280 KB:
+Works in Claude Code, Cursor, Codex and any agent that supports skills. Needs [Node.js](https://nodejs.org)
+18 or later. No clone, no API keys, no network.
 
 ```bash
 npx skills add https://github.com/victornasar/tasteskills --skill find-color
 ```
 
-No clone is needed. The skill needs only Node 18 or later: no install, no API keys and no network.
+This installs only the skill folder (about 280 KB): instructions plus one script with the whole library inside.
 
 ## Use it
 
 Ask your agent:
 
 ```
-/find-color premium halal fine-dining restaurant
+/find-color neighbourhood bakery
 ```
 
-Or tell it to pick colors while it builds, for example "use find-color to choose and apply a palette". It then takes the engine's default pick, applies it and tells you what it chose.
+The agent shows each direction with its colors, contrast numbers, when to choose it and what to watch out for,
+then waits for you to pick. For this brief:
 
-The engine underneath, which agents run for you:
+| Direction | Ground | Figure |
+| --- | --- | --- |
+| Espresso and Milk (recommended) | `#2B1F16` | `#ECE3D6` |
+| Oxblood and Pistachio | `#62141C` | `#C3DC9B` |
+| Bronze Monochrome | `#3B220D` | `#DFBE92` |
+| Clay and Linen | `#F5EDE4` | `#8D5951` |
+
+Say which one you want and the agent applies it: CSS custom properties, a Tailwind v4 theme or design tokens,
+with each token's job noted:
+
+```css
+:root {
+  --color-ground: #2B1F16;
+  --color-ground: oklch(0.25 0.025 55); /* Page background and the largest surfaces */
+  --color-figure: #ECE3D6;
+  --color-figure: oklch(0.92 0.02 80); /* Headings, type and logo */
+  --color-accent: #D18E46;
+  --color-accent: oklch(0.7 0.12 65); /* Prices, tags and highlights */
+  /* …plus text, muted text, tints and shades */
+}
+```
+
+You can add constraints in plain words: "must work in dark mode", "no gold", "photography-heavy", "avoid the
+usual colors for this industry". Or tell the agent to choose for you while it builds ("use find-color to pick
+and apply a palette"); it takes the recommended pick and tells you what it chose.
+
+### Run the engine directly
+
+The agent runs these for you, but you can too:
 
 ```bash
-node scripts/find-color.mjs recommend --brief "premium halal fine-dining restaurant"
+node scripts/find-color.mjs recommend --brief "neighbourhood bakery"
 node scripts/find-color.mjs recommend --domains saas,fintech --foundation dark --count 5
-node scripts/find-color.mjs apply lib.parchment-and-ink --format css --text
+node scripts/find-color.mjs apply lib.espresso-and-milk --format css --text
 node scripts/find-color.mjs classify --ground "oklch(0.95 0.02 90)" --figure "oklch(0.62 0.06 140)" --area 80/20
 ```
 
-From a clone, run the same commands with `node tools/cli.mjs`.
+`scripts/` is inside the installed skill folder. From a clone of this repo, run the same commands with
+`node tools/cli.mjs` from the `color/` folder.
+
+## Change the library
+
+Edit pairs in `library/source/*.json`, then run `node tools/build.mjs all`. The build stops on any color out
+of gamut, any contrast failure, any near-duplicate and any change to the golden briefs' results.
+[`AGENTS.md`](AGENTS.md) has the full rules.
+
+**Status:** 51 directions. Research on Awwwards sites ([`research/report.md`](research/report.md)) tested
+the classification and the library; its two-axis model was adopted as a result. Everything stays provisional.
 
 ## What exists
 

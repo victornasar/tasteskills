@@ -21,5 +21,5 @@ Work inside one area at a time and follow that area's `AGENTS.md`. Each area kee
 
 ## Checks
 
-- Typography: `cd typography && python3 scripts/build.py --check && python3 -m unittest discover -s tests -q` (also the pre-commit hook; enable with `git config core.hooksPath .githooks`).
+- Typography: `cd typography && python3 scripts/build.py --check && python3 -m unittest discover -s tests -q` (also CI and the pre-commit hook; enable the hook with `git config core.hooksPath .githooks`).
 - Color: `cd color && node tools/build.mjs all`, then `git diff --exit-code` (also CI).

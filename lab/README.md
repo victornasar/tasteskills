@@ -1,28 +1,46 @@
 # lab
 
-Experiments on whole-page design quality. The question: what actually moves an agent from "acceptable" to "distinctive", and how much of it is the model versus the system around it.
+Experiments on whole-page design quality.
 
-```text
-lab/
-  briefs/        opposite-register briefs with real copy, audience and constraints
-  runs/          one folder per run: screenshots at fixed viewports + the agent's notes
-  ratings/       blind pairwise picks + free-text critiques
-  findings.md    what helped, what didn't, per intervention
-  taste-grilling/  design for a discovery skill: the creative direction format, worked examples,
-                   and the Persona B simulated-client test (not a skill yet; no runs yet)
-```
+The color and typography skills pick better parts. The lab asks the bigger question: **what actually moves an
+AI agent from an acceptable website to a distinctive one, and how much of that is the model versus the tools
+and process around it?**
 
-## Protocol
+**Status:** the protocol below is written, and one experiment is designed (taste-grilling). No runs, ratings
+or findings exist yet.
 
-1. **Fixed start.** Every run branches from one frozen app commit (record the repo and SHA in the run folder). Run with and without shadcn to measure what its defaults contribute.
-2. **Baseline first.** 2 briefs × 3 models × 3 runs, no skills. Same harness for every model where possible.
-3. **Rate blind.** Strip model names, compare pairwise, write what's wrong in plain words. Critiques become the rubric; don't write criteria up front.
-4. **One intervention at a time:** direction doc → design skill → screenshot loop → separate critic → delete-only pass.
-5. **Outcome metric:** corrections needed before you'd ship it.
+## What's here
 
-## Measures
+| Path | What it is | Status |
+| --- | --- | --- |
+| [`taste-grilling/`](taste-grilling/) | Design for a skill that questions the client about what they want before building, and a test for whether it works | Designed, not run |
+| `briefs/` | Project briefs written in opposite registers, with real copy, audience and constraints | Not created yet |
+| `runs/` | One folder per run: screenshots at fixed viewport sizes, plus the agent's notes | Not created yet |
+| `ratings/` | Blind pairwise picks and written critiques | Not created yet |
+| `findings.md` | What helped and what didn't, per intervention | Not created yet |
 
-- **Convergence:** same model, opposite briefs. Structurally similar sites mean the model isn't reasoning from the brief.
-- **Craft defects:** contrast, type scale, spacing rhythm, line length, alignment — checked on the rendered DOM, not the screenshot.
+## How an experiment runs
+
+1. **Same starting point.** Every run starts from one frozen app commit. Record the repo and commit SHA in the
+   run folder. Run with and without shadcn/ui to measure what its default styling contributes.
+2. **Baseline first.** 2 briefs × 3 models × 3 runs each, with no skills. Use the same setup for every model
+   where possible.
+3. **Rate blind.** Remove model names, compare sites two at a time, and write down what's wrong in plain words.
+   Those critiques become the scoring rubric; don't write criteria in advance.
+4. **One change at a time.** Add interventions one by one: a written direction, then a design skill, then a
+   screenshot feedback loop, then a separate critic, then a pass that may only delete things.
+5. **What counts as better:** fewer corrections needed before you'd ship it.
+
+## What gets measured
+
+- **Convergence:** the same model given opposite briefs. If the sites come out structurally similar, the model
+  isn't reasoning from the brief.
+- **Craft defects:** contrast, type scale, spacing rhythm, line length, alignment. Checked on the rendered page,
+  not just the screenshot.
 - **Coherence:** does each section follow the written direction?
-- **Fit and distinctiveness:** human, blind, pairwise only.
+- **Fit and distinctiveness:** judged by people, blind, comparing two sites at a time.
+
+## Contributing a run
+
+Create `runs/<date>-<model>-<brief>/` with the starting commit SHA, the exact prompt, the agent's notes and
+screenshots at the fixed viewports. Don't rate your own runs; ratings happen blind, after the batch is done.

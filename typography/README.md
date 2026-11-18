@@ -1,58 +1,107 @@
 # typography
 
-A short, opinionated catalog of free typefaces that don't make a site look AI-generated, tagged by feel
-and use so an agent (or you) can pick the right one fast. Every font is free for commercial use and meant
-to be **self-hosted**: no Google Fonts CDN, no third-party requests. The repo stores no font files.
+A short catalog of free fonts that don't make a site look AI-generated, and a skill that picks from it.
 
-- **Agents:** start at [`AGENTS.md`](AGENTS.md). From any project, `/find-font <brief>` runs it (setup below).
-- **Humans:** browse the catalog below, grouped by use and by feel.
-- **Editing:** change [`fonts.json`](fonts.json) only, then run `python3 scripts/build.py`. It validates the
-  data and regenerates the catalog part of this README.
+AI agents keep choosing the same few fonts: Inter, Geist, DM Sans, Space Grotesk, Instrument Serif. This
+catalog offers 63 alternatives, each chosen by a person and tagged by **feel** (warm, technical, editorial…)
+and **use** (body text, headlines, logos, code…), so an agent can match fonts to a brief. It also keeps an
+[avoid list](#avoid-as-defaults) of 27 overused fonts, each with replacements.
+
+Every font is free for commercial use and meant to be **self-hosted**: you download the files into your
+project instead of loading them from Google Fonts. The repo stores no font files, only where to get them.
+
+## Use it with an AI agent
+
+Works in Claude Code, Cursor, Codex and any agent that supports skills. Needs Python 3.8 or later. No clone,
+no API keys, no network.
+
+```sh
+npx skills add https://github.com/victornasar/tasteskills --skill find-font
+```
+
+This installs only the skill folder: instructions, a copy of the catalog and one small script.
+
+Then, from any project:
+
+```
+/find-font cozy bakery website
+```
+
+The agent reads the brief into roles (headlines, body…), a feel (warm, technical…) and constraints
+(languages, public repo, a font to replace). The script then filters, ranks and pairs the catalog, so the same
+brief always gets the same picks. The answer has:
+
+- a top pick for each role, with two alternatives each (for this brief: Synonym for headlines, Sentient for
+  body text);
+- why each font fits, its license and where to download it;
+- the `@font-face` CSS for the top pick, with fallback fonts;
+- which overused font it replaces, if your project uses one.
+
+With no brief (`/find-font`), it reads your project and says what it inferred. To update the catalog, run the
+install command again.
+
+### Run the script directly
+
+```sh
+python3 skills/find-font/scripts/find_font.py recommend --role headlines --role body --feel warm
+python3 skills/find-font/scripts/find_font.py recommend --role ui --feel neutral --replaces Inter
+python3 skills/find-font/scripts/find_font.py vocab
+python3 skills/find-font/scripts/find_font.py avoid Poppins
+```
+
+## Use it yourself
+
+Browse the catalog [by use](#by-use), [by feel](#by-feel) or [all at once](#all-fonts), then follow
+[Using a font](#using-a-font) to self-host your pick.
+
+## Change the catalog
+
+1. Edit [`fonts.json`](fonts.json). It's the only file you edit by hand; the catalog part of this README and
+   the skill's `catalog.json` are generated from it. [`AGENTS.md`](AGENTS.md#editing-the-catalog) has the rules (which tags to use, where
+   facts must come from).
+2. Run `python3 scripts/build.py`. It validates the data and rewrites the generated files. It prints `✓`
+   when everything is valid. It also fails if one font is offered as the replacement for more than 3 overused
+   fonts, so the avoid list doesn't create a new default.
+3. Run `python3 -m unittest discover -s tests -q`.
+
+To run the check automatically on every commit, run `git config core.hooksPath .githooks` once from the
+repo root.
+
+**When to run what:** the hook covers every commit. Run `scripts/eval.py` after changing `AGENTS.md`, the tag
+vocabulary or many tags at once. Run `scripts/check_links.py` every month or so, and
+`scripts/measure_slop.py` every few months.
+
+## Files
 
 | File | What it is |
 |---|---|
-| `fonts.json` | The catalog: tag vocabulary, fonts, and the avoid list. The only file you edit by hand. |
-| `AGENTS.md` | How an agent picks a font from a brief. |
-| `scripts/build.py` | Validates `fonts.json` and regenerates this README's catalog. `--check` to verify only. |
-| `scripts/no-google-fonts.sh` | Fails if a project hotlinks Google Fonts or the Fontshare CDN. |
-| `scripts/eval.py` | Runs the briefs in `evals/briefs.json` through `/find-font` and checks the picks. Uses Claude calls. |
-| `scripts/check_links.py` | Checks every font link is alive and Fontshare facts still match. Needs the internet. |
-| `scripts/glyphs.py` | Reports which `scripts` tags a font earns, from its OTF or TTF files. |
-| `scripts/measure_slop.py` | Measures which fonts are slop (see below). About 30 Claude calls. |
-| `tests/` | Validator tests: `python3 -m unittest discover -s tests` |
-| `starter/fonts.css` | Copy-paste `@font-face` setup for self-hosting. |
+| `fonts.json` | The catalog: tag vocabulary, fonts, and the avoid list |
+| `AGENTS.md` | How the engine ranks fonts, and how to edit the catalog |
+| `skills/find-font/` | The installable skill: `SKILL.md`, the ranking script `scripts/find_font.py` and `catalog.json` (generated) |
+| `starter/fonts.css` | Copy-paste `@font-face` setup for self-hosting |
+| `scripts/build.py` | Validates `fonts.json`, regenerates this README's catalog and the skill's `catalog.json`. `--check` verifies only |
+| `scripts/no-google-fonts.sh` | Fails if a project still loads fonts from Google Fonts or Fontshare's servers |
+| `scripts/eval.py` | Runs the briefs in `evals/briefs.json` through the skill with Claude and checks the picks; summaries in `evals/results/` |
+| `scripts/check_links.py` | Checks every font link still works and Fontshare facts still match. Needs the internet |
+| `scripts/glyphs.py` | Reports which language tags a font earns, from its OTF or TTF files |
+| `scripts/measure_slop.py` | Measures which fonts AI agents overuse (see below). About 30 Claude calls |
+| `tests/` | Validator and engine tests: rules, eval briefs, and diversity (no Claude calls) |
 
-### Setup
+## How the data was measured
 
-```sh
-git clone https://github.com/victornasar/tasteskills ~/Documents/tasteskills
-mkdir -p ~/.claude/skills && cp -r ~/Documents/tasteskills/typography/skill/find-font ~/.claude/skills/
-```
+### Language tags
 
-That gives Claude Code a `/find-font` skill in every project. The skill expects the repo at
-`~/Documents/tasteskills/typography`; if you clone it elsewhere, edit the paths in `~/.claude/skills/find-font/SKILL.md`.
-Other agents can be pointed at `AGENTS.md` directly.
-
-If you'll edit the catalog, run `git config core.hooksPath .githooks` once from the tasteskills root. The pre-commit hook then blocks commits with an
-invalid or out-of-date catalog.
-
-**When to run what:** the hook covers every commit. Run `scripts/eval.py` after changing `AGENTS.md`, the tag
-vocabulary or many tags at once. Run `scripts/check_links.py` every month or so, and `scripts/measure_slop.py`
-every few months.
-
-### How language tags were measured
-
-`scripts` tags come from each font's character table, using the letter sets in `scripts/glyphs.py`. A letter only
-counts if every measured style has it. Two limits:
+A font's `scripts` tags (latin, latin-ext, cyrillic…) come from its character table, using the letter sets in
+`scripts/glyphs.py`. A letter only counts if every measured style has it. Two limits:
 
 - 24 families were measured from Fontsource's builds at weight 400 rather than upstream files, and Monaspace
   only through its Neon family.
 - `latin-ext` covers Western European languages plus Polish, Czech, Slovak, Hungarian and Croatian. Turkish,
   Romanian and Baltic letters aren't tested.
 
-### How "slop" is decided
+### What counts as overused ("slop")
 
-A font is slop when either is true:
+A font goes on the avoid list when either is true:
 
 - **AI default:** it appears in at least 15% of sites generated by default Claude from 30 generic prompts
   (landing pages, portfolios, blogs, dashboards, docs, shops). The runs switch off personal settings and skills
@@ -63,6 +112,9 @@ A font is slop when either is true:
 `scripts/measure_slop.py` writes the evidence onto every avoid entry, saves a report to `evals/slop/<date>.json`,
 and suggests additions. It also flags catalog fonts that cross a threshold. Adding to the avoid list or
 removing a catalog font stays a human decision.
+
+The latest measurement (`evals/slop/2026-11-07.json`) used 30 sites, 16 of which loaded a web font, all from
+one model. Treat the rates as early evidence.
 
 ---
 
@@ -555,31 +607,31 @@ Clearly from an era: pixel, terminal, LCD, collegiate, medieval.
 ## Avoid as defaults
 
 - **Inter**: The default of nearly every AI-generated UI and SaaS template. Try Switzer, Public Sans, Atkinson Hyperlegible Next. *(AI rate 56%, Google #5, measured 2026-11-07)*
-- **Geist**: Vercel's font; now the default look of AI-generated Next.js apps. Try Switzer, Supreme, Mona Sans / Hubot Sans. *(AI rate 0%, Google #90, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
-- **Space Grotesk**: The go-to 'techy but friendly' choice in templates. Try Supreme, Technor, Karrik. *(AI rate 0%, Google #62, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
+- **Geist**: Vercel's font; now the default look of AI-generated Next.js apps. Try Supreme, Mona Sans / Hubot Sans, Overpass. *(AI rate 0%, Google #90, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
+- **Space Grotesk**: The go-to 'techy but friendly' choice in templates. Try Technor, Karrik, Overpass. *(AI rate 0%, Google #62, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
 - **Instrument Serif**: The default 'tasteful serif' in AI landing pages. Try Erode, Gambarino, Cormorant. *(AI rate 12%, Google #70, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
-- **DM Sans**: Ubiquitous geometric default. Try Plein, Red Hat Display / Text. *(AI rate 19%, Google #21, measured 2026-11-07)*
+- **DM Sans**: Ubiquitous geometric default. Try Plein, Ranade. *(AI rate 19%, Google #21, measured 2026-11-07)*
 - **Plus Jakarta Sans**: Ubiquitous in startup templates. Try Red Hat Display / Text, Synonym. *(AI rate 0%, Google #34, measured 2026-11-07)*
 - **Manrope**: Ubiquitous in startup templates. Try Switzer, Ranade. *(AI rate 0%, Google #29, measured 2026-11-07)*
-- **Outfit**: Ubiquitous geometric default. Try Red Hat Display / Text, League Spartan. *(AI rate 0%, Google #31, measured 2026-11-07)*
+- **Outfit**: Ubiquitous geometric default. Try League Spartan, Alpino. *(AI rate 0%, Google #31, measured 2026-11-07)*
 - **Poppins**: The most overused geometric sans on the web. Try Red Hat Display / Text, League Spartan. *(AI rate 0%, Google #8, measured 2026-11-07)*
 - **Montserrat**: The most overused display sans on the web. Try League Spartan, Panchang. *(AI rate 0%, Google #6, measured 2026-11-07)*
-- **Roboto**: Android and Material default; reads as 'no decision made'. Try Public Sans, Source Sans 3. *(AI rate 0%, Google #2, measured 2026-11-07)*
+- **Roboto**: Android and Material default; reads as 'no decision made'. Try Public Sans, IBM Plex Sans. *(AI rate 0%, Google #2, measured 2026-11-07)*
 - **Open Sans**: Reads as 'no decision made'. Try Source Sans 3, Plein. *(AI rate 0%, Google #3, measured 2026-11-07)*
 - **JetBrains Mono**: The default mono in AI-generated code UIs. Try Commit Mono, Intel One Mono, Monaspace. *(AI rate 19%, Google #43, measured 2026-11-07)*
 - **Satoshi**: Fontshare's most-used font; the default of Framer-style templates. Try Switzer, Supreme. *(AI rate 0%, not on Google, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
-- **General Sans**: Heavily used in Framer-style templates. Try Switzer, Plein. *(AI rate 0%, not on Google, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
+- **General Sans**: Heavily used in Framer-style templates. Try Author, Plein. *(AI rate 0%, not on Google, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
 - **Clash Display**: The default 'bold display' of Framer-style templates. Try Panchang, League Gothic, Tanker. *(AI rate 0%, not on Google, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
 - **Cabinet Grotesk**: Heavily used in Framer-style templates. Try Synonym, Sporting Grotesque. *(AI rate 0%, not on Google, measured 2026-11-07)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
 - **Fraunces**: Claude's default 'warm editorial' serif: in half of the AI-built sites that load a web font. Try Erode, Gambetta, Zodiak. *(AI rate 50%, Google #74, measured 2026-11-07)*
-- **Playfair Display**: The default 'elegant serif' of free templates. Try Boska, Cormorant, Gambarino. *(AI rate 6%, Google #23, measured 2026-11-07)*
-- **Lato**: The default 'friendly humanist sans' of free templates. Try Source Sans 3, Plein, Ranade. *(AI rate 0%, Google #10, measured 2026-11-07)*
-- **Raleway**: The default 'stylish thin sans' of free templates. Try Red Hat Display / Text, League Spartan, Synonym. *(AI rate 0%, Google #24, measured 2026-11-07)*
-- **Nunito**: The default 'rounded friendly sans' of free templates. Try Red Hat Display / Text, Atkinson Hyperlegible Next, Plein. *(AI rate 0%, Google #25, measured 2026-11-07)*
-- **Figtree**: A ubiquitous geometric UI default. Try Switzer, Plein, Red Hat Display / Text. *(AI rate 0%, Google #39, measured 2026-11-07)*
+- **Playfair Display**: The default 'elegant serif' of free templates. Try Boska, Cormorant, Melodrama. *(AI rate 6%, Google #23, measured 2026-11-07)*
+- **Lato**: The default 'friendly humanist sans' of free templates. Try Source Sans 3, Ranade, Author. *(AI rate 0%, Google #10, measured 2026-11-07)*
+- **Raleway**: The default 'stylish thin sans' of free templates. Try Alpino, Synonym. *(AI rate 0%, Google #24, measured 2026-11-07)*
+- **Nunito**: The default 'rounded friendly sans' of free templates. Try Atkinson Hyperlegible Next, Red Hat Display / Text. *(AI rate 0%, Google #25, measured 2026-11-07)*
+- **Figtree**: A ubiquitous geometric UI default. Try Overpass, Public Sans. *(AI rate 0%, Google #39, measured 2026-11-07)*
 - **Oswald**: The default condensed headline font. Try League Gothic, Tanker, Mona Sans / Hubot Sans. *(AI rate 0%, Google #18, measured 2026-11-07)*
-- **Bebas Neue**: The default condensed all-caps poster font. Try League Gothic, Tanker, Ostrich Sans. *(AI rate 0%, Google #40, measured 2026-11-07)*
+- **Bebas Neue**: The default condensed all-caps poster font. Try League Gothic, Ostrich Sans, Tanker. *(AI rate 0%, Google #40, measured 2026-11-07)*
 - **Merriweather**: The default 'readable screen serif' of free templates. Try Source Serif 4, Sentient, Bespoke Serif. *(AI rate 0%, Google #33, measured 2026-11-07)*
-- **Rubik**: A ubiquitous soft-cornered sans default. Try Red Hat Display / Text, Recursive, Synonym. *(AI rate 0%, Google #30, measured 2026-11-07)*
+- **Rubik**: A ubiquitous soft-cornered sans default. Try Recursive, Author. *(AI rate 0%, Google #30, measured 2026-11-07)*
 
 <!-- catalog:end -->

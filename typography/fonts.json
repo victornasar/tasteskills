@@ -1050,7 +1050,7 @@
     {
       "name": "Geist",
       "why": "Vercel's font; now the default look of AI-generated Next.js apps.",
-      "instead": ["switzer", "supreme", "mona-sans"],
+      "instead": ["supreme", "mona-sans", "overpass"],
       "ai_rate": 0.0,
       "google_rank": 90,
       "measured": "2026-11-07",
@@ -1059,7 +1059,7 @@
     {
       "name": "Space Grotesk",
       "why": "The go-to 'techy but friendly' choice in templates.",
-      "instead": ["supreme", "technor", "karrik"],
+      "instead": ["technor", "karrik", "overpass"],
       "ai_rate": 0.0,
       "google_rank": 62,
       "measured": "2026-11-07",
@@ -1077,7 +1077,7 @@
     {
       "name": "DM Sans",
       "why": "Ubiquitous geometric default.",
-      "instead": ["plein", "red-hat"],
+      "instead": ["plein", "ranade"],
       "ai_rate": 0.188,
       "google_rank": 21,
       "measured": "2026-11-07",
@@ -1104,7 +1104,7 @@
     {
       "name": "Outfit",
       "why": "Ubiquitous geometric default.",
-      "instead": ["red-hat", "league-spartan"],
+      "instead": ["league-spartan", "alpino"],
       "ai_rate": 0.0,
       "google_rank": 31,
       "measured": "2026-11-07",
@@ -1131,7 +1131,7 @@
     {
       "name": "Roboto",
       "why": "Android and Material default; reads as 'no decision made'.",
-      "instead": ["public-sans", "source-sans-3"],
+      "instead": ["public-sans", "ibm-plex-sans"],
       "ai_rate": 0.0,
       "google_rank": 2,
       "measured": "2026-11-07",
@@ -1167,7 +1167,7 @@
     {
       "name": "General Sans",
       "why": "Heavily used in Framer-style templates.",
-      "instead": ["switzer", "plein"],
+      "instead": ["author", "plein"],
       "ai_rate": 0.0,
       "google_rank": null,
       "measured": "2026-11-07",
@@ -1203,7 +1203,7 @@
     {
       "name": "Playfair Display",
       "why": "The default 'elegant serif' of free templates.",
-      "instead": ["boska", "cormorant", "gambarino"],
+      "instead": ["boska", "cormorant", "melodrama"],
       "ai_rate": 0.062,
       "google_rank": 23,
       "measured": "2026-11-07",
@@ -1212,7 +1212,7 @@
     {
       "name": "Lato",
       "why": "The default 'friendly humanist sans' of free templates.",
-      "instead": ["source-sans-3", "plein", "ranade"],
+      "instead": ["source-sans-3", "ranade", "author"],
       "ai_rate": 0.0,
       "google_rank": 10,
       "measured": "2026-11-07",
@@ -1221,7 +1221,7 @@
     {
       "name": "Raleway",
       "why": "The default 'stylish thin sans' of free templates.",
-      "instead": ["red-hat", "league-spartan", "synonym"],
+      "instead": ["alpino", "synonym"],
       "ai_rate": 0.0,
       "google_rank": 24,
       "measured": "2026-11-07",
@@ -1230,7 +1230,7 @@
     {
       "name": "Nunito",
       "why": "The default 'rounded friendly sans' of free templates.",
-      "instead": ["red-hat", "atkinson-hyperlegible-next", "plein"],
+      "instead": ["atkinson-hyperlegible-next", "red-hat"],
       "ai_rate": 0.0,
       "google_rank": 25,
       "measured": "2026-11-07",
@@ -1239,7 +1239,7 @@
     {
       "name": "Figtree",
       "why": "A ubiquitous geometric UI default.",
-      "instead": ["switzer", "plein", "red-hat"],
+      "instead": ["overpass", "public-sans"],
       "ai_rate": 0.0,
       "google_rank": 39,
       "measured": "2026-11-07",
@@ -1257,7 +1257,7 @@
     {
       "name": "Bebas Neue",
       "why": "The default condensed all-caps poster font.",
-      "instead": ["league-gothic", "tanker", "ostrich-sans"],
+      "instead": ["league-gothic", "ostrich-sans", "tanker"],
       "ai_rate": 0.0,
       "google_rank": 40,
       "measured": "2026-11-07",
@@ -1275,7 +1275,7 @@
     {
       "name": "Rubik",
       "why": "A ubiquitous soft-cornered sans default.",
-      "instead": ["red-hat", "recursive", "synonym"],
+      "instead": ["recursive", "author"],
       "ai_rate": 0.0,
       "google_rank": 30,
       "measured": "2026-11-07",

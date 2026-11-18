@@ -8,12 +8,15 @@ Usage:
   python3 scripts/eval.py --model sonnet  pass a model to claude
   python3 scripts/eval.py --recheck DIR   re-score saved answers without calling Claude
 
-Each call runs `claude -p "/find-font <brief>"` from an empty temp folder, read-only.
-Raw answers are saved to evals/runs/<timestamp>/. Standard library only.
+Each call copies skills/find-font into an empty temp project and runs `claude -p "/find-font <brief>"` there,
+with personal settings and skills off, so it tests this repo's skill and nothing else.
+Raw answers are saved to evals/runs/<timestamp>/ (not committed); a pass/fail summary goes to
+evals/results/<timestamp>.json, which is committed as the record. Standard library only.
 """
 import argparse
 import json
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -29,11 +32,13 @@ VOICE = {"loud", "experimental", "playful"}
 
 
 def ask(brief, model):
-    cmd = ["claude", "-p", f"/find-font {brief}", "--add-dir", str(ROOT),
-           "--allowedTools", "Read", "Glob", "Grep"]
+    """One headless run of the repo's own skill: copied into an empty project, personal settings off."""
+    cmd = ["claude", "-p", f"/find-font {brief}", "--setting-sources", "project",
+           "--allowedTools", "Read", "Glob", "Grep", "Bash(python3:*)"]
     if model:
         cmd += ["--model", model]
     with tempfile.TemporaryDirectory() as empty:
+        shutil.copytree(ROOT / "skills" / "find-font", Path(empty) / ".claude" / "skills" / "find-font")
         res = subprocess.run(cmd, cwd=empty, capture_output=True, text=True, timeout=600)
     return res.stdout if res.returncode == 0 else f"[claude exited {res.returncode}]\n{res.stdout}\n{res.stderr}"
 
@@ -51,7 +56,7 @@ def parse_picks(answer):
 
 
 def candidates(role, scripts):
-    """Fonts that pass AGENTS.md step 2 for this role."""
+    """Fonts that pass the engine's filter for this role (AGENTS.md, How the engine decides)."""
     out = []
     for f in FONTS["fonts"]:
         if role not in f["use"] or not set(scripts) <= set(f["scripts"]):
@@ -169,6 +174,7 @@ def main():
                 answers[(b["id"], n)] = answer
 
     failed = 0
+    summary = []
     for b, n in jobs:
         answer = answers.get((b["id"], n))
         label = f"{b['id']}" + (f" #{n}" if args.runs > 1 else "")
@@ -177,6 +183,7 @@ def main():
             failed += 1
             continue
         fails = score(b, answer)
+        summary.append({"brief": b["id"], "run": n, "pass": not fails, "fails": fails})
         if fails:
             failed += 1
             print(f"  ✗ {label}", *fails, sep="\n      ")
@@ -184,6 +191,13 @@ def main():
             print(f"  ✓ {label}")
 
     print(f"\n{len(jobs) - failed}/{len(jobs)} passed. Answers in {out}")
+    if not args.recheck:
+        results = ROOT / "evals" / "results"
+        results.mkdir(exist_ok=True)
+        record = {"run": out.name, "model": args.model or "default", "passed": len(jobs) - failed,
+                  "total": len(jobs), "results": summary}
+        (results / f"{out.name}.json").write_text(json.dumps(record, indent=2) + "\n")
+        print(f"Summary (commit this): {(results / (out.name + '.json')).relative_to(ROOT)}")
     sys.exit(1 if failed else 0)
 
 
