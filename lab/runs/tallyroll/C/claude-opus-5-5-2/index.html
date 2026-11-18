@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyroll: usage-based billing API</title>
+<meta name="description" content="Tallyroll turns raw usage into invoices your finance team can reconcile line by line.">
+<!-- Fonts: IBM Plex Serif (headlines), IBM Plex Sans (body), Commit Mono (figures and code). All OFL, served by Fontsource via jsDelivr. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/commit-mono@5/400.css">
+<style>
+/* Color: Graphite and Signal (tasteskills find-color, lib.graphite-and-signal) */
+:root {
+  --color-ground: #F9FAFB;
+  --color-ground: oklch(0.985 0.002 250);
+  --color-figure: #15181E;
+  --color-figure: oklch(0.21 0.012 260);
+  --color-accent: #0E6EE6;
+  --color-accent: oklch(0.56 0.2 258);
+  --color-text: #3C3F46;
+  --color-text: oklch(0.368 0.012 260);
+  --color-text-muted: #6B6F76;
+  --color-text-muted: oklch(0.542 0.012 260);
+  --color-tint-1: #44484F;
+  --color-tint-1: oklch(0.4 0.0132 260);
+  --color-tint-2: #797E85;
+  --color-tint-2: oklch(0.59 0.0132 260);
+  --color-tint-3: #B2B8C0;
+  --color-tint-3: oklch(0.78 0.0132 260);
+
+  --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Commit Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --rule: 1px solid var(--color-tint-3);
+  --wrap: 72rem;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-text);
+  font: 400 1rem/1.6 var(--sans);
+}
+a { color: var(--color-accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+h1, h2, h3 { color: var(--color-figure); font-family: var(--serif); font-weight: 500; margin: 0; }
+code, .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 1.5rem; }
+
+/* Header */
+.top { border-bottom: var(--rule); }
+.top .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-top: 1.1rem; padding-bottom: 1.1rem; }
+.mark { font-family: var(--mono); font-size: 1rem; color: var(--color-figure); text-decoration: none; letter-spacing: 0.02em; }
+.top nav { display: flex; gap: 1.5rem; font-size: 0.9375rem; }
+.top nav a { color: var(--color-text); text-decoration: none; }
+.top nav a:hover { color: var(--color-figure); text-decoration: underline; }
+
+/* Actions */
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+.btn {
+  display: inline-block; padding: 0.7rem 1.15rem; border-radius: 3px;
+  background: var(--color-figure); color: var(--color-ground);
+  font: 500 0.9375rem/1.2 var(--sans); text-decoration: none;
+}
+.btn:hover { background: var(--color-tint-1); }
+.link-action { font-weight: 500; font-size: 0.9375rem; }
+
+/* Hero */
+.hero { padding: 4.5rem 0 5rem; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 3.5rem; align-items: start; }
+.hero h1 { font-size: clamp(2.25rem, 4.4vw, 3.4rem); line-height: 1.08; letter-spacing: -0.015em; }
+.hero p.sub { font-size: 1.1875rem; line-height: 1.5; margin: 1.25rem 0 2rem; max-width: 30rem; }
+
+/* Invoice */
+.invoice { background: #fff; border: var(--rule); border-radius: 3px; font-size: 0.875rem; }
+.inv-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; padding: 0.9rem 1.1rem; border-bottom: var(--rule); color: var(--color-text-muted); font-family: var(--mono); font-size: 0.8125rem; }
+.inv-head strong { color: var(--color-figure); font-weight: 400; }
+.inv-cols, .inv-line { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) auto auto auto; gap: 0 1rem; align-items: baseline; padding: 0.55rem 1.1rem; }
+.inv-cols { color: var(--color-text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: var(--rule); }
+.inv-cols span:nth-child(n+3), .inv-line span:nth-child(n+3) { text-align: right; }
+.inv-line { width: 100%; background: none; border: 0; border-bottom: var(--rule); cursor: pointer; text-align: left; color: var(--color-figure); font: inherit; padding-top: 0.85rem; padding-bottom: 0.85rem; }
+.inv-line:hover { background: var(--color-ground); }
+.inv-line .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.caret { font-family: var(--mono); font-size: 1.25rem; line-height: 1; color: var(--color-accent); transition: transform .15s; display: inline-block; }
+.inv-line[aria-expanded="true"] .caret { transform: rotate(90deg); }
+.trace { padding: 0.9rem 1.1rem 1.1rem 3.6rem; border-bottom: var(--rule); background: var(--color-ground); }
+.trace[hidden] { display: none; }
+.trace-label { font-size: 0.8125rem; color: var(--color-text-muted); margin: 0 0 0.7rem; }
+.days { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.15rem 1.25rem; margin: 0; padding: 0; list-style: none; font-family: var(--mono); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.days li { display: grid; grid-template-columns: auto 1fr; gap: 0 0.6rem; padding: 0.2rem 0; position: relative; }
+.days li span:first-child { color: var(--color-text-muted); }
+.days li span:last-child { text-align: right; color: var(--color-figure); }
+.days li i { position: absolute; left: 0; bottom: 0; height: 1px; background: var(--color-tint-2); }
+.days li.we span:first-child { color: var(--color-tint-2); }
+.sum { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid var(--color-figure); font-family: var(--mono); font-size: 0.8125rem; color: var(--color-figure); }
+.sum span:first-child { color: var(--color-text-muted); }
+.inv-foot { display: flex; justify-content: flex-end; gap: 2.25rem; padding: 0.9rem 1.1rem; font-family: var(--mono); font-size: 0.8125rem; color: var(--color-text-muted); }
+.inv-foot strong { color: var(--color-figure); font-weight: 400; }
+.caption { font-size: 0.8125rem; color: var(--color-text-muted); margin: 0.6rem 0 0; }
+
+/* Sections */
+section.block { border-top: var(--rule); }
+.kicker { font-family: var(--mono); font-size: 0.8125rem; color: var(--color-text-muted); margin: 0 0 0.6rem; }
+.how { padding: 4.5rem 0 3rem; }
+.how h2, .who h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.2; }
+.steps { list-style: none; margin: 2.5rem 0 0; padding: 0; counter-reset: s; }
+.steps > li { display: grid; grid-template-columns: 3rem minmax(0, 4fr) minmax(0, 7fr); gap: 0 2rem; padding: 2rem 0; border-top: var(--rule); counter-increment: s; }
+.steps > li::before { content: "0" counter(s); font-family: var(--mono); color: var(--color-text-muted); font-size: 0.875rem; padding-top: 0.3rem; }
+.steps > li > * { min-width: 0; }
+.steps h3 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+.steps p { margin: 0; max-width: 26rem; }
+pre {
+  margin: 0; padding: 1rem 1.2rem; overflow-x: auto;
+  background: var(--color-figure); color: #E4E7EB; border-radius: 3px;
+  font: 400 0.8125rem/1.65 var(--mono);
+}
+pre .c { color: var(--color-tint-3); }
+pre .k { color: #fff; }
+.trail { margin: 0; padding: 0; list-style: none; font-family: var(--mono); font-size: 0.8125rem; color: var(--color-figure); }
+.trail li { padding: 0.55rem 0 0.55rem 1.4rem; border-left: 1px solid var(--color-tint-3); position: relative; }
+.trail li::before { content: ""; position: absolute; left: -4px; top: 1.05rem; width: 7px; height: 7px; background: var(--color-ground); border: 1px solid var(--color-figure); border-radius: 50%; }
+.trail li span { color: var(--color-text-muted); display: block; font-family: var(--sans); font-size: 0.8125rem; }
+
+.who { padding: 4rem 0 4.5rem; background: #fff; }
+.who .wrap > h2 { max-width: 36rem; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 0 4rem; margin-top: 2.5rem; }
+.split h3 { font-family: var(--mono); font-weight: 400; font-size: 0.8125rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; padding-bottom: 0.75rem; border-bottom: 1px solid var(--color-figure); }
+.split ul { list-style: none; margin: 0; padding: 0; }
+.split li { padding: 0.95rem 0; border-bottom: var(--rule); color: var(--color-figure); font-size: 1.0625rem; }
+
+.price { padding: 5rem 0 5.5rem; }
+.price .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3rem; align-items: end; }
+.price p.figure { font-family: var(--serif); color: var(--color-figure); font-size: clamp(1.75rem, 3.2vw, 2.6rem); line-height: 1.2; margin: 0; }
+.price p.figure .mono { font-size: 0.92em; }
+.price p.note { margin: 0.9rem 0 0; font-size: 1.0625rem; }
+.price .actions { justify-content: flex-start; }
+
+footer { border-top: var(--rule); padding: 1.6rem 0 2.2rem; font-size: 0.875rem; color: var(--color-text-muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+footer nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; }
+footer a { color: var(--color-text); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .hero .wrap, .price .wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+  .steps > li { grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem 1rem; }
+  .steps > li > .art { grid-column: 2; }
+  .split { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+@media (max-width: 560px) {
+  .wrap { padding: 0 1rem; }
+  .top nav a:not(.keep) { display: none; }
+  .hero { padding: 3rem 0 3.5rem; }
+  .inv-cols { display: none; }
+  .inv-line { grid-template-columns: 1.25rem minmax(0, 1fr) auto; row-gap: 0.25rem; }
+  .inv-line .qty, .inv-line .rate { grid-column: 2; text-align: left !important; font-size: 0.8125rem; color: var(--color-text-muted); }
+  .inv-line .amt { grid-column: 3; grid-row: 1; }
+  .trace { padding-left: 1.1rem; }
+  .days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .steps > li { grid-template-columns: 1fr; }
+  .steps > li > .art { grid-column: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .caret { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#">tallyroll</a>
+    <nav aria-label="Primary">
+      <a class="keep" href="#docs">Docs</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#security">Security</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Every cent traces back to an event.</h1>
+        <p class="sub">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+        <div class="actions">
+          <a class="btn" href="#docs">Read the docs</a>
+          <a class="link-action" href="#demo">Book a demo</a>
+        </div>
+      </div>
+
+      <figure style="margin:0">
+        <div class="invoice" aria-label="Example invoice">
+          <div class="inv-head">
+            <span>Invoice <strong>INV-2026-03</strong></span>
+            <span>Period <strong>Mar 1–31, 2026</strong></span>
+          </div>
+          <div class="inv-cols" aria-hidden="true">
+            <span></span><span>Line</span><span>Quantity</span><span>Rate</span><span>Amount</span>
+          </div>
+          <button class="inv-line" type="button" aria-expanded="true" aria-controls="trace">
+            <span class="caret" aria-hidden="true">›</span>
+            <span>API calls, March</span>
+            <span class="num qty">1,204,388 calls</span>
+            <span class="num rate">× $0.0004</span>
+            <span class="num amt">$481.76</span>
+          </button>
+          <div class="trace" id="trace">
+            <p class="trace-label">The 31 daily totals behind this line</p>
+            <ol class="days" id="days"></ol>
+            <div class="sum"><span>Sum of daily totals</span><span>1,204,388 calls</span></div>
+          </div>
+          <div class="inv-foot"><span>Total</span><strong>$481.76</strong></div>
+        </div>
+        <figcaption class="caption">Example invoice line. Select it to open or close the daily totals.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block how" id="how">
+    <div class="wrap">
+      <p class="kicker">How it works</p>
+      <h2>From usage event to invoice line, in three steps.</h2>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>Send events.</h3>
+            <p>Post usage events from your product as they happen: <code>POST /v1/events</code>.</p>
+          </div>
+          <div class="art">
+<pre><span class="k">POST</span> /v1/events
+{
+  "idempotency_key": "evt_8f2c1a",
+  "customer": "cus_4021",
+  "type": "api.call",
+  "quantity": 1,
+  "timestamp": "2026-03-14T09:21:07Z"
+}
+<span class="c"># Illustrative request. The docs have the full schema.</span></pre>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Define pricing.</h3>
+            <p>Tiers, minimums, credits and commitments, written as rules you can read.</p>
+          </div>
+          <div class="art">
+<pre><span class="k">meter</span>   api_calls
+  sum   quantity where type = "api.call"
+<span class="k">price</span>   $0.0004 per call
+<span class="k">period</span>  calendar month
+<span class="c"># Illustrative rule, priced like the example invoice.</span></pre>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Invoice.</h3>
+            <p>Each line on an invoice opens up into the events that produced it.</p>
+          </div>
+          <div class="art">
+            <ol class="trail">
+              <li>API calls, March · $481.76<span>Invoice line</span></li>
+              <li>31 daily totals · 1,204,388 calls<span>Opens from the line</span></li>
+              <li>api.call events · each with its idempotency key<span>Opens from each day</span></li>
+            </ol>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block who" id="security">
+    <div class="wrap">
+      <p class="kicker">Who signs off</p>
+      <h2>Built for the two people who have to agree on the number.</h2>
+      <div class="split">
+        <div>
+          <h3>For finance</h3>
+          <ul>
+            <li>Line-level audit trail</li>
+            <li>Exports to NetSuite and QuickBooks</li>
+            <li>Revenue recognition schedules</li>
+          </ul>
+        </div>
+        <div>
+          <h3>For engineering</h3>
+          <ul>
+            <li>Idempotent event ingestion</li>
+            <li>Webhooks for every invoice state</li>
+            <li>SDKs for TypeScript, Python and Go</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block price" id="pricing">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Pricing</p>
+        <p class="figure"><span class="mono">0.5%</span> of billed revenue, no platform fee.</p>
+        <p class="note">Free until you bill $10,000 a month.</p>
+      </div>
+      <div class="actions" id="docs">
+        <a class="btn" href="#docs">Read the docs</a>
+        <a class="link-action" href="#demo" id="demo">Book a demo</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="#docs">Docs</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#status">Status</a>
+      <a href="#security">Security</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span>© 2026 Tallyroll.</span>
+  </div>
+</footer>
+
+<script>
+  // Example daily totals for March 2026; they sum to the invoice line's 1,204,388 calls.
+  const totals = [23222,40735,43907,40585,43558,42692,22872,24501,41172,43783,41692,41983,44233,26193,23818,43465,46197,48414,46222,45235,27428,24170,48740,45210,44424,44412,45831,27548,25292,48150,48704];
+  const max = Math.max(...totals);
+  const list = document.getElementById('days');
+  totals.forEach((n, i) => {
+    const li = document.createElement('li');
+    const dow = (i % 7); // Mar 1, 2026 is a Sunday
+    if (dow === 0 || dow === 6) li.className = 'we';
+    li.innerHTML = `<span>Mar ${String(i + 1).padStart(2, '0')}</span><span>${n.toLocaleString('en-US')}</span><i style="width:${(n / max * 100).toFixed(1)}%"></i>`;
+    li.title = `${n.toLocaleString('en-US')} calls`;
+    list.appendChild(li);
+  });
+  const line = document.querySelector('.inv-line');
+  const trace = document.getElementById('trace');
+  line.addEventListener('click', () => {
+    const open = line.getAttribute('aria-expanded') === 'true';
+    line.setAttribute('aria-expanded', String(!open));
+    trace.hidden = open;
+  });
+</script>
+</body>
+</html>

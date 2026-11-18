@@ -6,8 +6,8 @@ The color and typography skills pick better parts. The lab asks the bigger quest
 AI agent from an acceptable website to a distinctive one, and how much of that is the model versus the tools
 and process around it?**
 
-**Status:** a 90-site corpus of AI defaults is measured, the first baseline experiment (36 runs, with and
-without the skills) is measured automatically, and blind human ratings are open. Results so far are in
+**Status:** a 90-site corpus of AI defaults is measured; 54 runs across three conditions (no skills, font and
+color skills, plus check-layout) are measured automatically; blind human ratings are open. Results so far are in
 [`findings.md`](findings.md).
 
 ## What's here
@@ -20,24 +20,24 @@ without the skills) is measured automatically, and blind human ratings are open.
 | [`run.py`](run.py) | Runs the experiment: each brief × model × condition, 3 times |
 | `runs/<brief>/<condition>/<model>-<n>/` | One folder per run: the page, the agent's notes and the exact prompt |
 | [`analyze.py`](analyze.py) | Automatic measures for the runs → [`runs/measures.md`](runs/measures.md) |
-| [`ratings/`](ratings/) | The blind rating page, its answer key and the scoring script |
+| [`ratings/`](ratings/) | The blind rating page (A vs B and B vs C), its answer key and the scoring script |
 | [`tools/`](tools/) | Renders pages in Chrome and detects layout slop; calibrated on fixtures |
 | [`taste-grilling/`](taste-grilling/) | Design for a skill that questions the client before building (designed, not run) |
 
 ## Run it yourself
 
-Needs Python 3, Node 18+, Google Chrome and the `claude` CLI.
+Needs Python 3, Node 22+, Google Chrome and the `claude` CLI.
 
 ```bash
 cd lab/tools && npm install && npm test && cd ../..        # set up and calibrate the detector
 node lab/tools/resolve-fonts.mjs && node lab/tools/fetch-fonts.mjs   # fonts for faithful renders
-python3 lab/run.py                                          # 36 runs; skips ones that exist
+python3 lab/run.py --conditions A,B,C                       # 54 runs; skips ones that exist
 node lab/tools/detect.mjs lab/runs --out lab/runs/detect.json --shots lab/runs/shots --full
 python3 lab/analyze.py
 ```
 
-Conditions so far: **A**, no skills; **B**, `find-font` and `find-color` installed and asked for. Add a
-condition by extending `run.py` (for example C, a screenshot critique loop) and rerun; existing runs are kept.
+Conditions so far: **A**, no skills; **B**, `find-font` and `find-color` installed and asked for; **C**, B plus
+`check-layout`. Add a condition by extending `run.py` and rerun; existing runs are kept.
 
 ## How an experiment runs
 

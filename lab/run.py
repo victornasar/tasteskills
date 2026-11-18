@@ -73,7 +73,10 @@ def run_one(brief, condition, model, n):
         for name in CONDITION_SKILLS[condition]:
             shutil.copytree(SKILLS[name], Path(project) / ".claude" / "skills" / name)
         res = subprocess.run(cmd, cwd=project, capture_output=True, text=True, timeout=1800)
-    page, notes = split_reply(res.stdout)
+        page, notes = split_reply(res.stdout)
+        saved = Path(project) / "index.html"
+        if not page and saved.exists():  # C saves its page to check it, and may not repeat it in the reply
+            page, _ = split_reply("```html\n" + saved.read_text() + "\n```")
     if res.returncode != 0 or not page:
         return f"FAIL {out.relative_to(LAB)} (exit {res.returncode}) {res.stderr[:200]}"
     out.mkdir(parents=True, exist_ok=True)
@@ -90,7 +93,7 @@ def run_one(brief, condition, model, n):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--briefs", default="tallyroll,fennel-street")
-    ap.add_argument("--conditions", default="A,B")
+    ap.add_argument("--conditions", default="A,B,C")
     ap.add_argument("--models", default=",".join(MODELS))
     ap.add_argument("--runs", type=int, default=3)
     ap.add_argument("--workers", type=int, default=6)

@@ -94,8 +94,9 @@ agents start with its `AGENTS.md`.
   above the headline 93% and a decorative gradient 87%. With the skills, default fonts vanish (without them,
   every bakery page in the experiment used Fraunces) and layout patterns drop by about a quarter. See
   [`lab/findings.md`](lab/findings.md).
-- **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open. The skills
-  also don't change page structure, so layout is the next area to work on.
+- **Layout:** adding `check-layout` cut the overused layout patterns from 1.33 per page to 0.06 and changed page
+  structure beyond normal run-to-run variation for Opus and Sonnet (not yet for Haiku).
+- **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open.
 
 ## Words used here
 
