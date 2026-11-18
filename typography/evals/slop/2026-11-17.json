@@ -1,0 +1,51 @@
+{
+  "measured": "2026-11-17",
+  "sites": 90,
+  "sites_with_web_font": 18,
+  "ai_rate_counted": true,
+  "sources": {
+    "claude-haiku-5-5": 30,
+    "claude-opus-5-5": 30,
+    "claude-sonnet-5-5": 30
+  },
+  "thresholds": {
+    "ai_rate": 0.15,
+    "google_top": 40,
+    "min_font_sites": 10
+  },
+  "ai_rates": {
+    "Inter": 0.722,
+    "Fraunces": 0.5,
+    "Cormorant Garamond": 0.222,
+    "Jost": 0.167,
+    "JetBrains Mono": 0.111,
+    "DM Sans": 0.056,
+    "Playfair Display": 0.056,
+    "Inter Tight": 0.056
+  },
+  "suggest_avoid_ai": [
+    "Cormorant Garamond",
+    "Jost"
+  ],
+  "suggest_avoid_web": [
+    "Google Sans",
+    "Noto Sans JP",
+    "Arimo",
+    "Roboto Condensed",
+    "Roboto Mono",
+    "Noto Sans",
+    "Nunito Sans",
+    "Roboto Slab",
+    "Kanit",
+    "Ubuntu",
+    "Lora",
+    "Noto Sans KR",
+    "Work Sans"
+  ],
+  "catalog_flagged": [],
+  "avoid_below_threshold": [
+    "JetBrains Mono",
+    "Bebas Neue"
+  ],
+  "judgement_now_confirmed": []
+}

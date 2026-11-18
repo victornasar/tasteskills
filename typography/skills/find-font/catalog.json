@@ -1043,9 +1043,9 @@
       "name": "Inter",
       "why": "The default of nearly every AI-generated UI and SaaS template.",
       "instead": ["switzer", "public-sans", "atkinson-hyperlegible-next"],
-      "ai_rate": 0.562,
+      "ai_rate": 0.722,
       "google_rank": 5,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1053,8 +1053,8 @@
       "why": "Vercel's font; now the default look of AI-generated Next.js apps.",
       "instead": ["supreme", "mona-sans", "overpass"],
       "ai_rate": 0.0,
-      "google_rank": 90,
-      "measured": "2026-11-07",
+      "google_rank": 86,
+      "measured": "2026-11-17",
       "basis": "judgement"
     },
     {
@@ -1062,26 +1062,26 @@
       "why": "The go-to 'techy but friendly' choice in templates.",
       "instead": ["technor", "karrik", "overpass"],
       "ai_rate": 0.0,
-      "google_rank": 62,
-      "measured": "2026-11-07",
+      "google_rank": 57,
+      "measured": "2026-11-17",
       "basis": "judgement"
     },
     {
       "name": "Instrument Serif",
       "why": "The default 'tasteful serif' in AI landing pages.",
       "instead": ["erode", "gambarino", "cormorant"],
-      "ai_rate": 0.125,
-      "google_rank": 70,
-      "measured": "2026-11-07",
+      "ai_rate": 0.0,
+      "google_rank": 73,
+      "measured": "2026-11-17",
       "basis": "judgement"
     },
     {
       "name": "DM Sans",
       "why": "Ubiquitous geometric default.",
       "instead": ["plein", "ranade"],
-      "ai_rate": 0.188,
-      "google_rank": 21,
-      "measured": "2026-11-07",
+      "ai_rate": 0.056,
+      "google_rank": 20,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1089,8 +1089,8 @@
       "why": "Ubiquitous in startup templates.",
       "instead": ["red-hat", "synonym"],
       "ai_rate": 0.0,
-      "google_rank": 34,
-      "measured": "2026-11-07",
+      "google_rank": 36,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1098,8 +1098,8 @@
       "why": "Ubiquitous in startup templates.",
       "instead": ["switzer", "ranade"],
       "ai_rate": 0.0,
-      "google_rank": 29,
-      "measured": "2026-11-07",
+      "google_rank": 30,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1107,8 +1107,8 @@
       "why": "Ubiquitous geometric default.",
       "instead": ["league-spartan", "alpino"],
       "ai_rate": 0.0,
-      "google_rank": 31,
-      "measured": "2026-11-07",
+      "google_rank": 33,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1117,7 +1117,7 @@
       "instead": ["red-hat", "league-spartan"],
       "ai_rate": 0.0,
       "google_rank": 8,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1125,8 +1125,8 @@
       "why": "The most overused display sans on the web.",
       "instead": ["league-spartan", "panchang"],
       "ai_rate": 0.0,
-      "google_rank": 6,
-      "measured": "2026-11-07",
+      "google_rank": 7,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1135,7 +1135,7 @@
       "instead": ["public-sans", "ibm-plex-sans"],
       "ai_rate": 0.0,
       "google_rank": 2,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1144,16 +1144,16 @@
       "instead": ["source-sans-3", "plein"],
       "ai_rate": 0.0,
       "google_rank": 3,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
       "name": "JetBrains Mono",
       "why": "The default mono in AI-generated code UIs.",
       "instead": ["commit-mono", "intel-one-mono", "monaspace"],
-      "ai_rate": 0.188,
-      "google_rank": 43,
-      "measured": "2026-11-07",
+      "ai_rate": 0.111,
+      "google_rank": 41,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1162,7 +1162,7 @@
       "instead": ["switzer", "supreme"],
       "ai_rate": 0.0,
       "google_rank": null,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "judgement"
     },
     {
@@ -1171,7 +1171,7 @@
       "instead": ["author", "plein"],
       "ai_rate": 0.0,
       "google_rank": null,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "judgement"
     },
     {
@@ -1180,7 +1180,7 @@
       "instead": ["panchang", "league-gothic", "tanker"],
       "ai_rate": 0.0,
       "google_rank": null,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "judgement"
     },
     {
@@ -1189,7 +1189,7 @@
       "instead": ["synonym", "sporting-grotesque"],
       "ai_rate": 0.0,
       "google_rank": null,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "judgement"
     },
     {
@@ -1197,17 +1197,17 @@
       "why": "Claude's default 'warm editorial' serif: in half of the AI-built sites that load a web font.",
       "instead": ["erode", "gambetta", "zodiak"],
       "ai_rate": 0.5,
-      "google_rank": 74,
-      "measured": "2026-11-07",
+      "google_rank": 76,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
       "name": "Playfair Display",
       "why": "The default 'elegant serif' of free templates.",
       "instead": ["boska", "cormorant", "melodrama"],
-      "ai_rate": 0.062,
-      "google_rank": 23,
-      "measured": "2026-11-07",
+      "ai_rate": 0.056,
+      "google_rank": 22,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1215,8 +1215,8 @@
       "why": "The default 'friendly humanist sans' of free templates.",
       "instead": ["source-sans-3", "ranade", "author"],
       "ai_rate": 0.0,
-      "google_rank": 10,
-      "measured": "2026-11-07",
+      "google_rank": 9,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1225,7 +1225,7 @@
       "instead": ["alpino", "synonym"],
       "ai_rate": 0.0,
       "google_rank": 24,
-      "measured": "2026-11-07",
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1233,8 +1233,8 @@
       "why": "The default 'rounded friendly sans' of free templates.",
       "instead": ["atkinson-hyperlegible-next", "red-hat"],
       "ai_rate": 0.0,
-      "google_rank": 25,
-      "measured": "2026-11-07",
+      "google_rank": 23,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1242,8 +1242,8 @@
       "why": "A ubiquitous geometric UI default.",
       "instead": ["overpass", "public-sans"],
       "ai_rate": 0.0,
-      "google_rank": 39,
-      "measured": "2026-11-07",
+      "google_rank": 37,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1251,8 +1251,8 @@
       "why": "The default condensed headline font.",
       "instead": ["league-gothic", "tanker", "mona-sans"],
       "ai_rate": 0.0,
-      "google_rank": 18,
-      "measured": "2026-11-07",
+      "google_rank": 19,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1260,8 +1260,8 @@
       "why": "The default condensed all-caps poster font.",
       "instead": ["league-gothic", "ostrich-sans", "tanker"],
       "ai_rate": 0.0,
-      "google_rank": 40,
-      "measured": "2026-11-07",
+      "google_rank": 44,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1269,8 +1269,8 @@
       "why": "The default 'readable screen serif' of free templates.",
       "instead": ["source-serif-4", "sentient", "bespoke-serif"],
       "ai_rate": 0.0,
-      "google_rank": 33,
-      "measured": "2026-11-07",
+      "google_rank": 32,
+      "measured": "2026-11-17",
       "basis": "measured"
     },
     {
@@ -1278,8 +1278,8 @@
       "why": "A ubiquitous soft-cornered sans default.",
       "instead": ["recursive", "author"],
       "ai_rate": 0.0,
-      "google_rank": 30,
-      "measured": "2026-11-07",
+      "google_rank": 28,
+      "measured": "2026-11-17",
       "basis": "measured"
     }
   ]
