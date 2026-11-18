@@ -262,7 +262,6 @@ Section titles and large text inside a page.
 - [Hoover](https://www.fontshare.com/fonts/hoover): *serif*, retro, loud (FFL, no italics). Monolinear slab with no curves at all. Pure American collegiate and varsity-jacket lettering.
 - [Kola](https://www.fontshare.com/fonts/kola): *display*, technical, playful (FFL, no italics). Rounded techno stencil sans, a bit like LED signage. Large x-height keeps it readable.
 - [Melodrama](https://www.fontshare.com/fonts/melodrama): *display*, elegant, editorial (FFL, no italics). Sans with extreme contrast that grows with weight. Glamorous and theatrical.
-- [Steps Mono](https://github.com/raphaelbastide/steps-mono): *mono*, technical, neutral (no italics). Clean collaborative monospace made for the magazine étapes:. More restrained than most Velvetyne monos.
 - [Mona Sans / Hubot Sans](https://github.com/github/mona-sans): *sans*, neutral, technical. GitHub's variable grotesque with a width axis, so one family covers condensed headlines and normal UI. Hubot Sans is its squarer, more mechanical sibling.
 - [Red Hat Display / Text](https://github.com/RedHatOfficial/RedHatFont): *sans*, warm, neutral. Friendly geometric-humanist pair: Display for big sizes, Text for small. An alternative to Poppins or Montserrat.
 - [Overpass](https://github.com/RedHatOfficial/Overpass): *sans*, technical, neutral. Based on US highway signage (Highway Gothic): open, legible, a little civic. Has a matching mono.
@@ -280,6 +279,7 @@ Section titles and large text inside a page.
 - [Ostrich Sans](https://github.com/theleagueof/ostrich-sans): *display*, loud, playful (no italics). Ultra-condensed caps with rounded, inline and dashed variants. Fun, tall and skinny.
 - [Tanker](https://www.fontshare.com/fonts/tanker): *display*, loud, experimental (FFL, no italics). Condensed caps-only sans: the lowercase keys type classic caps and the uppercase keys type dynamic, experimental ones.
 - [Panchang](https://www.fontshare.com/fonts/panchang): *display*, loud, technical (FFL, no italics). Ultra-wide, almost panoramic sans. Industrial and very confident.
+- [Steps Mono](https://github.com/raphaelbastide/steps-mono): *mono*, technical, neutral (no italics). Clean collaborative monospace made for the magazine étapes:. More restrained than most Velvetyne monos.
 - [Switzer](https://www.fontshare.com/fonts/switzer): *sans*, neutral (FFL). Classic neo-grotesque with 9 weights and true italics. The quieter, less-seen alternative to Inter and Satoshi.
 - [Ranade](https://www.fontshare.com/fonts/ranade): *sans*, neutral, editorial (FFL). Neo-grotesque with high-contrast diagonals, a little kick that sets it apart from Helvetica clones.
 - [Ouroboros](https://gitlab.com/velvetyne/ouroboros): *display*, experimental, retro (no italics). Art-nouveau-ish display face with alchemical and astronomical symbols. Made for the weird and the occult.
@@ -300,6 +300,7 @@ Hero text, covers, one-word big moments.
 - [Tanker](https://www.fontshare.com/fonts/tanker): *display*, loud, experimental (FFL, no italics). Condensed caps-only sans: the lowercase keys type classic caps and the uppercase keys type dynamic, experimental ones.
 - [Panchang](https://www.fontshare.com/fonts/panchang): *display*, loud, technical (FFL, no italics). Ultra-wide, almost panoramic sans. Industrial and very confident.
 - [Segment](https://www.fontshare.com/fonts/segment): *display*, retro, technical (FFL, no italics). LCD-style letters built from segments. Digital clocks, transit boards, calculators.
+- [Steps Mono](https://github.com/raphaelbastide/steps-mono): *mono*, technical, neutral (no italics). Clean collaborative monospace made for the magazine étapes:. More restrained than most Velvetyne monos.
 - [Karrik](https://gitlab.com/phantomfoundry/karrik_fonts): *sans*, experimental, retro. Deliberately clumsy early-sans revival with uneven widths and missing optical corrections. Feels like faded road signs and ghost-town lettering.
 - [Avara](https://gitlab.com/velvetyne/Avara): *serif*, experimental, editorial. A curveless serif: every curve drawn as straight segments. Classic silhouette, faceted up close.
 - [Boska](https://www.fontshare.com/fonts/boska): *serif*, elegant, editorial (FFL). High-contrast Didone with a pointed-pen flourish. Fashion-magazine elegance. An alternative to Playfair Display.
@@ -307,7 +308,6 @@ Hero text, covers, one-word big moments.
 - [Zina](https://www.fontshare.com/fonts/zina): *display*, elegant, retro (FFL, no italics). Stately inline Didone with ball terminals. Early-1800s grandeur.
 - [Melodrama](https://www.fontshare.com/fonts/melodrama): *display*, elegant, editorial (FFL, no italics). Sans with extreme contrast that grows with weight. Glamorous and theatrical.
 - [Departure Mono](https://departuremono.com): *mono*, technical, retro (no italics). Monospaced pixel font with a lo-fi techy vibe. Strong for code, terminals, retro interfaces and sci-fi moments.
-- [Steps Mono](https://github.com/raphaelbastide/steps-mono): *mono*, technical, neutral (no italics). Clean collaborative monospace made for the magazine étapes:. More restrained than most Velvetyne monos.
 - [Sporting Grotesque](https://gitlab.com/velvetyne/Sporting-Grotesque): *sans*, retro, editorial (no italics). Wide, slightly old-fashioned grotesque with sporty swagger and calligraphic quirks (droopy r, wedge cuts, closed apertures). Feels like a vintage club badge.
 - [League Spartan](https://github.com/theleagueof/league-spartan): *sans*, loud, retro (no italics). Bold geometric in the Futura tradition; the heaviest weights are the reason to use it.
 - [Technor](https://www.fontshare.com/fonts/technor): *sans*, technical, retro (FFL, no italics). Constructed sans with flat sides and rounded tops. Sci-fi and industrial without being a cliché.
@@ -384,7 +384,7 @@ Quiet, Swiss, gets out of the way.
 - [Source Serif 4](https://github.com/adobe-fonts/source-serif): *serif*, for body, headlines
 - [Bespoke Serif](https://www.fontshare.com/fonts/bespoke-serif): *serif*, for body
 - [iA Writer Mono / Duo / Quattro](https://github.com/iaolo/iA-Fonts): *mono*, for body, code
-- [Steps Mono](https://github.com/raphaelbastide/steps-mono): *mono*, for headlines, posters
+- [Steps Mono](https://github.com/raphaelbastide/steps-mono): *mono*, for posters, headlines
 
 ### warm
 
@@ -419,7 +419,7 @@ Engineered, precise, a bit cold.
 - [Departure Mono](https://departuremono.com): *mono*, for code, posters
 - [Iosevka](https://github.com/be5invis/Iosevka): *mono*, for code
 - [IBM Plex Mono](https://github.com/IBM/plex): *mono*, for code, ui, body
-- [Steps Mono](https://github.com/raphaelbastide/steps-mono): *mono*, for headlines, posters
+- [Steps Mono](https://github.com/raphaelbastide/steps-mono): *mono*, for posters, headlines
 - [Mona Sans / Hubot Sans](https://github.com/github/mona-sans): *sans*, for ui, headlines, body
 - [Panchang](https://www.fontshare.com/fonts/panchang): *display*, for posters, headlines, logos
 - [Segment](https://www.fontshare.com/fonts/segment): *display*, for posters, logos
@@ -600,7 +600,7 @@ Clearly from an era: pixel, terminal, LCD, collegiate, medieval.
 | [Iosevka](https://github.com/be5invis/Iosevka) | mono | technical | code | 100–900 | yes | latin, latin-ext, cyrillic, greek, vietnamese | OFL |
 | [Victor Mono](https://rubjo.github.io/victor-mono) | mono | playful, technical | code | 100–700 var | yes | latin, latin-ext, cyrillic, greek, vietnamese | OFL |
 | [IBM Plex Mono](https://github.com/IBM/plex) | mono | technical, warm | code, ui, body | 100–700 var | yes | latin, latin-ext, cyrillic, vietnamese | OFL |
-| [Steps Mono](https://github.com/raphaelbastide/steps-mono) | mono | technical, neutral | headlines, posters | 100–400 | no | latin | OFL |
+| [Steps Mono](https://github.com/raphaelbastide/steps-mono) | mono | technical, neutral | posters, headlines | 100–400 | no | latin | OFL |
 
 ⚠︎ = tags not yet reviewed by a human.
 
@@ -609,7 +609,7 @@ Clearly from an era: pixel, terminal, LCD, collegiate, medieval.
 - **Inter**: The default of nearly every AI-generated UI and SaaS template. Try Switzer, Public Sans, Atkinson Hyperlegible Next. *(AI rate 72%, Google #5, measured 2026-11-17)*
 - **Geist**: Vercel's font; now the default look of AI-generated Next.js apps. Try Supreme, Mona Sans / Hubot Sans, Overpass. *(AI rate 0%, Google #86, measured 2026-11-17)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
 - **Space Grotesk**: The go-to 'techy but friendly' choice in templates. Try Technor, Karrik, Overpass. *(AI rate 0%, Google #57, measured 2026-11-17)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
-- **Instrument Serif**: The default 'tasteful serif' in AI landing pages. Try Erode, Gambarino, Cormorant. *(AI rate 0%, Google #73, measured 2026-11-17)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
+- **Instrument Serif**: The default 'tasteful serif' in AI landing pages. Try Erode, Gambarino, Linden Hill. *(AI rate 0%, Google #73, measured 2026-11-17)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
 - **DM Sans**: Ubiquitous geometric default. Try Plein, Ranade. *(AI rate 6%, Google #20, measured 2026-11-17)*
 - **Plus Jakarta Sans**: Ubiquitous in startup templates. Try Red Hat Display / Text, Synonym. *(AI rate 0%, Google #36, measured 2026-11-17)*
 - **Manrope**: Ubiquitous in startup templates. Try Switzer, Ranade. *(AI rate 0%, Google #30, measured 2026-11-17)*
@@ -624,7 +624,7 @@ Clearly from an era: pixel, terminal, LCD, collegiate, medieval.
 - **Clash Display**: The default 'bold display' of Framer-style templates. Try Panchang, League Gothic, Tanker. *(AI rate 0%, not on Google, measured 2026-11-17)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
 - **Cabinet Grotesk**: Heavily used in Framer-style templates. Try Synonym, Sporting Grotesque. *(AI rate 0%, not on Google, measured 2026-11-17)* **On judgement:** a house font of starters and template tools that the measurement doesn't sample yet.
 - **Fraunces**: Claude's default 'warm editorial' serif: in half of the AI-built sites that load a web font. Try Erode, Gambetta, Zodiak. *(AI rate 50%, Google #76, measured 2026-11-17)*
-- **Playfair Display**: The default 'elegant serif' of free templates. Try Boska, Cormorant, Melodrama. *(AI rate 6%, Google #22, measured 2026-11-17)*
+- **Playfair Display**: The default 'elegant serif' of free templates. Try Boska, Melodrama, Zodiak. *(AI rate 6%, Google #22, measured 2026-11-17)*
 - **Lato**: The default 'friendly humanist sans' of free templates. Try Source Sans 3, Ranade, Author. *(AI rate 0%, Google #9, measured 2026-11-17)*
 - **Raleway**: The default 'stylish thin sans' of free templates. Try Alpino, Synonym. *(AI rate 0%, Google #24, measured 2026-11-17)*
 - **Nunito**: The default 'rounded friendly sans' of free templates. Try Atkinson Hyperlegible Next, Red Hat Display / Text. *(AI rate 0%, Google #23, measured 2026-11-17)*
@@ -633,5 +633,7 @@ Clearly from an era: pixel, terminal, LCD, collegiate, medieval.
 - **Bebas Neue**: The default condensed all-caps poster font. Try League Gothic, Ostrich Sans, Tanker. *(AI rate 0%, Google #44, measured 2026-11-17)*
 - **Merriweather**: The default 'readable screen serif' of free templates. Try Source Serif 4, Sentient, Bespoke Serif. *(AI rate 0%, Google #32, measured 2026-11-17)*
 - **Rubik**: A ubiquitous soft-cornered sans default. Try Recursive, Author. *(AI rate 0%, Google #28, measured 2026-11-17)*
+- **Cormorant Garamond**: Claude's default 'elegant serif': on 22% of AI-built pages that load a web font. Try Linden Hill, Gambarino. *(AI rate 22%, Google #61, measured 2026-11-17)*
+- **Jost**: A frequent geometric default in AI-built pages: on 17% of those that load a web font. Try Supreme, Alpino. *(AI rate 17%, Google #53, measured 2026-11-17)*
 
 <!-- catalog:end -->

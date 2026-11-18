@@ -6,7 +6,7 @@ Usage:
   python3 lab/ratings/build.py page             write page.html from page.template.html + uploads.json
   python3 lab/ratings/build.py score votes.json score exported votes → results.md
 
-A pair is the condition A run and the condition B run with the same brief, model and run number. Left/right
+A pair is two runs with the same brief, model and run number from two conditions (A vs B, then B vs C). Left/right
 and the order of pairs are shuffled with a fixed seed. The page only ever says "left" and "right"; key.json
 (kept in the repo, never in the page) says which side was which condition. Standard library only.
 """
@@ -22,24 +22,32 @@ SHOTS = RUNS / "shots"
 SEED = 20261117
 
 
+# Each comparison is (first condition, second condition, seed). Earlier comparisons keep their pair ids when
+# later ones are added, so votes already cast stay valid.
+COMPARISONS = [("A", "B", SEED), ("B", "C", SEED + 1)]
+
+
 def pairs():
     found = []
-    for a in sorted(RUNS.glob("*/A/*/index.html")):
-        brief, run = a.parts[-4], a.parts[-2]
-        b = RUNS / brief / "B" / run / "index.html"
-        if not b.exists():
-            continue
-        shots = {c: {"fold": SHOTS / brief / c / run / "index.jpg", "full": SHOTS / brief / c / run / "index-full.jpg"}
-                 for c in ("A", "B")}
-        if all(p.exists() for s in shots.values() for p in s.values()):
-            model, n = run.rsplit("-", 1)
-            found.append({"brief": brief, "model": model, "run": int(n), "shots": shots})
-    rng = random.Random(SEED)
-    rng.shuffle(found)
+    for first, second, seed in COMPARISONS:
+        batch = []
+        for a in sorted(RUNS.glob(f"*/{first}/*/index.html")):
+            brief, run = a.parts[-4], a.parts[-2]
+            if not (RUNS / brief / second / run / "index.html").exists():
+                continue
+            shots = {c: {"fold": SHOTS / brief / c / run / "index.jpg", "full": SHOTS / brief / c / run / "index-full.jpg"}
+                     for c in (first, second)}
+            if all(p.exists() for s in shots.values() for p in s.values()):
+                model, n = run.rsplit("-", 1)
+                batch.append({"brief": brief, "model": model, "run": int(n), "shots": shots, "conditions": (first, second)})
+        rng = random.Random(seed)
+        rng.shuffle(batch)
+        for p in batch:
+            p["left"] = rng.choice(p["conditions"])
+            p["right"] = p["conditions"][1] if p["left"] == p["conditions"][0] else p["conditions"][0]
+        found += batch
     for i, p in enumerate(found, 1):
         p["id"] = f"p{i:02d}"
-        p["left"] = rng.choice("AB")
-        p["right"] = "B" if p["left"] == "A" else "A"
     return found
 
 
@@ -51,8 +59,8 @@ def cmd_pairs():
     for f in files:
         uploads.setdefault(f, None)
     uploads_file.write_text(json.dumps(uploads, indent=2) + "\n")
-    key = {p["id"]: {"brief": p["brief"], "model": p["model"], "run": p["run"], "left": p["left"], "right": p["right"]}
-           for p in ps}
+    key = {p["id"]: {"brief": p["brief"], "model": p["model"], "run": p["run"], "compares": "".join(p["conditions"]),
+                     "left": p["left"], "right": p["right"]} for p in ps}
     (HERE / "key.json").write_text(json.dumps(key, indent=2) + "\n")
     print(f"{len(ps)} pairs, {len(files)} screenshots. Missing uploads: {sum(v is None for v in uploads.values())}")
     for f in files:
@@ -91,20 +99,28 @@ def cmd_score(path):
             k = key.get(pid)
             if not k:
                 continue
+            comp = k.get("compares", "AB")
             winner = "tie" if v["choice"] == "tie" else k[v["choice"]]
             for group in ("all", k["model"], k["brief"]):
-                tally[group][winner] += 1
+                tally[(comp, group)][winner] += 1
             if v.get("note"):
-                loser = {"A": "B", "B": "A"}.get(winner, "either")
-                notes[loser].append(f"{k['brief']} / {k['model']}: {v['note']}")
-    lines = ["# Blind ratings: results", "", f"{raters} raters. A = no skills, B = find-font + find-color.", "",
-             "| Group | B preferred | A preferred | Can't separate | Votes |", "|---|---|---|---|---|"]
-    for group, c in sorted(tally.items(), key=lambda kv: kv[0] != "all"):
-        n = sum(c.values())
-        lines.append(f"| {group} | {c['B']} ({c['B'] / n:.0%}) | {c['A']} ({c['A'] / n:.0%}) | {c['tie']} | {n} |")
-    for side in ("A", "B", "either"):
-        if notes[side]:
-            lines += ["", f"## What raters said was wrong with {side}", ""] + [f"- {n}" for n in notes[side]]
+                loser = {comp[0]: comp[1], comp[1]: comp[0]}.get(winner, "either")
+                notes[(comp, loser)].append(f"{k['brief']} / {k['model']}: {v['note']}")
+    lines = ["# Blind ratings: results", "",
+             f"{raters} raters. A = no skills, B = find-font + find-color, C = B + check-layout.", ""]
+    for comp in sorted({c for c, _ in tally}):
+        x, y = comp
+        lines += [f"## {x} vs {y}", "", f"| Group | {y} preferred | {x} preferred | Can't separate | Votes |",
+                  "|---|---|---|---|---|"]
+        for (cp, group), c in sorted(tally.items(), key=lambda kv: kv[0][1] != "all"):
+            if cp != comp:
+                continue
+            n = sum(c.values())
+            lines.append(f"| {group} | {c[y]} ({c[y] / n:.0%}) | {c[x]} ({c[x] / n:.0%}) | {c['tie']} | {n} |")
+        for side in (x, y, "either"):
+            if notes[(comp, side)]:
+                lines += ["", f"What raters said was wrong with {side}:", ""] + [f"- {n}" for n in notes[(comp, side)]]
+        lines.append("")
     (HERE / "results.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines[:12]))
 

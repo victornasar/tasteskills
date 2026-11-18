@@ -17,7 +17,7 @@ This repo gives agents better defaults to reach for, and the evidence for why th
 
 ## Quick start
 
-Two skills are ready to use today. Both work in Claude Code, Cursor, Codex and any agent that supports skills.
+Three skills are ready to use today. All work in Claude Code, Cursor, Codex and any agent that supports skills.
 Each one ships with its data and a small script, so the picks are the same every time for the same brief.
 
 ### Pick colors: `/find-color`
@@ -57,8 +57,21 @@ You get a top pick per role (for this brief, Synonym for headlines and Sentient 
 alternatives each, the license, where to download it and the CSS to self-host it. More in
 [`typography/README.md`](typography/README.md).
 
-Agent without skills support? Point it at the skill's `SKILL.md` (in [`color/skills/`](color/skills/) or
-[`typography/skills/`](typography/skills/)) and give it the brief.
+### Check the layout: `/check-layout`
+
+Needs Node 22 or later and Chrome (or Chromium, Edge, Brave). No clone, no API keys.
+
+```bash
+npx skills add https://github.com/victornasar/tasteskills --skill check-layout
+```
+
+Ask your agent to build or review a page "with check-layout". Before building, it plans the page from the brief
+instead of the usual template. After building, it renders the page, checks for the patterns AI-built sites
+overuse (pill badges, emoji icons, rounded boxes everywhere and six more) and fixes the ones the brief doesn't
+justify. More in [`layout/README.md`](layout/README.md).
+
+Agent without skills support? Point it at the skill's `SKILL.md` (in [`color/skills/`](color/skills/),
+[`typography/skills/`](typography/skills/) or [`layout/skills/`](layout/skills/)) and give it the brief.
 
 ## What's in the repo
 
@@ -66,6 +79,7 @@ Agent without skills support? Point it at the skill's `SKILL.md` (in [`color/ski
 | --- | --- | --- |
 | [`color/`](color/) | 51 curated color directions, a script that picks and applies them, and research on 6,295 award-winning sites | Ready to use |
 | [`typography/`](typography/) | 63 curated free fonts, an avoid list of 27 overused ones, and the `/find-font` skill | Ready to use |
+| [`layout/`](layout/) | The `check-layout` skill: plans page structure from the brief and checks the rendered page for nine overused layout patterns | Ready to use |
 | [`lab/`](lab/) | Experiments on whole-page design: a measured corpus of AI defaults, a with/without-skills experiment, blind ratings | First results in |
 
 Each folder works on its own, with its own data, scripts and checks. Start with the folder's `README.md`;
@@ -80,8 +94,9 @@ agents start with its `AGENTS.md`.
   above the headline 93% and a decorative gradient 87%. With the skills, default fonts vanish (without them,
   every bakery page in the experiment used Fraunces) and layout patterns drop by about a quarter. See
   [`lab/findings.md`](lab/findings.md).
-- **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open. The skills
-  also don't change page structure, so layout is the next area to work on.
+- **Layout:** adding `check-layout` cut the overused layout patterns from 1.33 per page to 0.06 and changed page
+  structure beyond normal run-to-run variation for Opus and Sonnet (not yet for Haiku).
+- **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open.
 
 ## Words used here
 

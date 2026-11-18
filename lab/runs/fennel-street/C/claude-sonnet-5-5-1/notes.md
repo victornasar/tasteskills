@@ -1,0 +1,5 @@
+- **Fonts:** Cormorant for headlines and prices, and Source Sans 3 for body text (both OFL, self-hosted, no Google links). The `.woff2` files aren't in `./fonts/` yet, so the page currently shows the Palatino/Georgia and system fallbacks. I didn't re-render after the final spacing fix.
+- **Colour:** the Clay and Linen direction from find-color (linen ground, rose-clay figure), with its own tints and shades. Body text is 10:1 on the ground.
+- **Structure:** it follows what a phone visitor asks, in order: open?, where?, what's baked?, how do I order a cake? The hours board and address sit in the hero. The menu is a dotted-leader price list, not cards.
+- **Open/closed line:** a small script compares London time to the hours. The page has no hero image or badge, so the layout checker found none of its nine patterns.
+- **Placeholders:** the cake photo is a labelled striped box. The Instagram link is `#` until there's a real URL.

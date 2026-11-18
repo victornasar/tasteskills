@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const out = join(mkdtempSync(join(tmpdir(), "detect-")), "r.json");
-execFileSync("node", ["detect.mjs", "fixtures", "--out", out], { stdio: "inherit" });
+execFileSync("node", ["detect.mjs", "../../layout/tests/fixtures", "--out", out], { stdio: "inherit" });
 const results = JSON.parse(readFileSync(out, "utf8"));
 let failed = 0;
 for (const r of results) {

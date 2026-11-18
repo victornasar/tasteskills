@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Neighbourhood bakery on Fennel Street, London E8. Sourdough, Portuguese pastries and a few seasonal cakes.">
+<style>
+/* Fonts: Synonym (Fontshare, FFL) for headings; Sentient (Fontshare, FFL) for text.
+   Self-hosted from ./fonts/. Download from fontshare.com and place the woff2 files there. */
+@font-face {
+  font-family: "Synonym";
+  src: url("./fonts/Synonym.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sentient";
+  src: url("./fonts/Sentient.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Colours: Clay and Linen (find-color). Hex fallback first, OKLCH second. */
+:root {
+  --color-ground: #F5EDE4;
+  --color-ground: oklch(0.95 0.015 75);
+  --color-figure: #8D5951;
+  --color-figure: oklch(0.52 0.07 30);
+  --color-text: #3D3832;
+  --color-text: oklch(0.345 0.012 75);
+  --color-text-muted: #6C6761;
+  --color-text-muted: oklch(0.518 0.012 75);
+  --color-tint-3: #E1CAC6;
+  --color-tint-3: oklch(0.857 0.026 30);
+
+  --font-display: "Synonym", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-text: "Sentient", Georgia, "Times New Roman", serif;
+  --gutter: 16px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: #F5EDE4;
+  background: var(--color-ground);
+  color: #3D3832;
+  color: var(--color-text);
+  font-family: var(--font-text);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+a {
+  color: #8D5951;
+  color: var(--color-figure);
+  text-underline-offset: 0.2em;
+}
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Masthead: status first, because the first question is "is it open". */
+.masthead { padding-top: 28px; }
+.status {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #8D5951;
+  color: var(--color-figure);
+  margin: 0 0 40px;
+}
+h1 {
+  font-size: clamp(2.25rem, 9vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.line {
+  margin: 12px 0 0;
+  font-size: 1.25rem;
+  color: #6C6761;
+  color: var(--color-text-muted);
+}
+
+/* Sections: rules and spacing, no boxes. Gaps differ by section. */
+h2 {
+  font-size: 1.25rem;
+  color: #8D5951;
+  color: var(--color-figure);
+  padding-top: 14px;
+  border-top: 1px solid #E1CAC6;
+  border-top: 1px solid var(--color-tint-3);
+  margin-bottom: 14px;
+}
+.today { margin-top: 44px; }
+.season { margin-top: 32px; }
+.cakes { margin-top: 56px; }
+.split { margin-top: 64px; }
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #E1CAC6;
+  border-bottom: 1px solid var(--color-tint-3);
+}
+.list .price {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.list .price small { display: block; white-space: normal; color: #6C6761; color: var(--color-text-muted); font-size: 0.9375rem; }
+
+.note { margin: 0 0 14px; }
+.small { font-size: 0.9375rem; color: #6C6761; color: var(--color-text-muted); }
+
+.button {
+  display: inline-block;
+  min-height: 48px;
+  line-height: 48px;
+  padding: 0 20px;
+  border-radius: 2px;
+  background: #8D5951;
+  background: var(--color-figure);
+  color: #F5EDE4;
+  color: var(--color-ground);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.photo {
+  margin: 0 0 20px;
+  aspect-ratio: 4 / 3;
+  background: #E1CAC6;
+  background: var(--color-tint-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+  font-size: 0.9375rem;
+  color: #3D3832;
+  color: var(--color-text);
+}
+
+.visit p { margin: 0 0 12px; }
+
+.foot {
+  margin-top: 56px;
+  padding: 24px 0 48px;
+  border-top: 1px solid #E1CAC6;
+  border-top: 1px solid var(--color-tint-3);
+  font-size: 0.9375rem;
+  color: #6C6761;
+  color: var(--color-text-muted);
+}
+.foot nav a { margin-right: 10px; }
+.foot p { margin: 14px 0 0; }
+
+@media (min-width: 720px) {
+  /* Anchor the column to a left edge on wide screens instead of centring it. */
+  .wrap { margin: 0 0 0 max(var(--gutter), 8vw); }
+  .masthead { padding-top: 48px; }
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .split h2 { margin-top: 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead wrap">
+  <p class="status" id="status">Wednesday to Sunday, 7:00 to 14:00, or until we sell out.</p>
+  <h1>Fennel Street Bakery</h1>
+  <p class="line">Bread at seven, tarts by nine, gone by two.</p>
+</header>
+
+<main class="wrap">
+
+  <section class="today" aria-labelledby="daily-h">
+    <h2 id="daily-h">Baked daily</h2>
+    <ul class="list">
+      <li><span>Country sourdough</span><span class="price">£5.20</span></li>
+      <li><span>Seeded rye</span><span class="price">£5.60</span></li>
+      <li><span>Pastel de nata</span><span class="price">£2.10<small>or six for £11</small></span></li>
+      <li><span>Cardamom buns</span><span class="price">£3.00</span></li>
+      <li><span>Olive oil focaccia, by the slice</span><span class="price">£2.80</span></li>
+    </ul>
+  </section>
+
+  <section class="season" aria-labelledby="season-h">
+    <h2 id="season-h">This season</h2>
+    <ul class="list">
+      <li><span>Orange and almond cake</span><span class="price">whole £28<small>slice £4</small></span></li>
+      <li><span>Fig and walnut loaf</span><span class="price">£6.40</span></li>
+    </ul>
+  </section>
+
+  <section class="cakes" id="cakes" aria-labelledby="cakes-h">
+    <h2 id="cakes-h">Order a cake</h2>
+    <p class="note">Whole cakes with 48 hours' notice. Message us or call <a href="tel:+442079460381">020 7946 0381</a>.</p>
+    <p><a class="button" href="tel:+442079460381">Call to order</a></p>
+  </section>
+
+  <div class="split">
+    <section class="about" aria-labelledby="about-h">
+      <div class="photo" role="img" aria-label="Placeholder for a photo of Ana and Rita">Photo placeholder: Ana and Rita</div>
+      <h2 id="about-h">About</h2>
+      <p class="note">Ana bakes the bread. Rita does everything with custard.</p>
+      <p class="note">We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+    </section>
+
+    <section class="visit" id="find" aria-labelledby="find-h">
+      <h2 id="find-h">Find us</h2>
+      <p>14 Fennel Street, London E8</p>
+      <p>Wednesday to Sunday, 7:00 to 14:00, or until we sell out.<br>Closed Monday and Tuesday.</p>
+      <p><a href="https://maps.google.com/?q=14+Fennel+Street+London+E8">Open in Maps</a></p>
+    </section>
+  </div>
+
+</main>
+
+<footer class="foot wrap">
+  <nav>
+    <a href="#">Instagram</a>
+    <a href="#cakes">Order a cake</a>
+    <a href="#find">Find us</a>
+  </nav>
+  <p>© 2026 Fennel Street Bakery.</p>
+</footer>
+
+<script>
+/* Live status from London time. Falls back to the static line above. */
+(function () {
+  var el = document.getElementById('status');
+  try {
+    var parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/London', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false
+    }).formatToParts(new Date());
+    var get = function (t) {
+      for (var i = 0; i < parts.length; i++) { if (parts[i].type === t) return parts[i].value; }
+      return '';
+    };
+    var day = get('weekday');
+    var mins = (parseInt(get('hour'), 10) % 24) * 60 + parseInt(get('minute'), 10);
+    var isOpenDay = ['Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(day) > -1;
+    var open = isOpenDay && mins >= 420 && mins < 840; /* 7:00 to 14:00 */
+    el.textContent = open
+      ? 'Open now, until 14:00 or until we sell out.'
+      : 'Closed now. Open Wednesday to Sunday, 7:00 to 14:00.';
+  } catch (e) { /* keep the static line */ }
+})();
+</script>
+</body>
+</html>

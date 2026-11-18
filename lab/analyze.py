@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
-"""Automatic measures for lab runs: condition A (no skills) against B (skills).
+"""Automatic measures for lab runs, across conditions (A no skills, B font + color skills, C B + check-layout).
 
 Usage:
   node lab/tools/detect.mjs lab/runs --out lab/runs/detect.json --shots lab/runs/shots --full
   python3 lab/analyze.py        → lab/runs/measures.md and measures.json
 
 Measures, per condition and model:
-  - layout slop: patterns per page from detect.mjs
+  - layout slop: patterns per page from the shared pattern checks
   - default fonts: share of pages whose heading or body font is on typography's avoid list
-  - convergence: for the same model, condition and run number, how alike the two opposite briefs came out
-    (same heading font, same body font, shared layout patterns, same light/dark ground)
+  - structure change: how far a page's section skeleton is from the condition A page with the same brief, model
+    and run number (normalised edit distance; 0 = same structure, 1 = nothing in common)
+  - run-to-run variation: the same distance between different runs of one condition, model and brief. A
+    structure change only means something when it's clearly above this noise floor
+  - convergence: how many different heading fonts and skeletons the runs of one brief produced
 
 These are automatic and say nothing about whether people prefer the result. That's what blind ratings are for.
 Standard library only.
 """
 import json
-from collections import defaultdict
 from pathlib import Path
 
 LAB = Path(__file__).resolve().parent
 AVOID = {a["name"].lower() for a in json.loads((LAB.parent / "typography" / "fonts.json").read_text())["avoid"]}
+NAMES = {"A": "no skills", "B": "font + color skills", "C": "B + check-layout"}
 
 
 def load():
@@ -33,104 +36,112 @@ def load():
             "hits": {k for k, v in r["patterns"].items() if v["hit"]},
             "heading": (r["fonts"]["heading"] or "").strip(),
             "body": (r["fonts"]["body"] or "").strip(),
-            "dark": r.get("ground", {}).get("lightness", 1) < 0.5,
+            "skeleton": r.get("skeleton", []),
             "fonts_loaded": r["fonts"].get("loaded", {}),
         }
     return rows
 
 
-def jaccard(a, b):
-    return len(a & b) / len(a | b) if a | b else 1.0
+def distance(a, b):
+    """Levenshtein distance between two token lists, divided by the longer length."""
+    if not a and not b:
+        return 0.0
+    prev = list(range(len(b) + 1))
+    for i, x in enumerate(a, 1):
+        cur = [i]
+        for j, y in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x != y)))
+        prev = cur
+    return prev[-1] / max(len(a), len(b))
+
+
+def mean(xs):
+    xs = list(xs)
+    return sum(xs) / len(xs) if xs else None
 
 
 def main():
     rows = load()
-    groups = defaultdict(list)
-    for (brief, cond, model, n), row in rows.items():
-        groups[(cond, model)].append(row)
-        groups[(cond, "all")].append(row)
+    conds = sorted({k[1] for k in rows})
+    models = sorted({k[2] for k in rows})
+    briefs = sorted({k[0] for k in rows})
 
-    def slop(rs):
-        return sum(len(r["hits"]) for r in rs) / len(rs)
+    def pick(cond, model=None, brief=None):
+        return [(k, r) for k, r in rows.items() if k[1] == cond and (model is None or k[2] == model)
+                and (brief is None or k[0] == brief)]
 
-    def defaults(rs):
-        return sum(r["heading"].lower() in AVOID or r["body"].lower() in AVOID for r in rs) / len(rs)
+    def struct_change(cond, model=None):
+        ds = []
+        for (brief, c, m, n), r in pick(cond, model):
+            base = rows.get((brief, "A", m, n))
+            if base:
+                ds.append(distance(r["skeleton"], base["skeleton"]))
+        return mean(ds)
 
-    pairs = defaultdict(list)
-    for (brief, cond, model, n), row in rows.items():
-        if brief != "tallyroll":
-            continue
-        other = rows.get(("fennel-street", cond, model, n))
-        if other:
-            sim = {"heading": row["heading"] == other["heading"], "body": row["body"] == other["body"],
-                   "layout": jaccard(row["hits"], other["hits"]), "ground": row["dark"] == other["dark"]}
-            pairs[(cond, model)].append(sim)
-            pairs[(cond, "all")].append(sim)
+    def run_to_run(cond, model=None):
+        """Noise floor: skeleton distance between different runs of the same brief, model and condition."""
+        ds = []
+        for (brief, c, m, n), r in pick(cond, model):
+            for (b2, c2, m2, n2), r2 in pick(cond, model):
+                if b2 == brief and m2 == m and n2 > n:
+                    ds.append(distance(r["skeleton"], r2["skeleton"]))
+        return mean(ds)
 
-    models = sorted({m for (_, m) in groups if m != "all"})
+    fmt = lambda v, pct=False: "–" if v is None else (f"{v:.0%}" if pct else f"{v:.2f}")
     measures = {}
-    lines = ["# Lab baseline: automatic measures", "",
-             "Condition A: no skills. Condition B: find-font and find-color installed and asked for. Same prompt, "
-             "tools and empty project otherwise. Generated by `lab/analyze.py`; don't edit by hand.", "",
-             "Lower is better on every row except where noted. These are automatic measures, not ratings.", "",
-             "| Measure | Model | A | B |", "|---|---|---|---|"]
-    for model in ["all", *models]:
-        a, b = groups.get(("A", model), []), groups.get(("B", model), [])
-        if not a or not b:
-            continue
-        pa, pb = pairs.get(("A", model), []), pairs.get(("B", model), [])
-        m = {
-            "pages": (len(a), len(b)),
-            "slop_patterns_per_page": (round(slop(a), 2), round(slop(b), 2)),
-            "default_font_share": (round(defaults(a), 2), round(defaults(b), 2)),
-            "same_heading_font_across_briefs": (round(sum(p["heading"] for p in pa) / max(1, len(pa)), 2),
-                                                round(sum(p["heading"] for p in pb) / max(1, len(pb)), 2)),
-            "same_body_font_across_briefs": (round(sum(p["body"] for p in pa) / max(1, len(pa)), 2),
-                                             round(sum(p["body"] for p in pb) / max(1, len(pb)), 2)),
-            "layout_overlap_across_briefs": (round(sum(p["layout"] for p in pa) / max(1, len(pa)), 2),
-                                             round(sum(p["layout"] for p in pb) / max(1, len(pb)), 2)),
-            "same_ground_across_briefs": (round(sum(p["ground"] for p in pa) / max(1, len(pa)), 2),
-                                          round(sum(p["ground"] for p in pb) / max(1, len(pb)), 2)),
-        }
-        measures[model] = m
-        label = "all models" if model == "all" else model.replace("claude-", "")
+    lines = ["# Lab runs: automatic measures", "",
+             "Conditions: " + "; ".join(f"**{c}** {NAMES.get(c, c)}" for c in conds) + ". Same prompt, tools and "
+             "empty project otherwise (C also gets Write and Edit so it can save and check its page). Generated by "
+             "`lab/analyze.py`; don't edit by hand.", "",
+             "| Measure | Model | " + " | ".join(conds) + " |", "|---|---|" + "---|" * len(conds)]
+    for model in [None, *models]:
+        label = "all models" if model is None else model.replace("claude-", "")
+        m = {}
+        for c in conds:
+            rs = [r for _, r in pick(c, model)]
+            m[c] = {
+                "pages": len(rs),
+                "slop_patterns_per_page": mean(len(r["hits"]) for r in rs),
+                "default_font_share": mean((r["heading"].lower() in AVOID or r["body"].lower() in AVOID) for r in rs),
+                "structure_change_from_A": struct_change(c, model) if c != "A" else None,
+                "run_to_run_variation": run_to_run(c, model),
+            }
+        measures[label] = m
         lines += [
-            f"| Pages | {label} | {m['pages'][0]} | {m['pages'][1]} |",
-            f"| Layout slop patterns per page (of 9) | {label} | {m['slop_patterns_per_page'][0]} | {m['slop_patterns_per_page'][1]} |",
-            f"| Pages using an avoid-list font | {label} | {m['default_font_share'][0]:.0%} | {m['default_font_share'][1]:.0%} |",
-            f"| Same heading font for both briefs | {label} | {m['same_heading_font_across_briefs'][0]:.0%} | {m['same_heading_font_across_briefs'][1]:.0%} |",
-            f"| Same body font for both briefs | {label} | {m['same_body_font_across_briefs'][0]:.0%} | {m['same_body_font_across_briefs'][1]:.0%} |",
-            f"| Same light/dark background for both briefs | {label} | {m['same_ground_across_briefs'][0]:.0%} | {m['same_ground_across_briefs'][1]:.0%} |",
-            f"| Layout pattern overlap between briefs | {label} | {m['layout_overlap_across_briefs'][0]:.0%} | {m['layout_overlap_across_briefs'][1]:.0%} |",
+            f"| Pages | {label} | " + " | ".join(str(m[c]["pages"]) for c in conds) + " |",
+            f"| Layout slop patterns per page (of 9) | {label} | " + " | ".join(fmt(m[c]["slop_patterns_per_page"]) for c in conds) + " |",
+            f"| Pages using an avoid-list font | {label} | " + " | ".join(fmt(m[c]["default_font_share"], True) for c in conds) + " |",
+            f"| Structure change from A (0 same, 1 different) | {label} | " + " | ".join(fmt(m[c]["structure_change_from_A"]) for c in conds) + " |",
+            f"| Run-to-run structure variation (noise floor) | {label} | " + " | ".join(fmt(m[c]["run_to_run_variation"]) for c in conds) + " |",
         ]
+
     lines += ["", "## Convergence within a brief", "",
-              "How many different fonts the 9 runs of one brief used (3 models × 3 runs). Higher means less "
-              "convergence on one default. The top heading font and its share are shown.", "",
-              "| Brief | Condition | Distinct heading fonts | Distinct body fonts | Most common heading |",
-              "|---|---|---|---|---|"]
+              "Across all runs of one brief (3 models × 3 runs): how many different heading fonts and page skeletons "
+              "came out. Higher means less convergence on one default.", "",
+              "| Brief | Condition | Distinct heading fonts | Distinct skeletons | Most common heading |", "|---|---|---|---|---|"]
     within = {}
-    for brief in sorted({k[0] for k in rows}):
-        for cond in ("A", "B"):
-            rs = [r for k, r in rows.items() if k[0] == brief and k[1] == cond]
+    for brief in briefs:
+        for c in conds:
+            rs = [r for _, r in pick(c, brief=brief)]
             if not rs:
                 continue
             heads = [r["heading"] for r in rs]
             top = max(set(heads), key=heads.count)
-            within[f"{brief}/{cond}"] = {"heading": len(set(heads)), "body": len({r["body"] for r in rs}),
-                                         "top": top, "top_share": round(heads.count(top) / len(rs), 2)}
-            lines.append(f"| {brief} | {cond} | {len(set(heads))} | {len({r['body'] for r in rs})} | "
-                         f"{top} ({heads.count(top)} of {len(rs)}) |")
+            skel = len({" ".join(r["skeleton"]) for r in rs})
+            within[f"{brief}/{c}"] = {"headings": len(set(heads)), "skeletons": skel, "top": top,
+                                      "top_share": round(heads.count(top) / len(rs), 2)}
+            lines.append(f"| {brief} | {c} | {len(set(heads))} | {skel} | {top} ({heads.count(top)} of {len(rs)}) |")
     measures["within_brief"] = within
-    lines += ["", "## Fonts used", "", "| Brief | Condition | Model | Run | Heading | Body | Rendered |", "|---|---|---|---|---|---|---|"]
-    for (brief, cond, model, n), r in sorted(rows.items()):
-        loaded = "yes" if all(r["fonts_loaded"].values()) else "fallback shown"
-        lines.append(f"| {brief} | {cond} | {model.replace('claude-', '')} | {n} | {r['heading']} | {r['body']} | {loaded} |")
-    lines += ["", "## Pattern counts", "", "| Brief | Condition | Model | Run | Patterns |", "|---|---|---|---|---|"]
-    for (brief, cond, model, n), r in sorted(rows.items()):
-        lines.append(f"| {brief} | {cond} | {model.replace('claude-', '')} | {n} | {', '.join(sorted(r['hits'])) or 'none'} |")
+
+    lines += ["", "## Every run", "", "| Brief | Cond. | Model | Run | Heading | Body | Skeleton | Patterns |",
+              "|---|---|---|---|---|---|---|---|"]
+    for (brief, c, model, n), r in sorted(rows.items()):
+        fallback = "" if all(r["fonts_loaded"].values()) else " (fallback shown)"
+        lines.append(f"| {brief} | {c} | {model.replace('claude-', '')} | {n} | {r['heading']}{fallback} | {r['body']} | "
+                     f"{' '.join(r['skeleton'])} | {', '.join(sorted(r['hits'])) or 'none'} |")
     (LAB / "runs" / "measures.md").write_text("\n".join(lines) + "\n")
     (LAB / "runs" / "measures.json").write_text(json.dumps(measures, indent=2) + "\n")
-    print("\n".join(lines[:40]))
+    print("\n".join(lines[:24]))
 
 
 if __name__ == "__main__":

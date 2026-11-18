@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Bread at seven, tarts by nine, gone by two. Neighbourhood bakery at 14 Fennel Street, London E8.">
+<style>
+/* Fonts: Red Hat Display (headings) and Source Sans 3 (body), both OFL, self-hosted from ./fonts.
+   Until the files are added the system fallbacks below are used. */
+@font-face{font-family:"Red Hat Display";src:url("./fonts/RedHatDisplay.woff2") format("woff2");font-weight:300 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:url("./fonts/SourceSans3.woff2") format("woff2");font-weight:200 900;font-style:normal;font-display:swap}
+
+:root{
+  --color-ground:#F5EDE4;--color-ground:oklch(0.95 0.015 75);
+  --color-figure:#8D5951;--color-figure:oklch(0.52 0.07 30);
+  --color-text:#3D3832;--color-text:oklch(0.345 0.012 75);
+  --color-text-muted:#6C6761;--color-text-muted:oklch(0.518 0.012 75);
+  --color-tint-3:#E1CAC6;--color-tint-3:oklch(0.857 0.026 30);
+  --color-shade-1:#6A423C;--color-shade-1:oklch(0.425 0.0573 30);
+  --color-shade-3:#2B1815;--color-shade-3:oklch(0.235 0.0317 30);
+  --head:"Red Hat Display","Avenir Next",system-ui,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--color-ground);color:var(--color-text);font:400 1.125rem/1.55 var(--body)}
+a{color:var(--color-figure);text-underline-offset:.2em}
+a:hover{color:var(--color-shade-1)}
+:focus-visible{outline:3px solid var(--color-figure);outline-offset:3px}
+h1,h2,h3{font-family:var(--head);color:var(--color-figure);margin:0;line-height:1.08;letter-spacing:-.01em}
+.wrap{max-width:68rem;margin:0 auto;padding:0 1.25rem}
+
+/* masthead */
+header{padding:1.5rem 0 0}
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-family:var(--head);font-weight:700}
+.mast a{text-decoration:none;font-size:.95rem}
+.mast .name{color:var(--color-shade-3);font-size:1.05rem}
+
+.hero{padding-block:3rem 3.5rem;display:grid;gap:2rem}
+.hero h1{font-size:clamp(2.6rem,9.5vw,5.8rem);font-weight:800;max-width:11ch}
+.status{border-top:2px solid var(--color-figure);padding-top:.9rem;max-width:26rem}
+.status strong{display:block;font-family:var(--head);font-size:1.5rem;color:var(--color-shade-3);line-height:1.2}
+.status span{color:var(--color-text-muted)}
+.photo{min-height:13rem;background:var(--color-tint-3);color:var(--color-shade-1);display:flex;align-items:flex-end;padding:1rem;font-size:.95rem;border:2px dashed var(--color-figure)}
+
+/* sections */
+section{padding:3.5rem 0 0}
+section h2{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;margin-bottom:1.4rem}
+.two{display:grid;gap:2.5rem}
+
+/* menu */
+.menu{list-style:none;margin:0;padding:0}
+.menu li{display:flex;align-items:baseline;gap:.6rem;padding:.7rem 0;border-bottom:1px solid var(--color-tint-3)}
+.menu .dots{flex:1;border-bottom:2px dotted var(--color-tint-3);transform:translateY(-.25em);min-width:1rem}
+.menu .item{font-weight:600;color:var(--color-shade-3)}
+.menu .price{font-family:var(--head);font-weight:700;color:var(--color-figure);white-space:nowrap}
+.menu small{display:block;color:var(--color-text-muted);font-size:.95rem;font-weight:400}
+.menu .l{min-width:0}
+h3{font-size:1.15rem;font-weight:700;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em}
+
+/* hours */
+.hours{width:100%;border-collapse:collapse;font-size:1.1rem}
+.hours th,.hours td{text-align:left;padding:.6rem 0;border-bottom:1px solid var(--color-tint-3);font-weight:400}
+.hours th{font-family:var(--head);font-weight:700;color:var(--color-shade-3)}
+.hours .closed td,.hours .closed th{color:var(--color-text-muted)}
+.hours tr.today th,.hours tr.today td{color:var(--color-figure);font-weight:700}
+address{font-style:normal;margin-top:1.4rem;font-size:1.2rem}
+
+/* orders */
+.order{margin-top:3.5rem;background:var(--color-shade-3);color:var(--color-ground);padding:3rem 0}
+.order h2{color:var(--color-tint-3)}
+.order p{max-width:34rem;margin:0 0 1.4rem}
+.order .big{font-family:var(--head);font-weight:800;font-size:clamp(1.9rem,7vw,3rem);line-height:1.1;margin:0 0 1.6rem}
+.order .big a{color:var(--color-ground)}
+.btn{display:inline-block;background:var(--color-figure);color:var(--color-ground);font-family:var(--head);font-weight:700;padding:.9rem 1.4rem;text-decoration:none;min-height:3rem}
+.order .btn{background:var(--color-ground);color:var(--color-shade-3)}
+.btn:hover{background:var(--color-shade-1);color:var(--color-ground)}
+
+.about p{max-width:36rem;font-size:1.25rem;margin:0}
+footer{padding:3rem 0 2.5rem;margin-top:3.5rem;border-top:1px solid var(--color-tint-3);color:var(--color-text-muted);font-size:1rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:.8rem 2rem;justify-content:space-between}
+footer nav{display:flex;gap:1.5rem;flex-wrap:wrap}
+
+@media (min-width:52rem){
+  .wrap{padding:0 2.5rem}
+  .hero{grid-template-columns:1.3fr 1fr;align-items:end;gap:3.5rem;padding-block:4.5rem 5rem}
+  .hero .side{display:grid;gap:1.5rem}
+  .two{grid-template-columns:1.25fr 1fr;gap:5rem}
+  section{padding-top:5rem}
+  .order{padding:4rem 0;margin-top:5rem}
+  footer{margin-top:5rem}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap mast">
+    <span class="name">Fennel Street Bakery</span>
+    <a href="#order">Order a cake</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <h1>Bread at seven, tarts by nine, gone by two.</h1>
+    <div class="side">
+      <div class="status" id="status" aria-live="polite">
+        <strong>Wednesday to Sunday, 7:00 to 14:00</strong>
+        <span>Or until we sell out. 14 Fennel Street, London E8.</span>
+      </div>
+      <div class="photo" role="img" aria-label="Photo placeholder">Photo placeholder: the counter, mid-morning</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="baked">
+      <h2>What’s baked</h2>
+      <div class="two">
+        <div>
+          <h3>Daily</h3>
+          <ul class="menu">
+            <li><span class="item">Country sourdough</span><span class="dots"></span><span class="price">£5.20</span></li>
+            <li><span class="item">Seeded rye</span><span class="dots"></span><span class="price">£5.60</span></li>
+            <li><span class="l"><span class="item">Pastel de nata</span><small>Or six for £11</small></span><span class="dots"></span><span class="price">£2.10</span></li>
+            <li><span class="item">Cardamom buns</span><span class="dots"></span><span class="price">£3.00</span></li>
+            <li><span class="l"><span class="item">Olive oil focaccia</span><small>By the slice</small></span><span class="dots"></span><span class="price">£2.80</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>This season</h3>
+          <ul class="menu">
+            <li><span class="l"><span class="item">Orange and almond cake</span><small>Whole £28, slice £4</small></span></li>
+            <li><span class="item">Fig and walnut loaf</span><span class="dots"></span><span class="price">£6.40</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="find">
+      <div class="two">
+        <div>
+          <h2>Open when</h2>
+          <table class="hours" id="hours">
+            <tr data-d="3"><th>Wednesday</th><td>7:00 to 14:00</td></tr>
+            <tr data-d="4"><th>Thursday</th><td>7:00 to 14:00</td></tr>
+            <tr data-d="5"><th>Friday</th><td>7:00 to 14:00</td></tr>
+            <tr data-d="6"><th>Saturday</th><td>7:00 to 14:00</td></tr>
+            <tr data-d="0"><th>Sunday</th><td>7:00 to 14:00</td></tr>
+            <tr data-d="1" class="closed"><th>Monday</th><td>Closed</td></tr>
+            <tr data-d="2" class="closed"><th>Tuesday</th><td>Closed</td></tr>
+          </table>
+          <p style="color:var(--color-text-muted);margin:.8rem 0 0">Or until we sell out.</p>
+        </div>
+        <div>
+          <h2>Find us</h2>
+          <address>14 Fennel Street<br>London E8</address>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="order" id="order">
+    <div class="wrap">
+      <h2>Cake orders</h2>
+      <p>Whole cakes with 48 hours’ notice. Message us or call.</p>
+      <p class="big"><a href="tel:+442079460381">020 7946 0381</a></p>
+      <a class="btn" href="tel:+442079460381">Call to order</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="about" style="padding-top:3.5rem">
+      <h2>Two sisters, one oven</h2>
+      <p>Ana bakes the bread. Rita does everything with custard. We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="Footer"><a href="#">Instagram</a><a href="#order">Order a cake</a><a href="#find">Find us</a></nav>
+    <span>© 2026 Fennel Street Bakery</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  try{
+    var p=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'short',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date()),o={};
+    p.forEach(function(x){o[x.type]=x.value});
+    var d={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[o.weekday],m=(+o.hour%24)*60+ +o.minute;
+    var row=document.querySelector('#hours tr[data-d="'+d+'"]');if(row)row.classList.add('today');
+    var open=d>=3||d===0,t=open&&m>=420&&m<840,s=document.getElementById('status'),h,sub;
+    if(t){h='Open now, until 14:00';sub='Or until we sell out.'}
+    else if(open&&m<420){h='Opens today at 7:00';sub='Bread first, tarts by nine.'}
+    else{h='Closed right now';sub='Next: '+(d===1?'Wednesday':d===2?'Wednesday':'tomorrow')+' at 7:00. Wednesday to Sunday, 7:00 to 14:00.'}
+    if(!open&&(d===1||d===2)){}
+    else if(open&&m>=840){sub='Next: '+(d===6?'Sunday':d===0?'Wednesday':'tomorrow')+' at 7:00.'}
+    s.innerHTML='<strong>'+h+'</strong><span>'+sub+' 14 Fennel Street, London E8.</span>';
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

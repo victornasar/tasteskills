@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyroll — Every cent traces back to an event</title>
+<meta name="description" content="Usage-based billing API. Tallyroll turns raw usage into invoices your finance team can reconcile line by line.">
+<style>
+/* Fonts: Overpass (headlines), IBM Plex Sans (body), Commit Mono (code). All OFL, self-host
+   woff2 files in ./fonts/ ; system fallbacks apply until then. */
+@font-face{font-family:"Overpass";src:url("./fonts/Overpass-Variable.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("./fonts/IBMPlexSans-Variable.woff2") format("woff2");font-weight:100 700;font-display:swap}
+@font-face{font-family:"Commit Mono";src:url("./fonts/CommitMono.woff2") format("woff2");font-weight:400;font-display:swap}
+
+:root{
+  --color-ground:#CBF7E6;
+  --color-ground:oklch(0.94 0.05 170);
+  --color-figure:#0E294A;
+  --color-figure:oklch(0.28 0.07 255);
+  --color-text:#323A37;
+  --color-text:oklch(0.341 0.012 170);
+  --color-muted:#616966;
+  --color-muted:oklch(0.513 0.012 170);
+  --color-tint-1:#385880;
+  --color-shade-1:#09213D;
+  --paper:color-mix(in oklch,var(--color-ground) 35%,white);
+  --rule:color-mix(in oklch,var(--color-figure) 22%,transparent);
+  --head:"Overpass","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"Commit Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-ground);color:var(--color-text);font:400 1.0625rem/1.6 var(--body)}
+a{color:inherit}
+code,.mono{font-family:var(--mono);font-size:.92em}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:2px solid var(--color-figure);outline-offset:3px}
+
+header.top{border-bottom:1px solid var(--rule)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+.logo{font:700 1.2rem var(--head);color:var(--color-figure);text-decoration:none;letter-spacing:-.01em}
+nav a{margin-left:24px;font-size:.95rem;text-decoration:none;color:var(--color-text)}
+nav a:hover{text-decoration:underline}
+
+.hero{padding:72px 0 80px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:start}
+h1{font:700 clamp(2.4rem,5vw,3.9rem)/1.05 var(--head);letter-spacing:-.025em;color:var(--color-figure);margin:0 0 20px}
+.sub{font-size:1.2rem;max-width:30em;margin:0 0 32px}
+.actions{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+.btn{display:inline-block;padding:13px 22px;background:var(--color-figure);color:var(--color-ground);font:600 1rem var(--body);text-decoration:none;border-radius:2px}
+.btn:hover{background:var(--color-shade-1)}
+.link{font-weight:600;color:var(--color-figure);text-underline-offset:4px}
+
+/* invoice artifact */
+.invoice{background:var(--paper);border:1px solid var(--color-figure)}
+.invoice .bar{display:flex;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--rule);font:.8rem var(--mono);color:var(--color-muted)}
+details{border-bottom:1px solid var(--rule)}
+summary{list-style:none;cursor:pointer;padding:18px 16px;display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:baseline}
+summary::-webkit-details-marker{display:none}
+summary .what{font-weight:600;color:var(--color-figure)}
+summary .math{grid-column:1;font:.95rem var(--mono);color:var(--color-text)}
+summary .amt{grid-row:1/3;grid-column:2;font:700 1.6rem var(--head);color:var(--color-figure);align-self:center}
+summary .hint{grid-column:1/3;font-size:.82rem;color:var(--color-muted);margin-top:4px}
+summary .hint::before{content:"+ ";font-family:var(--mono)}
+details[open] summary .hint::before{content:"− "}
+.days{padding:0 16px 16px;max-height:300px;overflow:auto}
+.days table{width:100%;border-collapse:collapse;font:.85rem var(--mono)}
+.days th{text-align:left;font-weight:400;color:var(--color-muted);padding:6px 0;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--paper)}
+.days td,.days th:last-child{padding:3px 0}
+.days td:last-child,.days th:last-child{text-align:right}
+.days tfoot td{border-top:1px solid var(--color-figure);padding-top:8px;font-weight:700}
+.note{padding:10px 16px;font-size:.8rem;color:var(--muted,var(--color-muted))}
+
+section{padding:72px 0;border-top:1px solid var(--rule)}
+h2{font:700 1.7rem/1.15 var(--head);letter-spacing:-.015em;color:var(--color-figure);margin:0 0 8px}
+.lead-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:56px}
+
+ol.steps{list-style:none;margin:0;padding:0}
+ol.steps li{display:grid;grid-template-columns:48px 1fr;padding:22px 0;border-bottom:1px solid var(--rule)}
+ol.steps li:first-child{padding-top:0}
+ol.steps .n{font:.95rem var(--mono);color:var(--color-tint-1);padding-top:4px}
+ol.steps h3{font:600 1.25rem var(--head);color:var(--color-figure);margin:0 0 4px}
+ol.steps p{margin:0}
+ol.steps code{background:var(--paper);border:1px solid var(--rule);padding:1px 6px}
+
+.two{padding:56px 0 64px}
+.two .wrap{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.two .col{padding:0 40px 0 0}
+.two .col+.col{padding:0 0 0 40px;border-left:1px solid var(--rule)}
+.two h2{font-size:1.3rem}
+.two ul{list-style:none;margin:16px 0 0;padding:0}
+.two li{padding:10px 0;border-top:1px solid var(--rule)}
+
+.price{padding:64px 0}
+.price .big{font:700 clamp(1.6rem,3vw,2.2rem)/1.2 var(--head);color:var(--color-figure);margin:0 0 6px;letter-spacing:-.015em}
+.price p{margin:0}
+
+.close{background:var(--color-figure);color:var(--color-ground);padding:64px 0;border:0}
+.close h2{color:var(--color-ground)}
+.close .btn{background:var(--color-ground);color:var(--color-figure)}
+.close .btn:hover{background:var(--paper)}
+.close .link{color:var(--color-ground)}
+.close .actions{margin-top:24px}
+
+footer{padding:28px 0 40px;font-size:.92rem;color:var(--color-muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer a{margin-right:6px;text-decoration:none;color:var(--color-text)}
+footer a:hover{text-decoration:underline}
+
+@media (max-width:820px){
+  .hero{padding:40px 0 56px}
+  .hero .wrap,.lead-grid{grid-template-columns:1fr;gap:36px}
+  .two .wrap{grid-template-columns:1fr}
+  .two .col,.two .col+.col{padding:0;border:0}
+  .two .col+.col{margin-top:40px}
+  section{padding:52px 0}
+  nav a{margin-left:14px}
+}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="logo" href="#">Tallyroll</a>
+  <nav><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#">Docs</a></nav>
+</div></header>
+
+<main>
+<div class="hero"><div class="wrap">
+  <div>
+    <h1>Every cent traces back to an event.</h1>
+    <p class="sub">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+    <div class="actions">
+      <a class="btn" href="#">Read the docs</a>
+      <a class="link" href="#">Book a demo</a>
+    </div>
+  </div>
+
+  <div class="invoice" aria-label="Example invoice">
+    <div class="bar"><span>INVOICE · EXAMPLE</span><span>1 line</span></div>
+    <details>
+      <summary>
+        <span class="what">API calls, March</span>
+        <span class="amt">$481.76</span>
+        <span class="math">1,204,388 calls × $0.0004 = $481.76</span>
+        <span class="hint">Show the 31 daily totals behind this line</span>
+      </summary>
+      <div class="days">
+        <table>
+          <thead><tr><th>Day</th><th>Calls</th></tr></thead>
+          <tbody id="days"></tbody>
+          <tfoot><tr><td>Total, March</td><td id="total"></td></tr></tfoot>
+        </table>
+      </div>
+    </details>
+    <div class="note">Daily figures are illustrative; they are set to add up to the line above.</div>
+  </div>
+</div></div>
+
+<section id="how"><div class="wrap lead-grid">
+  <div><h2>How it works</h2></div>
+  <ol class="steps">
+    <li><span class="n">01</span><div><h3>Send events.</h3><p>Post usage events from your product as they happen: <code>POST /v1/events</code>.</p></div></li>
+    <li><span class="n">02</span><div><h3>Define pricing.</h3><p>Tiers, minimums, credits and commitments, written as rules you can read.</p></div></li>
+    <li><span class="n">03</span><div><h3>Invoice.</h3><p>Each line on an invoice opens up into the events that produced it.</p></div></li>
+  </ol>
+</div></section>
+
+<section class="two"><div class="wrap">
+  <div class="col">
+    <h2>For finance</h2>
+    <ul><li>Line-level audit trail.</li><li>Exports to NetSuite and QuickBooks.</li><li>Revenue recognition schedules.</li></ul>
+  </div>
+  <div class="col">
+    <h2>For engineering</h2>
+    <ul><li>Idempotent event ingestion.</li><li>Webhooks for every invoice state.</li><li>SDKs for TypeScript, Python and Go.</li></ul>
+  </div>
+</div></section>
+
+<section class="price" id="pricing"><div class="wrap">
+  <p class="big">0.5% of billed revenue, no platform fee.</p>
+  <p>Free until you bill $10,000 a month.</p>
+</div></section>
+
+<section class="close"><div class="wrap">
+  <h2>Read how it works, or see it on your own events.</h2>
+  <div class="actions">
+    <a class="btn" href="#">Read the docs</a>
+    <a class="link" href="#">Book a demo</a>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span><a href="#">Docs</a> · <a href="#">Pricing</a> · <a href="#">Status</a> · <a href="#">Security</a> · <a href="#">Contact</a></span>
+  <span>© 2026 Tallyroll</span>
+</div></footer>
+
+<script>
+// Illustrative daily totals that sum exactly to 1,204,388 (deterministic).
+(function(){
+  var total=1204388,n=31,w=[],s=0,i;
+  for(i=0;i<n;i++){var v=1+0.35*Math.sin(i*1.7)+0.2*Math.cos(i*0.9);w.push(v);s+=v}
+  var vals=w.map(function(x){return Math.floor(total*x/s)});
+  var diff=total-vals.reduce(function(a,b){return a+b},0);
+  vals[n-1]+=diff;
+  var rows="";
+  vals.forEach(function(v,i){rows+="<tr><td>Mar "+(i+1)+"</td><td>"+v.toLocaleString("en-US")+"</td></tr>"});
+  document.getElementById("days").innerHTML=rows;
+  document.getElementById("total").textContent=total.toLocaleString("en-US");
+})();
+</script>
+</body>
+</html>

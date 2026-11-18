@@ -1,0 +1,5 @@
+- **Structure:** The phone's first screen answers "is it open, where is it". It has the headline, a live open/closed line, the hours board with today highlighted, and the address. Prices follow as a dotted-leader menu, then cake orders, then the sisters.
+- **Fonts:** Cormorant for headings and Source Sans 3 for body. Both are OFL and self-hosted from `./fonts/` (`Cormorant.woff2`, `SourceSans3.woff2`), with `local()` and system fallbacks. I haven't added those files, so until you do, it renders in the fallbacks.
+- **Colour:** Clay and Linen from find-color: linen ground, rose-clay headings, and a near-black clay band for the cake-order section.
+- **Layout:** No boxes, cards, badges or gradients. Rules and spacing do the grouping. check-layout found none of the nine patterns at desktop or phone width.
+- **Placeholders:** The photo is a labelled dashed placeholder. The Instagram links are `#` because the brief gives no handle. The only copy I added is the three-step cake-order list, which restates the brief's 48-hour note.
