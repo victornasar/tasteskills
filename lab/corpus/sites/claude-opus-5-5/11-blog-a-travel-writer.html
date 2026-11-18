@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Far & Slow: Travel Writing by Mara Lindqvist</title>
+<meta name="description" content="Slow travel essays, field notes and practical guides from the road.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e9;
+    --paper: #fffdf9;
+    --ink: #1f1b16;
+    --muted: #6d655a;
+    --line: #e3d9ca;
+    --accent: #c4512b;
+    --accent-2: #2f6f6a;
+    --shadow: 0 1px 2px rgba(31,27,22,.06), 0 8px 24px rgba(31,27,22,.08);
+    --radius: 14px;
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg: #15130f;
+    --paper: #1e1b16;
+    --ink: #f1ebe1;
+    --muted: #a99f90;
+    --line: #342f27;
+    --accent: #e57a52;
+    --accent-2: #6bb5ad;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s, color .3s;
+  }
+  body.locked { overflow: hidden; }
+  a { color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  .wrap { width: min(1180px, 92vw); margin: 0 auto; }
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { left: 1rem; top: 1rem; background: var(--accent); color: #fff; padding: .5rem 1rem; z-index: 999; border-radius: 6px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* Header */
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 1rem; }
+  .logo { font-family: var(--serif); font-weight: 800; font-size: 1.5rem; text-decoration: none; letter-spacing: -.02em; }
+  .logo span { color: var(--accent); font-style: italic; font-weight: 400; }
+  .nav ul { display: flex; list-style: none; gap: 1.75rem; align-items: center; }
+  .nav ul a { text-decoration: none; font-size: .92rem; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .nav ul a:hover { color: var(--ink); }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    display: grid; place-items: center;
+  }
+  .menu-btn { display: none; }
+
+  /* Hero */
+  .hero { padding: 5rem 0 3.5rem; display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.5rem; align-items: center; }
+  .eyebrow { font-size: .78rem; text-transform: uppercase; letter-spacing: .16em; color: var(--accent); font-weight: 600; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(2.6rem, 5.5vw, 4.4rem); line-height: 1.04; letter-spacing: -.03em; margin: .8rem 0 1.25rem; font-weight: 600; }
+  .hero h1 em { color: var(--accent-2); font-weight: 400; }
+  .hero p.lede { font-size: 1.15rem; color: var(--muted); max-width: 34rem; }
+  .hero-cta { display: flex; gap: .8rem; margin-top: 2rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .85rem 1.4rem; border-radius: 999px; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--bg); font-weight: 600; font-size: .92rem; text-decoration: none;
+    transition: transform .2s, background .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .stats { display: flex; gap: 2.5rem; margin-top: 2.75rem; }
+  .stats strong { font-family: var(--serif); font-size: 2rem; display: block; line-height: 1; }
+  .stats span { font-size: .82rem; color: var(--muted); }
+  .hero-art { position: relative; aspect-ratio: 4/5; }
+  .postcard {
+    position: absolute; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow);
+    border: 8px solid var(--paper); background: var(--paper);
+  }
+  .postcard.a { inset: 0 18% 22% 0; transform: rotate(-4deg); }
+  .postcard.b { inset: 30% 0 0 28%; transform: rotate(5deg); }
+  .postcard svg { width: 100%; height: 100%; }
+  .stamp {
+    position: absolute; right: 4%; top: 6%; width: 92px; height: 92px; border-radius: 50%;
+    border: 2px dashed var(--accent); color: var(--accent); display: grid; place-items: center; text-align: center;
+    font-family: var(--serif); font-size: .72rem; line-height: 1.2; transform: rotate(14deg);
+    background: color-mix(in srgb, var(--paper) 70%, transparent);
+  }
+
+  /* Section */
+  section { padding: 3.5rem 0; }
+  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .section-head h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: -.02em; font-weight: 600; }
+
+  /* Featured */
+  .featured {
+    display: grid; grid-template-columns: 1.3fr 1fr; background: var(--paper);
+    border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--line);
+    cursor: pointer; transition: transform .25s;
+  }
+  .featured:hover { transform: translateY(-3px); }
+  .featured .media { min-height: 380px; }
+  .featured .media svg { width: 100%; height: 100%; object-fit: cover; }
+  .featured .body { padding: 2.75rem; display: flex; flex-direction: column; justify-content: center; }
+  .featured h3 { font-family: var(--serif); font-size: 2rem; line-height: 1.15; margin: .75rem 0 1rem; letter-spacing: -.02em; font-weight: 600; }
+  .featured p { color: var(--muted); }
+  .meta { display: flex; gap: .75rem; align-items: center; font-size: .8rem; color: var(--muted); flex-wrap: wrap; }
+  .meta .dot { width: 3px; height: 3px; background: currentColor; border-radius: 50%; }
+  .tag {
+    display: inline-block; font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 600;
+    color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 12%, transparent);
+    padding: .3rem .65rem; border-radius: 999px;
+  }
+  .read-more { margin-top: 1.5rem; font-weight: 600; color: var(--accent); font-size: .92rem; }
+
+  /* Filters */
+  .tools { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .chips { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .chip {
+    border: 1px solid var(--line); background: var(--paper); color: var(--muted);
+    padding: .45rem .95rem; border-radius: 999px; font-size: .85rem; font-weight: 500; transition: all .2s;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--muted); }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .search { position: relative; }
+  .search input {
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    padding: .55rem 1rem .55rem 2.3rem; border-radius: 999px; font: inherit; font-size: .9rem; width: 220px;
+  }
+  .search svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); color: var(--muted); }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+  .card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; display: flex; flex-direction: column; cursor: pointer;
+    transition: transform .25s, box-shadow .25s; animation: rise .5s both;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .card .media { aspect-ratio: 16/10; overflow: hidden; }
+  .card .media svg { width: 100%; height: 100%; transition: transform .6s; }
+  .card:hover .media svg { transform: scale(1.05); }
+  .card .body { padding: 1.4rem 1.5rem 1.6rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
+  .card h3 { font-family: var(--serif); font-size: 1.3rem; line-height: 1.25; letter-spacing: -.01em; font-weight: 600; }
+  .card p { color: var(--muted); font-size: .93rem; flex: 1; }
+  .empty { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 3rem; font-family: var(--serif); font-size: 1.2rem; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  /* Destinations */
+  .dest { background: var(--ink); color: var(--bg); border-radius: 22px; padding: 3rem; }
+  .dest .section-head h2 { color: var(--bg); }
+  .dest .section-head p { color: color-mix(in srgb, var(--bg) 65%, transparent); max-width: 28rem; }
+  .map-wrap { position: relative; }
+  .map-wrap svg { width: 100%; height: auto; }
+  .pin { cursor: pointer; }
+  .pin circle.p { fill: var(--accent); transition: r .2s; }
+  .pin circle.ring { fill: none; stroke: var(--accent); opacity: .5; animation: pulse 2.4s infinite; transform-box: fill-box; transform-origin: center; }
+  .pin:hover circle.p, .pin:focus circle.p { r: 8; }
+  @keyframes pulse { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(3); opacity: 0; } }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--paper); color: var(--ink);
+    padding: .55rem .85rem; border-radius: 8px; font-size: .82rem; box-shadow: var(--shadow);
+    transform: translate(-50%, calc(-100% - 14px)); opacity: 0; transition: opacity .15s; white-space: nowrap;
+  }
+  .tooltip strong { font-family: var(--serif); display: block; font-size: .95rem; }
+  .dest-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .75rem; margin-top: 2rem; }
+  .dest-list button {
+    text-align: left; background: color-mix(in srgb, var(--bg) 7%, transparent); color: var(--bg);
+    border: 1px solid color-mix(in srgb, var(--bg) 15%, transparent); border-radius: 10px; padding: .85rem 1rem;
+    transition: background .2s;
+  }
+  .dest-list button:hover { background: color-mix(in srgb, var(--bg) 15%, transparent); }
+  .dest-list strong { display: block; font-family: var(--serif); font-weight: 600; }
+  .dest-list span { font-size: .78rem; opacity: .65; }
+
+  /* About */
+  .about { display: grid; grid-template-columns: 340px 1fr; gap: 4rem; align-items: center; }
+  .portrait { aspect-ratio: 4/5; border-radius: 200px 200px var(--radius) var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  .about h2 { font-family: var(--serif); font-size: clamp(1.9rem, 3vw, 2.6rem); letter-spacing: -.02em; margin: .6rem 0 1.2rem; font-weight: 600; line-height: 1.15; }
+  .about p { color: var(--muted); margin-bottom: 1rem; font-size: 1.05rem; }
+  .about .sig { font-family: var(--serif); font-style: italic; font-size: 1.6rem; color: var(--ink); margin-top: 1.5rem; }
+  .press { display: flex; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; font-family: var(--serif); font-weight: 600; color: var(--muted); opacity: .8; font-size: 1.05rem; }
+
+  /* Newsletter */
+  .newsletter {
+    background: var(--accent); color: #fff; border-radius: 22px; padding: 3.5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; position: relative; overflow: hidden;
+  }
+  .newsletter::after {
+    content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px;
+    border-radius: 50%; border: 40px solid rgba(255,255,255,.08);
+  }
+  .newsletter h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1.15; font-weight: 600; letter-spacing: -.02em; }
+  .newsletter p { opacity: .9; margin-top: .75rem; }
+  .newsletter form { display: flex; gap: .6rem; position: relative; z-index: 1; flex-wrap: wrap; }
+  .newsletter input {
+    flex: 1; min-width: 200px; padding: .95rem 1.2rem; border-radius: 999px; border: none; font: inherit; font-size: .95rem;
+    background: rgba(255,255,255,.95); color: #1f1b16;
+  }
+  .newsletter button { padding: .95rem 1.5rem; border-radius: 999px; border: none; background: #1f1b16; color: #fff; font-weight: 600; }
+  .form-msg { width: 100%; font-size: .88rem; min-height: 1.3em; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); padding: 2.5rem 0; margin-top: 3rem; color: var(--muted); font-size: .88rem; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  footer nav { display: flex; gap: 1.25rem; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  /* Reader */
+  .reader {
+    position: fixed; inset: 0; z-index: 100; background: var(--bg); overflow-y: auto;
+    opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+  }
+  .reader.open { opacity: 1; visibility: visible; }
+  .progress { position: sticky; top: 0; height: 3px; background: var(--accent); width: 0; z-index: 3; }
+  .reader-bar {
+    position: sticky; top: 3px; z-index: 2; display: flex; justify-content: space-between; align-items: center;
+    padding: .8rem 4vw; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .reader-bar .logo { font-size: 1.15rem; }
+  .reader-hero { height: min(56vh, 520px); }
+  .reader-hero svg { width: 100%; height: 100%; }
+  article.post { width: min(700px, 90vw); margin: -5rem auto 4rem; position: relative; background: var(--paper); border-radius: var(--radius); padding: 3rem clamp(1.5rem, 5vw, 3.5rem); box-shadow: var(--shadow); border: 1px solid var(--line); }
+  article.post h1 { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.1; letter-spacing: -.025em; margin: 1rem 0; font-weight: 600; }
+  article.post .sub { font-family: var(--serif); font-style: italic; font-size: 1.2rem; color: var(--muted); margin-bottom: 1.5rem; }
+  article.post .content { font-family: var(--serif); font-size: 1.15rem; line-height: 1.75; margin-top: 2rem; }
+  article.post .content p { margin-bottom: 1.4rem; }
+  article.post .content > p:first-child::first-letter { float: left; font-size: 4.2rem; line-height: .9; padding: .35rem .6rem 0 0; color: var(--accent); font-weight: 800; }
+  article.post .content h2 { font-size: 1.55rem; margin: 2.25rem 0 .9rem; font-weight: 600; letter-spacing: -.01em; }
+  article.post blockquote { border-left: 3px solid var(--accent); padding: .25rem 0 .25rem 1.5rem; margin: 2rem 0; font-style: italic; font-size: 1.35rem; color: var(--ink); }
+  .tips { background: color-mix(in srgb, var(--accent-2) 9%, transparent); border-radius: 12px; padding: 1.5rem 1.75rem; margin: 2rem 0; font-family: var(--sans); font-size: .95rem; }
+  .tips h4 { font-size: .75rem; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: .75rem; }
+  .tips ul { padding-left: 1.1rem; }
+  .tips li { margin-bottom: .4rem; }
+  .post-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 2.5rem; gap: 1rem; flex-wrap: wrap; }
+  .like { display: inline-flex; gap: .5rem; align-items: center; border: 1px solid var(--line); background: transparent; color: var(--ink); padding: .5rem 1rem; border-radius: 999px; }
+  .like[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+  .next-wrap { width: min(700px, 90vw); margin: 0 auto 5rem; }
+  .next-wrap h4 { font-size: .75rem; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); margin-bottom: 1rem; }
+
+  .toast {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translate(-50%, 150%); background: var(--ink); color: var(--bg);
+    padding: .75rem 1.25rem; border-radius: 999px; font-size: .9rem; z-index: 200; transition: transform .3s;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+
+  @media (max-width: 960px) {
+    .hero, .featured, .about, .newsletter { grid-template-columns: 1fr; }
+    .hero { padding-top: 3rem; }
+    .hero-art { max-width: 420px; width: 100%; margin: 0 auto; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .about { gap: 2rem; }
+    .portrait { max-width: 300px; }
+    .featured .media { min-height: 260px; }
+  }
+  @media (max-width: 720px) {
+    .menu-btn { display: grid; }
+    .nav ul { display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; background: var(--paper); border-bottom: 1px solid var(--line); padding: 1.25rem; gap: 1rem; }
+    .nav ul.open { display: flex; }
+    .grid { grid-template-columns: 1fr; }
+    .dest, .newsletter { padding: 2rem 1.5rem; }
+    .featured .body { padding: 1.75rem; }
+    .search input { width: 100%; }
+    .search, .tools { width: 100%; }
+    .stats { gap: 1.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+<a href="#journal" class="skip">Skip to content</a>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="#" class="logo">Far <span>&amp;</span> Slow</a>
+    <ul id="navList">
+      <li><a href="#journal">Journal</a></li>
+      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#subscribe">Newsletter</a></li>
+    </ul>
+    <div style="display:flex;gap:.5rem">
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">Essays &amp; field notes from the road</span>
+      <h1>The world, taken <em>slowly</em>, one long walk at a time.</h1>
+      <p class="lede">I'm Mara, a travel writer chasing night trains, mountain huts, and the kind of meals you only find by getting a little lost. Twelve years, sixty-one countries, and still no carry-on that fits everything.</p>
+      <div class="hero-cta">
+        <a href="#journal" class="btn">Read the journal →</a>
+        <a href="#subscribe" class="btn ghost">Get the Sunday letter</a>
+      </div>
+      <div class="stats">
+        <div><strong>61</strong><span>countries</span></div>
+        <div><strong>240+</strong><span>stories filed</span></div>
+        <div><strong>18k</strong><span>readers</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="postcard a" id="heroA"></div>
+      <div class="postcard b" id="heroB"></div>
+      <div class="stamp">Postmarked<br><strong>EVERYWHERE</strong><br>2026</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><h2>Latest story</h2></div>
+      <div id="featured"></div>
+    </div>
+  </section>
+
+  <section id="journal">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The Journal</h2>
+        <div class="tools">
+          <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+          <label class="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" id="search" placeholder="Search stories…" aria-label="Search stories">
+          </label>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="destinations">
+    <div class="wrap">
+      <div class="dest">
+        <div class="section-head">
+          <h2>Where I've been writing</h2>
+          <p>Tap a pin to jump straight to the story from that place.</p>
+        </div>
+        <div class="map-wrap">
+          <svg viewBox="0 0 1000 480" id="map" role="img" aria-label="World map of story locations">
+            <g fill="currentColor" opacity=".13">
+              <path d="M95 95 L210 70 L300 85 L330 130 L300 190 L250 220 L230 270 L190 250 L150 200 L110 170 Z"/>
+              <path d="M240 290 L300 280 L340 320 L330 390 L300 440 L275 430 L260 370 L235 330 Z"/>
+              <path d="M455 85 L540 70 L580 95 L560 135 L520 150 L480 140 L460 115 Z"/>
+              <path d="M470 175 L560 165 L600 210 L590 290 L560 360 L520 370 L500 310 L475 250 Z"/>
+              <path d="M580 80 L760 65 L880 95 L900 150 L840 200 L780 230 L720 250 L660 220 L610 180 L590 130 Z"/>
+              <path d="M780 330 L870 320 L900 360 L870 400 L800 395 L775 365 Z"/>
+              <path d="M330 40 L390 35 L400 60 L360 75 Z"/>
+            </g>
+          </svg>
+          <div class="tooltip" id="tooltip"></div>
+        </div>
+        <div class="dest-list" id="destList"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="portrait" id="portrait" aria-hidden="true"></div>
+      <div>
+        <span class="eyebrow">About the writer</span>
+        <h2>I write for people who'd rather stay a month than see ten cities in a week.</h2>
+        <p>I started Far &amp; Slow in a hostel in Valparaíso after my third notebook ran out of pages. What began as letters home turned into a place for long-form essays, honest guides, and the small moments that never make it into a magazine edit.</p>
+        <p>My work has appeared in print and online travel publications, and I occasionally lead small writing workshops for travellers who want to bring better stories home. When I'm not moving, I'm in a drafty flat in Lisbon, arguing with my sourdough.</p>
+        <p class="sig">— Mara</p>
+        <div class="press" aria-label="As featured in"><span>Wanderer Quarterly</span><span>The Slow Atlas</span><span>Northbound</span><span>Field &amp; Fare</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="subscribe">
+    <div class="wrap">
+      <div class="newsletter">
+        <div>
+          <h2>One letter, every Sunday. Never more.</h2>
+          <p>A new story, a place worth knowing, and one thing I packed that I regretted. Join 18,000 slow travellers.</p>
+        </div>
+        <form id="newsForm" novalidate>
+          <label for="email" class="skip">Email address</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+          <button type="submit">Subscribe</button>
+          <div class="form-msg" id="formMsg" role="status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> Far &amp; Slow · Words and wanderings by Mara Lindqvist</span>
+    <nav aria-label="Social">
+      <a href="#">Instagram</a><a href="#">RSS</a><a href="#subscribe">Newsletter</a><a href="#about">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="postTitle">
+  <div class="progress" id="progress"></div>
+  <div class="reader-bar">
+    <span class="logo">Far <span>&amp;</span> Slow</span>
+    <button class="icon-btn" id="closeReader" aria-label="Close story">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="reader-hero" id="readerHero"></div>
+  <article class="post" id="post"></article>
+  <div class="next-wrap" id="nextWrap"></div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const posts = [
+  {
+    id: "night-train-lapland",
+    title: "Nineteen Hours North on the Arctic Night Train",
+    sub: "From Stockholm to Abisko, by bunk, by snow, by aurora.",
+    excerpt: "The sleeper leaves at dusk and wakes you in a world that's gone entirely blue. A love letter to slow travel above the Arctic Circle.",
+    category: "Rail", place: "Abisko, Sweden", date: "2026-11-09", scene: "aurora", map: [530, 62],
+    body: [
+      "The conductor knocks twice at 6:40 a.m. and says only one word through the door: <em>snö</em>. I pull back the blind and the world has turned the colour of ink diluted in milk. Birches stand in drifts up to their waists. We are somewhere past Kiruna, and the sun will not be rising today.",
+      "I booked the night train on a whim, partly to avoid a flight and partly because I'd always wanted to fall asleep in one country's climate and wake up in another's. The carriage is old in the best way, with brass fittings, a tiny fold-down sink, and a window that rattles faintly in its frame whenever we cross a bridge.",
+      "<h2>The dining car at midnight</h2>",
+      "Around Sundsvall the dining car becomes a kind of floating living room. A retired geologist from Umeå explains the difference between the twelve kinds of snow he can name. Two students share cloudberry jam with anyone who walks past. Nobody is in a hurry, because there is nowhere to hurry to.",
+      "<blockquote>Slow travel isn't about the speed of the vehicle. It's about letting the distance mean something.</blockquote>",
+      "In Abisko, I spent four nights at a small station guesthouse with a sauna and a frozen lake out back. On the third night, the sky finally cracked open: first a pale green smear, then curtains, then something that moved like breath. I stood on the ice until I couldn't feel my toes, then stood a while longer.",
+      { tips: ["Book the sleeper 3–4 months ahead for winter dates.", "Bring your own slippers; the corridors are cold at 3 a.m.", "Abisko's clear-sky odds are best from late February to March.", "Merino base layers beat any fancy parka."] },
+      "When I boarded the train south, the geologist was there again, heading home. He asked if I'd seen the lights. I said yes, and he nodded like that settled something, and we didn't talk much after that."
+    ]
+  },
+  {
+    id: "oaxaca-markets",
+    title: "Learning to Eat Slowly in Oaxaca's Markets",
+    sub: "Seven moles, one grandmother, and a lesson in patience.",
+    excerpt: "I came for the mezcal. I stayed for the woman at stall 114 who refused to let me leave until I'd tried every mole she made.",
+    category: "Food", place: "Oaxaca, Mexico", date: "2026-10-21", scene: "desert", map: [205, 225],
+    body: [
+      "Doña Elvira does not believe in tasting menus. She believes in sitting down. When I tried to order 'just a little' of the mole negro at her stall in Mercado 20 de Noviembre, she laughed and pulled out a plastic stool.",
+      "Over the next two hours I ate my way through seven moles, each with its own family history. The amarillo was her mother's recipe. The coloradito came from a neighbour she'd fallen out with in 1994 and never made up with, though she kept the recipe out of spite.",
+      "<h2>The smoke hall</h2>",
+      "Next door, the pasillo de humo fills with charcoal smoke and the sound of tasajo hitting the grill. You buy raw meat from one vendor, hand it to another to cook, and pick up tortillas and salsa from a third. It's chaotic, communal, and absolutely perfect.",
+      "<blockquote>A market tells you more about a place in one morning than a museum does in a week.</blockquote>",
+      { tips: ["Go to markets before 11 a.m. for the best selection.", "Bring small bills and coins; nobody can break a 500.", "Ask before photographing vendors; most say yes if you buy something.", "Try tejate, a cold maize-and-cacao drink, at least once."] },
+      "On my last day, I went back to say goodbye. Doña Elvira handed me a small jar of mole wrapped in newspaper and told me not to let customs take it. They didn't."
+    ]
+  },
+  {
+    id: "dolomites-huts",
+    title: "Hut to Hut Across the Dolomites",
+    sub: "Eight days, six rifugi, and too much strudel to count.",
+    excerpt: "The Alta Via 1 is less a hike than a progression of very good lunches connected by some of the most dramatic limestone on Earth.",
+    category: "Hiking", place: "Dolomites, Italy", date: "2026-09-30", scene: "mountains", map: [510, 112],
+    body: [
+      "On the first morning, the trail out of Lago di Braies climbs so steeply that I spend most of it looking at my boots. By the time I look up, the lake has shrunk to a turquoise coin and the peaks around me glow pink in the early light.",
+      "The magic of the Alta Via is the rifugi: mountain huts perched in impossible places, run by families who haul supplies up by cable or helicopter. Each night brings bunks, wool blankets, and a communal dinner of polenta, venison, and wine that tastes better at 2,400 metres.",
+      "<h2>On walking with strangers</h2>",
+      "By day three, a loose group had formed: a Dutch couple on their honeymoon, a Slovenian teacher, and a Canadian who'd quit his job the week before. We didn't plan to walk together. We just kept arriving at the same huts.",
+      "<blockquote>Mountains strip conversations down to what matters: weather, water, and whether the hut has a shower.</blockquote>",
+      { tips: ["Reserve rifugi in January for July–August.", "Carry cash; many huts don't take cards.", "Pack a silk sleeping bag liner; it's required in most huts.", "Start early; afternoon storms are common in summer."] },
+      "At the end, in Belluno, we sat in a piazza and ordered spritzes, and nobody quite knew how to say goodbye. We still have a group chat. It's mostly photos of strudel."
+    ]
+  },
+  {
+    id: "kyoto-autumn",
+    title: "A Quiet Month in Kyoto",
+    sub: "On temples without crowds and the art of the early alarm.",
+    excerpt: "Kyoto rewards those willing to wake before the tour buses. Here's how I spent a month living, working, and walking the city's quieter edges.",
+    category: "Cities", place: "Kyoto, Japan", date: "2026-08-14", scene: "city", map: [850, 150],
+    body: [
+      "At 5:45 a.m., Fushimi Inari belongs to the cats, the crows, and a handful of joggers. The vermilion gates climb into the forest and the only sound is my own breathing and the occasional bell.",
+      "I rented a small machiya in the north of the city for a month, the kind of narrow wooden townhouse with a tiny garden courtyard and a kitchen that seems designed for a person half my height. Mornings were for walking, afternoons for writing, evenings for the neighbourhood sento.",
+      "<h2>The neighbourhood bathhouse</h2>",
+      "The sento became my anchor. The same grandmothers came every evening at 7. After a week, they began nodding at me. After two weeks, one of them showed me how to properly wring out a towel. After three, I was invited to tea.",
+      "<blockquote>The longer you stay somewhere, the smaller it becomes, in the best possible way.</blockquote>",
+      { tips: ["Visit popular temples at opening or in the last hour.", "Rent a bicycle; the city is flat and bike-friendly.", "Explore Demachiyanagi and Kurama for quieter neighbourhoods.", "Many small restaurants are cash only; carry yen."] },
+      "On my last evening, the grandmothers gave me a small furoshiki cloth, folded neatly. I use it to wrap my notebook. It's travelled four continents since."
+    ]
+  },
+  {
+    id: "azores-coast",
+    title: "Whales, Wind and Volcanic Bread in the Azores",
+    sub: "Island-hopping in the middle of the Atlantic.",
+    excerpt: "Nine islands, one ferry schedule that operates on vibes, and stew cooked underground by volcanic heat.",
+    category: "Islands", place: "São Miguel, Azores", date: "2026-07-02", scene: "sea", map: [395, 140],
+    body: [
+      "The cozido in Furnas is cooked in the ground. Literally: pots of meat, sausage, and cabbage are lowered into steaming holes in the volcanic earth at dawn and pulled up around lunchtime, smelling faintly of sulphur and entirely of comfort.",
+      "The Azores feel like the edge of something. Hydrangeas line every road, cows outnumber people, and the weather changes so often that locals joke you can experience all four seasons before lunch.",
+      "<h2>Out on the water</h2>",
+      "From Pico, I joined a small whale-watching boat run by a former whaler's grandson. We watched sperm whales surface and breathe, their exhales hanging in the air like smoke. Nobody on the boat spoke for a long time.",
+      { tips: ["Inter-island flights are often easier than ferries outside summer.", "Pack layers and a rain jacket in every season.", "Book whale watching with operators who follow responsible guidelines.", "Try queijada da Vila, a small sweet cheese tart, in Vila Franca."] },
+      "<blockquote>Islands teach you to plan loosely and expect weather.</blockquote>",
+      "I missed two ferries and one flight over three weeks. Each time, someone offered me a coffee and a story while I waited. I've stopped thinking of those as delays."
+    ]
+  },
+  {
+    id: "packing-light",
+    title: "Everything I Carry: A 7kg Packing List",
+    sub: "Refined over twelve years and far too many overweight bags.",
+    excerpt: "My exact packing list for long-term, one-bag travel, including the three items I've never once regretted and the one I always forget.",
+    category: "Guides", place: "Anywhere", date: "2026-06-11", scene: "dunes", map: null,
+    body: [
+      "For my first big trip, I packed a 70-litre backpack, three pairs of jeans, and a hardback novel. I made it four days before mailing half of it home. Twelve years later, everything I travel with fits in a 30-litre bag that weighs under seven kilograms.",
+      "<h2>The core rules</h2>",
+      "Everything should do at least two jobs. Everything should dry overnight. And nothing goes in the bag that I wouldn't be fine losing, except the notebook.",
+      { tips: ["2 merino t-shirts, 1 long-sleeve, 1 button-up", "1 pair travel trousers, 1 pair shorts that double as swimwear", "Packable down jacket + lightweight rain shell", "One pair of shoes good for both hiking and dinner", "Silk sleeping liner, sarong, and a small dry bag", "Notebook, two pens, e-reader, universal adapter"] },
+      "<blockquote>You will always be able to buy what you forgot. You will rarely miss what you left behind.</blockquote>",
+      "The item I always forget? A spare phone cable. I've bought one in eleven countries. I'm starting a collection."
+    ]
+  },
+  {
+    id: "georgia-supra",
+    title: "Toasts Until Dawn: A Georgian Supra",
+    sub: "On hospitality, wine from clay jars, and the role of the tamada.",
+    excerpt: "In the Kakheti wine region, a dinner invitation turned into eleven hours of toasts, songs and amber wine poured from buried qvevri.",
+    category: "Food", place: "Kakheti, Georgia", date: "2026-05-03", scene: "hills", map: [605, 118],
+    body: [
+      "Giorgi's invitation was simple: come for dinner. I arrived at 6 p.m. and left, gently supported by two of his cousins, at 5 the next morning.",
+      "A Georgian supra is not a meal. It's a ritual led by the tamada, the toastmaster, who guides the table through a sequence of toasts: to peace, to the dead, to parents, to friendship, to women, to the guest. Each toast is a small speech. Each one requires an emptied glass.",
+      "<h2>Wine from the earth</h2>",
+      "The amber wine came from qvevri, large clay vessels buried in the ground where grapes ferment with their skins for months. It's tannic, nutty, and unlike anything I'd tasted. Giorgi's family has been making it the same way for, by his estimate, 'forever.'",
+      "<blockquote>In Georgia, a guest is a gift from God. I've never felt that sentence more literally.</blockquote>",
+      { tips: ["Learn to say gaumarjos (cheers) and madloba (thank you).", "Pace yourself; you can sip between toasts if you say so politely.", "Visit Sighnaghi and Telavi for small family wineries.", "Try khachapuri, badrijani, and churchkhela."] },
+      "I've tried to explain the supra to friends back home. It never quite translates. You have to be there, glass raised, while someone sings a song older than your entire country."
+    ]
+  },
+  {
+    id: "patagonia-wind",
+    title: "The Wind in Patagonia Has Opinions",
+    sub: "Hiking the W Trek in Torres del Paine.",
+    excerpt: "Five days, gusts strong enough to knock me flat, and the most beautiful granite towers I'll ever see, eventually, after the clouds cleared.",
+    category: "Hiking", place: "Torres del Paine, Chile", date: "2026-03-18", scene: "peaks", map: [285, 420],
+    body: [
+      "On day two, the wind picked me up. Not metaphorically. A gust off Lago Grey lifted my pack, then me, and set me down a metre to the left on my backside. A passing Chilean ranger helped me up and said, cheerfully, 'Welcome to Patagonia.'",
+      "The W Trek winds through valleys carved by glaciers, past lakes the colour of melted turquoise, toward the three granite towers that give the park its name. For four days, the towers hid behind cloud.",
+      "<h2>The final climb</h2>",
+      "On the last morning I started at 3:30 a.m., headlamp bobbing, hoping for a clear sunrise. The final hour is a scramble over boulders. When I reached the lake at the base, the towers were there, catching the first light, glowing orange like embers.",
+      "<blockquote>Patience is the real gear list in Patagonia.</blockquote>",
+      { tips: ["Book campsites and refugios months ahead; it's required.", "Trekking poles are essential for wind and descents.", "Pack for four seasons in one day, every day.", "Start the towers hike early for sunrise and fewer crowds."] },
+      "I sat there for an hour, eating a squashed sandwich, while the light shifted from orange to gold to ordinary daylight. It was worth every gust."
+    ]
+  },
+  {
+    id: "lisbon-home",
+    title: "On Coming Home to Lisbon",
+    sub: "What a travel writer learns by staying put.",
+    excerpt: "After a year of constant motion, I tried something radical: staying in one place for a whole season. Notes on trams, tiles and the comfort of routine.",
+    category: "Cities", place: "Lisbon, Portugal", date: "2026-01-27", scene: "tiles", map: [460, 125],
+    body: [
+      "My café knows my order. That's the first sign I've stayed somewhere too long, or exactly long enough. A galão and a pastel de nata, every morning at 8:15, at the counter, standing up like a local.",
+      "For a travel writer, staying put feels almost transgressive. But after a year of moving every few days, I needed a season of the same streets, the same tram, the same view of the river from the same miradouro.",
+      "<h2>Noticing the small things</h2>",
+      "Routine sharpens the eye. I started noticing the azulejo tiles: which buildings had them, which patterns repeated, which ones were cracked and patched with mismatched pieces. I began photographing them. I now have 3,400 photos of tiles.",
+      "<blockquote>Travel teaches you to see. Home teaches you to look again.</blockquote>",
+      { tips: ["Walk instead of taking Tram 28; it's often faster and less crowded.", "Visit Alfama and Graça early in the morning.", "Try ginjinha, a sour cherry liqueur, from a hole-in-the-wall bar.", "Sunset at Miradouro da Senhora do Monte is worth the climb."] },
+      "I'll leave again soon. I always do. But I'm learning that coming home is its own kind of journey, and maybe the one I've been avoiding the longest."
+    ]
+  }
+];
+
+/* ---------- Scene illustrations (pure SVG, no external images) ---------- */
+function scene(type, uid) {
+  const g = `g${uid}`;
+  const scenes = {
+    aurora: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1a33"/><stop offset=".7" stop-color="#1d3a5c"/><stop offset="1" stop-color="#2d5577"/></linearGradient></defs>
+      <rect width="400" height="250" fill="url(#${g})"/>
+      ${[...Array(30)].map((_, i) => `<circle cx="${(i * 137) % 400}" cy="${(i * 53) % 110}" r="${i % 3 ? .8 : 1.4}" fill="#fff" opacity=".8"/>`).join("")}
+      <path d="M0 90 C80 40 140 120 220 70 S340 40 400 80 L400 120 C320 90 260 140 200 110 S80 80 0 130Z" fill="#5dffb0" opacity=".35"/>
+      <path d="M0 70 C100 30 180 100 260 55 S360 50 400 60 L400 85 C330 70 270 110 200 90 S70 60 0 95Z" fill="#9dffcf" opacity=".25"/>
+      <path d="M0 200 L60 160 L110 185 L170 140 L230 180 L290 150 L350 175 L400 155 L400 250 L0 250Z" fill="#e8f0f7"/>
+      <path d="M0 220 L400 210 L400 250 L0 250Z" fill="#cfdde9"/>
+      ${[30, 80, 330, 370].map(x => `<path d="M${x} 225 l8 -30 l8 30z" fill="#14283f"/>`).join("")}`,
+    desert: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6b26b"/><stop offset="1" stop-color="#f7dca8"/></linearGradient></defs>
+      <rect width="400" height="250" fill="url(#${g})"/><circle cx="300" cy="80" r="34" fill="#fff4dc"/>
+      <path d="M0 170 L80 120 L150 160 L230 110 L320 150 L400 125 L400 250 L0 250Z" fill="#c9673c"/>
+      <path d="M0 200 Q100 175 200 195 T400 190 L400 250 L0 250Z" fill="#8e3f22"/>
+      <path d="M90 230 v-55 m0 20 h-12 v-15 m12 25 h12 v-20" stroke="#3d4f2a" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M330 235 v-40 m0 15 h-9 v-12 m9 18 h9 v-15" stroke="#3d4f2a" stroke-width="6" stroke-linecap="round" fill="none"/>`,
+    mountains: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c6b6"/><stop offset="1" stop-color="#fbe8d8"/></linearGradient></defs>
+      <rect width="400" height="250" fill="url(#${g})"/>
+      <path d="M0 180 L70 70 L110 120 L170 40 L230 130 L280 60 L340 140 L400 90 L400 250 L0 250Z" fill="#b7a2a4"/>
+      <path d="M170 40 L190 70 L180 68 L170 80 L160 66 L152 70Z M280 60 L295 85 L280 82 L268 88Z M70 70 L82 90 L70 88 L60 92Z" fill="#fff"/>
+      <path d="M0 210 L90 150 L170 200 L260 160 L330 195 L400 170 L400 250 L0 250Z" fill="#5f7a63"/>
+      <path d="M0 235 Q200 215 400 235 L400 250 L0 250Z" fill="#3c5443"/>
+      <rect x="250" y="183" width="22" height="14" fill="#8b4a2b"/><path d="M247 184 L261 174 L275 184Z" fill="#5a2e1a"/>`,
+    city: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9a07a"/><stop offset="1" stop-color="#f6d3b8"/></linearGradient></defs>
+      <rect width="400" height="250" fill="url(#${g})"/><circle cx="110" cy="85" r="38" fill="#d9472b" opacity=".85"/>
+      <path d="M0 190 Q120 150 200 175 T400 160 L400 250 L0 250Z" fill="#a85d4b" opacity=".5"/>
+      <g fill="#3a2424"><rect x="250" y="120" width="8" height="90"/><rect x="232" y="110" width="44" height="7"/><rect x="236" y="128" width="36" height="5"/>
+      <path d="M215 110 L300 110 L292 100 L223 100Z"/><rect x="200" y="88" width="108" height="6" rx="3"/>
+      <path d="M200 88 Q254 70 308 88" fill="none" stroke="#3a2424" stroke-width="4"/></g>
+      <path d="M0 215 L400 215 L400 250 L0 250Z" fill="#2f1f1f"/>
+      ${[20, 60, 120, 340, 375].map(x => `<circle cx="${x}" cy="205" r="14" fill="#f2a1b6" opacity=".9"/>`).join("")}`,
+    sea: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe3ea"/><stop offset=".55" stop-color="#e9f5f2"/><stop offset=".55" stop-color="#2d7d8a"/><stop offset="1" stop-color="#16505c"/></linearGradient></defs>
+      <rect width="400" height="250" fill="url(#${g})"/>
+      <path d="M260 138 L300 95 L330 115 L380 85 L400 100 L400 138Z" fill="#3e6b45"/>
+      <path d="M0 138 L40 120 L80 138Z" fill="#4e7a52"/>
+      ${[160, 185, 210].map((y, i) => `<path d="M0 ${y} q25 -8 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="#fff" stroke-opacity="${.35 - i * .08}" stroke-width="2"/>`).join("")}
+      <path d="M140 175 q30 -22 60 0 q-10 6 -30 6 q-20 0 -30 -6z" fill="#0d2f38"/><path d="M196 172 l14 -12 l-4 14z" fill="#0d2f38"/>
+      <path d="M168 160 q-2 -14 4 -20 M168 160 q4 -12 12 -14" stroke="#fff" stroke-width="2" fill="none" opacity=".8"/>`,
+    dunes: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e7d8c3"/><stop offset="1" stop-color="#f4ece0"/></linearGradient></defs>
+      <rect width="400" height="250" fill="url(#${g})"/>
+      <g transform="translate(140 55)"><rect x="0" y="20" width="120" height="150" rx="22" fill="#c4512b"/><rect x="28" y="0" width="64" height="30" rx="12" fill="none" stroke="#8a3218" stroke-width="8"/>
+      <rect x="20" y="60" width="80" height="50" rx="10" fill="#a7401f"/><rect x="45" y="80" width="30" height="5" rx="2" fill="#f4ece0"/>
+      <rect x="-10" y="40" width="10" height="100" rx="5" fill="#8a3218"/><rect x="120" y="40" width="10" height="100" rx="5" fill="#8a3218"/></g>
+      <circle cx="70" cy="190" r="22" fill="#2f6f6a"/><rect x="310" y="160" width="50" height="60" rx="6" fill="#1f1b16"/><rect x="316" y="166" width="38" height="40" rx="3" fill="#e7d8c3"/>`,
+    hills: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd59e"/><stop offset="1" stop-color="#ffefd6"/></linearGradient></defs>
+      <rect width="400" height="250" fill="url(#${g})"/><circle cx="90" cy="70" r="28" fill="#fff6e5"/>
+      <path d="M0 140 L60 90 L120 120 L200 70 L280 110 L350 80 L400 100 L400 250 L0 250Z" fill="#9c8fb3" opacity=".6"/>
+      <path d="M0 170 Q100 130 200 160 T400 150 L400 250 L0 250Z" fill="#8a9b4d"/>
+      <path d="M0 200 Q120 175 230 200 T400 195 L400 250 L0 250Z" fill="#5d6e2e"/>
+      ${[...Array(9)].map((_, i) => `<path d="M${20 + i * 45} 250 L${45 + i * 40} 195" stroke="#3d4a1d" stroke-width="3" opacity=".6"/>`).join("")}
+      <ellipse cx="300" cy="208" rx="22" ry="26" fill="#b5653a"/><rect x="290" y="178" width="20" height="10" fill="#8f4a28"/>`,
+    peaks: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fa8c9"/><stop offset="1" stop-color="#dbe7ee"/></linearGradient></defs>
+      <rect width="400" height="250" fill="url(#${g})"/>
+      <path d="M130 170 L155 50 L170 60 L180 30 L200 55 L215 40 L240 170Z" fill="#6b5a52"/>
+      <path d="M155 50 L162 75 L170 60 M180 30 L188 60 L200 55 M215 40 L222 70" stroke="#e7ddd6" stroke-width="3" fill="none"/>
+      <path d="M0 170 L70 120 L120 170 Z M240 170 L320 100 L400 150 L400 170Z" fill="#8c9aa6"/>
+      <rect y="170" width="400" height="40" fill="#43b4c4"/><path d="M0 210 L400 205 L400 250 L0 250Z" fill="#7c7a45"/>
+      <path d="M40 60 q20 -10 40 0 q15 -8 30 2 h-70z M260 45 q15 -8 30 0 q12 -6 24 2 h-54z" fill="#fff" opacity=".85"/>`,
+    tiles: `<defs><pattern id="${g}" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="#f3efe6"/>
+      <path d="M25 4 Q35 15 25 25 Q15 15 25 4Z M25 46 Q35 35 25 25 Q15 35 25 46Z M4 25 Q15 15 25 25 Q15 35 4 25Z M46 25 Q35 15 25 25 Q35 35 46 25Z" fill="#2b5aa0"/>
+      <circle cx="25" cy="25" r="4" fill="#f3efe6"/><path d="M0 0h8v2H2v6H0z M50 0h-8v2h6v6h2z M0 50h8v-2H2v-6H0z M50 50h-8v-2h6v-6h2z" fill="#2b5aa0"/></pattern></defs>
+      <rect width="400" height="250" fill="url(#${g})"/>
+      <rect x="0" y="175" width="400" height="75" fill="#f1c84a"/><rect x="40" y="185" width="200" height="45" rx="8" fill="#f6d360" stroke="#2a2a2a" stroke-width="3"/>
+      ${[0, 1, 2, 3].map(i => `<rect x="${55 + i * 45}" y="193" width="30" height="20" rx="3" fill="#cfe3ef" stroke="#2a2a2a" stroke-width="2"/>`).join("")}
+      <path d="M140 185 L150 160 M150 160 h-20" stroke="#2a2a2a" stroke-width="3"/>
+      <circle cx="75" cy="232" r="8" fill="#2a2a2a"/><circle cx="205" cy="232" r="8" fill="#2a2a2a"/><path d="M0 240 H400" stroke="#9b8a5a" stroke-width="3"/>`,
+    portrait: `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c7a8"/><stop offset="1" stop-color="#d98a64"/></linearGradient></defs>
+      <rect width="400" height="500" fill="url(#${g})"/><circle cx="290" cy="120" r="40" fill="#fbe3cf"/>
+      <path d="M0 360 L120 260 L200 320 L300 240 L400 300 L400 500 L0 500Z" fill="#a8583c" opacity=".55"/>
+      <path d="M120 500 Q120 360 200 350 Q280 360 280 500Z" fill="#2f6f6a"/>
+      <circle cx="200" cy="290" r="55" fill="#e8b48f"/>
+      <path d="M140 290 Q138 220 200 215 Q265 218 262 300 Q250 255 210 250 Q170 255 150 300Z" fill="#3a2a20"/>
+      <path d="M140 270 Q120 330 150 360 L160 300Z M262 280 Q280 330 250 360 L242 300Z" fill="#3a2a20"/>
+      <path d="M150 238 Q200 195 252 238 L262 232 Q200 175 140 232Z" fill="#c4512b"/>
+      <rect x="180" y="395" width="40" height="55" rx="4" fill="#f6f1e9" transform="rotate(-8 200 420)"/>`
+  };
+  const h = type === "portrait" ? 500 : 250;
+  return `<svg viewBox="0 0 400 ${h}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${scenes[type]}</svg>`;
+}
+
+/* ---------- Helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+const wordCount = p => p.body.map(b => typeof b === "string" ? b.replace(/<[^>]+>/g, "") : b.tips.join(" ")).join(" ").split(/\s+/).length;
+const readTime = p => Math.max(3, Math.round(wordCount(p) / 120)) + " min read";
+let uid = 0;
+const nextId = () => ++uid;
+
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+/* ---------- Render ---------- */
+const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date));
+const featured = sorted[0];
+const categories = ["All", ...new Set(posts.map(p => p.category))];
+let activeCat = "All";
+let query = "";
+
+$("#heroA").innerHTML = scene("mountains", nextId());
+$("#heroB").innerHTML = scene("sea", nextId());
+$("#portrait").innerHTML = scene("portrait", nextId());
+$("#year").textContent = new Date().getFullYear();
+
+$("#featured").innerHTML = `
+  <div class="featured" tabindex="0" role="button" data-id="${featured.id}" aria-label="Read: ${esc(featured.title)}">
+    <div class="media">${scene(featured.scene, nextId())}</div>
+    <div class="body">
+      <div class="meta"><span class="tag">${esc(featured.category)}</span><span>${esc(featured.place)}</span></div>
+      <h3>${esc(featured.title)}</h3>
+      <p>${esc(featured.excerpt)}</p>
+      <div class="meta" style="margin-top:1.25rem"><span>${fmtDate(featured.date)}</span><span class="dot"></span><span>${readTime(featured)}</span></div>
+      <span class="read-more">Read the story →</span>
+    </div>
+  </div>`;
+
+$("#chips").innerHTML = categories.map(c =>
+  `<button class="chip" aria-pressed="${c === activeCat}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
+
+function cardHTML(p, i = 0) {
+  return `<div class="card" tabindex="0" role="button" data-id="${p.id}" style="animation-delay:${i * 60}ms" aria-label="Read: ${esc(p.title)}">
+    <div class="media">${scene(p.scene, nextId())}</div>
+    <div class="body">
+      <div class="meta"><span class="tag">${esc(p.category)}</span><span>${esc(p.place)}</span></div>
+      <h3>${esc(p.title)}</h3>
+      <p>${esc(p.excerpt)}</p>
+      <div class="meta"><span>${fmtDate(p.date)}</span><span class="dot"></span><span>${readTime(p)}</span></div>
+    </div>
+  </div>`;
+}
+
+function renderGrid() {
+  const q = query.trim().toLowerCase();
+  const list = sorted.filter(p => p.id !== featured.id || activeCat !== "All" || q)
+    .filter(p => activeCat === "All" || p.category === activeCat)
+    .filter(p => !q || [p.title, p.excerpt, p.place, p.category].join(" ").toLowerCase().includes(q));
+  $("#grid").innerHTML = list.length
+    ? list.map(cardHTML).join("")
+    : `<div class="empty">No stories match that, yet. Maybe it's somewhere I should go next.</div>`;
+}
+renderGrid();
+
+$("#chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  activeCat = b.dataset.cat;
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+  renderGrid();
+});
+$("#search").addEventListener("input", e => { query = e.target.value; renderGrid(); });
+
+/* ---------- Map ---------- */
+const map = $("#map");
+const tip = $("#tooltip");
+const mapped = posts.filter(p => p.map);
+map.insertAdjacentHTML("beforeend", mapped.map(p => `
+  <g class="pin" tabindex="0" role="button" data-id="${p.id}" aria-label="${esc(p.place)}: ${esc(p.title)}">
+    <circle class="ring" cx="${p.map[0]}" cy="${p.map[1]}" r="6" stroke-width="2"/>
+    <circle class="p" cx="${p.map[0]}" cy="${p.map[1]}" r="6"/>
+  </g>`).join(""));
+map.style.color = "var(--bg)";
+
+map.querySelectorAll(".pin").forEach(pin => {
+  const p = posts.find(x => x.id === pin.dataset.id);
+  const show = () => {
+    const box = map.getBoundingClientRect();
+    const scale = box.width / 1000;
+    tip.style.left = p.map[0] * scale + "px";
+    tip.style.top = p.map[1] * scale + "px";
+    tip.innerHTML = `<strong>${esc(p.place)}</strong>${esc(p.title)}`;
+    tip.style.opacity = 1;
+  };
+  const hide = () => (tip.style.opacity = 0);
+  pin.addEventListener("mouseenter", show);
+  pin.addEventListener("focus", show);
+  pin.addEventListener("mouseleave", hide);
+  pin.addEventListener("blur", hide);
+});
+
+$("#destList").innerHTML = mapped.map(p =>
+  `<button data-id="${p.id}"><strong>${esc(p.place.split(",")[0])}</strong><span>${esc(p.place.split(",")[1] || "")} · ${esc(p.category)}</span></button>`).join("");
+
+/* ---------- Reader ---------- */
+const reader = $("#reader");
+let lastFocus = null;
+const likes = JSON.parse(localStorage.getItem("fs-likes") || "{}");
+
+function openPost(id, push = true) {
+  const p = posts.find(x => x.id === id);
+  if (!p) return;
+  lastFocus = document.activeElement;
+  $("#readerHero").innerHTML = scene(p.scene, nextId());
+  const content = p.body.map(b => {
+    if (typeof b === "object") return `<div class="tips"><h4>Field notes</h4><ul>${b.tips.map(t => `<li>${esc(t)}</li>`).join("")}</ul></div>`;
+    return /^<(h2|blockquote)/.test(b) ? b : `<p>${b}</p>`;
+  }).join("");
+  const liked = !!likes[p.id];
+  $("#post").innerHTML = `
+    <div class="meta"><span class="tag">${esc(p.category)}</span><span>${esc(p.place)}</span></div>
+    <h1 id="postTitle">${esc(p.title)}</h1>
+    <p class="sub">${esc(p.sub)}</p>
+    <div class="meta"><span>By Mara Lindqvist</span><span class="dot"></span><span>${fmtDate(p.date)}</span><span class="dot"></span><span>${readTime(p)}</span></div>
+    <div class="content">${content}</div>
+    <div class="post-foot">
+      <button class="like" aria-pressed="${liked}" data-id="${p.id}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="${liked ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+        <span>${liked ? "Saved to favourites" : "Save story"}</span>
+      </button>
+      <button class="btn ghost" id="shareBtn">Share link</button>
+    </div>`;
+  const idx = sorted.findIndex(x => x.id === id);
+  const nxt = sorted[(idx + 1) % sorted.length];
+  $("#nextWrap").innerHTML = `<h4>Up next</h4>${cardHTML(nxt)}`;
+  reader.classList.add("open");
+  document.body.classList.add("locked");
+  reader.scrollTop = 0;
+  $("#progress").style.width = 0;
+  $("#closeReader").focus();
+  if (push) history.pushState({ id }, "", "#/" + id);
+  document.title = p.title + " · Far & Slow";
+}
+
+function closePost(push = true) {
+  reader.classList.remove("open");
+  document.body.classList.remove("locked");
+  document.title = "Far & Slow: Travel Writing by Mara Lindqvist";
+  if (push) history.pushState({}, "", location.pathname + location.search);
+  if (lastFocus) lastFocus.focus();
+}
+
+document.addEventListener("click", e => {
+  const target = e.target.closest("[data-id]");
+  if (target && !target.classList.contains("like")) { openPost(target.dataset.id); return; }
+  const like = e.target.closest(".like");
+  if (like) {
+    const id = like.dataset.id;
+    likes[id] = !likes[id];
+    if (!likes[id]) delete likes[id];
+    localStorage.setItem("fs-likes", JSON.stringify(likes));
+    like.setAttribute("aria-pressed", !!likes[id]);
+    like.querySelector("svg").setAttribute("fill", likes[id] ? "currentColor" : "none");
+    like.querySelector("span").textContent = likes[id] ? "Saved to favourites" : "Save story";
+    toast(likes[id] ? "Saved to your favourites" : "Removed from favourites");
+  }
+  if (e.target.id === "shareBtn") {
+    const url = location.href;
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+      .then(() => toast("Link copied to clipboard"))
+      .catch(() => toast("Copy this link: " + url));
+  }
+});
+document.addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches("[role=button][data-id]")) {
+    e.preventDefault();
+    openPost(e.target.dataset.id);
+  }
+  if (e.key === "Escape" && reader.classList.contains("open")) closePost();
+});
+$("#closeReader").addEventListener("click", () => closePost());
+reader.addEventListener("scroll", () => {
+  const max = reader.scrollHeight - reader.clientHeight;
+  $("#progress").style.width = (max > 0 ? reader.scrollTop / max * 100 : 0) + "%";
+});
+window.addEventListener("popstate", () => {
+  const m = location.hash.match(/^#\/(.+)/);
+  m ? openPost(m[1], false) : reader.classList.contains("open") && closePost(false);
+});
+const initial = location.hash.match(/^#\/(.+)/);
+if (initial) openPost(initial[1], false);
+
+/* ---------- Theme & menu ---------- */
+const savedTheme = localStorage.getItem("fs-theme") ||
+  (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+document.documentElement.dataset.theme = savedTheme;
+$("#themeBtn").addEventListener("click", () => {
+  const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem("fs-theme", t);
+});
+$("#menuBtn").addEventListener("click", () => {
+  const open = $("#navList").classList.toggle("open");
+  $("#menuBtn").setAttribute("aria-expanded", open);
+});
+$("#navList").addEventListener("click", e => {
+  if (e.target.tagName === "A") { $("#navList").classList.remove("open"); $("#menuBtn").setAttribute("aria-expanded", false); }
+});
+
+/* ---------- Newsletter ---------- */
+$("#newsForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const input = $("#email");
+  const msg = $("#formMsg");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+    msg.textContent = "Hmm, that email doesn't look quite right.";
+    input.focus();
+    return;
+  }
+  msg.textContent = "You're in! Your first letter arrives this Sunday. ✉";
+  input.value = "";
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+- **Type:** Cormorant (headlines) with Source Sans 3 (body), both OFL, from the find-font engine. The page references them as self-hosted `./fonts/Cormorant.woff2` and `./fonts/SourceSans3.woff2`, so add those files or it falls back to Georgia and system-ui.
+- **Colour:** Clay and Linen (from find-color): linen ground, rose-clay headings and buttons (4.92:1), dark text at 10:1. The deep clay-brown cake-order block uses the engine's shade tokens.
+- **Phone first:** a live "open today until 14:00" status and today's row highlighted in the hours table, because people check whether the shop is open. The cake-order block has a tap-to-call button.
+- **Menu:** dotted leader lines like a handwritten chalkboard. Only the supplied copy and prices are used.
+- **Placeholders:** the photo and map slots are clearly labelled. The Instagram links are `#` stubs, since no URL was given.

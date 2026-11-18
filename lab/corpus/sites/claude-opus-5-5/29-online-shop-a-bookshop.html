@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inkwell &amp; Oak — Independent Bookshop</title>
+<style>
+  :root {
+    --paper: #f7f2e9;
+    --paper-dark: #efe6d6;
+    --ink: #2a2420;
+    --ink-soft: #5c524a;
+    --accent: #8c3b2a;
+    --accent-dark: #6e2c1f;
+    --green: #3d5a45;
+    --line: #dccfb9;
+    --white: #fffdf9;
+    --shadow: 0 6px 24px rgba(42, 36, 32, 0.12);
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Georgia", "Iowan Old Style", "Palatino Linotype", serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; }
+  .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Announcement */
+  .announce {
+    background: var(--green); color: #f1ece2; text-align: center;
+    font-size: 0.85rem; padding: 8px 16px; letter-spacing: 0.02em;
+  }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247, 242, 233, 0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; gap: 24px; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--accent); color: var(--paper);
+    display: grid; place-items: center; font-size: 1.2rem; font-style: italic; font-weight: bold;
+  }
+  .logo-text { font-size: 1.35rem; font-weight: bold; letter-spacing: -0.01em; }
+  .logo-text span { color: var(--accent); font-style: italic; font-weight: normal; }
+  .nav-links { display: flex; gap: 22px; list-style: none; font-size: 0.95rem; }
+  .nav-links a { text-decoration: none; color: var(--ink-soft); transition: color .2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .search {
+    display: flex; align-items: center; background: var(--white);
+    border: 1px solid var(--line); border-radius: 999px; padding: 0 14px; height: 40px; width: 260px;
+  }
+  .search input { border: 0; outline: 0; background: transparent; flex: 1; padding-left: 8px; font-size: 0.92rem; }
+  .search:focus-within { border-color: var(--accent); }
+  .icon-btn {
+    position: relative; background: var(--white); border: 1px solid var(--line);
+    width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+    transition: border-color .2s, transform .15s;
+  }
+  .icon-btn:hover { border-color: var(--accent); }
+  .icon-btn:active { transform: scale(.95); }
+  .badge {
+    position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px;
+    background: var(--accent); color: #fff; border-radius: 999px;
+    font-size: 0.72rem; display: grid; place-items: center; padding: 0 5px; font-weight: 600;
+  }
+  .badge.bump { animation: bump .35s ease; }
+  @keyframes bump { 50% { transform: scale(1.35); } }
+
+  /* Hero */
+  .hero { padding: 64px 0 48px; border-bottom: 1px solid var(--line); }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.75rem; color: var(--accent); font-weight: 600; }
+  .hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.6rem); line-height: 1.1; margin: 14px 0 18px; letter-spacing: -0.02em; }
+  .hero h1 em { color: var(--accent); }
+  .hero p { color: var(--ink-soft); font-size: 1.1rem; max-width: 34em; }
+  .hero-actions { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 22px; border-radius: 999px; border: 1px solid transparent;
+    font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: background .2s, color .2s, border-color .2s, transform .15s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-dark); }
+  .btn-outline { border-color: var(--ink); background: transparent; }
+  .btn-outline:hover { background: var(--ink); color: var(--paper); }
+  .btn-block { width: 100%; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+  .hero-books { position: relative; height: 340px; }
+  .hero-books .cover { position: absolute; width: 170px; height: 255px; box-shadow: var(--shadow); transition: transform .4s; }
+  .hero-books .cover:nth-child(1) { left: 6%; top: 50px; transform: rotate(-9deg); }
+  .hero-books .cover:nth-child(2) { left: 32%; top: 10px; z-index: 2; transform: rotate(1deg); }
+  .hero-books .cover:nth-child(3) { left: 58%; top: 55px; transform: rotate(8deg); }
+  .hero-books:hover .cover:nth-child(1) { transform: rotate(-13deg) translateX(-12px); }
+  .hero-books:hover .cover:nth-child(3) { transform: rotate(12deg) translateX(12px); }
+
+  /* Features */
+  .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+  .feature { display: flex; gap: 12px; align-items: flex-start; font-size: 0.9rem; }
+  .feature strong { display: block; font-size: 0.95rem; }
+  .feature span { color: var(--ink-soft); }
+  .feature-icon { font-size: 1.4rem; line-height: 1; }
+
+  /* Section */
+  section { padding: 56px 0; }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .section-head h2 { font-size: 2rem; letter-spacing: -0.01em; }
+  .section-head p { color: var(--ink-soft); }
+
+  /* Filters */
+  .toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 28px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--white); font-size: 0.85rem; transition: all .2s;
+  }
+  .chip:hover { border-color: var(--ink); }
+  .chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .sort { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--ink-soft); }
+  .sort select { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--white); }
+  .results-count { font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 16px; }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 32px 24px; }
+  .card { display: flex; flex-direction: column; }
+  .card-cover { position: relative; aspect-ratio: 2 / 3; margin-bottom: 14px; cursor: pointer; }
+  .card-cover .cover { width: 100%; height: 100%; box-shadow: 0 4px 14px rgba(42,36,32,.15); transition: transform .3s, box-shadow .3s; }
+  .card-cover:hover .cover { transform: translateY(-6px); box-shadow: 0 14px 28px rgba(42,36,32,.22); }
+  .tag {
+    position: absolute; top: 10px; left: -6px; z-index: 2;
+    background: var(--accent); color: #fff; font-size: 0.7rem; font-weight: 700;
+    padding: 4px 10px; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .tag.green { background: var(--green); }
+  .wish {
+    position: absolute; top: 8px; right: 8px; z-index: 2; width: 34px; height: 34px; border-radius: 50%;
+    border: 0; background: rgba(255,253,249,.92); display: grid; place-items: center; font-size: 1rem;
+    opacity: 0; transition: opacity .2s, transform .15s;
+  }
+  .card-cover:hover .wish, .wish.on, .wish:focus-visible { opacity: 1; }
+  .wish:active { transform: scale(.88); }
+  .card h3 { font-size: 1.05rem; line-height: 1.3; margin-bottom: 2px; cursor: pointer; }
+  .card h3:hover { color: var(--accent); }
+  .card .author { color: var(--ink-soft); font-size: 0.9rem; font-style: italic; }
+  .rating { color: #b8862f; font-size: 0.8rem; margin: 4px 0; letter-spacing: 1px; }
+  .rating small { color: var(--ink-soft); letter-spacing: 0; }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 8px; }
+  .price { font-weight: bold; font-size: 1.1rem; }
+  .price s { color: var(--ink-soft); font-weight: normal; font-size: 0.85rem; margin-left: 6px; }
+  .add-btn {
+    background: transparent; border: 1px solid var(--ink); border-radius: 999px;
+    padding: 6px 14px; font-size: 0.82rem; font-weight: 600; transition: all .2s;
+  }
+  .add-btn:hover { background: var(--ink); color: var(--paper); }
+  .add-btn.added { background: var(--green); border-color: var(--green); color: #fff; }
+  .empty { text-align: center; padding: 60px 20px; color: var(--ink-soft); grid-column: 1 / -1; }
+  .empty div { font-size: 2.5rem; margin-bottom: 10px; }
+
+  /* Generated covers */
+  .cover {
+    position: relative; overflow: hidden; border-radius: 2px 6px 6px 2px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 12% 10%; color: #fff; text-align: center;
+  }
+  .cover::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7%;
+    background: linear-gradient(90deg, rgba(0,0,0,.28), rgba(255,255,255,.08) 60%, rgba(0,0,0,.1));
+  }
+  .cover::after {
+    content: ""; position: absolute; inset: 6%; border: 1px solid rgba(255,255,255,.35); pointer-events: none;
+  }
+  .cover-title { position: relative; font-weight: bold; line-height: 1.15; font-size: clamp(0.85rem, 1.6vw, 1.15rem); text-shadow: 0 1px 2px rgba(0,0,0,.2); }
+  .cover-orn { position: relative; font-size: 1.8em; opacity: .85; }
+  .cover-author { position: relative; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; opacity: .9; }
+
+  /* Staff pick / Newsletter */
+  .pick {
+    background: var(--paper-dark); border-radius: 16px; padding: 48px;
+    display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: center;
+  }
+  .pick .cover { width: 220px; height: 330px; box-shadow: var(--shadow); }
+  .pick blockquote { font-size: 1.35rem; font-style: italic; line-height: 1.5; margin: 14px 0 18px; }
+  .pick cite { color: var(--ink-soft); font-style: normal; font-size: 0.9rem; display: block; margin-bottom: 22px; }
+
+  .newsletter { background: var(--ink); color: var(--paper); text-align: center; border-radius: 16px; padding: 56px 24px; }
+  .newsletter h2 { font-size: 2rem; margin-bottom: 8px; }
+  .newsletter p { color: #c9bfb1; margin-bottom: 24px; }
+  .newsletter form { display: flex; gap: 10px; max-width: 460px; margin: 0 auto; }
+  .newsletter input { flex: 1; padding: 12px 18px; border-radius: 999px; border: 0; background: var(--paper); color: var(--ink); }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); padding: 48px 0 28px; font-size: 0.9rem; color: var(--ink-soft); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+  footer h4 { color: var(--ink); margin-bottom: 12px; font-size: 1rem; }
+  footer ul { list-style: none; display: grid; gap: 6px; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  .copyright { border-top: 1px solid var(--line); padding-top: 20px; font-size: 0.8rem; text-align: center; }
+
+  /* Drawer */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(42,36,32,.45); z-index: 90;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .overlay.open { opacity: 1; pointer-events: auto; }
+  .drawer {
+    position: fixed; top: 0; right: 0; height: 100%; width: min(420px, 100%);
+    background: var(--paper); z-index: 100; display: flex; flex-direction: column;
+    transform: translateX(100%); transition: transform .35s cubic-bezier(.2,.8,.2,1);
+    box-shadow: -10px 0 40px rgba(0,0,0,.15);
+  }
+  .drawer.open { transform: translateX(0); }
+  .drawer-head { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; border-bottom: 1px solid var(--line); }
+  .drawer-head h2 { font-size: 1.4rem; }
+  .close { background: none; border: 0; font-size: 1.6rem; line-height: 1; padding: 4px 8px; color: var(--ink-soft); }
+  .close:hover { color: var(--ink); }
+  .drawer-body { flex: 1; overflow-y: auto; padding: 8px 24px; }
+  .ship-bar { padding: 14px 24px; background: var(--paper-dark); font-size: 0.85rem; }
+  .progress { height: 6px; background: var(--line); border-radius: 999px; margin-top: 8px; overflow: hidden; }
+  .progress > div { height: 100%; background: var(--green); transition: width .4s; }
+  .line { display: grid; grid-template-columns: 60px 1fr auto; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .line .cover { width: 60px; height: 90px; padding: 8px 6px; }
+  .line .cover-title { font-size: 0.5rem; }
+  .line .cover-orn, .line .cover-author { display: none; }
+  .line h4 { font-size: 0.95rem; line-height: 1.3; }
+  .line .author { font-size: 0.82rem; color: var(--ink-soft); font-style: italic; }
+  .qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; margin-top: 8px; background: var(--white); }
+  .qty button { background: none; border: 0; width: 28px; height: 28px; font-size: 1rem; }
+  .qty span { min-width: 22px; text-align: center; font-size: 0.88rem; }
+  .line-right { text-align: right; }
+  .remove { background: none; border: 0; color: var(--ink-soft); font-size: 0.78rem; text-decoration: underline; margin-top: 8px; }
+  .remove:hover { color: var(--accent); }
+  .drawer-foot { padding: 20px 24px; border-top: 1px solid var(--line); background: var(--white); }
+  .sum-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.92rem; }
+  .sum-row.total { font-size: 1.15rem; font-weight: bold; margin: 10px 0 16px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .promo { display: flex; gap: 8px; margin-bottom: 14px; }
+  .promo input { flex: 1; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font-size: 0.88rem; }
+  .promo button { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--ink); background: transparent; font-size: 0.85rem; }
+  .promo-msg { font-size: 0.8rem; margin: -8px 0 12px; }
+  .promo-msg.ok { color: var(--green); }
+  .promo-msg.err { color: var(--accent); }
+
+  /* Modal */
+  .modal {
+    position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .modal.open { opacity: 1; pointer-events: auto; }
+  .modal-backdrop { position: absolute; inset: 0; background: rgba(42,36,32,.55); }
+  .modal-box {
+    position: relative; background: var(--paper); border-radius: 14px; width: min(820px, 100%);
+    max-height: 92vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    transform: translateY(14px) scale(.98); transition: transform .3s;
+  }
+  .modal.open .modal-box { transform: none; }
+  .modal-box .close { position: absolute; top: 12px; right: 14px; z-index: 3; }
+  .detail { display: grid; grid-template-columns: 260px 1fr; gap: 36px; padding: 40px; }
+  .detail .cover { width: 260px; height: 390px; box-shadow: var(--shadow); }
+  .detail h2 { font-size: 1.9rem; line-height: 1.15; margin-bottom: 4px; }
+  .detail .author { font-size: 1.05rem; color: var(--ink-soft); font-style: italic; }
+  .detail .desc { margin: 18px 0; color: var(--ink-soft); }
+  .meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; font-size: 0.85rem; margin-bottom: 22px; }
+  .meta dt { color: var(--ink-soft); }
+  .detail .price { font-size: 1.6rem; margin-bottom: 16px; display: block; }
+  .detail-actions { display: flex; gap: 10px; }
+
+  /* Checkout */
+  .checkout { padding: 40px; }
+  .checkout h2 { font-size: 1.7rem; margin-bottom: 6px; }
+  .steps { display: flex; gap: 8px; margin: 14px 0 26px; font-size: 0.8rem; }
+  .steps span { flex: 1; padding-top: 8px; border-top: 3px solid var(--line); color: var(--ink-soft); }
+  .steps span.on { border-color: var(--accent); color: var(--ink); font-weight: 600; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); }
+  .field input, .field select {
+    padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); outline: none;
+  }
+  .field input:focus, .field select:focus { border-color: var(--accent); }
+  .field input:user-invalid { border-color: var(--accent); }
+  .order-summary { background: var(--paper-dark); border-radius: 10px; padding: 16px 18px; margin: 22px 0; font-size: 0.9rem; }
+  .success { text-align: center; padding: 60px 40px; }
+  .success .check {
+    width: 72px; height: 72px; border-radius: 50%; background: var(--green); color: #fff;
+    display: grid; place-items: center; font-size: 2rem; margin: 0 auto 20px; animation: pop .5s ease;
+  }
+  @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+  .success h2 { font-size: 1.9rem; margin-bottom: 10px; }
+  .success p { color: var(--ink-soft); margin-bottom: 24px; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 120px);
+    background: var(--ink); color: var(--paper); padding: 12px 22px; border-radius: 999px;
+    font-size: 0.9rem; z-index: 200; transition: transform .35s cubic-bezier(.2,.8,.2,1); box-shadow: var(--shadow);
+  }
+  .toast.show { transform: translate(-50%, 0); }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-books { height: 300px; max-width: 460px; margin: 0 auto; width: 100%; }
+    .features { grid-template-columns: repeat(2, 1fr); }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 680px) {
+    .search { display: none; }
+    .search.mobile { display: flex; width: 100%; margin-bottom: 16px; }
+    .pick, .detail { grid-template-columns: 1fr; padding: 28px; gap: 24px; }
+    .pick .cover, .detail .cover { margin: 0 auto; }
+    .detail .cover { width: 200px; height: 300px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .checkout { padding: 28px 22px; }
+    .newsletter form { flex-direction: column; }
+    .sort { margin-left: 0; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+    .hero-books .cover { width: 130px; height: 195px; }
+  }
+  @media (min-width: 681px) { .search.mobile { display: none; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="announce sans">Free shipping on orders over $35 · Use code <strong>READMORE</strong> for 10% off your first order</div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo" aria-label="Inkwell & Oak home">
+      <div class="logo-mark">I</div>
+      <div class="logo-text">Inkwell <span>&amp;</span> Oak</div>
+    </a>
+    <ul class="nav-links sans">
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#pick">Staff Picks</a></li>
+      <li><a href="#newsletter">Book Club</a></li>
+      <li><a href="#visit">Visit Us</a></li>
+    </ul>
+    <div class="nav-right">
+      <label class="search sans">
+        <span aria-hidden="true">🔍</span>
+        <span class="visually-hidden">Search books</span>
+        <input type="search" id="search" placeholder="Search titles, authors…">
+      </label>
+      <button class="icon-btn" id="wishBtn" aria-label="Show wishlist" title="Wishlist">
+        <span aria-hidden="true">♡</span>
+        <span class="badge sans" id="wishCount" hidden>0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Open cart">
+        <span aria-hidden="true">🛒</span>
+        <span class="badge sans" id="cartCount" hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow sans">Independent since 1987</div>
+        <h1>Stories worth <em>staying up</em> for.</h1>
+        <p>A neighborhood bookshop with a hand-picked shelf of timeless classics and modern favorites — carefully chosen by people who actually read them.</p>
+        <div class="hero-actions sans">
+          <a href="#shop" class="btn btn-primary">Browse the shelves →</a>
+          <a href="#pick" class="btn btn-outline">This month's pick</a>
+        </div>
+      </div>
+      <div class="hero-books" id="heroBooks" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="features sans">
+      <div class="feature"><div class="feature-icon">📦</div><div><strong>Free shipping</strong><span>On orders over $35</span></div></div>
+      <div class="feature"><div class="feature-icon">🎁</div><div><strong>Gift wrapping</strong><span>Brown paper &amp; twine</span></div></div>
+      <div class="feature"><div class="feature-icon">↩️</div><div><strong>30-day returns</strong><span>No questions asked</span></div></div>
+      <div class="feature"><div class="feature-icon">☕</div><div><strong>Local pickup</strong><span>Ready in 2 hours</span></div></div>
+    </div>
+  </div>
+
+  <section id="shop">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow sans">The Shelves</div>
+          <h2>Shop all books</h2>
+        </div>
+      </div>
+
+      <label class="search mobile sans">
+        <span aria-hidden="true">🔍</span>
+        <span class="visually-hidden">Search books</span>
+        <input type="search" id="searchMobile" placeholder="Search titles, authors…">
+      </label>
+
+      <div class="toolbar sans">
+        <div class="chips" id="chips" role="group" aria-label="Filter by genre"></div>
+        <label class="sort">Sort
+          <select id="sort">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="rating">Top rated</option>
+            <option value="title">Title A–Z</option>
+          </select>
+        </label>
+      </div>
+      <div class="results-count sans" id="resultsCount" aria-live="polite"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="pick">
+    <div class="container">
+      <div class="pick" id="pickBox"></div>
+    </div>
+  </section>
+
+  <section id="newsletter">
+    <div class="container">
+      <div class="newsletter">
+        <div class="eyebrow sans" style="color:#e0a998">Join the Book Club</div>
+        <h2>One great book, every month.</h2>
+        <p>Staff recommendations, author events, and members-only discounts in your inbox.</p>
+        <form id="newsForm" class="sans">
+          <label class="visually-hidden" for="newsEmail">Email address</label>
+          <input type="email" id="newsEmail" placeholder="you@example.com" required>
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="visit">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="logo" style="margin-bottom:12px">
+          <div class="logo-mark">I</div>
+          <div class="logo-text">Inkwell <span>&amp;</span> Oak</div>
+        </a>
+        <p>214 Maple Street, Old Town<br>Open daily 9am – 8pm<br>(555) 014-2290</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul class="sans"><li><a href="#shop">All books</a></li><li><a href="#pick">Staff picks</a></li><li><a href="#">Gift cards</a></li></ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul class="sans"><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQ</a></li></ul>
+      </div>
+      <div>
+        <h4>About</h4>
+        <ul class="sans"><li><a href="#">Our story</a></li><li><a href="#">Events</a></li><li><a href="#">Contact</a></li></ul>
+      </div>
+    </div>
+    <div class="copyright sans">© <span id="year"></span> Inkwell &amp; Oak Books. Made with love for readers.</div>
+  </div>
+</footer>
+
+<!-- Cart drawer -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Your basket</h2>
+    <button class="close" id="closeCart" aria-label="Close cart">×</button>
+  </div>
+  <div class="ship-bar sans" id="shipBar"></div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot sans" id="cartFoot"></div>
+</aside>
+
+<!-- Modal -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <button class="close" data-close aria-label="Close">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast sans" id="toast" role="status"></div>
+
+<script>
+const BOOKS = [
+  { id: 1,  title: "Pride and Prejudice", author: "Jane Austen", genre: "Romance", price: 12.99, rating: 4.8, reviews: 2140, year: 1813, pages: 432, colors: ["#8c3b2a","#b85c43"], orn: "❦", tag: "Bestseller", desc: "Elizabeth Bennet's sharp wit meets Mr. Darcy's pride in the most beloved comedy of manners ever written." },
+  { id: 2,  title: "Frankenstein", author: "Mary Shelley", genre: "Horror", price: 10.99, rating: 4.6, reviews: 1320, year: 1818, pages: 280, colors: ["#2d3a3a","#51706b"], orn: "⚡", desc: "A young scientist creates life — and must reckon with the creature he abandons. The original science-fiction masterpiece." },
+  { id: 3,  title: "Moby-Dick", author: "Herman Melville", genre: "Adventure", price: 14.50, oldPrice: 18.00, rating: 4.2, reviews: 870, year: 1851, pages: 720, colors: ["#1f3b5a","#3f6d94"], orn: "🐋", tag: "Sale", desc: "Captain Ahab's obsessive hunt for the white whale becomes a sweeping meditation on fate, nature and madness." },
+  { id: 4,  title: "Jane Eyre", author: "Charlotte Brontë", genre: "Romance", price: 11.99, rating: 4.7, reviews: 1650, year: 1847, pages: 532, colors: ["#4a2f45","#7b4f72"], orn: "✿", desc: "An orphaned governess with an unbreakable spirit uncovers a dark secret at Thornfield Hall." },
+  { id: 5,  title: "The Count of Monte Cristo", author: "Alexandre Dumas", genre: "Adventure", price: 16.99, rating: 4.9, reviews: 1980, year: 1844, pages: 1276, colors: ["#5a4520","#9a7a3a"], orn: "⚔", tag: "Staff Pick", tagClass: "green", desc: "Betrayed and imprisoned, Edmond Dantès escapes to exact an elaborate, decades-long revenge." },
+  { id: 6,  title: "Dracula", author: "Bram Stoker", genre: "Horror", price: 9.99, rating: 4.5, reviews: 1410, year: 1897, pages: 418, colors: ["#3a1015","#7a1f2a"], orn: "🦇", desc: "Told through letters and diaries, the gothic tale of a Transylvanian count's journey to England." },
+  { id: 7,  title: "The Adventures of Sherlock Holmes", author: "Arthur Conan Doyle", genre: "Mystery", price: 11.50, rating: 4.7, reviews: 1760, year: 1892, pages: 307, colors: ["#2f2a22","#5b5040"], orn: "🔍", tag: "Bestseller", desc: "Twelve brilliant cases featuring the world's greatest consulting detective and his loyal friend Dr. Watson." },
+  { id: 8,  title: "Meditations", author: "Marcus Aurelius", genre: "Philosophy", price: 8.99, rating: 4.8, reviews: 2310, year: 180, pages: 254, colors: ["#5a5a4a","#8a8a6e"], orn: "☉", desc: "The private reflections of a Roman emperor on duty, resilience and living a good life." },
+  { id: 9,  title: "Little Women", author: "Louisa May Alcott", genre: "Classics", price: 12.50, rating: 4.6, reviews: 1190, year: 1868, pages: 449, colors: ["#6b4a5c","#a87891"], orn: "✾", desc: "The four March sisters grow up, chase their dreams and hold each other close in Civil War–era New England." },
+  { id: 10, title: "The Time Machine", author: "H. G. Wells", genre: "Sci-Fi", price: 7.99, oldPrice: 10.99, rating: 4.3, reviews: 760, year: 1895, pages: 118, colors: ["#20414a","#3d7d8a"], orn: "⌛", tag: "Sale", desc: "A Victorian inventor travels to the year 802,701 and discovers the strange fate of humanity." },
+  { id: 11, title: "Wuthering Heights", author: "Emily Brontë", genre: "Romance", price: 10.50, rating: 4.4, reviews: 1050, year: 1847, pages: 416, colors: ["#3b4535","#66775a"], orn: "☁", desc: "A wild, windswept tale of passion and revenge between Heathcliff and Catherine on the Yorkshire moors." },
+  { id: 12, title: "Crime and Punishment", author: "Fyodor Dostoevsky", genre: "Classics", price: 15.99, rating: 4.7, reviews: 1370, year: 1866, pages: 671, colors: ["#4a3a2a","#7a604a"], orn: "✠", desc: "A destitute student commits a murder and spirals into guilt in this gripping psychological novel." },
+  { id: 13, title: "The War of the Worlds", author: "H. G. Wells", genre: "Sci-Fi", price: 9.50, rating: 4.4, reviews: 920, year: 1898, pages: 192, colors: ["#5a2a1a","#a04a2a"], orn: "✷", desc: "Martian cylinders land in Surrey and humanity faces an invasion it cannot comprehend." },
+  { id: 14, title: "The Moonstone", author: "Wilkie Collins", genre: "Mystery", price: 11.99, rating: 4.3, reviews: 540, year: 1868, pages: 528, colors: ["#2a2a4a","#4f4f86"], orn: "☾", tag: "New", tagClass: "green", desc: "A cursed diamond vanishes on a young woman's birthday — the first great detective novel in English." },
+  { id: 15, title: "Treasure Island", author: "Robert Louis Stevenson", genre: "Adventure", price: 8.50, rating: 4.5, reviews: 1100, year: 1883, pages: 292, colors: ["#3a5a3a","#5e8a52"], orn: "⚓", desc: "Young Jim Hawkins, a treasure map and the unforgettable Long John Silver set sail for adventure." },
+  { id: 16, title: "Thus Spoke Zarathustra", author: "Friedrich Nietzsche", genre: "Philosophy", price: 13.50, rating: 4.2, reviews: 610, year: 1883, pages: 352, colors: ["#2a2a2a","#555048"], orn: "☀", desc: "A poetic, prophetic work introducing the Übermensch and the doctrine of eternal recurrence." },
+];
+
+const FREE_SHIP = 35;
+const SHIPPING = 4.95;
+const PROMOS = { READMORE: 0.10, BOOKWORM: 0.15 };
+
+const $ = s => document.querySelector(s);
+const fmt = n => "$" + n.toFixed(2);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+
+const state = {
+  cart: load("io_cart", {}),
+  wish: load("io_wish", []),
+  promo: load("io_promo", null),
+  genre: "All",
+  query: "",
+  sort: "featured",
+  wishOnly: false,
+};
+
+const byId = id => BOOKS.find(b => b.id === id);
+
+function coverHTML(b) {
+  return `<div class="cover" style="background:linear-gradient(155deg, ${b.colors[1]}, ${b.colors[0]})">
+    <div class="cover-title">${esc(b.title)}</div>
+    <div class="cover-orn">${b.orn}</div>
+    <div class="cover-author">${esc(b.author)}</div>
+  </div>`;
+}
+
+function stars(r) {
+  const full = Math.round(r);
+  return "★".repeat(full) + "☆".repeat(5 - full);
+}
+
+/* ---------- Rendering ---------- */
+function renderChips() {
+  const genres = ["All", ...new Set(BOOKS.map(b => b.genre))];
+  $("#chips").innerHTML = genres.map(g =>
+    `<button class="chip ${g === state.genre && !state.wishOnly ? "active" : ""}" data-genre="${g}">${g}</button>`
+  ).join("") + `<button class="chip ${state.wishOnly ? "active" : ""}" data-wish="1">♥ Wishlist</button>`;
+}
+
+function filtered() {
+  const q = state.query.trim().toLowerCase();
+  let list = BOOKS.filter(b =>
+    (state.wishOnly ? state.wish.includes(b.id) : (state.genre === "All" || b.genre === state.genre)) &&
+    (!q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.genre.toLowerCase().includes(q))
+  );
+  const sorters = {
+    "price-asc": (a, b) => a.price - b.price,
+    "price-desc": (a, b) => b.price - a.price,
+    "rating": (a, b) => b.rating - a.rating,
+    "title": (a, b) => a.title.localeCompare(b.title),
+  };
+  if (sorters[state.sort]) list = [...list].sort(sorters[state.sort]);
+  return list;
+}
+
+function renderGrid() {
+  const list = filtered();
+  $("#resultsCount").textContent = `Showing ${list.length} of ${BOOKS.length} books`;
+  if (!list.length) {
+    $("#grid").innerHTML = `<div class="empty"><div>📚</div>${state.wishOnly ? "Your wishlist is empty — tap ♡ on any book to save it." : "No books match your search. Try another title or author."}</div>`;
+    return;
+  }
+  $("#grid").innerHTML = list.map(b => {
+    const wished = state.wish.includes(b.id);
+    return `<article class="card">
+      <div class="card-cover" data-open="${b.id}">
+        ${b.tag ? `<span class="tag sans ${b.tagClass || ""}">${b.tag}</span>` : ""}
+        <button class="wish ${wished ? "on" : ""}" data-wish-id="${b.id}" aria-label="${wished ? "Remove from" : "Add to"} wishlist" aria-pressed="${wished}">${wished ? "♥" : "♡"}</button>
+        ${coverHTML(b)}
+      </div>
+      <h3 data-open="${b.id}">${esc(b.title)}</h3>
+      <div class="author">${esc(b.author)}</div>
+      <div class="rating" aria-label="Rated ${b.rating} out of 5">${stars(b.rating)} <small class="sans">${b.rating} (${b.reviews.toLocaleString()})</small></div>
+      <div class="card-foot">
+        <span class="price">${fmt(b.price)}${b.oldPrice ? `<s>${fmt(b.oldPrice)}</s>` : ""}</span>
+        <button class="add-btn sans" data-add="${b.id}">Add +</button>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function renderHero() {
+  $("#heroBooks").innerHTML = [4, 5, 1].map(id => coverHTML(byId(id))).join("");
+}
+
+function renderPick() {
+  const b = byId(5);
+  $("#pickBox").innerHTML = `
+    <div>${coverHTML(b)}</div>
+    <div>
+      <div class="eyebrow sans">Staff Pick of the Month</div>
+      <h2 style="font-size:2rem;margin-top:8px">${esc(b.title)}</h2>
+      <blockquote>“The greatest revenge story ever told. I read the last 300 pages in a single sitting and missed my train stop twice.”</blockquote>
+      <cite class="sans">— Margot, Fiction Buyer</cite>
+      <div class="sans" style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" data-add="${b.id}">Add to basket — ${fmt(b.price)}</button>
+        <button class="btn btn-outline" data-open="${b.id}">Read more</button>
+      </div>
+    </div>`;
+}
+
+/* ---------- Cart ---------- */
+function cartItems() {
+  return Object.entries(state.cart).map(([id, qty]) => ({ book: byId(+id), qty })).filter(i => i.book);
+}
+function totals() {
+  const items = cartItems();
+  const subtotal = items.reduce((s, i) => s + i.book.price * i.qty, 0);
+  const discount = state.promo && PROMOS[state.promo] ? subtotal * PROMOS[state.promo] : 0;
+  const after = subtotal - discount;
+  const shipping = items.length === 0 || after >= FREE_SHIP ? 0 : SHIPPING;
+  const count = items.reduce((s, i) => s + i.qty, 0);
+  return { items, subtotal, discount, shipping, total: after + shipping, count, after };
+}
+
+function persist() {
+  save("io_cart", state.cart);
+  save("io_wish", state.wish);
+  save("io_promo", state.promo);
+}
+
+function updateBadges(bump) {
+  const { count } = totals();
+  const cc = $("#cartCount");
+  cc.hidden = count === 0;
+  cc.textContent = count;
+  if (bump) { cc.classList.remove("bump"); void cc.offsetWidth; cc.classList.add("bump"); }
+  const wc = $("#wishCount");
+  wc.hidden = state.wish.length === 0;
+  wc.textContent = state.wish.length;
+}
+
+function renderCart() {
+  const t = totals();
+  const remaining = Math.max(0, FREE_SHIP - t.after);
+  const pct = Math.min(100, (t.after / FREE_SHIP) * 100);
+  $("#shipBar").innerHTML = t.items.length
+    ? (remaining > 0 ? `You're <strong>${fmt(remaining)}</strong> away from free shipping` : `🎉 You've unlocked <strong>free shipping</strong>!`) +
+      `<div class="progress"><div style="width:${pct}%"></div></div>`
+    : `Free shipping on orders over ${fmt(FREE_SHIP)}`;
+
+  if (!t.items.length) {
+    $("#cartBody").innerHTML = `<div class="empty"><div>🛒</div>Your basket is empty.<br><br><button class="btn btn-outline sans" data-close-cart>Keep browsing</button></div>`;
+    $("#cartFoot").innerHTML = "";
+    return;
+  }
+
+  $("#cartBody").innerHTML = t.items.map(({ book: b, qty }) => `
+    <div class="line">
+      ${coverHTML(b)}
+      <div>
+        <h4>${esc(b.title)}</h4>
+        <div class="author">${esc(b.author)}</div>
+        <div class="qty sans">
+          <button data-dec="${b.id}" aria-label="Decrease quantity">−</button>
+          <span>${qty}</span>
+          <button data-inc="${b.id}" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+      <div class="line-right">
+        <div class="price" style="font-size:1rem">${fmt(b.price * qty)}</div>
+        <button class="remove sans" data-remove="${b.id}">Remove</button>
+      </div>
+    </div>`).join("");
+
+  $("#cartFoot").innerHTML = `
+    <form class="promo" id="promoForm">
+      <label class="visually-hidden" for="promoInput">Promo code</label>
+      <input id="promoInput" placeholder="Promo code" value="${state.promo || ""}">
+      <button type="submit">${state.promo ? "Remove" : "Apply"}</button>
+    </form>
+    <div class="promo-msg" id="promoMsg"></div>
+    <div class="sum-row"><span>Subtotal</span><span>${fmt(t.subtotal)}</span></div>
+    ${t.discount ? `<div class="sum-row" style="color:var(--green)"><span>Discount (${state.promo})</span><span>−${fmt(t.discount)}</span></div>` : ""}
+    <div class="sum-row"><span>Shipping</span><span>${t.shipping ? fmt(t.shipping) : "Free"}</span></div>
+    <div class="sum-row total"><span>Total</span><span>${fmt(t.total)}</span></div>
+    <button class="btn btn-primary btn-block" id="checkoutBtn">Checkout →</button>`;
+}
+
+function addToCart(id, qty = 1) {
+  state.cart[id] = (state.cart[id] || 0) + qty;
+  persist(); renderCart(); updateBadges(true);
+  toast(`Added “${byId(id).title}” to your basket`);
+  document.querySelectorAll(`.add-btn[data-add="${id}"]`).forEach(btn => {
+    btn.classList.add("added"); btn.textContent = "✓ Added";
+    setTimeout(() => { btn.classList.remove("added"); btn.textContent = "Add +"; }, 1200);
+  });
+}
+function setQty(id, qty) {
+  if (qty <= 0) delete state.cart[id]; else state.cart[id] = qty;
+  persist(); renderCart(); updateBadges();
+}
+function toggleWish(id) {
+  const i = state.wish.indexOf(id);
+  if (i >= 0) { state.wish.splice(i, 1); toast("Removed from wishlist"); }
+  else { state.wish.push(id); toast("Saved to wishlist ♥"); }
+  persist(); renderGrid(); updateBadges();
+}
+
+/* ---------- Drawer & modal ---------- */
+let lastFocus = null;
+function openCart() {
+  lastFocus = document.activeElement;
+  renderCart();
+  $("#drawer").classList.add("open"); $("#overlay").classList.add("open");
+  $("#drawer").setAttribute("aria-hidden", "false");
+  setTimeout(() => $("#closeCart").focus(), 50);
+}
+function closeCart() {
+  $("#drawer").classList.remove("open"); $("#overlay").classList.remove("open");
+  $("#drawer").setAttribute("aria-hidden", "true");
+  lastFocus?.focus?.();
+}
+function openModal(html) {
+  lastFocus = document.activeElement;
+  $("#modalContent").innerHTML = html;
+  $("#modal").classList.add("open");
+  $("#modal").setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  setTimeout(() => $("#modal .close").focus(), 50);
+}
+function closeModal() {
+  $("#modal").classList.remove("open");
+  $("#modal").setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  lastFocus?.focus?.();
+}
+
+function openBook(id) {
+  const b = byId(id);
+  const wished = state.wish.includes(b.id);
+  openModal(`
+    <div class="detail">
+      <div>${coverHTML(b)}</div>
+      <div>
+        <div class="eyebrow sans">${b.genre}</div>
+        <h2>${esc(b.title)}</h2>
+        <div class="author">by ${esc(b.author)}</div>
+        <div class="rating" style="font-size:.95rem;margin-top:8px">${stars(b.rating)} <small class="sans">${b.rating} · ${b.reviews.toLocaleString()} reviews</small></div>
+        <p class="desc">${esc(b.desc)}</p>
+        <dl class="meta sans">
+          <dt>First published</dt><dd>${b.year}</dd>
+          <dt>Pages</dt><dd>${b.pages.toLocaleString()}</dd>
+          <dt>Format</dt><dd>Paperback</dd>
+          <dt>Availability</dt><dd style="color:var(--green)">● In stock — ships in 1–2 days</dd>
+        </dl>
+        <span class="price">${fmt(b.price)}${b.oldPrice ? `<s>${fmt(b.oldPrice)}</s>` : ""}</span>
+        <div class="detail-actions sans">
+          <button class="btn btn-primary" data-add="${b.id}" data-and-close>Add to basket</button>
+          <button class="btn btn-outline" data-wish-id="${b.id}" data-modal-wish>${wished ? "♥ Saved" : "♡ Wishlist"}</button>
+        </div>
+      </div>
+    </div>`);
+}
+
+/* ---------- Checkout ---------- */
+function openCheckout() {
+  const t = totals();
+  if (!t.items.length) return;
+  closeCart();
+  openModal(`
+    <form class="checkout" id="checkoutForm" novalidate>
+      <h2>Checkout</h2>
+      <div class="steps sans"><span class="on">1. Details</span><span class="on">2. Payment</span><span>3. Done</span></div>
+      <div class="form-grid sans">
+        <div class="field"><label for="fn">First name</label><input id="fn" required autocomplete="given-name"></div>
+        <div class="field"><label for="ln">Last name</label><input id="ln" required autocomplete="family-name"></div>
+        <div class="field full"><label for="em">Email</label><input id="em" type="email" required autocomplete="email"></div>
+        <div class="field full"><label for="ad">Street address</label><input id="ad" required autocomplete="street-address"></div>
+        <div class="field"><label for="ci">City</label><input id="ci" required autocomplete="address-level2"></div>
+        <div class="field"><label for="zp">Postal code</label><input id="zp" required autocomplete="postal-code"></div>
+        <div class="field full"><label for="dl">Delivery</label>
+          <select id="dl"><option value="ship">Standard shipping (3–5 days)</option><option value="pickup">Free in-store pickup</option></select>
+        </div>
+        <div class="field full"><label for="cc">Card number</label><input id="cc" required inputmode="numeric" placeholder="1234 5678 9012 3456" maxlength="19" pattern="[0-9 ]{15,19}" autocomplete="cc-number"></div>
+        <div class="field"><label for="ex">Expiry</label><input id="ex" required placeholder="MM/YY" maxlength="5" pattern="(0[1-9]|1[0-2])\\/[0-9]{2}" autocomplete="cc-exp"></div>
+        <div class="field"><label for="cv">CVC</label><input id="cv" required inputmode="numeric" placeholder="123" maxlength="4" pattern="[0-9]{3,4}" autocomplete="cc-csc"></div>
+        <label class="field full" style="flex-direction:row;align-items:center;gap:8px;font-size:.88rem"><input type="checkbox" id="gift"> Add gift wrapping (free)</label>
+      </div>
+      <div class="order-summary sans" id="coSummary"></div>
+      <p class="sans" id="coError" style="color:var(--accent);font-size:.85rem;margin-bottom:10px" hidden>Please fill in all fields correctly.</p>
+      <button class="btn btn-primary btn-block sans" type="submit" id="placeBtn">Place order</button>
+      <p class="sans" style="text-align:center;font-size:.75rem;color:var(--ink-soft);margin-top:10px">🔒 Demo checkout — no real payment is processed.</p>
+    </form>`);
+  renderCoSummary();
+}
+
+function renderCoSummary() {
+  const t = totals();
+  const pickup = $("#dl")?.value === "pickup";
+  const shipping = pickup ? 0 : t.shipping;
+  $("#coSummary").innerHTML = `
+    ${t.items.map(i => `<div class="sum-row"><span>${i.qty} × ${esc(i.book.title)}</span><span>${fmt(i.book.price * i.qty)}</span></div>`).join("")}
+    ${t.discount ? `<div class="sum-row" style="color:var(--green)"><span>Discount</span><span>−${fmt(t.discount)}</span></div>` : ""}
+    <div class="sum-row"><span>${pickup ? "In-store pickup" : "Shipping"}</span><span>${shipping ? fmt(shipping) : "Free"}</span></div>
+    <div class="sum-row total" style="margin-bottom:0"><span>Total</span><span>${fmt(t.after + shipping)}</span></div>`;
+}
+
+function placeOrder(form) {
+  const fields = [...form.querySelectorAll("input[required]")];
+  const valid = fields.every(f => f.value.trim() && f.checkValidity());
+  if (!valid) {
+    $("#coError").hidden = false;
+    fields.find(f => !f.value.trim() || !f.checkValidity())?.focus();
+    return;
+  }
+  const btn = $("#placeBtn");
+  btn.disabled = true; btn.textContent = "Processing…";
+  const name = $("#fn").value.trim();
+  const email = $("#em").value.trim();
+  const pickup = $("#dl").value === "pickup";
+  setTimeout(() => {
+    const orderNo = "IO-" + Math.floor(100000 + Math.random() * 900000);
+    state.cart = {}; state.promo = null; persist(); updateBadges(); renderCart();
+    $("#modalContent").innerHTML = `
+      <div class="success">
+        <div class="check">✓</div>
+        <h2>Thank you, ${esc(name)}!</h2>
+        <p>Your order <strong>${orderNo}</strong> is confirmed.<br>A receipt is on its way to ${esc(email)}.<br>
+        ${pickup ? "We'll let you know when it's ready for pickup." : "Expect your books in 3–5 business days."}</p>
+        <button class="btn btn-primary sans" data-close>Continue shopping</button>
+      </div>`;
+  }, 1100);
+}
+
+/* ---------- Toast ---------- */
+let toastTimer;
+function toast(msg) {
+  const el = $("#toast");
+  el.textContent = msg; el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+/* ---------- Events ---------- */
+document.addEventListener("click", e => {
+  const t = e.target;
+  const wishBtn = t.closest("[data-wish-id]");
+  if (wishBtn) {
+    e.stopPropagation();
+    const id = +wishBtn.dataset.wishId;
+    toggleWish(id);
+    if (wishBtn.hasAttribute("data-modal-wish")) wishBtn.textContent = state.wish.includes(id) ? "♥ Saved" : "♡ Wishlist";
+    return;
+  }
+  const add = t.closest("[data-add]");
+  if (add) { addToCart(+add.dataset.add); if (add.hasAttribute("data-and-close")) closeModal(); return; }
+  const open = t.closest("[data-open]");
+  if (open) { openBook(+open.dataset.open); return; }
+  const chip = t.closest(".chip");
+  if (chip) {
+    if (chip.dataset.wish) { state.wishOnly = !state.wishOnly; }
+    else { state.wishOnly = false; state.genre = chip.dataset.genre; }
+    renderChips(); renderGrid(); return;
+  }
+  if (t.closest("[data-inc]")) { const id = +t.closest("[data-inc]").dataset.inc; setQty(id, state.cart[id] + 1); return; }
+  if (t.closest("[data-dec]")) { const id = +t.closest("[data-dec]").dataset.dec; setQty(id, state.cart[id] - 1); return; }
+  if (t.closest("[data-remove]")) { setQty(+t.closest("[data-remove]").dataset.remove, 0); return; }
+  if (t.closest("[data-close]")) { closeModal(); return; }
+  if (t.closest("[data-close-cart]")) { closeCart(); return; }
+  if (t.closest("#checkoutBtn")) { openCheckout(); return; }
+});
+
+document.addEventListener("submit", e => {
+  if (e.target.id === "promoForm") {
+    e.preventDefault();
+    const msg = () => $("#promoMsg");
+    if (state.promo) { state.promo = null; persist(); renderCart(); return; }
+    const code = $("#promoInput").value.trim().toUpperCase();
+    if (PROMOS[code]) {
+      state.promo = code; persist(); renderCart();
+      msg().className = "promo-msg ok"; msg().textContent = `Code applied — ${PROMOS[code] * 100}% off!`;
+    } else {
+      msg().className = "promo-msg err"; msg().textContent = "That code isn't valid.";
+    }
+  }
+  if (e.target.id === "checkoutForm") { e.preventDefault(); placeOrder(e.target); }
+  if (e.target.id === "newsForm") {
+    e.preventDefault();
+    toast("Welcome to the Book Club! 📚");
+    e.target.reset();
+  }
+});
+
+document.addEventListener("change", e => { if (e.target.id === "dl") renderCoSummary(); });
+document.addEventListener("input", e => {
+  if (e.target.id === "cc") {
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})(?=.)/g, "$1 ");
+  }
+  if (e.target.id === "ex") {
+    let v = e.target.value.replace(/\D/g, "").slice(0, 4);
+    if (v.length > 2) v = v.slice(0, 2) + "/" + v.slice(2);
+    e.target.value = v;
+  }
+  if (e.target.id === "cv") e.target.value = e.target.value.replace(/\D/g, "");
+});
+
+let searchTimer;
+["#search", "#searchMobile"].forEach(sel => {
+  $(sel).addEventListener("input", e => {
+    clearTimeout(searchTimer);
+    const v = e.target.value;
+    $("#search").value = v; $("#searchMobile").value = v;
+    searchTimer = setTimeout(() => {
+      state.query = v; renderGrid();
+      if (v && window.scrollY < $("#shop").offsetTop - 200) $("#shop").scrollIntoView();
+    }, 150);
+  });
+});
+
+$("#sort").addEventListener("change", e => { state.sort = e.target.value; renderGrid(); });
+$("#cartBtn").addEventListener("click", openCart);
+$("#closeCart").addEventListener("click", closeCart);
+$("#overlay").addEventListener("click", closeCart);
+$("#wishBtn").addEventListener("click", () => {
+  state.wishOnly = true; renderChips(); renderGrid();
+  $("#shop").scrollIntoView();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    if ($("#modal").classList.contains("open")) closeModal();
+    else if ($("#drawer").classList.contains("open")) closeCart();
+  }
+});
+
+/* ---------- Init ---------- */
+$("#year").textContent = new Date().getFullYear();
+renderHero();
+renderChips();
+renderGrid();
+renderPick();
+renderCart();
+updateBadges();
+</script>
+</body>
+</html>

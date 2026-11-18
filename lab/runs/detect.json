@@ -1,0 +1,2179 @@
+[
+  {
+    "file": "runs/fennel-street/A/claude-haiku-5-5-1/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": true,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": true,
+        "backgrounds": 1,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 9,
+        "boxes": 15
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 1,
+        "sharedPadding": 0
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 240, 227)",
+      "lightness": 0.96
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Fraunces",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2278
+  },
+  {
+    "file": "runs/fennel-street/A/claude-haiku-5-5-2/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 9,
+        "boxes": 14
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 51,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(251, 245, 234)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Karla",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2267
+  },
+  {
+    "file": "runs/fennel-street/A/claude-haiku-5-5-3/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": true,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 9,
+        "boxes": 15
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 4,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 53,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 240, 227)",
+      "lightness": 0.96
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Figtree",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2179
+  },
+  {
+    "file": "runs/fennel-street/A/claude-opus-5-5-1/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 12,
+        "boxes": 19
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 54,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 240, 228)",
+      "lightness": 0.96
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Karla",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2467
+  },
+  {
+    "file": "runs/fennel-street/A/claude-opus-5-5-2/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 12,
+        "boxes": 16
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 4,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 51,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 240, 227)",
+      "lightness": 0.96
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Figtree",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2602
+  },
+  {
+    "file": "runs/fennel-street/A/claude-opus-5-5-3/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 14,
+        "boxes": 21
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 3,
+        "sharedPadding": 3
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 49,
+        "cta": "What’s baked"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 241, 230)",
+      "lightness": 0.96
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Fraunces",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2405
+  },
+  {
+    "file": "runs/fennel-street/A/claude-sonnet-5-5-1/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 14,
+        "boxes": 20
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 42,
+        "cta": "What's baked"
+      },
+      "pillBadge": {
+        "hit": true,
+        "text": "Closed · opens today at 7:00"
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(251, 243, 228)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Figtree",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2148
+  },
+  {
+    "file": "runs/fennel-street/A/claude-sonnet-5-5-2/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 10,
+        "boxes": 12
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 4,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 42,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(251, 243, 228)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "DM Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2810
+  },
+  {
+    "file": "runs/fennel-street/A/claude-sonnet-5-5-3/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 13,
+        "boxes": 15
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 2
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 39,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": true,
+        "text": "Closed now, opening today at 7:00"
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(251, 243, 228)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Figtree",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2417
+  },
+  {
+    "file": "runs/fennel-street/B/claude-haiku-5-5-1/index.html",
+    "suppliedFonts": [
+      "Source Sans 3",
+      "Cormorant"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": true,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 1,
+        "boxes": 10
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 5
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 267,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.95 0.015 75)",
+      "lightness": 0.19
+    },
+    "fonts": {
+      "heading": "Cormorant",
+      "body": "Cormorant",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2488
+  },
+  {
+    "file": "runs/fennel-street/B/claude-haiku-5-5-2/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 3,
+        "boxes": 12
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 1,
+        "sharedPadding": 0
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 29,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(245, 237, 228)",
+      "lightness": 0.95
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Synonym",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2381
+  },
+  {
+    "file": "runs/fennel-street/B/claude-haiku-5-5-3/index.html",
+    "suppliedFonts": [
+      "Source Sans 3",
+      "Cormorant"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": true,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 4,
+        "boxes": 12
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 2,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 267,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.95 0.015 75)",
+      "lightness": 0.19
+    },
+    "fonts": {
+      "heading": "Cormorant",
+      "body": "Cormorant",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2636
+  },
+  {
+    "file": "runs/fennel-street/B/claude-opus-5-5-1/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "FennelStreetBakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 10,
+        "boxes": 16
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 4,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.93 0.05 90)",
+      "lightness": 0.21
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Synonym",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2980
+  },
+  {
+    "file": "runs/fennel-street/B/claude-opus-5-5-2/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 4,
+        "boxes": 18
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 265,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": true,
+        "text": "Closed · opens today at 7:00"
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.93 0.05 90)",
+      "lightness": 0.21
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Synonym",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2617
+  },
+  {
+    "file": "runs/fennel-street/B/claude-opus-5-5-3/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 8,
+        "boxes": 18
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Hours & directions"
+      },
+      "pillBadge": {
+        "hit": true,
+        "text": "Closed opens today at 7:00"
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.93 0.05 90)",
+      "lightness": 0.21
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Synonym",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2706
+  },
+  {
+    "file": "runs/fennel-street/B/claude-sonnet-5-5-1/index.html",
+    "suppliedFonts": [
+      "Source Sans 3",
+      "Cormorant"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": true,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 5,
+        "boxes": 14
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 6,
+        "sharedPadding": 5
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 267,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": true,
+        "text": "Opens today at 7:00"
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.95 0.015 75)",
+      "lightness": 0.19
+    },
+    "fonts": {
+      "heading": "Cormorant",
+      "body": "Source Sans 3",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 3574
+  },
+  {
+    "file": "runs/fennel-street/B/claude-sonnet-5-5-2/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": true,
+        "rounded": 9,
+        "boxes": 14
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 5
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Hours and directions"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.93 0.05 90)",
+      "lightness": 0.21
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Synonym",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2891
+  },
+  {
+    "file": "runs/fennel-street/B/claude-sonnet-5-5-3/index.html",
+    "suppliedFonts": [
+      "Source Sans 3",
+      "Cormorant"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 4,
+        "boxes": 15
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 267,
+        "cta": "Order a cake"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.95 0.015 75)",
+      "lightness": 0.19
+    },
+    "fonts": {
+      "heading": "Cormorant",
+      "body": "Source Sans 3",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 3006
+  },
+  {
+    "file": "runs/tallyroll/A/claude-haiku-5-5-1/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 4,
+        "boxes": 48
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 4,
+        "sharedPadding": 3
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 189,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(246, 245, 241)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1755
+  },
+  {
+    "file": "runs/tallyroll/A/claude-haiku-5-5-2/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 18
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 216,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(246, 245, 241)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Mono",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1811
+  },
+  {
+    "file": "runs/tallyroll/A/claude-haiku-5-5-3/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 1,
+        "boxes": 22
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 230,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 247, 245)",
+      "lightness": 0.98
+    },
+    "fonts": {
+      "heading": "system-ui",
+      "body": "ui-monospace",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1949
+  },
+  {
+    "file": "runs/tallyroll/A/claude-opus-5-5-1/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 3,
+        "boxes": 55
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 168,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 247, 245)",
+      "lightness": 0.98
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Mono",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2489
+  },
+  {
+    "file": "runs/tallyroll/A/claude-opus-5-5-2/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 2,
+        "boxes": 146
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 5
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 168,
+        "cta": "Read the docs →"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(246, 245, 241)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Mono",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2870
+  },
+  {
+    "file": "runs/tallyroll/A/claude-opus-5-5-3/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 2,
+        "boxes": 84
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 6,
+        "sharedPadding": 5
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 168,
+        "cta": "Read the docs →"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 246, 242)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Mono",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2874
+  },
+  {
+    "file": "runs/tallyroll/A/claude-sonnet-5-5-1/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 23
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 4,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 168,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 246, 242)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1836
+  },
+  {
+    "file": "runs/tallyroll/A/claude-sonnet-5-5-2/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 30
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 5
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(247, 246, 242)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2391
+  },
+  {
+    "file": "runs/tallyroll/A/claude-sonnet-5-5-3/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 3,
+        "boxes": 43
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 174,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "rgb(246, 245, 241)",
+      "lightness": 0.97
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2098
+  },
+  {
+    "file": "runs/tallyroll/B/claude-haiku-5-5-1/index.html",
+    "suppliedFonts": [
+      "Iosevka",
+      "IBM Plex Sans",
+      "Switzer"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 2,
+        "boxes": 22
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "Switzer",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2193
+  },
+  {
+    "file": "runs/tallyroll/B/claude-haiku-5-5-2/index.html",
+    "suppliedFonts": [
+      "Mona Sans"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 47
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "Mona Sans",
+      "body": "Mona Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2135
+  },
+  {
+    "file": "runs/tallyroll/B/claude-haiku-5-5-3/index.html",
+    "suppliedFonts": [
+      "IBM Plex Mono",
+      "IBM Plex Sans"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 1,
+        "boxes": 18
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 1,
+        "sharedPadding": 0
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2278
+  },
+  {
+    "file": "runs/tallyroll/B/claude-opus-5-5-1/index.html",
+    "suppliedFonts": [
+      "IBM Plex Mono",
+      "IBM Plex Serif",
+      "Steps Mono"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 24
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs →"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "Steps Mono",
+      "body": "IBM Plex Mono",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2859
+  },
+  {
+    "file": "runs/tallyroll/B/claude-opus-5-5-2/index.html",
+    "suppliedFonts": [
+      "Steps Mono"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 21
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 3
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs →"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "Steps Mono",
+      "body": "IBM Plex Serif",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 3285
+  },
+  {
+    "file": "runs/tallyroll/B/claude-opus-5-5-3/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 71
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs →"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "IBM Plex Serif",
+      "body": "IBM Plex Serif",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2978
+  },
+  {
+    "file": "runs/tallyroll/B/claude-sonnet-5-5-1/index.html",
+    "suppliedFonts": [
+      "Commit Mono",
+      "IBM Plex Serif",
+      "Steps Mono"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 16
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "Steps Mono",
+      "body": "IBM Plex Serif",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2380
+  },
+  {
+    "file": "runs/tallyroll/B/claude-sonnet-5-5-2/index.html",
+    "suppliedFonts": [
+      "IBM Plex Mono",
+      "IBM Plex Sans"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 21
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 5
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2243
+  },
+  {
+    "file": "runs/tallyroll/B/claude-sonnet-5-5-3/index.html",
+    "suppliedFonts": [
+      "Commit Mono",
+      "IBM Plex Serif",
+      "Steps Mono"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 21
+      },
+      "uniformSpacing": {
+        "hit": true,
+        "sections": 5,
+        "sharedPadding": 4
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "Steps Mono",
+      "body": "IBM Plex Serif",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2453
+  }
+]

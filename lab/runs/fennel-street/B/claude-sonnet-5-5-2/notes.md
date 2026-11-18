@@ -1,0 +1,5 @@
+- **Fonts:** Synonym (headings) and Sentient (body), both from Fontshare, self-hosted. Put `Synonym.woff2` and `Sentient.woff2` in `./fonts/`. Until you do, the page falls back to system sans and Georgia. I haven't rendered the page or checked it in a browser.
+- **Colours:** Club Cream (cream ground `#F5E7C3`, oxblood figure `#5B1D26`), from find-color. Body text is 10.1:1 on the ground. I picked it for the custard-tart warmth over the other light options.
+- **Phone first:** a live open/closed status sits in the header, today's row is highlighted in the hours table, and the layout is one column on phones.
+- **Cake orders:** the oxblood band has a tap-to-call button for 020 7946 0381. "Message us on Instagram" and the footer Instagram link are `#` placeholders, because the brief gives no handle.
+- **Photos and copy:** all photos are labelled dashed placeholders. Nothing was added beyond your copy.

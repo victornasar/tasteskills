@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page & Pine — Independent Bookshop</title>
+<style>
+  :root{
+    --bg:#faf6ef; --paper:#fffdf8; --ink:#2a2420; --muted:#7a6f66;
+    --accent:#2f5d50; --accent-dark:#234539; --warm:#c8763a; --line:#e6ddcf;
+    --shadow:0 4px 14px rgba(60,40,20,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  button,input,select{font-family:inherit;font-size:1rem}
+  header{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  .bar{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .logo{font-size:1.6rem;font-weight:bold;color:var(--accent);letter-spacing:.5px}
+  .logo span{color:var(--warm)}
+  .search{flex:1;min-width:200px}
+  .search input{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:24px;background:var(--bg)}
+  .cart-btn{background:var(--accent);color:#fff;border:none;padding:10px 18px;border-radius:24px;cursor:pointer}
+  .cart-btn:hover{background:var(--accent-dark)}
+  .hero{background:linear-gradient(120deg,#2f5d50,#3d7565);color:#fff;text-align:center;padding:60px 20px}
+  .hero h1{font-size:2.4rem;margin-bottom:10px}
+  .hero p{max-width:560px;margin:auto;opacity:.92}
+  main{max-width:1200px;margin:auto;padding:30px 20px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .chip{padding:7px 16px;border:1px solid var(--line);background:var(--paper);border-radius:20px;cursor:pointer;color:var(--ink)}
+  .chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .filters select{margin-left:auto;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:24px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .15s}
+  .card:hover{transform:translateY(-3px)}
+  .cover{height:220px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;cursor:pointer}
+  .cover .t{font-size:1.25rem;font-weight:bold;line-height:1.2}
+  .cover .a{font-size:.85rem;opacity:.9;font-style:italic}
+  .info{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .info .genre{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+  .info h3{font-size:1rem}
+  .stars{color:var(--warm);font-size:.9rem}
+  .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px}
+  .price{font-weight:bold;font-size:1.1rem}
+  .add{background:var(--warm);color:#fff;border:none;padding:7px 14px;border-radius:6px;cursor:pointer}
+  .add:hover{filter:brightness(.92)}
+  .empty{text-align:center;color:var(--muted);padding:40px}
+  /* drawer & modal */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:30}
+  .overlay.show{display:block}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:var(--paper);z-index:40;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column}
+  .drawer.show{transform:none}
+  .drawer h2{padding:20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+  .x{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted)}
+  .items{flex:1;overflow:auto;padding:10px 20px}
+  .item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+  .mini{width:44px;height:60px;border-radius:3px;flex-shrink:0}
+  .item .d{flex:1;font-size:.92rem}
+  .qty{display:flex;align-items:center;gap:6px;margin-top:4px}
+  .qty button{width:24px;height:24px;border:1px solid var(--line);background:var(--bg);border-radius:4px;cursor:pointer}
+  .rm{color:#b04040;background:none;border:none;cursor:pointer;font-size:.8rem}
+  .foot{padding:20px;border-top:1px solid var(--line)}
+  .sum{display:flex;justify-content:space-between;margin-bottom:6px}
+  .sum.total{font-weight:bold;font-size:1.15rem;margin-top:8px}
+  .primary{width:100%;margin-top:12px;background:var(--accent);color:#fff;border:none;padding:12px;border-radius:8px;cursor:pointer}
+  .primary:hover{background:var(--accent-dark)}
+  .primary:disabled{background:#aaa;cursor:not-allowed}
+  .modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--paper);z-index:50;width:min(560px,92%);max-height:90vh;overflow:auto;border-radius:12px;display:none;padding:26px}
+  .modal.show{display:block}
+  .modal .head{display:flex;gap:20px;margin-bottom:14px}
+  .modal .big{width:130px;height:190px;border-radius:6px;flex-shrink:0}
+  .modal form{display:grid;gap:12px;margin-top:10px}
+  .modal label{display:grid;gap:4px;font-size:.9rem;color:var(--muted)}
+  .modal input{padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--bg)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:24px;transition:transform .25s;z-index:60}
+  .toast.show{transform:translateX(-50%)}
+  footer{background:var(--ink);color:#d8cfc4;text-align:center;padding:30px 20px;margin-top:40px;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="logo">Page <span>&</span> Pine</div>
+    <div class="search"><input id="search" type="search" placeholder="Search by title or author…" aria-label="Search books"></div>
+    <button class="cart-btn" id="openCart">🛒 Cart (<span id="count">0</span>)</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Find your next favourite read</h1>
+  <p>An independent bookshop with handpicked fiction, non-fiction and more. Free shipping on orders over $40.</p>
+</section>
+
+<main>
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>© 2026 Page & Pine Books · Demo shop — no real payments are processed.</footer>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="drawer" id="drawer" aria-label="Shopping cart">
+  <h2>Your Cart <button class="x" id="closeCart" aria-label="Close cart">×</button></h2>
+  <div class="items" id="items"></div>
+  <div class="foot">
+    <div class="sum"><span>Subtotal</span><span id="sub">$0.00</span></div>
+    <div class="sum"><span>Shipping</span><span id="ship">$0.00</span></div>
+    <div class="sum total"><span>Total</span><span id="total">$0.00</span></div>
+    <button class="primary" id="checkout" disabled>Checkout</button>
+  </div>
+</aside>
+
+<div class="modal" id="modal"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const BOOKS = [
+  {id:1,title:"The Midnight Library",author:"Matt Haig",genre:"Fiction",price:14.99,rating:4.5,color:"#3b4a7a",desc:"Between life and death there is a library, and within that library, the shelves go on forever."},
+  {id:2,title:"Project Hail Mary",author:"Andy Weir",genre:"Sci-Fi",price:16.50,rating:5,color:"#1f5f78",desc:"A lone astronaut must save the earth from disaster in this propulsive, witty space adventure."},
+  {id:3,title:"Educated",author:"Tara Westover",genre:"Memoir",price:15.00,rating:4.5,color:"#8a5a3c",desc:"A memoir about a young woman who leaves her survivalist family to pursue an education."},
+  {id:4,title:"Atomic Habits",author:"James Clear",genre:"Non-Fiction",price:13.99,rating:4.5,color:"#c8763a",desc:"Tiny changes, remarkable results: a practical guide to building good habits."},
+  {id:5,title:"Dune",author:"Frank Herbert",genre:"Sci-Fi",price:12.99,rating:5,color:"#a8742e",desc:"The epic tale of Paul Atreides and the desert planet Arrakis."},
+  {id:6,title:"Pride and Prejudice",author:"Jane Austen",genre:"Classics",price:8.99,rating:4.5,color:"#8a3f5a",desc:"Elizabeth Bennet and Mr. Darcy in Austen's beloved comedy of manners."},
+  {id:7,title:"The Silent Patient",author:"Alex Michaelides",genre:"Mystery",price:13.50,rating:4,color:"#4a4a4a",desc:"A woman shoots her husband and then never speaks again. A psychotherapist is determined to find out why."},
+  {id:8,title:"Sapiens",author:"Yuval Noah Harari",genre:"Non-Fiction",price:17.99,rating:4.5,color:"#5b7a3b",desc:"A brief history of humankind, from the Stone Age to the present."},
+  {id:9,title:"Rebecca",author:"Daphne du Maurier",genre:"Classics",price:10.99,rating:4.5,color:"#2f5d50",desc:"“Last night I dreamt I went to Manderley again.” A gothic masterpiece."},
+  {id:10,title:"Gone Girl",author:"Gillian Flynn",genre:"Mystery",price:12.50,rating:4,color:"#7a2f2f",desc:"On their fifth anniversary, Amy disappears. Nick becomes the prime suspect."},
+  {id:11,title:"Braiding Sweetgrass",author:"Robin Wall Kimmerer",genre:"Non-Fiction",price:18.00,rating:5,color:"#4f7a52",desc:"Indigenous wisdom, scientific knowledge and the teachings of plants."},
+  {id:12,title:"Piranesi",author:"Susanna Clarke",genre:"Fiction",price:15.50,rating:4.5,color:"#5a6f8a",desc:"A man lives in a labyrinth of endless halls filled with statues and tides."}
+];
+const FREE_SHIP=40, SHIP=4.99;
+let cart = JSON.parse(localStorage.getItem('pp_cart')||'{}');
+let genre='All', query='', sort='featured';
+const $=id=>document.getElementById(id);
+const money=n=>'$'+n.toFixed(2);
+const stars=r=>{let s='';for(let i=1;i<=5;i++)s+=r>=i?'★':(r>=i-.5?'⯨':'☆');return s};
+const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function save(){localStorage.setItem('pp_cart',JSON.stringify(cart))}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),1800)}
+
+function renderFilters(){
+  const genres=['All',...new Set(BOOKS.map(b=>b.genre))];
+  $('filters').innerHTML=genres.map(g=>`<button class="chip ${g===genre?'active':''}" data-g="${g}">${g}</button>`).join('')+
+   `<select id="sort" aria-label="Sort"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="rating">Top rated</option><option value="az">Title A–Z</option></select>`;
+  $('sort').value=sort;
+  $('sort').onchange=e=>{sort=e.target.value;renderGrid()};
+  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{genre=c.dataset.g;renderFilters();renderGrid()});
+}
+function renderGrid(){
+  let list=BOOKS.filter(b=>(genre==='All'||b.genre===genre)&&(b.title+b.author).toLowerCase().includes(query.toLowerCase()));
+  if(sort==='low')list.sort((a,b)=>a.price-b.price);
+  if(sort==='high')list.sort((a,b)=>b.price-a.price);
+  if(sort==='rating')list.sort((a,b)=>b.rating-a.rating);
+  if(sort==='az')list.sort((a,b)=>a.title.localeCompare(b.title));
+  $('grid').innerHTML=list.length?list.map(b=>`
+    <article class="card">
+      <div class="cover" style="background:linear-gradient(145deg,${b.color},#00000055),${b.color}" data-id="${b.id}">
+        <div class="t">${esc(b.title)}</div><div class="a">${esc(b.author)}</div>
+      </div>
+      <div class="info">
+        <div class="genre">${b.genre}</div>
+        <h3>${esc(b.title)}</h3>
+        <div class="stars" aria-label="${b.rating} out of 5">${stars(b.rating)}</div>
+        <div class="row"><span class="price">${money(b.price)}</span><button class="add" data-add="${b.id}">Add to cart</button></div>
+      </div>
+    </article>`).join(''):`<div class="empty" style="grid-column:1/-1">No books match your search.</div>`;
+  document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(+b.dataset.add));
+  document.querySelectorAll('.cover').forEach(c=>c.onclick=()=>details(+c.dataset.id));
+}
+function add(id){cart[id]=(cart[id]||0)+1;save();renderCart();toast('Added to cart')}
+function change(id,d){cart[id]+=d;if(cart[id]<=0)delete cart[id];save();renderCart()}
+function renderCart(){
+  const ids=Object.keys(cart);
+  let sub=0,n=0;
+  $('items').innerHTML=ids.length?ids.map(id=>{
+    const b=BOOKS.find(x=>x.id==id),q=cart[id];sub+=b.price*q;n+=q;
+    return `<div class="item"><div class="mini" style="background:${b.color}"></div>
+      <div class="d"><strong>${esc(b.title)}</strong><br><span style="color:var(--muted)">${esc(b.author)}</span>
+      <div class="qty"><button data-d="-1" data-id="${id}">−</button><span>${q}</span><button data-d="1" data-id="${id}">+</button>
+      <button class="rm" data-rm="${id}">Remove</button></div></div>
+      <div>${money(b.price*q)}</div></div>`}).join(''):`<div class="empty">Your cart is empty.</div>`;
+  const ship=sub===0||sub>=FREE_SHIP?0:SHIP;
+  $('sub').textContent=money(sub);$('ship').textContent=sub>=FREE_SHIP?'Free':money(ship);
+  $('total').textContent=money(sub+ship);$('count').textContent=n;$('checkout').disabled=!n;
+  document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>change(b.dataset.id,+b.dataset.d));
+  document.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{delete cart[b.dataset.rm];save();renderCart()});
+}
+function openDrawer(){$('drawer').classList.add('show');$('overlay').classList.add('show')}
+function closeAll(){$('drawer').classList.remove('show');$('modal').classList.remove('show');$('overlay').classList.remove('show')}
+function details(id){
+  const b=BOOKS.find(x=>x.id===id);
+  $('modal').innerHTML=`<button class="x" style="float:right" onclick="closeAll()" aria-label="Close">×</button>
+   <div class="head"><div class="big" style="background:linear-gradient(145deg,${b.color},#00000055)"></div>
+   <div><div class="genre" style="color:var(--muted);text-transform:uppercase;font-size:.75rem">${b.genre}</div>
+   <h2>${esc(b.title)}</h2><p style="font-style:italic;color:var(--muted)">by ${esc(b.author)}</p>
+   <div class="stars">${stars(b.rating)}</div><p class="price" style="margin:8px 0">${money(b.price)}</p></div></div>
+   <p>${esc(b.desc)}</p><button class="primary" onclick="add(${b.id});closeAll()">Add to cart</button>`;
+  $('modal').classList.add('show');$('overlay').classList.add('show');
+}
+function checkout(){
+  $('drawer').classList.remove('show');
+  $('modal').innerHTML=`<button class="x" style="float:right" onclick="closeAll()" aria-label="Close">×</button>
+   <h2>Checkout</h2><p style="color:var(--muted)">Total: <strong>${$('total').textContent}</strong> (demo — no payment is taken)</p>
+   <form id="form"><label>Full name<input required name="n"></label>
+   <label>Email<input required type="email" name="e"></label>
+   <label>Shipping address<input required name="a"></label>
+   <div class="two"><label>City<input required name="c"></label><label>Postal code<input required name="z"></label></div>
+   <button class="primary" type="submit">Place order</button></form>`;
+  $('modal').classList.add('show');$('overlay').classList.add('show');
+  $('form').onsubmit=e=>{e.preventDefault();
+    const name=esc(new FormData(e.target).get('n'));
+    cart={};save();renderCart();
+    $('modal').innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:3rem">📚</div><h2>Thank you, ${name}!</h2>
+      <p style="color:var(--muted);margin:10px 0 18px">Your order has been placed. A confirmation would be sent to your email.</p>
+      <button class="primary" onclick="closeAll()">Continue shopping</button></div>`;
+  };
+}
+$('openCart').onclick=openDrawer;
+$('closeCart').onclick=closeAll;
+$('overlay').onclick=closeAll;
+$('checkout').onclick=checkout;
+$('search').oninput=e=>{query=e.target.value;renderGrid()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
+renderFilters();renderGrid();renderCart();
+</script>
+</body>
+</html>

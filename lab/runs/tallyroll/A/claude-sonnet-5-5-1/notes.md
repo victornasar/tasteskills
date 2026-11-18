@@ -1,0 +1,5 @@
+- **Fonts:** IBM Plex Sans and IBM Plex Mono, loaded from Google Fonts. The mono face carries numbers and code, so the figures read as data.
+- **Hero:** the invoice line is built in HTML and CSS and expands to 31 daily rows. The total is checked: 1,204,388 × $0.0004 = $481.7552, which rounds to $481.76. The page says this under the invoice.
+- **Invented data:** the 31 daily figures aren't in the brief. I made them up, labelled them illustrative, and set the last day so they sum exactly to 1,204,388.
+- **Tone:** a muted off-white and one green accent, with no imagery, quotes or extra claims. Dark mode follows the system setting.
+- **Calls to action:** "Read the docs" and "Book a demo" appear in the hero and again at the bottom. All links are `#` placeholders for you to point at real URLs.

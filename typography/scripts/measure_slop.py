@@ -5,6 +5,7 @@ Usage:
   python3 scripts/measure_slop.py              generate sites with default Claude, measure, update
   python3 scripts/measure_slop.py --no-claude  measure evals/slop-samples/ and the last saved sites only
   python3 scripts/measure_slop.py --model sonnet
+  python3 scripts/measure_slop.py --corpus ../lab/corpus/sites   measure a saved corpus (one folder per model)
 
 A font is slop when its AI rate >= AI_RATE, or its Google Fonts popularity rank <= GOOGLE_TOP.
 AI rate = share of the generated sites that load a web font which use this font (sites on system fonts
@@ -84,6 +85,8 @@ def fonts_in(text):
             name = name.strip().strip("'\"").strip()
             if not name or name.startswith("var(") or name.lower().startswith("ui-"):
                 continue
+            if any(ch in name for ch in "${}<>\"=`"):  # template-literal or markup fragments, not font names
+                break
             if name.lower() not in GENERIC:
                 found.add(name)
             break  # only the first real entry is the intended font
@@ -121,13 +124,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-claude", action="store_true")
     ap.add_argument("--model")
+    ap.add_argument("--corpus", type=Path, help="folder of <source>/<site>.html to measure instead of generating")
     args = ap.parse_args()
 
     date = time.strftime("%Y-%m-%d")
     SLOP.mkdir(parents=True, exist_ok=True)
     sites = {}  # label -> text
 
-    if args.no_claude:
+    if args.corpus:
+        for f in sorted(args.corpus.glob("*/*.html")):
+            sites[f"{f.parent.name}/{f.stem}"] = f.read_text(errors="ignore")
+    elif args.no_claude:
         previous = sorted(SLOP.glob("sites-*"))
         if previous:
             sites |= {f"claude/{p.name}": p.read_text() for p in previous[-1].glob("*.html")}

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~/dev/notes — A Personal Tech Blog</title>
+<meta name="description" content="Notes on software, systems, and the tools I use every day.">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1d1d1f;
+    --muted: #6b6b70;
+    --border: #e6e3dc;
+    --accent: #2f6feb;
+    --accent-soft: #e8efff;
+    --code-bg: #f3f1ec;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    --serif: "Iowan Old Style", "Charter", Georgia, serif;
+  }
+  [data-theme="dark"] {
+    --bg: #0f1115;
+    --surface: #161920;
+    --text: #e6e6e9;
+    --muted: #9a9ca5;
+    --border: #262a33;
+    --accent: #7aa2ff;
+    --accent-soft: #1c2640;
+    --code-bg: #1b1f27;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    transition: background .25s, color .25s;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; color: var(--text); }
+  .logo span { color: var(--accent); }
+  .logo .cursor { display: inline-block; width: 8px; height: 1.05em; background: var(--accent); vertical-align: -2px; margin-left: 2px; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .nav-links { display: flex; gap: 22px; align-items: center; }
+  .nav-links a { color: var(--muted); font-size: .95rem; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); text-decoration: none; }
+  .icon-btn {
+    border: 1px solid var(--border); background: var(--surface); color: var(--text);
+    width: 36px; height: 36px; border-radius: 10px; cursor: pointer; display: grid; place-items: center;
+    font-size: 1rem;
+  }
+  .icon-btn:hover { border-color: var(--accent); }
+
+  /* Hero */
+  .hero { padding: 72px 0 40px; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: 0 0 16px; letter-spacing: -.02em; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { color: var(--muted); font-size: 1.15rem; max-width: 620px; margin: 0; }
+
+  /* Controls */
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin: 24px 0 28px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag-btn {
+    font-family: var(--mono); font-size: .8rem;
+    border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+    padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all .15s;
+  }
+  .tag-btn:hover { color: var(--text); border-color: var(--muted); }
+  .tag-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .search {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 0 12px;
+    min-width: 240px;
+  }
+  .search input { border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; padding: 9px 0; width: 100%; }
+  .search:focus-within { border-color: var(--accent); }
+  kbd { font-family: var(--mono); font-size: .72rem; border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--muted); }
+
+  /* Layout */
+  .layout { display: grid; grid-template-columns: 1fr 280px; gap: 40px; padding-bottom: 80px; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } .nav-links .hide-sm { display: none; } }
+
+  /* Featured */
+  .featured {
+    background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+    border: 1px solid var(--border); border-radius: 18px; padding: 32px; margin-bottom: 28px;
+    cursor: pointer; transition: transform .2s, box-shadow .2s;
+  }
+  .featured:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .featured .label { font-family: var(--mono); font-size: .75rem; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; }
+  .featured h2 { font-size: 1.75rem; margin: 10px 0 10px; letter-spacing: -.01em; line-height: 1.2; }
+  .featured p { color: var(--muted); margin: 0 0 16px; }
+
+  /* Post list */
+  .posts { display: grid; gap: 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px;
+    cursor: pointer; transition: border-color .15s, transform .15s, box-shadow .15s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .card h3 { margin: 6px 0 8px; font-size: 1.2rem; line-height: 1.3; }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: .95rem; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: var(--mono); font-size: .78rem; color: var(--muted); }
+  .meta .dot { opacity: .5; }
+  .chip { background: var(--accent-soft); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-family: var(--mono); font-size: .74rem; }
+  .empty { text-align: center; color: var(--muted); padding: 48px 0; font-family: var(--mono); }
+
+  /* Sidebar */
+  aside { display: flex; flex-direction: column; gap: 20px; }
+  .widget { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .widget h4 { margin: 0 0 12px; font-family: var(--mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 14px; margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent), #a855f7); display: grid; place-items: center;
+    color: #fff; font-family: var(--mono); font-weight: 700; font-size: 1.2rem;
+  }
+  .widget p { margin: 0; font-size: .92rem; color: var(--muted); }
+  .socials { display: flex; gap: 12px; margin-top: 14px; font-family: var(--mono); font-size: .85rem; }
+  .archive { list-style: none; padding: 0; margin: 0; font-size: .92rem; }
+  .archive li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--border); }
+  .archive li:last-child { border-bottom: 0; }
+  .archive span { color: var(--muted); font-family: var(--mono); font-size: .8rem; }
+  .newsletter input {
+    width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font: inherit; margin: 10px 0 8px;
+  }
+  .newsletter input:focus { outline: none; border-color: var(--accent); }
+  .btn {
+    width: 100%; padding: 10px; border-radius: 10px; border: 0; background: var(--accent); color: #fff;
+    font: inherit; font-weight: 600; cursor: pointer;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .msg { font-size: .82rem; margin-top: 8px; font-family: var(--mono); min-height: 1.2em; }
+
+  /* Article view */
+  #article-view { display: none; padding: 48px 0 80px; }
+  #article-view.open { display: block; }
+  .progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); width: 0; z-index: 20; transition: width .1s; }
+  .article { max-width: 720px; margin: 0 auto; }
+  .back { font-family: var(--mono); font-size: .85rem; background: none; border: 0; color: var(--muted); cursor: pointer; padding: 0; margin-bottom: 28px; }
+  .back:hover { color: var(--accent); }
+  .article h1 { font-size: clamp(1.9rem, 4.5vw, 2.7rem); line-height: 1.15; letter-spacing: -.02em; margin: 12px 0 16px; }
+  .article .meta { margin-bottom: 36px; }
+  .prose { font-family: var(--serif); font-size: 1.15rem; line-height: 1.75; }
+  .prose h2 { font-family: var(--sans); font-size: 1.4rem; margin: 2.2em 0 .6em; letter-spacing: -.01em; }
+  .prose p { margin: 0 0 1.3em; }
+  .prose code { font-family: var(--mono); font-size: .85em; background: var(--code-bg); padding: 2px 6px; border-radius: 5px; }
+  .prose pre {
+    font-family: var(--mono); font-size: .88rem; line-height: 1.6;
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px 20px; overflow-x: auto; position: relative; margin: 0 0 1.5em;
+  }
+  .prose pre code { background: none; padding: 0; font-size: inherit; }
+  .copy {
+    position: absolute; top: 8px; right: 8px; font-family: var(--mono); font-size: .72rem;
+    background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: 6px;
+    padding: 3px 8px; cursor: pointer;
+  }
+  .copy:hover { color: var(--accent); }
+  .prose blockquote { margin: 0 0 1.3em; padding: 4px 20px; border-left: 3px solid var(--accent); color: var(--muted); font-style: italic; }
+  .prose ul { padding-left: 1.3em; margin: 0 0 1.3em; }
+  .prose li { margin-bottom: .4em; }
+  .tok-k { color: #c678dd; } .tok-s { color: #50a14f; } .tok-c { color: #8a8f98; font-style: italic; } .tok-f { color: #4078f2; }
+  [data-theme="dark"] .tok-s { color: #98c379; } [data-theme="dark"] .tok-f { color: #61afef; }
+  .article-foot { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .article-foot button { font-family: var(--mono); font-size: .85rem; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; cursor: pointer; max-width: 48%; text-align: left; }
+  .article-foot button:hover { border-color: var(--accent); }
+  .article-foot button:disabled { opacity: .4; cursor: default; }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: .85rem; font-family: var(--mono); }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo" id="home-link">~/dev/<span>notes</span><i class="cursor"></i></a>
+    <nav class="nav-links">
+      <a href="#" class="active" id="nav-posts">Posts</a>
+      <a href="#about" class="hide-sm">About</a>
+      <a href="#subscribe" class="hide-sm">Subscribe</a>
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="list-view">
+    <div class="hero">
+      <h1>Notes on software, <em>systems</em>, and the craft of building things.</h1>
+      <p>A working notebook — things I've learned the hard way, tools I love, and occasional rants about YAML.</p>
+    </div>
+
+    <div class="controls">
+      <div class="tags" id="tags"></div>
+      <label class="search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" id="search" placeholder="Search posts…" aria-label="Search posts">
+        <kbd>/</kbd>
+      </label>
+    </div>
+
+    <div class="layout">
+      <div>
+        <div id="featured"></div>
+        <div class="posts" id="posts"></div>
+      </div>
+
+      <aside>
+        <div class="widget" id="about">
+          <div class="avatar">&gt;_</div>
+          <h4>About</h4>
+          <p>Software engineer writing about backend systems, developer tooling, and the occasional side project. Opinions are my own and subject to change after coffee.</p>
+          <div class="socials">
+            <a href="#">GitHub</a><a href="#">Mastodon</a><a href="#">RSS</a>
+          </div>
+        </div>
+
+        <div class="widget">
+          <h4>Archive</h4>
+          <ul class="archive" id="archive"></ul>
+        </div>
+
+        <div class="widget newsletter" id="subscribe">
+          <h4>Newsletter</h4>
+          <p>New posts, roughly once a month. No spam, ever.</p>
+          <form id="sub-form">
+            <input type="email" id="sub-email" placeholder="you@example.com" required aria-label="Email address">
+            <button class="btn" type="submit">Subscribe</button>
+            <div class="msg" id="sub-msg"></div>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="article-view">
+    <article class="article">
+      <button class="back" id="back">← all posts</button>
+      <div id="article-body"></div>
+      <div class="article-foot">
+        <button id="prev-post"></button>
+        <button id="next-post"></button>
+      </div>
+    </article>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> ~/dev/notes · Built with plain HTML, CSS &amp; JS</span>
+    <span>No trackers. No cookies.</span>
+  </div>
+</footer>
+
+<script>
+const posts = [
+  {
+    id: "rust-cli",
+    title: "Writing a Fast CLI Tool in Rust: Lessons from Shipping v1.0",
+    excerpt: "What I learned building a file-indexing CLI — from argument parsing to making startup time feel instant.",
+    date: "2026-11-02",
+    tags: ["rust", "tooling"],
+    featured: true,
+    body: `
+<p>Six months ago I started a small weekend project: a CLI that indexes a directory tree and lets you fuzzy-search it faster than <code>find | grep</code>. It shipped v1.0 last week. Here's what I wish I'd known at the start.</p>
+<h2>Startup time is a feature</h2>
+<p>For CLI tools, the first 50ms matter more than anything else. Users notice lag before they notice throughput. I moved all config loading behind a lazy initializer and the cold start dropped from 38ms to 6ms.</p>
+<pre><code><span class="tok-k">use</span> std::sync::OnceLock;
+
+<span class="tok-k">static</span> CONFIG: OnceLock&lt;Config&gt; = OnceLock::new();
+
+<span class="tok-k">fn</span> <span class="tok-f">config</span>() -&gt; &amp;<span class="tok-k">'static</span> Config {
+    CONFIG.<span class="tok-f">get_or_init</span>(|| Config::<span class="tok-f">load</span>().<span class="tok-f">unwrap_or_default</span>())
+}</code></pre>
+<h2>Don't fight the borrow checker — restructure</h2>
+<p>Every time I found myself reaching for <code>Rc&lt;RefCell&lt;T&gt;&gt;</code>, it was a sign the data flow was wrong. Splitting the walker and the indexer into separate stages connected by a channel made ownership obvious.</p>
+<blockquote>If the compiler is yelling at you, it's usually telling you something about your design, not your syntax.</blockquote>
+<h2>Takeaways</h2>
+<ul>
+  <li>Profile startup with <code>hyperfine</code> early and often.</li>
+  <li>Use <code>clap</code>'s derive API — it's worth the compile time.</li>
+  <li>Ship static binaries; nobody wants to debug glibc versions.</li>
+</ul>
+<p>The source is on GitHub if you want to poke around. PRs welcome — especially for Windows path handling, which remains cursed.</p>`
+  },
+  {
+    id: "postgres-indexes",
+    title: "The Postgres Index You Forgot: Partial Indexes in Practice",
+    excerpt: "A 40GB table, a slow dashboard query, and the one-line fix that cut it from 9 seconds to 12 milliseconds.",
+    date: "2026-10-14",
+    tags: ["databases", "performance"],
+    body: `
+<p>Our admin dashboard had a query that filtered an <code>orders</code> table for rows where <code>status = 'pending'</code>. Pending orders are about 0.3% of the table. The query took nine seconds.</p>
+<h2>The fix</h2>
+<p>A regular B-tree index on <code>status</code> helped a little, but a partial index was the real win — it only indexes the rows you actually query.</p>
+<pre><code><span class="tok-k">CREATE INDEX CONCURRENTLY</span> idx_orders_pending
+  <span class="tok-k">ON</span> orders (created_at)
+  <span class="tok-k">WHERE</span> status = <span class="tok-s">'pending'</span>;</code></pre>
+<p>The resulting index is tiny — a few megabytes instead of gigabytes — and fits comfortably in memory.</p>
+<h2>When to reach for one</h2>
+<ul>
+  <li>You frequently filter on a low-cardinality column with a skewed distribution.</li>
+  <li>Soft-deleted rows: <code>WHERE deleted_at IS NULL</code>.</li>
+  <li>Unique constraints that only apply to active rows.</li>
+</ul>
+<p>Always check with <code>EXPLAIN (ANALYZE, BUFFERS)</code> — the planner only uses a partial index if your query's <code>WHERE</code> clause provably implies the index predicate.</p>`
+  },
+  {
+    id: "dotfiles",
+    title: "My 2026 Dotfiles: A Minimal, Fast Terminal Setup",
+    excerpt: "I deleted 80% of my shell config and my terminal has never felt better. Here's what survived.",
+    date: "2026-09-28",
+    tags: ["tooling", "productivity"],
+    body: `
+<p>Every couple of years I declare dotfile bankruptcy. This year I went further than usual and asked of every line: <em>have I used this in the last month?</em></p>
+<h2>What stayed</h2>
+<ul>
+  <li><strong>zsh</strong> with no framework — just a handful of options and a fast prompt.</li>
+  <li><strong>fzf</strong> for history search and file picking.</li>
+  <li><strong>zoxide</strong> because typing paths is for people with more patience than me.</li>
+  <li><strong>ripgrep</strong> and <strong>fd</strong>, obviously.</li>
+</ul>
+<pre><code><span class="tok-c"># ~/.zshrc — the important bits</span>
+setopt AUTO_CD HIST_IGNORE_DUPS SHARE_HISTORY
+<span class="tok-k">eval</span> <span class="tok-s">"$(zoxide init zsh)"</span>
+<span class="tok-k">source</span> <span class="tok-s">&lt;(fzf --zsh)</span>
+<span class="tok-k">alias</span> g=<span class="tok-s">'git'</span> ll=<span class="tok-s">'ls -lah'</span></code></pre>
+<h2>Shell startup: 41ms</h2>
+<p>Down from 380ms. The biggest offender was a version manager that eagerly loaded on every shell. Lazy-loading it was the single best change.</p>
+<blockquote>The best config is the one you understand completely.</blockquote>`
+  },
+  {
+    id: "llm-evals",
+    title: "Writing Evals for LLM Features Without Losing Your Mind",
+    excerpt: "Vibes-based testing doesn't scale. A pragmatic approach to evaluating AI features in a small team.",
+    date: "2026-09-03",
+    tags: ["ai", "testing"],
+    body: `
+<p>We shipped an AI-powered summary feature and quickly realized we had no idea whether prompt changes made it better or worse. Here's the lightweight eval setup we landed on.</p>
+<h2>Start with a golden set</h2>
+<p>Collect 50–100 real inputs that represent your traffic, including the weird ones. Write down what a good output looks like for each — not a full reference answer, just the properties it must have.</p>
+<pre><code><span class="tok-k">def</span> <span class="tok-f">check_summary</span>(output, case):
+    checks = {
+        <span class="tok-s">"mentions_key_fact"</span>: case.key_fact.lower() <span class="tok-k">in</span> output.lower(),
+        <span class="tok-s">"under_limit"</span>: <span class="tok-f">len</span>(output.split()) &lt;= <span class="tok-s">80</span>,
+        <span class="tok-s">"no_hedging"</span>: <span class="tok-s">"as an ai"</span> <span class="tok-k">not in</span> output.lower(),
+    }
+    <span class="tok-k">return</span> checks</code></pre>
+<h2>Mix deterministic and model-graded checks</h2>
+<p>Use plain code assertions wherever you can. Reserve model-graded checks for subjective qualities like tone or faithfulness — and spot-check the grader regularly.</p>
+<h2>Run it in CI</h2>
+<p>Treat the eval score like a test suite. If a prompt change drops the pass rate, the PR needs a justification. It's caught three regressions already.</p>`
+  },
+  {
+    id: "k8s-homelab",
+    title: "Running a Homelab on Three Mini PCs (and Why I Ditched Kubernetes)",
+    excerpt: "I spent a month building a k3s cluster at home. Then I replaced it with Docker Compose and a cron job.",
+    date: "2026-08-11",
+    tags: ["devops", "homelab"],
+    body: `
+<p>Kubernetes is a fantastic tool for problems I don't have at home. After a month of wrangling a three-node k3s cluster for a media server, a password manager, and a few dashboards, I took a step back.</p>
+<h2>What went wrong</h2>
+<ul>
+  <li>Storage. Distributed volumes on consumer SSDs are a recipe for 3am debugging.</li>
+  <li>Upgrades turned a 5-minute task into an afternoon.</li>
+  <li>I was spending more time on the platform than on the things running on it.</li>
+</ul>
+<h2>What I run now</h2>
+<pre><code><span class="tok-c"># docker-compose.yml (excerpt)</span>
+<span class="tok-k">services:</span>
+  <span class="tok-f">vaultwarden:</span>
+    <span class="tok-k">image:</span> <span class="tok-s">vaultwarden/server:latest</span>
+    <span class="tok-k">restart:</span> <span class="tok-s">unless-stopped</span>
+    <span class="tok-k">volumes:</span>
+      - <span class="tok-s">./data/vw:/data</span></code></pre>
+<p>Each box runs its own Compose stack. Backups are a nightly <code>restic</code> job to an offsite bucket. Total maintenance: maybe 20 minutes a month.</p>
+<blockquote>Choose boring technology — especially for the things you rely on every day.</blockquote>`
+  },
+  {
+    id: "git-tricks",
+    title: "Five Git Commands I Wish I'd Learned Years Ago",
+    excerpt: "From rescuing lost commits to bisecting regressions automatically — small commands, big time savings.",
+    date: "2026-07-19",
+    tags: ["tooling", "git"],
+    body: `
+<p>I've used Git daily for over a decade and still discover things. These five have saved me the most time.</p>
+<h2>1. <code>git reflog</code></h2>
+<p>Your safety net. Every HEAD movement is recorded, so "lost" commits after a bad rebase are almost always recoverable.</p>
+<h2>2. <code>git bisect run</code></h2>
+<pre><code>git bisect start HEAD v2.3.0
+git bisect run npm test</code></pre>
+<p>Git will binary-search your history and find the commit that broke the tests — fully automated.</p>
+<h2>3. <code>git switch -</code></h2>
+<p>Jump back to the previous branch, just like <code>cd -</code>.</p>
+<h2>4. <code>git commit --fixup</code> + <code>rebase --autosquash</code></h2>
+<p>Make tidy history without manually reordering commits in an interactive rebase.</p>
+<h2>5. <code>git worktree add</code></h2>
+<p>Check out a second branch in another directory without stashing. Perfect for reviewing a PR while mid-feature.</p>`
+  },
+  {
+    id: "on-writing",
+    title: "Why Every Engineer Should Keep a Public Notebook",
+    excerpt: "This blog started as notes to my future self. It turned out to be the best career investment I've made.",
+    date: "2026-06-02",
+    tags: ["career"],
+    body: `
+<p>I started writing here because I kept solving the same problems twice. Writing things down publicly forced me to actually understand them.</p>
+<h2>Writing is thinking</h2>
+<p>If I can't explain something clearly, I don't understand it yet. A draft post is often where I discover the gaps in my mental model.</p>
+<h2>It compounds</h2>
+<p>A post from three years ago still brings in emails from people who hit the same weird bug. Some of those emails turned into friendships, collaborations, and a job offer.</p>
+<h2>Lower the bar</h2>
+<ul>
+  <li>Write for one specific person — usually yourself, six months ago.</li>
+  <li>Short is fine. A useful paragraph beats an unpublished essay.</li>
+  <li>Publish, then improve. Posts can be edited.</li>
+</ul>
+<blockquote>Learn in public. The worst case is you've built a searchable memory.</blockquote>`
+  }
+];
+
+const $ = s => document.querySelector(s);
+let activeTag = "all";
+let query = "";
+
+const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+const readTime = html => Math.max(1, Math.round(html.replace(/<[^>]+>/g, "").split(/\s+/).length / 220));
+const escapeHtml = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const metaHtml = p => `
+  <div class="meta">
+    <time datetime="${p.date}">${fmtDate(p.date)}</time><span class="dot">•</span>
+    <span>${readTime(p.body)} min read</span><span class="dot">•</span>
+    ${p.tags.map(t => `<span class="chip">#${t}</span>`).join(" ")}
+  </div>`;
+
+function renderTags() {
+  const all = ["all", ...new Set(posts.flatMap(p => p.tags))];
+  $("#tags").innerHTML = all.map(t =>
+    `<button class="tag-btn ${t === activeTag ? "active" : ""}" data-tag="${t}">${t === "all" ? "all" : "#" + t}</button>`
+  ).join("");
+}
+
+function filtered() {
+  const q = query.toLowerCase();
+  return posts.filter(p =>
+    (activeTag === "all" || p.tags.includes(activeTag)) &&
+    (!q || p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q) || p.tags.some(t => t.includes(q)))
+  );
+}
+
+function renderPosts() {
+  const list = filtered();
+  const showFeatured = activeTag === "all" && !query;
+  const feat = posts.find(p => p.featured);
+
+  $("#featured").innerHTML = showFeatured && feat ? `
+    <div class="featured" data-id="${feat.id}" tabindex="0">
+      <div class="label">★ Featured</div>
+      <h2>${feat.title}</h2>
+      <p>${feat.excerpt}</p>
+      ${metaHtml(feat)}
+    </div>` : "";
+
+  const items = showFeatured ? list.filter(p => !p.featured) : list;
+  $("#posts").innerHTML = items.length ? items.map(p => `
+    <article class="card" data-id="${p.id}" tabindex="0">
+      ${metaHtml(p)}
+      <h3>${p.title}</h3>
+      <p>${p.excerpt}</p>
+    </article>`).join("")
+    : `<div class="empty">No posts match “${escapeHtml(query || activeTag)}”. Try another search.</div>`;
+}
+
+function renderArchive() {
+  const counts = {};
+  posts.forEach(p => {
+    const k = new Date(p.date + "T00:00:00").toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    counts[k] = (counts[k] || 0) + 1;
+  });
+  $("#archive").innerHTML = Object.entries(counts).map(([m, c]) => `<li>${m}<span>${c}</span></li>`).join("");
+}
+
+function openPost(id, push = true) {
+  const idx = posts.findIndex(p => p.id === id);
+  if (idx < 0) return showList(false);
+  const p = posts[idx];
+  $("#article-body").innerHTML = `${metaHtml(p)}<h1>${p.title}</h1><div class="prose">${p.body}</div>`;
+  // move meta below title for readability
+  const body = $("#article-body");
+  body.insertBefore(body.querySelector("h1"), body.firstChild);
+
+  body.querySelectorAll("pre").forEach(pre => {
+    const btn = document.createElement("button");
+    btn.className = "copy"; btn.textContent = "copy";
+    btn.onclick = () => {
+      navigator.clipboard?.writeText(pre.querySelector("code").innerText).then(() => {
+        btn.textContent = "copied!"; setTimeout(() => btn.textContent = "copy", 1500);
+      });
+    };
+    pre.appendChild(btn);
+  });
+
+  const newer = posts[idx - 1], older = posts[idx + 1];
+  const prev = $("#prev-post"), next = $("#next-post");
+  prev.disabled = !older; prev.textContent = older ? `← ${older.title}` : "← No older posts";
+  prev.onclick = () => older && openPost(older.id);
+  next.disabled = !newer; next.textContent = newer ? `${newer.title} →` : "No newer posts →";
+  next.onclick = () => newer && openPost(newer.id);
+
+  $("#list-view").style.display = "none";
+  $("#article-view").classList.add("open");
+  document.title = `${p.title} — ~/dev/notes`;
+  if (push) history.pushState({ id }, "", `#/post/${id}`);
+  window.scrollTo(0, 0);
+  updateProgress();
+}
+
+function showList(push = true) {
+  $("#article-view").classList.remove("open");
+  $("#list-view").style.display = "";
+  document.title = "~/dev/notes — A Personal Tech Blog";
+  if (push) history.pushState({}, "", location.pathname);
+  $("#progress").style.width = "0";
+}
+
+function updateProgress() {
+  if (!$("#article-view").classList.contains("open")) return;
+  const h = document.documentElement;
+  const pct = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight) * 100;
+  $("#progress").style.width = pct + "%";
+}
+
+function route() {
+  const m = location.hash.match(/^#\/post\/(.+)$/);
+  m ? openPost(m[1], false) : showList(false);
+}
+
+// Events
+$("#tags").addEventListener("click", e => {
+  const t = e.target.closest(".tag-btn"); if (!t) return;
+  activeTag = t.dataset.tag; renderTags(); renderPosts();
+});
+$("#search").addEventListener("input", e => { query = e.target.value.trim(); renderPosts(); });
+
+const openFromEvent = e => {
+  const el = e.target.closest("[data-id]");
+  if (el) openPost(el.dataset.id);
+};
+document.addEventListener("click", e => { if (e.target.closest("#featured, #posts")) openFromEvent(e); });
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target.matches("[data-id]")) openFromEvent(e);
+  if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
+    e.preventDefault();
+    if ($("#article-view").classList.contains("open")) showList();
+    $("#search").focus();
+  }
+  if (e.key === "Escape" && $("#article-view").classList.contains("open")) showList();
+});
+
+$("#back").onclick = () => showList();
+$("#home-link").onclick = e => { e.preventDefault(); showList(); };
+$("#nav-posts").onclick = e => { e.preventDefault(); showList(); };
+document.querySelectorAll('a[href="#about"], a[href="#subscribe"]').forEach(a =>
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    if ($("#article-view").classList.contains("open")) showList();
+    setTimeout(() => document.querySelector(a.getAttribute("href")).scrollIntoView({ behavior: "smooth" }), 0);
+  })
+);
+
+window.addEventListener("popstate", route);
+window.addEventListener("scroll", updateProgress, { passive: true });
+
+// Theme
+const root = document.documentElement;
+const savedTheme = localStorage.getItem("theme") ||
+  (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+root.dataset.theme = savedTheme;
+$("#theme-toggle").onclick = () => {
+  const t = root.dataset.theme === "dark" ? "light" : "dark";
+  root.dataset.theme = t; localStorage.setItem("theme", t);
+};
+
+// Newsletter (demo only)
+$("#sub-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const msg = $("#sub-msg");
+  msg.style.color = "var(--accent)";
+  msg.textContent = "✓ Thanks! Check your inbox to confirm.";
+  e.target.reset();
+});
+
+$("#year").textContent = new Date().getFullYear();
+
+renderTags(); renderPosts(); renderArchive(); route();
+</script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warehouse Inventory Dashboard</title>
+<style>
+  :root{
+    --bg:#f4f6fa;--card:#fff;--text:#1d2433;--muted:#6b7487;--border:#e3e7ef;
+    --primary:#2f5bea;--ok:#1f9d63;--warn:#e0a100;--bad:#d64545;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+  header{background:var(--card);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+  h1{font-size:20px;margin:0}
+  .sub{color:var(--muted);font-size:13px}
+  main{padding:24px;max-width:1300px;margin:0 auto}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .kpi .label{color:var(--muted);font-size:13px}
+  .kpi .value{font-size:28px;font-weight:700;margin-top:6px}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:24px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  h2{font-size:15px;margin:0 0 12px}
+  .bars{display:flex;flex-direction:column;gap:10px}
+  .bar-row{display:grid;grid-template-columns:110px 1fr 80px;gap:10px;align-items:center;font-size:13px}
+  .bar-track{background:#eef1f7;border-radius:6px;height:14px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--primary);border-radius:6px;transition:width .4s}
+  .bar-row span:last-child{text-align:right;color:var(--muted)}
+  .alerts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto}
+  .alerts li{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:8px 10px;border-radius:8px;background:#fdf3f3;border:1px solid #f4d4d4}
+  .alerts li.low{background:#fff9e6;border-color:#f3e2a6}
+  .alerts li.none{background:#eefaf3;border-color:#c9ecd9}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+  input,select,button{font:inherit;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:#fff}
+  input{flex:1;min-width:180px}
+  button{cursor:pointer;background:var(--primary);color:#fff;border-color:var(--primary)}
+  button.ghost{background:#fff;color:var(--text);border-color:var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;cursor:pointer;user-select:none}
+  th:hover{color:var(--text)}
+  .tablewrap{overflow-x:auto}
+  .badge{padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600}
+  .b-ok{background:#e3f6ec;color:var(--ok)}
+  .b-low{background:#fff3cc;color:#9a7000}
+  .b-out{background:#fbe3e3;color:var(--bad)}
+  .qty-btn{padding:2px 8px;background:#fff;color:var(--text);border:1px solid var(--border)}
+  .pager{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:13px;color:var(--muted)}
+  dialog{border:none;border-radius:12px;padding:20px;width:min(420px,92vw);box-shadow:0 20px 50px rgba(0,0,0,.25)}
+  dialog::backdrop{background:rgba(20,25,40,.45)}
+  dialog form{display:grid;gap:10px}
+  dialog label{font-size:13px;color:var(--muted);display:grid;gap:4px}
+  .row{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>📦 Warehouse Inventory</h1>
+    <div class="sub" id="updated"></div>
+  </div>
+  <div class="toolbar" style="margin:0">
+    <button id="addBtn">+ Add item</button>
+    <button class="ghost" id="exportBtn">Export CSV</button>
+    <button class="ghost" id="resetBtn">Reset demo data</button>
+  </div>
+</header>
+
+<main>
+  <section class="kpis">
+    <div class="card kpi"><div class="label">Total SKUs</div><div class="value" id="kSkus">0</div></div>
+    <div class="card kpi"><div class="label">Units in stock</div><div class="value" id="kUnits">0</div></div>
+    <div class="card kpi"><div class="label">Inventory value</div><div class="value" id="kValue">$0</div></div>
+    <div class="card kpi"><div class="label">Low stock</div><div class="value" id="kLow" style="color:var(--warn)">0</div></div>
+    <div class="card kpi"><div class="label">Out of stock</div><div class="value" id="kOut" style="color:var(--bad)">0</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>Stock value by category</h2>
+      <div class="bars" id="bars"></div>
+    </div>
+    <div class="card">
+      <h2>Reorder alerts</h2>
+      <ul class="alerts" id="alerts"></ul>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Inventory</h2>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search SKU, name or location…">
+      <select id="cat"></select>
+      <select id="status">
+        <option value="">All statuses</option>
+        <option value="ok">In stock</option>
+        <option value="low">Low stock</option>
+        <option value="out">Out of stock</option>
+      </select>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr id="thead"></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="pager">
+      <span id="count"></span>
+      <span>
+        <button class="ghost" id="prev">Prev</button>
+        <span id="pageInfo" style="margin:0 8px"></span>
+        <button class="ghost" id="next">Next</button>
+      </span>
+    </div>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <h2 id="dlgTitle">Add item</h2>
+    <label>SKU<input name="sku" required></label>
+    <label>Name<input name="name" required></label>
+    <label>Category<input name="category" required list="catlist"></label>
+    <datalist id="catlist"></datalist>
+    <label>Location<input name="location" placeholder="e.g. A-01-3" required></label>
+    <label>Quantity<input name="qty" type="number" min="0" required></label>
+    <label>Reorder point<input name="reorder" type="number" min="0" required></label>
+    <label>Unit cost ($)<input name="cost" type="number" min="0" step="0.01" required></label>
+    <div class="row">
+      <button type="button" class="ghost" id="cancel">Cancel</button>
+      <button type="submit">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const KEY = "warehouse-inventory-v1";
+const PAGE = 10;
+const COLS = [
+  ["sku","SKU"],["name","Name"],["category","Category"],["location","Location"],
+  ["qty","Qty"],["reorder","Reorder pt"],["cost","Unit cost"],["value","Value"],["status","Status"],["actions",""]
+];
+
+function seed(){
+  const items = [
+    ["WH-1001","Pallet Jack","Equipment","A-01-1",14,5,389],
+    ["WH-1002","Stretch Wrap Roll","Packaging","B-02-3",220,100,12.5],
+    ["WH-1003","Cardboard Box 12x12","Packaging","B-02-1",35,150,0.85],
+    ["WH-1004","Safety Gloves (pair)","Safety","C-03-2",410,200,3.2],
+    ["WH-1005","Hi-Vis Vest","Safety","C-03-4",8,25,9.99],
+    ["WH-1006","Barcode Scanner","Electronics","D-01-1",22,10,215],
+    ["WH-1007","Thermal Label Roll","Electronics","D-01-5",0,40,6.75],
+    ["WH-1008","Forklift Battery","Equipment","A-04-2",3,2,1850],
+    ["WH-1009","Packing Tape","Packaging","B-03-2",96,60,2.4],
+    ["WH-1010","Steel Shelving Unit","Equipment","A-05-1",12,4,142],
+    ["WH-1011","Safety Goggles","Safety","C-02-1",54,30,5.5],
+    ["WH-1012","Handheld Radio","Electronics","D-02-3",17,8,74],
+    ["WH-1013","Bubble Wrap Roll","Packaging","B-01-4",18,40,21],
+    ["WH-1014","Pallet (wood)","Pallets","E-01-1",640,300,11],
+    ["WH-1015","Pallet (plastic)","Pallets","E-01-2",0,50,28],
+    ["WH-1016","Corner Protectors","Packaging","B-04-1",1200,500,0.22],
+    ["WH-1017","First Aid Kit","Safety","C-01-1",9,10,34],
+    ["WH-1018","Label Printer","Electronics","D-03-1",6,3,329]
+  ];
+  return items.map(([sku,name,category,location,qty,reorder,cost])=>({sku,name,category,location,qty,reorder,cost}));
+}
+
+let items = JSON.parse(localStorage.getItem(KEY) || "null") || seed();
+let sort = {key:"sku",dir:1};
+let page = 1;
+let editing = null;
+
+const $ = id => document.getElementById(id);
+const fmt$ = n => n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
+const fmt$2 = n => n.toLocaleString(undefined,{style:"currency",currency:"USD"});
+const status = i => i.qty===0 ? "out" : i.qty<=i.reorder ? "low" : "ok";
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const save = () => { localStorage.setItem(KEY, JSON.stringify(items)); render(); };
+
+function filtered(){
+  const q = $("search").value.trim().toLowerCase();
+  const c = $("cat").value, s = $("status").value;
+  let list = items.filter(i =>
+    (!q || [i.sku,i.name,i.location,i.category].some(v=>v.toLowerCase().includes(q))) &&
+    (!c || i.category===c) && (!s || status(i)===s));
+  const val = i => sort.key==="value" ? i.qty*i.cost : sort.key==="status" ? status(i) : i[sort.key];
+  list.sort((a,b)=>{
+    const x=val(a), y=val(b);
+    return (typeof x==="number" ? x-y : String(x).localeCompare(String(y),undefined,{numeric:true})) * sort.dir;
+  });
+  return list;
+}
+
+function renderKpis(){
+  $("kSkus").textContent = items.length;
+  $("kUnits").textContent = items.reduce((a,i)=>a+i.qty,0).toLocaleString();
+  $("kValue").textContent = fmt$(items.reduce((a,i)=>a+i.qty*i.cost,0));
+  $("kLow").textContent = items.filter(i=>status(i)==="low").length;
+  $("kOut").textContent = items.filter(i=>status(i)==="out").length;
+}
+
+function renderBars(){
+  const totals = {};
+  items.forEach(i => totals[i.category] = (totals[i.category]||0) + i.qty*i.cost);
+  const entries = Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+  const max = Math.max(1,...entries.map(e=>e[1]));
+  $("bars").innerHTML = entries.map(([k,v])=>
+    `<div class="bar-row"><span>${esc(k)}</span><div class="bar-track"><div class="bar-fill" style="width:${v/max*100}%"></div></div><span>${fmt$(v)}</span></div>`
+  ).join("") || '<div class="sub">No data</div>';
+}
+
+function renderAlerts(){
+  const list = items.filter(i=>status(i)!=="ok").sort((a,b)=>a.qty/(a.reorder||1)-b.qty/(b.reorder||1));
+  $("alerts").innerHTML = list.map(i=>
+    `<li class="${status(i)==="out"?"none-stock":"low"}" style="${status(i)==="out"?"":""}">
+      <span><strong>${esc(i.name)}</strong><br><span class="sub">${esc(i.sku)} · ${esc(i.location)}</span></span>
+      <span style="text-align:right">${i.qty} / ${i.reorder}<br><span class="sub">${status(i)==="out"?"Out of stock":"Reorder"}</span></span>
+    </li>`).join("") || '<li class="none">All items are sufficiently stocked ✓</li>';
+}
+
+function renderFilters(){
+  const cats = [...new Set(items.map(i=>i.category))].sort();
+  const cur = $("cat").value;
+  $("cat").innerHTML = '<option value="">All categories</option>' + cats.map(c=>`<option ${c===cur?"selected":""}>${esc(c)}</option>`).join("");
+  $("catlist").innerHTML = cats.map(c=>`<option value="${esc(c)}">`).join("");
+}
+
+function renderHead(){
+  $("thead").innerHTML = COLS.map(([k,l])=>
+    `<th data-k="${k}">${l}${sort.key===k?(sort.dir>0?" ▲":" ▼"):""}</th>`).join("");
+  $("thead").querySelectorAll("th").forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k; if(k==="actions")return;
+    sort = {key:k, dir: sort.key===k ? -sort.dir : 1}; render();
+  });
+}
+
+function renderTable(){
+  const list = filtered();
+  const pages = Math.max(1,Math.ceil(list.length/PAGE));
+  page = Math.min(page,pages);
+  const rows = list.slice((page-1)*PAGE, page*PAGE);
+  $("tbody").innerHTML = rows.map(i=>{
+    const s = status(i);
+    const label = {ok:"In stock",low:"Low",out:"Out"}[s];
+    return `<tr>
+      <td>${esc(i.sku)}</td><td>${esc(i.name)}</td><td>${esc(i.category)}</td><td>${esc(i.location)}</td>
+      <td>
+        <button class="qty-btn" data-a="dec" data-s="${esc(i.sku)}">−</button>
+        <strong style="margin:0 6px">${i.qty}</strong>
+        <button class="qty-btn" data-a="inc" data-s="${esc(i.sku)}">+</button>
+      </td>
+      <td>${i.reorder}</td><td>${fmt$2(i.cost)}</td><td>${fmt$2(i.qty*i.cost)}</td>
+      <td><span class="badge b-${s}">${label}</span></td>
+      <td>
+        <button class="qty-btn" data-a="edit" data-s="${esc(i.sku)}">Edit</button>
+        <button class="qty-btn" data-a="del" data-s="${esc(i.sku)}">Delete</button>
+      </td>
+    </tr>`;
+  }).join("") || `<tr><td colspan="10" class="sub" style="text-align:center;padding:24px">No items match your filters.</td></tr>`;
+  $("count").textContent = `${list.length} of ${items.length} items`;
+  $("pageInfo").textContent = `Page ${page} / ${pages}`;
+  $("prev").disabled = page<=1;
+  $("next").disabled = page>=pages;
+}
+
+function render(){
+  renderFilters(); renderKpis(); renderBars(); renderAlerts(); renderHead(); renderTable();
+  $("updated").textContent = "Last updated " + new Date().toLocaleString();
+}
+
+$("tbody").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  const item = items.find(i=>i.sku===b.dataset.s); if(!item) return;
+  const a = b.dataset.a;
+  if(a==="inc") { item.qty++; save(); }
+  else if(a==="dec") { item.qty = Math.max(0,item.qty-1); save(); }
+  else if(a==="del") { if(confirm(`Delete ${item.name}?`)) { items = items.filter(i=>i!==item); save(); } }
+  else if(a==="edit") openDialog(item);
+});
+
+["search","cat","status"].forEach(id=>$(id).addEventListener("input",()=>{page=1;renderTable();}));
+$("prev").onclick=()=>{page--;renderTable();};
+$("next").onclick=()=>{page++;renderTable();};
+
+function openDialog(item){
+  editing = item || null;
+  $("dlgTitle").textContent = item ? "Edit item" : "Add item";
+  const f = $("form");
+  ["sku","name","category","location","qty","reorder","cost"].forEach(k=>f.elements[k].value = item ? item[k] : "");
+  f.elements.sku.readOnly = !!item;
+  $("dlg").showModal();
+}
+$("addBtn").onclick=()=>openDialog();
+$("cancel").onclick=()=>$("dlg").close();
+$("form").addEventListener("submit", e=>{
+  const f = e.target.elements;
+  const data = {
+    sku:f.sku.value.trim(), name:f.name.value.trim(), category:f.category.value.trim(),
+    location:f.location.value.trim(), qty:+f.qty.value, reorder:+f.reorder.value, cost:+f.cost.value
+  };
+  if(editing){ Object.assign(editing,data); }
+  else if(items.some(i=>i.sku.toLowerCase()===data.sku.toLowerCase())){
+    e.preventDefault(); alert("That SKU already exists."); return;
+  } else items.push(data);
+  save();
+});
+
+$("resetBtn").onclick=()=>{ if(confirm("Reset to demo data? Your changes will be lost.")){ items=seed(); page=1; save(); } };
+
+$("exportBtn").onclick=()=>{
+  const head = ["SKU","Name","Category","Location","Qty","Reorder point","Unit cost","Value","Status"];
+  const cell = v => { let s=String(v); if(/^[=+\-@]/.test(s)) s="'"+s; return `"${s.replace(/"/g,'""')}"`; };
+  const rows = filtered().map(i=>[i.sku,i.name,i.category,i.location,i.qty,i.reorder,i.cost,(i.qty*i.cost).toFixed(2),status(i)]);
+  const csv = [head,...rows].map(r=>r.map(cell).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  a.download = "inventory.csv"; a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+render();
+</script>
+</body>
+</html>

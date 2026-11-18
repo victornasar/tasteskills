@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbit API Reference</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f6f8fa;
+    --bg-code: #0f172a;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #4f46e5;
+    --accent-soft: #eef2ff;
+    --code-text: #e2e8f0;
+    --get: #059669; --post: #2563eb; --patch: #d97706; --delete: #dc2626;
+    --sidebar-w: 270px;
+  }
+  [data-theme="dark"] {
+    --bg: #0b1020;
+    --bg-alt: #121a2e;
+    --bg-code: #060a16;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --border: #1f2a44;
+    --accent: #818cf8;
+    --accent-soft: #1e1b4b;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    margin: 0; font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text);
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code, pre, kbd { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
+  :not(pre) > code { background: var(--bg-alt); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; }
+
+  /* Header */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px; z-index: 20;
+    display: flex; align-items: center; gap: 16px; padding: 0 20px;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+  }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+  .logo svg { width: 28px; height: 28px; }
+  .version { font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+  .header-spacer { flex: 1; }
+  .icon-btn {
+    background: none; border: 1px solid var(--border); color: var(--text); border-radius: 8px;
+    height: 36px; min-width: 36px; padding: 0 10px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .icon-btn:hover { background: var(--bg-alt); }
+  #menuBtn { display: none; }
+
+  /* Sidebar */
+  aside {
+    position: fixed; top: 60px; bottom: 0; left: 0; width: var(--sidebar-w);
+    overflow-y: auto; padding: 20px 16px 40px; border-right: 1px solid var(--border); background: var(--bg);
+  }
+  .search { position: relative; margin-bottom: 18px; }
+  .search input {
+    width: 100%; padding: 9px 12px 9px 34px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg-alt); color: var(--text); font-size: 14px; outline: none;
+  }
+  .search input:focus { border-color: var(--accent); }
+  .search svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 16px; color: var(--muted); }
+  .search kbd { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 0 5px; }
+  .nav-group { margin-bottom: 18px; }
+  .nav-group h4 { margin: 0 0 6px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .nav-group a {
+    display: flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 6px;
+    color: var(--text); font-size: 14px;
+  }
+  .nav-group a:hover { background: var(--bg-alt); text-decoration: none; }
+  .nav-group a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .nav-empty { color: var(--muted); font-size: 14px; display: none; padding: 0 10px; }
+
+  /* Method badges */
+  .m { font: 700 10px/1 "SF Mono", ui-monospace, monospace; padding: 3px 5px; border-radius: 4px; color: #fff; min-width: 44px; text-align: center; }
+  .m.get { background: var(--get); } .m.post { background: var(--post); }
+  .m.patch { background: var(--patch); } .m.delete { background: var(--delete); }
+
+  /* Main */
+  main { margin-left: var(--sidebar-w); padding-top: 60px; }
+  section { padding: 44px 48px; border-bottom: 1px solid var(--border); }
+  section.endpoint { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+  h1 { font-size: 34px; margin: 0 0 12px; letter-spacing: -.02em; }
+  h2 { font-size: 24px; margin: 0 0 12px; letter-spacing: -.01em; }
+  h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 26px 0 8px; }
+  p { margin: 0 0 14px; }
+  .lead { font-size: 17px; color: var(--muted); max-width: 720px; }
+  .path { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; padding: 10px 12px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto; }
+  .path code { background: none; border: none; padding: 0; font-size: 14px; white-space: nowrap; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 24px; }
+  .card { border: 1px solid var(--border); border-radius: 10px; padding: 16px; background: var(--bg-alt); color: var(--text); }
+  .card:hover { border-color: var(--accent); text-decoration: none; }
+  .card strong { display: block; margin-bottom: 4px; }
+  .card span { color: var(--muted); font-size: 14px; }
+
+  /* Param tables */
+  .params { border-top: 1px solid var(--border); }
+  .param { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .param-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+  .param-name { font-family: "SF Mono", ui-monospace, monospace; font-weight: 600; font-size: 13.5px; }
+  .param-type { color: var(--muted); font-size: 13px; }
+  .req { color: var(--delete); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .opt { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+  .param p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+
+  table.simple { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0 16px; }
+  table.simple th, table.simple td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  table.simple th { background: var(--bg-alt); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+
+  .callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 14px; }
+  .callout.warn { border-color: var(--patch); background: color-mix(in srgb, var(--patch) 12%, transparent); }
+
+  /* Code panels */
+  .code-col { position: sticky; top: 84px; align-self: start; display: flex; flex-direction: column; gap: 16px; }
+  .code-block { background: var(--bg-code); border-radius: 10px; overflow: hidden; border: 1px solid #1e293b; }
+  .code-head { display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 4px; background: #111827; border-bottom: 1px solid #1e293b; }
+  .tabs { display: flex; }
+  .tab { background: none; border: none; color: #94a3b8; padding: 10px 12px; font-size: 12.5px; cursor: pointer; border-bottom: 2px solid transparent; }
+  .tab:hover { color: #e2e8f0; }
+  .tab.active { color: #fff; border-bottom-color: var(--accent); }
+  .code-label { color: #94a3b8; font-size: 12.5px; padding: 10px 12px; }
+  .copy { background: none; border: 1px solid #334155; color: #cbd5e1; font-size: 12px; border-radius: 6px; padding: 3px 9px; cursor: pointer; }
+  .copy:hover { background: #1e293b; }
+  pre { margin: 0; padding: 16px; color: var(--code-text); overflow-x: auto; line-height: 1.6; }
+  pre[hidden] { display: none; }
+  .k { color: #c084fc; } .s { color: #86efac; } .n { color: #fbbf24; } .c { color: #64748b; font-style: italic; } .p { color: #7dd3fc; }
+
+  footer { padding: 32px 48px; color: var(--muted); font-size: 14px; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    section.endpoint { grid-template-columns: 1fr; }
+    .code-col { position: static; }
+  }
+  @media (max-width: 800px) {
+    #menuBtn { display: inline-flex; }
+    aside { transform: translateX(-100%); transition: transform .2s ease; z-index: 15; width: 290px; box-shadow: 0 0 40px rgba(0,0,0,.2); }
+    aside.open { transform: none; }
+    main { margin-left: 0; }
+    section, footer { padding: 32px 20px; }
+    h1 { font-size: 28px; }
+    .hide-sm { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="icon-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+  <a class="logo" href="#introduction">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <circle cx="16" cy="16" r="6" fill="currentColor" style="color:var(--accent)"/>
+      <ellipse cx="16" cy="16" rx="14" ry="6" stroke="currentColor" stroke-width="2" transform="rotate(-25 16 16)" style="color:var(--accent)"/>
+    </svg>
+    Orbit API
+  </a>
+  <span class="version">v2</span>
+  <div class="header-spacer"></div>
+  <a class="icon-btn hide-sm" href="#changelog">Changelog</a>
+  <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">🌙</button>
+</header>
+
+<aside id="sidebar">
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="search" type="search" placeholder="Search docs…" aria-label="Search documentation">
+    <kbd>/</kbd>
+  </div>
+  <nav id="nav">
+    <div class="nav-group">
+      <h4>Getting started</h4>
+      <a href="#introduction">Introduction</a>
+      <a href="#authentication">Authentication</a>
+      <a href="#errors">Errors</a>
+      <a href="#pagination">Pagination</a>
+      <a href="#rate-limits">Rate limits</a>
+    </div>
+    <div class="nav-group">
+      <h4>Projects</h4>
+      <a href="#list-projects"><span class="m get">GET</span>List projects</a>
+      <a href="#create-project"><span class="m post">POST</span>Create a project</a>
+      <a href="#get-project"><span class="m get">GET</span>Retrieve a project</a>
+      <a href="#update-project"><span class="m patch">PATCH</span>Update a project</a>
+      <a href="#delete-project"><span class="m delete">DEL</span>Delete a project</a>
+    </div>
+    <div class="nav-group">
+      <h4>Tasks</h4>
+      <a href="#list-tasks"><span class="m get">GET</span>List tasks</a>
+      <a href="#create-task"><span class="m post">POST</span>Create a task</a>
+      <a href="#update-task"><span class="m patch">PATCH</span>Update a task</a>
+    </div>
+    <div class="nav-group">
+      <h4>Webhooks</h4>
+      <a href="#webhooks">Overview &amp; events</a>
+      <a href="#verify-webhooks">Verifying signatures</a>
+    </div>
+    <div class="nav-group">
+      <h4>Resources</h4>
+      <a href="#changelog">Changelog</a>
+    </div>
+    <p class="nav-empty" id="navEmpty">No matching pages.</p>
+  </nav>
+</aside>
+
+<main>
+
+  <!-- INTRODUCTION -->
+  <section id="introduction">
+    <h1>Orbit API Reference</h1>
+    <p class="lead">The Orbit API lets you manage projects, tasks, and real-time events programmatically. It is organized around REST, uses predictable resource-oriented URLs, accepts JSON request bodies, and returns JSON responses with standard HTTP status codes.</p>
+    <div class="path"><span class="m get">BASE</span><code>https://api.orbit.example/v2</code></div>
+    <p>All requests must be made over HTTPS. Requests made over plain HTTP will be rejected. Timestamps are returned in ISO&nbsp;8601 format in UTC, and IDs are opaque strings prefixed by resource type (for example <code>prj_</code> or <code>tsk_</code>).</p>
+    <div class="cards">
+      <a class="card" href="#authentication"><strong>🔑 Authentication</strong><span>Get an API key and authorize requests.</span></a>
+      <a class="card" href="#list-projects"><strong>📁 Projects</strong><span>Create and organize workspaces.</span></a>
+      <a class="card" href="#list-tasks"><strong>✅ Tasks</strong><span>Track work items inside projects.</span></a>
+      <a class="card" href="#webhooks"><strong>📡 Webhooks</strong><span>Receive events as they happen.</span></a>
+    </div>
+  </section>
+
+  <!-- AUTHENTICATION -->
+  <section id="authentication" class="endpoint">
+    <div>
+      <h2>Authentication</h2>
+      <p>The Orbit API uses bearer tokens. Create and revoke keys from <strong>Dashboard → Settings → API keys</strong>. Include your key in the <code>Authorization</code> header of every request.</p>
+      <p>Keys come in two flavors:</p>
+      <table class="simple">
+        <tr><th>Prefix</th><th>Use</th></tr>
+        <tr><td><code>sk_live_</code></td><td>Production data. Keep it secret and server-side only.</td></tr>
+        <tr><td><code>sk_test_</code></td><td>Sandbox data. Safe for development; never touches live resources.</td></tr>
+      </table>
+      <div class="callout warn"><strong>Keep keys secret.</strong> Never embed secret keys in client-side code, mobile apps, or public repositories. Rotate a key immediately if you suspect it has been exposed.</div>
+      <p>Requests without a valid key return <code>401 Unauthorized</code>. Keys lacking a required scope return <code>403 Forbidden</code>.</p>
+    </div>
+    <div class="code-col">
+      <div class="code-block">
+        <div class="code-head"><span class="code-label">Authenticated request</span><button class="copy">Copy</button></div>
+<pre>curl https://api.orbit.example/v2/projects \
+  -H <span class="s">"Authorization: Bearer sk_test_EXAMPLE_KEY_REDACTED"</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ERRORS -->
+  <section id="errors" class="endpoint">
+    <div>
+      <h2>Errors</h2>
+      <p>Orbit uses conventional HTTP response codes. Codes in the <code>2xx</code> range indicate success, <code>4xx</code> indicate a problem with the request, and <code>5xx</code> indicate a problem on our side.</p>
+      <table class="simple">
+        <tr><th>Status</th><th>Meaning</th></tr>
+        <tr><td><code>200</code> OK</td><td>Request succeeded.</td></tr>
+        <tr><td><code>201</code> Created</td><td>Resource created.</td></tr>
+        <tr><td><code>204</code> No Content</td><td>Succeeded with no response body.</td></tr>
+        <tr><td><code>400</code> Bad Request</td><td>Malformed JSON or missing required parameter.</td></tr>
+        <tr><td><code>401</code> Unauthorized</td><td>No valid API key provided.</td></tr>
+        <tr><td><code>403</code> Forbidden</td><td>Key lacks permission for this resource.</td></tr>
+        <tr><td><code>404</code> Not Found</td><td>Resource doesn't exist.</td></tr>
+        <tr><td><code>409</code> Conflict</td><td>Request conflicts with current state (e.g. idempotency key reuse).</td></tr>
+        <tr><td><code>422</code> Unprocessable</td><td>Validation failed.</td></tr>
+        <tr><td><code>429</code> Too Many Requests</td><td>Rate limit exceeded.</td></tr>
+        <tr><td><code>5xx</code></td><td>Server error. Safe to retry with backoff.</td></tr>
+      </table>
+    </div>
+    <div class="code-col">
+      <div class="code-block">
+        <div class="code-head"><span class="code-label">Error response</span><button class="copy">Copy</button></div>
+<pre>{
+  <span class="p">"error"</span>: {
+    <span class="p">"type"</span>: <span class="s">"validation_error"</span>,
+    <span class="p">"code"</span>: <span class="s">"parameter_missing"</span>,
+    <span class="p">"message"</span>: <span class="s">"The 'name' parameter is required."</span>,
+    <span class="p">"param"</span>: <span class="s">"name"</span>,
+    <span class="p">"request_id"</span>: <span class="s">"req_8fK2mQ1xZt"</span>
+  }
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGINATION -->
+  <section id="pagination" class="endpoint">
+    <div>
+      <h2>Pagination</h2>
+      <p>All list endpoints use cursor-based pagination. Responses include a <code>has_more</code> flag and a <code>next_cursor</code> you pass back to fetch the following page.</p>
+      <h3>Query parameters</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">limit</span><span class="param-type">integer</span><span class="opt">optional</span></div><p>Number of objects to return, between 1 and 100. Defaults to 20.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">cursor</span><span class="param-type">string</span><span class="opt">optional</span></div><p>The <code>next_cursor</code> value from a previous response.</p></div>
+      </div>
+    </div>
+    <div class="code-col">
+      <div class="code-block">
+        <div class="code-head"><span class="code-label">Paginated response</span><button class="copy">Copy</button></div>
+<pre>{
+  <span class="p">"object"</span>: <span class="s">"list"</span>,
+  <span class="p">"data"</span>: [ <span class="c">/* … */</span> ],
+  <span class="p">"has_more"</span>: <span class="k">true</span>,
+  <span class="p">"next_cursor"</span>: <span class="s">"eyJpZCI6InByal8yMCJ9"</span>
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- RATE LIMITS -->
+  <section id="rate-limits" class="endpoint">
+    <div>
+      <h2>Rate limits</h2>
+      <p>Each API key may make up to <strong>100 requests per second</strong> in live mode and <strong>25 per second</strong> in test mode. Every response includes headers describing your current usage.</p>
+      <table class="simple">
+        <tr><th>Header</th><th>Description</th></tr>
+        <tr><td><code>X-RateLimit-Limit</code></td><td>Requests allowed in the current window.</td></tr>
+        <tr><td><code>X-RateLimit-Remaining</code></td><td>Requests left in the current window.</td></tr>
+        <tr><td><code>X-RateLimit-Reset</code></td><td>Unix timestamp when the window resets.</td></tr>
+        <tr><td><code>Retry-After</code></td><td>Seconds to wait (only on <code>429</code>).</td></tr>
+      </table>
+      <div class="callout">Use exponential backoff with jitter when retrying <code>429</code> and <code>5xx</code> responses. For safe retries of <code>POST</code> requests, send an <code>Idempotency-Key</code> header.</div>
+    </div>
+    <div class="code-col">
+      <div class="code-block">
+        <div class="code-head"><span class="code-label">429 response headers</span><button class="copy">Copy</button></div>
+<pre>HTTP/1.1 <span class="n">429</span> Too Many Requests
+X-RateLimit-Limit: <span class="n">100</span>
+X-RateLimit-Remaining: <span class="n">0</span>
+X-RateLimit-Reset: <span class="n">1795392000</span>
+Retry-After: <span class="n">2</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIST PROJECTS -->
+  <section id="list-projects" class="endpoint">
+    <div>
+      <h2>List projects</h2>
+      <div class="path"><span class="m get">GET</span><code>/v2/projects</code></div>
+      <p>Returns a paginated list of projects your key has access to, sorted by creation date with the newest first.</p>
+      <h3>Query parameters</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">status</span><span class="param-type">enum</span><span class="opt">optional</span></div><p>Filter by status: <code>active</code>, <code>archived</code>, or <code>all</code>. Defaults to <code>active</code>.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">limit</span><span class="param-type">integer</span><span class="opt">optional</span></div><p>Page size, 1–100. Defaults to 20.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">cursor</span><span class="param-type">string</span><span class="opt">optional</span></div><p>Pagination cursor from a previous response.</p></div>
+      </div>
+      <h3>Returns</h3>
+      <p>A list object whose <code>data</code> array contains <a href="#get-project">project objects</a>.</p>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="curl">cURL</button><button class="tab" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="curl">curl <span class="s">"https://api.orbit.example/v2/projects?status=active&amp;limit=2"</span> \
+  -H <span class="s">"Authorization: Bearer $ORBIT_API_KEY"</span></pre>
+<pre data-lang="js" hidden><span class="k">const</span> res = <span class="k">await</span> fetch(
+  <span class="s">"https://api.orbit.example/v2/projects?status=active&amp;limit=2"</span>,
+  { headers: { Authorization: <span class="s">`Bearer ${process.env.ORBIT_API_KEY}`</span> } }
+);
+<span class="k">const</span> { data } = <span class="k">await</span> res.json();</pre>
+<pre data-lang="py" hidden><span class="k">import</span> os, requests
+
+r = requests.get(
+    <span class="s">"https://api.orbit.example/v2/projects"</span>,
+    params={<span class="s">"status"</span>: <span class="s">"active"</span>, <span class="s">"limit"</span>: <span class="n">2</span>},
+    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['ORBIT_API_KEY']}"</span>},
+)
+projects = r.json()[<span class="s">"data"</span>]</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-head"><span class="code-label">Response · 200</span><button class="copy">Copy</button></div>
+<pre>{
+  <span class="p">"object"</span>: <span class="s">"list"</span>,
+  <span class="p">"data"</span>: [
+    {
+      <span class="p">"id"</span>: <span class="s">"prj_9a7Kx2LmQ"</span>,
+      <span class="p">"object"</span>: <span class="s">"project"</span>,
+      <span class="p">"name"</span>: <span class="s">"Website relaunch"</span>,
+      <span class="p">"status"</span>: <span class="s">"active"</span>,
+      <span class="p">"task_count"</span>: <span class="n">42</span>,
+      <span class="p">"created_at"</span>: <span class="s">"2026-10-02T14:21:07Z"</span>
+    }
+  ],
+  <span class="p">"has_more"</span>: <span class="k">true</span>,
+  <span class="p">"next_cursor"</span>: <span class="s">"eyJpZCI6InByal85YTdLeDJMbVEifQ"</span>
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATE PROJECT -->
+  <section id="create-project" class="endpoint">
+    <div>
+      <h2>Create a project</h2>
+      <div class="path"><span class="m post">POST</span><code>/v2/projects</code></div>
+      <p>Creates a new project. The authenticated key's owner becomes the project owner.</p>
+      <h3>Body parameters</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">name</span><span class="param-type">string</span><span class="req">required</span></div><p>Display name, 1–120 characters.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">description</span><span class="param-type">string</span><span class="opt">optional</span></div><p>Markdown description, up to 10,000 characters.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">color</span><span class="param-type">string</span><span class="opt">optional</span></div><p>Hex color used in the UI, e.g. <code>#4f46e5</code>.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">metadata</span><span class="param-type">object</span><span class="opt">optional</span></div><p>Up to 50 key/value string pairs for your own use.</p></div>
+      </div>
+      <h3>Headers</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">Idempotency-Key</span><span class="param-type">string</span><span class="opt">optional</span></div><p>Unique value (e.g. a UUID) that makes the request safe to retry for 24 hours.</p></div>
+      </div>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="curl">cURL</button><button class="tab" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="curl">curl https://api.orbit.example/v2/projects \
+  -H <span class="s">"Authorization: Bearer $ORBIT_API_KEY"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -H <span class="s">"Idempotency-Key: 6f1c2a8e-3b7d-4c11-9e2f-0a5b8d7c4e21"</span> \
+  -d <span class="s">'{"name":"Mobile app","color":"#10b981"}'</span></pre>
+<pre data-lang="js" hidden><span class="k">const</span> res = <span class="k">await</span> fetch(<span class="s">"https://api.orbit.example/v2/projects"</span>, {
+  method: <span class="s">"POST"</span>,
+  headers: {
+    Authorization: <span class="s">`Bearer ${process.env.ORBIT_API_KEY}`</span>,
+    <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>,
+    <span class="s">"Idempotency-Key"</span>: crypto.randomUUID(),
+  },
+  body: JSON.stringify({ name: <span class="s">"Mobile app"</span>, color: <span class="s">"#10b981"</span> }),
+});
+<span class="k">const</span> project = <span class="k">await</span> res.json();</pre>
+<pre data-lang="py" hidden><span class="k">import</span> os, uuid, requests
+
+r = requests.post(
+    <span class="s">"https://api.orbit.example/v2/projects"</span>,
+    json={<span class="s">"name"</span>: <span class="s">"Mobile app"</span>, <span class="s">"color"</span>: <span class="s">"#10b981"</span>},
+    headers={
+        <span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['ORBIT_API_KEY']}"</span>,
+        <span class="s">"Idempotency-Key"</span>: str(uuid.uuid4()),
+    },
+)
+project = r.json()</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-head"><span class="code-label">Response · 201</span><button class="copy">Copy</button></div>
+<pre>{
+  <span class="p">"id"</span>: <span class="s">"prj_3TqW8vNcR"</span>,
+  <span class="p">"object"</span>: <span class="s">"project"</span>,
+  <span class="p">"name"</span>: <span class="s">"Mobile app"</span>,
+  <span class="p">"description"</span>: <span class="k">null</span>,
+  <span class="p">"color"</span>: <span class="s">"#10b981"</span>,
+  <span class="p">"status"</span>: <span class="s">"active"</span>,
+  <span class="p">"task_count"</span>: <span class="n">0</span>,
+  <span class="p">"metadata"</span>: {},
+  <span class="p">"created_at"</span>: <span class="s">"2026-11-17T09:12:44Z"</span>
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET PROJECT -->
+  <section id="get-project" class="endpoint">
+    <div>
+      <h2>Retrieve a project</h2>
+      <div class="path"><span class="m get">GET</span><code>/v2/projects/{project_id}</code></div>
+      <p>Retrieves a single project by ID.</p>
+      <h3>Path parameters</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">project_id</span><span class="param-type">string</span><span class="req">required</span></div><p>The project's ID, e.g. <code>prj_3TqW8vNcR</code>.</p></div>
+      </div>
+      <h3>The project object</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">id</span><span class="param-type">string</span></div><p>Unique identifier, prefixed <code>prj_</code>.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">name</span><span class="param-type">string</span></div><p>Display name.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">status</span><span class="param-type">enum</span></div><p><code>active</code> or <code>archived</code>.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">task_count</span><span class="param-type">integer</span></div><p>Number of open tasks.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">created_at</span><span class="param-type">timestamp</span></div><p>ISO 8601 creation time (UTC).</p></div>
+      </div>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="curl">cURL</button><button class="tab" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="curl">curl https://api.orbit.example/v2/projects/prj_3TqW8vNcR \
+  -H <span class="s">"Authorization: Bearer $ORBIT_API_KEY"</span></pre>
+<pre data-lang="js" hidden><span class="k">const</span> res = <span class="k">await</span> fetch(<span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR"</span>, {
+  headers: { Authorization: <span class="s">`Bearer ${process.env.ORBIT_API_KEY}`</span> },
+});
+<span class="k">const</span> project = <span class="k">await</span> res.json();</pre>
+<pre data-lang="py" hidden>r = requests.get(
+    <span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR"</span>,
+    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['ORBIT_API_KEY']}"</span>},
+)
+project = r.json()</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPDATE PROJECT -->
+  <section id="update-project" class="endpoint">
+    <div>
+      <h2>Update a project</h2>
+      <div class="path"><span class="m patch">PATCH</span><code>/v2/projects/{project_id}</code></div>
+      <p>Updates the specified fields. Fields you omit are left unchanged. Set a field to <code>null</code> to clear it.</p>
+      <h3>Body parameters</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">name</span><span class="param-type">string</span><span class="opt">optional</span></div><p>New display name.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">description</span><span class="param-type">string | null</span><span class="opt">optional</span></div><p>New description.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">status</span><span class="param-type">enum</span><span class="opt">optional</span></div><p>Set to <code>archived</code> to archive, or <code>active</code> to restore.</p></div>
+      </div>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="curl">cURL</button><button class="tab" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="curl">curl -X PATCH https://api.orbit.example/v2/projects/prj_3TqW8vNcR \
+  -H <span class="s">"Authorization: Bearer $ORBIT_API_KEY"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{"status":"archived"}'</span></pre>
+<pre data-lang="js" hidden><span class="k">await</span> fetch(<span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR"</span>, {
+  method: <span class="s">"PATCH"</span>,
+  headers: {
+    Authorization: <span class="s">`Bearer ${process.env.ORBIT_API_KEY}`</span>,
+    <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>,
+  },
+  body: JSON.stringify({ status: <span class="s">"archived"</span> }),
+});</pre>
+<pre data-lang="py" hidden>requests.patch(
+    <span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR"</span>,
+    json={<span class="s">"status"</span>: <span class="s">"archived"</span>},
+    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['ORBIT_API_KEY']}"</span>},
+)</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELETE PROJECT -->
+  <section id="delete-project" class="endpoint">
+    <div>
+      <h2>Delete a project</h2>
+      <div class="path"><span class="m delete">DELETE</span><code>/v2/projects/{project_id}</code></div>
+      <p>Permanently deletes a project and all of its tasks. Returns <code>204 No Content</code> on success.</p>
+      <div class="callout warn"><strong>This cannot be undone.</strong> Consider archiving with <a href="#update-project">Update a project</a> instead. Requires the <code>projects:delete</code> scope.</div>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="curl">cURL</button><button class="tab" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="curl">curl -X DELETE https://api.orbit.example/v2/projects/prj_3TqW8vNcR \
+  -H <span class="s">"Authorization: Bearer $ORBIT_API_KEY"</span></pre>
+<pre data-lang="js" hidden><span class="k">await</span> fetch(<span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR"</span>, {
+  method: <span class="s">"DELETE"</span>,
+  headers: { Authorization: <span class="s">`Bearer ${process.env.ORBIT_API_KEY}`</span> },
+});</pre>
+<pre data-lang="py" hidden>requests.delete(
+    <span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR"</span>,
+    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['ORBIT_API_KEY']}"</span>},
+)</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIST TASKS -->
+  <section id="list-tasks" class="endpoint">
+    <div>
+      <h2>List tasks</h2>
+      <div class="path"><span class="m get">GET</span><code>/v2/projects/{project_id}/tasks</code></div>
+      <p>Returns tasks in a project, ordered by position.</p>
+      <h3>Query parameters</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">state</span><span class="param-type">enum</span><span class="opt">optional</span></div><p><code>todo</code>, <code>in_progress</code>, <code>done</code>, or <code>all</code>. Defaults to <code>all</code>.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">assignee</span><span class="param-type">string</span><span class="opt">optional</span></div><p>Filter by user ID (<code>usr_…</code>).</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">due_before</span><span class="param-type">timestamp</span><span class="opt">optional</span></div><p>Only tasks due before this time.</p></div>
+      </div>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="curl">cURL</button><button class="tab" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="curl">curl <span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR/tasks?state=todo"</span> \
+  -H <span class="s">"Authorization: Bearer $ORBIT_API_KEY"</span></pre>
+<pre data-lang="js" hidden><span class="k">const</span> res = <span class="k">await</span> fetch(
+  <span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR/tasks?state=todo"</span>,
+  { headers: { Authorization: <span class="s">`Bearer ${process.env.ORBIT_API_KEY}`</span> } }
+);</pre>
+<pre data-lang="py" hidden>r = requests.get(
+    <span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR/tasks"</span>,
+    params={<span class="s">"state"</span>: <span class="s">"todo"</span>},
+    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['ORBIT_API_KEY']}"</span>},
+)</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-head"><span class="code-label">Response · 200</span><button class="copy">Copy</button></div>
+<pre>{
+  <span class="p">"object"</span>: <span class="s">"list"</span>,
+  <span class="p">"data"</span>: [
+    {
+      <span class="p">"id"</span>: <span class="s">"tsk_Vb51pXa0"</span>,
+      <span class="p">"object"</span>: <span class="s">"task"</span>,
+      <span class="p">"project_id"</span>: <span class="s">"prj_3TqW8vNcR"</span>,
+      <span class="p">"title"</span>: <span class="s">"Design onboarding flow"</span>,
+      <span class="p">"state"</span>: <span class="s">"todo"</span>,
+      <span class="p">"assignee"</span>: <span class="s">"usr_Lk82hQ"</span>,
+      <span class="p">"due_at"</span>: <span class="s">"2026-11-28T17:00:00Z"</span>,
+      <span class="p">"labels"</span>: [<span class="s">"design"</span>, <span class="s">"p1"</span>]
+    }
+  ],
+  <span class="p">"has_more"</span>: <span class="k">false</span>,
+  <span class="p">"next_cursor"</span>: <span class="k">null</span>
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATE TASK -->
+  <section id="create-task" class="endpoint">
+    <div>
+      <h2>Create a task</h2>
+      <div class="path"><span class="m post">POST</span><code>/v2/projects/{project_id}/tasks</code></div>
+      <p>Adds a task to the end of a project's task list.</p>
+      <h3>Body parameters</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">title</span><span class="param-type">string</span><span class="req">required</span></div><p>Short summary, 1–255 characters.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">notes</span><span class="param-type">string</span><span class="opt">optional</span></div><p>Markdown body.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">assignee</span><span class="param-type">string</span><span class="opt">optional</span></div><p>User ID to assign.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">due_at</span><span class="param-type">timestamp</span><span class="opt">optional</span></div><p>Due date and time (ISO 8601).</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">labels</span><span class="param-type">string[]</span><span class="opt">optional</span></div><p>Up to 20 labels.</p></div>
+      </div>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="curl">cURL</button><button class="tab" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="curl">curl https://api.orbit.example/v2/projects/prj_3TqW8vNcR/tasks \
+  -H <span class="s">"Authorization: Bearer $ORBIT_API_KEY"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{
+    "title": "Write release notes",
+    "due_at": "2026-12-01T12:00:00Z",
+    "labels": ["docs"]
+  }'</span></pre>
+<pre data-lang="js" hidden><span class="k">const</span> res = <span class="k">await</span> fetch(
+  <span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR/tasks"</span>,
+  {
+    method: <span class="s">"POST"</span>,
+    headers: {
+      Authorization: <span class="s">`Bearer ${process.env.ORBIT_API_KEY}`</span>,
+      <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>,
+    },
+    body: JSON.stringify({
+      title: <span class="s">"Write release notes"</span>,
+      due_at: <span class="s">"2026-12-01T12:00:00Z"</span>,
+      labels: [<span class="s">"docs"</span>],
+    }),
+  }
+);</pre>
+<pre data-lang="py" hidden>r = requests.post(
+    <span class="s">"https://api.orbit.example/v2/projects/prj_3TqW8vNcR/tasks"</span>,
+    json={
+        <span class="s">"title"</span>: <span class="s">"Write release notes"</span>,
+        <span class="s">"due_at"</span>: <span class="s">"2026-12-01T12:00:00Z"</span>,
+        <span class="s">"labels"</span>: [<span class="s">"docs"</span>],
+    },
+    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['ORBIT_API_KEY']}"</span>},
+)</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPDATE TASK -->
+  <section id="update-task" class="endpoint">
+    <div>
+      <h2>Update a task</h2>
+      <div class="path"><span class="m patch">PATCH</span><code>/v2/tasks/{task_id}</code></div>
+      <p>Updates a task. Commonly used to move a task between states or reassign it. Completing a task fires the <code>task.completed</code> webhook.</p>
+      <h3>Body parameters</h3>
+      <div class="params">
+        <div class="param"><div class="param-head"><span class="param-name">state</span><span class="param-type">enum</span><span class="opt">optional</span></div><p><code>todo</code>, <code>in_progress</code>, or <code>done</code>.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">assignee</span><span class="param-type">string | null</span><span class="opt">optional</span></div><p>New assignee, or <code>null</code> to unassign.</p></div>
+        <div class="param"><div class="param-head"><span class="param-name">title</span><span class="param-type">string</span><span class="opt">optional</span></div><p>New title.</p></div>
+      </div>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="curl">cURL</button><button class="tab" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="curl">curl -X PATCH https://api.orbit.example/v2/tasks/tsk_Vb51pXa0 \
+  -H <span class="s">"Authorization: Bearer $ORBIT_API_KEY"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{"state":"done"}'</span></pre>
+<pre data-lang="js" hidden><span class="k">await</span> fetch(<span class="s">"https://api.orbit.example/v2/tasks/tsk_Vb51pXa0"</span>, {
+  method: <span class="s">"PATCH"</span>,
+  headers: {
+    Authorization: <span class="s">`Bearer ${process.env.ORBIT_API_KEY}`</span>,
+    <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>,
+  },
+  body: JSON.stringify({ state: <span class="s">"done"</span> }),
+});</pre>
+<pre data-lang="py" hidden>requests.patch(
+    <span class="s">"https://api.orbit.example/v2/tasks/tsk_Vb51pXa0"</span>,
+    json={<span class="s">"state"</span>: <span class="s">"done"</span>},
+    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['ORBIT_API_KEY']}"</span>},
+)</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEBHOOKS -->
+  <section id="webhooks" class="endpoint">
+    <div>
+      <h2>Webhooks</h2>
+      <p>Webhooks push events to your server via HTTPS <code>POST</code> as they happen. Register endpoints under <strong>Dashboard → Developers → Webhooks</strong>. Respond with any <code>2xx</code> status within 10 seconds; failed deliveries are retried with exponential backoff for up to 3 days.</p>
+      <h3>Event types</h3>
+      <table class="simple">
+        <tr><th>Event</th><th>Fired when</th></tr>
+        <tr><td><code>project.created</code></td><td>A project is created.</td></tr>
+        <tr><td><code>project.archived</code></td><td>A project's status becomes <code>archived</code>.</td></tr>
+        <tr><td><code>project.deleted</code></td><td>A project is permanently deleted.</td></tr>
+        <tr><td><code>task.created</code></td><td>A task is added.</td></tr>
+        <tr><td><code>task.updated</code></td><td>Any task field changes.</td></tr>
+        <tr><td><code>task.completed</code></td><td>A task moves to <code>done</code>.</td></tr>
+      </table>
+      <div class="callout">Events may arrive out of order or more than once. Use the event <code>id</code> to deduplicate.</div>
+    </div>
+    <div class="code-col">
+      <div class="code-block">
+        <div class="code-head"><span class="code-label">Event payload</span><button class="copy">Copy</button></div>
+<pre>{
+  <span class="p">"id"</span>: <span class="s">"evt_Q2c7nP0sLm"</span>,
+  <span class="p">"type"</span>: <span class="s">"task.completed"</span>,
+  <span class="p">"created_at"</span>: <span class="s">"2026-11-17T10:03:51Z"</span>,
+  <span class="p">"data"</span>: {
+    <span class="p">"object"</span>: {
+      <span class="p">"id"</span>: <span class="s">"tsk_Vb51pXa0"</span>,
+      <span class="p">"object"</span>: <span class="s">"task"</span>,
+      <span class="p">"state"</span>: <span class="s">"done"</span>
+    },
+    <span class="p">"previous"</span>: { <span class="p">"state"</span>: <span class="s">"in_progress"</span> }
+  }
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERIFY WEBHOOKS -->
+  <section id="verify-webhooks" class="endpoint">
+    <div>
+      <h2>Verifying signatures</h2>
+      <p>Every delivery includes an <code>Orbit-Signature</code> header of the form <code>t=&lt;timestamp&gt;,v1=&lt;hex&gt;</code>. The signature is an HMAC-SHA256 of <code>"{t}.{raw_body}"</code> keyed with your endpoint's signing secret.</p>
+      <ol>
+        <li>Parse <code>t</code> and <code>v1</code> from the header.</li>
+        <li>Reject the request if <code>t</code> is more than 5 minutes old.</li>
+        <li>Compute the expected HMAC over the <em>raw</em> request body.</li>
+        <li>Compare using a constant-time function.</li>
+      </ol>
+    </div>
+    <div class="code-col">
+      <div class="code-block" data-tabs>
+        <div class="code-head"><div class="tabs"><button class="tab active" data-lang="js">Node.js</button><button class="tab" data-lang="py">Python</button></div><button class="copy">Copy</button></div>
+<pre data-lang="js"><span class="k">import</span> crypto <span class="k">from</span> <span class="s">"node:crypto"</span>;
+
+<span class="k">export function</span> verify(rawBody, header, secret) {
+  <span class="k">const</span> parts = Object.fromEntries(header.split(<span class="s">","</span>).map(p =&gt; p.split(<span class="s">"="</span>)));
+  <span class="k">if</span> (Math.abs(Date.now() / <span class="n">1000</span> - Number(parts.t)) &gt; <span class="n">300</span>) <span class="k">return false</span>;
+  <span class="k">const</span> expected = crypto
+    .createHmac(<span class="s">"sha256"</span>, secret)
+    .update(<span class="s">`${parts.t}.${rawBody}`</span>)
+    .digest(<span class="s">"hex"</span>);
+  <span class="k">const</span> a = Buffer.from(expected), b = Buffer.from(parts.v1 ?? <span class="s">""</span>);
+  <span class="k">return</span> a.length === b.length &amp;&amp; crypto.timingSafeEqual(a, b);
+}</pre>
+<pre data-lang="py" hidden><span class="k">import</span> hmac, hashlib, time
+
+<span class="k">def</span> verify(raw_body: bytes, header: str, secret: str) -&gt; bool:
+    parts = dict(p.split(<span class="s">"="</span>, <span class="n">1</span>) <span class="k">for</span> p <span class="k">in</span> header.split(<span class="s">","</span>))
+    <span class="k">if</span> abs(time.time() - int(parts[<span class="s">"t"</span>])) &gt; <span class="n">300</span>:
+        <span class="k">return False</span>
+    expected = hmac.new(
+        secret.encode(),
+        f<span class="s">"{parts['t']}."</span>.encode() + raw_body,
+        hashlib.sha256,
+    ).hexdigest()
+    <span class="k">return</span> hmac.compare_digest(expected, parts.get(<span class="s">"v1"</span>, <span class="s">""</span>))</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHANGELOG -->
+  <section id="changelog">
+    <h2>Changelog</h2>
+    <table class="simple">
+      <tr><th style="width:140px">Date</th><th>Change</th></tr>
+      <tr><td>2026-11-03</td><td>Added <code>due_before</code> filter to <a href="#list-tasks">List tasks</a>.</td></tr>
+      <tr><td>2026-09-15</td><td>New <code>project.archived</code> webhook event.</td></tr>
+      <tr><td>2026-07-01</td><td><strong>v2 released.</strong> Cursor pagination replaces offset pagination; IDs are now prefixed by resource type.</td></tr>
+      <tr><td>2026-01-31</td><td>v1 deprecated. It will be retired on 2027-01-31.</td></tr>
+    </table>
+  </section>
+
+  <footer>
+    © 2026 Orbit. API status: <a href="#rate-limits">operational</a> · Questions? Open an issue in the developer forum.
+  </footer>
+</main>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+
+  // Theme
+  const applyTheme = t => {
+    root.dataset.theme = t;
+    themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+  };
+  let theme = 'light';
+  try { theme = localStorage.getItem('orbit-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); } catch (e) {}
+  applyTheme(theme);
+  themeBtn.addEventListener('click', () => {
+    theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(theme);
+    try { localStorage.setItem('orbit-theme', theme); } catch (e) {}
+  });
+
+  // Language tabs (synced across all blocks)
+  const setLang = lang => {
+    document.querySelectorAll('[data-tabs]').forEach(block => {
+      if (!block.querySelector(`pre[data-lang="${lang}"]`)) return;
+      block.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.lang === lang));
+      block.querySelectorAll('pre[data-lang]').forEach(p => p.hidden = p.dataset.lang !== lang);
+    });
+  };
+  document.querySelectorAll('.tab').forEach(tab =>
+    tab.addEventListener('click', () => setLang(tab.dataset.lang)));
+
+  // Copy buttons
+  document.querySelectorAll('.copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const block = btn.closest('.code-block');
+      const pre = [...block.querySelectorAll('pre')].find(p => !p.hidden);
+      const text = pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+      }
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
+  });
+
+  // Search filter
+  const search = document.getElementById('search');
+  const links = [...document.querySelectorAll('#nav a')];
+  const groups = [...document.querySelectorAll('.nav-group')];
+  const empty = document.getElementById('navEmpty');
+  const sectionText = id => (document.getElementById(id)?.textContent || '').toLowerCase();
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    let any = false;
+    links.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      const match = !q || a.textContent.toLowerCase().includes(q) || sectionText(id).includes(q);
+      a.style.display = match ? '' : 'none';
+      any ||= match;
+    });
+    groups.forEach(g => {
+      g.style.display = [...g.querySelectorAll('a')].some(a => a.style.display !== 'none') ? '' : 'none';
+    });
+    empty.style.display = any ? 'none' : 'block';
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== search) { e.preventDefault(); search.focus(); }
+    if (e.key === 'Escape' && document.activeElement === search) { search.value = ''; search.dispatchEvent(new Event('input')); search.blur(); }
+  });
+
+  // Active section highlighting
+  const byId = Object.fromEntries(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(a => a.classList.remove('active'));
+        const link = byId[entry.target.id];
+        if (link) {
+          link.classList.add('active');
+          link.scrollIntoView({ block: 'nearest' });
+        }
+      }
+    });
+  }, { rootMargin: '-70px 0px -65% 0px' });
+  document.querySelectorAll('main section[id]').forEach(s => observer.observe(s));
+
+  // Mobile menu
+  const sidebar = document.getElementById('sidebar');
+  document.getElementById('menuBtn').addEventListener('click', () => sidebar.classList.toggle('open'));
+  links.forEach(a => a.addEventListener('click', () => sidebar.classList.remove('open')));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+- Warm cream-and-crust palette with a custard accent. Fraunces (serif headings) and Karla (body) are loaded from Google Fonts, with Georgia and system sans as fallbacks.
+- The open/closed pill is computed from London time, so phone visitors see whether the shop is open without reading the hours.
+- Cake ordering is one tap: a `tel:` call link and an `sms:` message link to 020 7946 0381. I did not invent an email address.
+- The brief gave no Instagram handle, so the footer link is a `#` placeholder to replace.
+- The photo is a labelled CSS placeholder, and there is no external image.

@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Savory & Sweet — A Food Blog</title>
+  <style>
+    :root {
+      --cream: #fdf8f0;
+      --paper: #fffdf9;
+      --terracotta: #c4572e;
+      --terracotta-dark: #a3441f;
+      --olive: #5b6b3a;
+      --charcoal: #2e2a26;
+      --muted: #7a7068;
+      --border: #ebe2d5;
+      --shadow: 0 4px 18px rgba(46, 42, 38, 0.08);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    a { color: var(--terracotta); text-decoration: none; }
+    a:hover { color: var(--terracotta-dark); text-decoration: underline; }
+
+    /* ---------- Header ---------- */
+    header {
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: var(--charcoal);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--terracotta); }
+    .logo:hover { text-decoration: none; color: var(--charcoal); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--charcoal);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    nav a:hover, nav a.active { color: var(--terracotta); text-decoration: none; }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      background: var(--cream);
+    }
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      width: 180px;
+      color: var(--charcoal);
+    }
+    .search-box span { color: var(--muted); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      max-width: 1100px;
+      margin: 2.5rem auto 1rem;
+      padding: 0 1.5rem;
+    }
+
+    .hero-card {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      min-height: 420px;
+      display: flex;
+      align-items: flex-end;
+      background:
+        linear-gradient(to top, rgba(30, 20, 15, 0.85) 0%, rgba(30, 20, 15, 0.1) 60%),
+        url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80") center/cover no-repeat;
+      color: #fff;
+    }
+
+    .hero-content {
+      padding: 2.5rem;
+      max-width: 680px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--terracotta);
+      color: #fff;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero h1 {
+      font-size: 2.6rem;
+      line-height: 1.15;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero p { font-size: 1.1rem; opacity: 0.92; margin-bottom: 1rem; }
+
+    .meta {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      background: var(--terracotta);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--terracotta-dark); color: #fff; text-decoration: none; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--terracotta);
+      border: 2px solid var(--terracotta);
+    }
+    .btn-outline:hover { background: var(--terracotta); color: #fff; }
+
+    /* ---------- Layout ---------- */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 3rem;
+    }
+
+    section.section-title {
+      grid-column: 1 / -1;
+    }
+
+    h2.section-heading {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    h2.section-heading::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--terracotta);
+      margin-top: 0.4rem;
+    }
+
+    /* ---------- Post grid ---------- */
+    .posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .post-card {
+      background: var(--paper);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(46, 42, 38, 0.14);
+    }
+
+    .post-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .post-body {
+      padding: 1.3rem 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .post-body .cat {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.75rem;
+      color: var(--olive);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .post-body h3 {
+      font-size: 1.3rem;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+
+    .post-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 0.8rem;
+    }
+
+    .rating { color: var(--terracotta); letter-spacing: 1px; }
+
+    /* ---------- Sidebar ---------- */
+    aside { display: flex; flex-direction: column; gap: 2rem; }
+
+    .widget {
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .widget h4 {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--olive);
+      margin-bottom: 1rem;
+    }
+
+    .about-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1rem;
+      border: 4px solid var(--cream);
+      box-shadow: var(--shadow);
+    }
+    .about-text { text-align: center; font-size: 0.95rem; color: var(--muted); }
+    .about-text strong { color: var(--charcoal); display: block; font-size: 1.1rem; margin-bottom: 0.3rem; }
+
+    .cat-list { list-style: none; }
+    .cat-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.55rem 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.95rem;
+    }
+    .cat-list li:last-child { border-bottom: none; }
+    .cat-list .count {
+      background: var(--cream);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 0 0.6rem;
+      font-size: 0.8rem;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .newsletter p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.9rem; }
+    .newsletter input {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      margin-bottom: 0.7rem;
+      background: var(--cream);
+    }
+    .newsletter .btn { width: 100%; text-align: center; margin-top: 0; }
+    .form-msg { font-size: 0.85rem; margin-top: 0.6rem; color: var(--olive); display: none; }
+
+    /* ---------- Recipe / article view ---------- */
+    .article {
+      background: var(--paper);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: none;
+    }
+    .article.active { display: block; }
+    .article img.article-hero { width: 100%; height: 380px; object-fit: cover; }
+    .article-body { padding: 2.2rem 2.5rem 2.8rem; }
+    .article-body h1 { font-size: 2.4rem; line-height: 1.2; margin: 0.6rem 0 0.8rem; }
+    .article-body .byline {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-body h3 {
+      font-size: 1.35rem;
+      margin: 1.8rem 0 0.8rem;
+      color: var(--olive);
+    }
+    .article-body p { margin-bottom: 1.1rem; font-size: 1.05rem; }
+
+    .recipe-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.8rem;
+      margin: 2rem 0;
+    }
+    .recipe-card h3 { margin-top: 0; color: var(--terracotta); }
+    .recipe-card ul { padding-left: 1.2rem; margin-bottom: 1rem; }
+    .recipe-card li { margin-bottom: 0.4rem; }
+    .recipe-card ol { padding-left: 1.3rem; }
+    .recipe-card ol li { margin-bottom: 0.7rem; }
+    .recipe-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.2rem;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .comments { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .comments h3 { margin-bottom: 1rem; }
+    .comment {
+      background: var(--cream);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .comment strong { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 0.95rem; }
+    .comment span { font-size: 0.8rem; color: var(--muted); margin-left: 0.5rem; }
+    .comment p { margin-top: 0.4rem; font-size: 0.97rem; }
+
+    .comment-form input, .comment-form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      margin-bottom: 0.7rem;
+      background: var(--cream);
+    }
+    .comment-form textarea { min-height: 110px; resize: vertical; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: var(--charcoal);
+      color: #d9cfc3;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+    footer .logo { color: #fff; display: inline-block; margin-bottom: 0.8rem; }
+    footer .logo span { color: var(--terracotta); }
+    footer a { color: #e9b89f; }
+    footer .socials { margin-top: 1rem; display: flex; justify-content: center; gap: 1.2rem; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      main { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
+      .article-body { padding: 1.6rem 1.4rem 2rem; }
+      .article-body h1 { font-size: 1.9rem; }
+      .search-box input { width: 120px; }
+    }
+
+    @media (max-width: 560px) {
+      .hero-card { min-height: 360px; }
+      .hero-content { padding: 1.5rem; }
+      .hero h1 { font-size: 1.7rem; }
+      .posts { grid-template-columns: 1fr; }
+      nav ul { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header>
+    <div class="nav-wrap">
+      <a href="#" class="logo" data-home>Savory<span>&amp;</span>Sweet</a>
+      <nav>
+        <ul>
+          <li><a href="#" class="active" data-home>Home</a></li>
+          <li><a href="#recipes" data-filter="Recipes">Recipes</a></li>
+          <li><a href="#travel" data-filter="Travel">Travel</a></li>
+          <li><a href="#baking" data-filter="Baking">Baking</a></li>
+          <li><a href="#about" data-about>About</a></li>
+        </ul>
+      </nav>
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="search" id="searchInput" placeholder="Search recipes..." aria-label="Search">
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO (home only) ============ -->
+  <div id="homeView">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-content">
+          <span class="tag">Featured Recipe</span>
+          <h1>Slow-Roasted Tomato Pasta with Garlic Crumbs</h1>
+          <p>Sweet, jammy tomatoes meet toasted breadcrumbs and a glug of good olive oil. Simple ingredients, big flavor, ready in under an hour.</p>
+          <div class="meta">By Maya Lindqvist · 15 min prep · 45 min cook · Serves 4</div>
+          <br>
+          <a href="#" class="btn" data-post="1">Read the Recipe</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MAIN GRID ============ -->
+    <main>
+      <div>
+        <h2 class="section-heading" id="latestHeading">Latest from the Kitchen</h2>
+        <div class="posts" id="postGrid"></div>
+        <p id="emptyMsg" style="display:none; color: var(--muted); margin-top: 1rem;">No recipes match your search.</p>
+      </div>
+
+      <!-- Sidebar -->
+      <aside>
+        <div class="widget">
+          <img class="about-img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" alt="Maya">
+          <div class="about-text">
+            <strong>Hi, I'm Maya</strong>
+            Home cook, weekend baker, and eternal snacker. This blog is where I share the recipes I make over and over again.
+          </div>
+        </div>
+
+        <div class="widget">
+          <h4>Categories</h4>
+          <ul class="cat-list">
+            <li><a href="#" data-filter="All">All Posts</a><span class="count" id="countAll">0</span></li>
+            <li><a href="#" data-filter="Recipes">Recipes</a><span class="count" id="countRecipes">0</span></li>
+            <li><a href="#" data-filter="Baking">Baking</a><span class="count" id="countBaking">0</span></li>
+            <li><a href="#" data-filter="Travel">Travel</a><span class="count" id="countTravel">0</span></li>
+          </ul>
+        </div>
+
+        <div class="widget newsletter">
+          <h4>Get New Recipes</h4>
+          <p>Join 12,000+ home cooks getting one recipe a week. No spam, ever.</p>
+          <form id="newsletterForm">
+            <input type="email" placeholder="you@example.com" required aria-label="Email">
+            <button type="submit" class="btn">Subscribe</button>
+            <div class="form-msg" id="newsletterMsg">Thanks! You're on the list. 🍋</div>
+          </form>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- ============ ARTICLE VIEW ============ -->
+  <main id="articleView" style="display:none; grid-template-columns: 1fr;">
+    <div style="grid-column: 1 / -1;">
+      <a href="#" class="back-link" id="backBtn">← Back to all recipes</a>
+      <article class="article" id="articleContainer"></article>
+    </div>
+  </main>
+
+  <!-- ============ ABOUT VIEW ============ -->
+  <main id="aboutView" style="display:none; grid-template-columns: 1fr;">
+    <div style="grid-column: 1 / -1; max-width: 720px; margin: 0 auto;">
+      <a href="#" class="back-link" data-home>← Back to home</a>
+      <div class="article active" style="display:block;">
+        <div class="article-body">
+          <h1>About Savory &amp; Sweet</h1>
+          <div class="byline">Written by Maya Lindqvist</div>
+          <p>Savory &amp; Sweet started in a tiny apartment kitchen with one oven that ran hot and a stack of handwritten recipe cards. Today it's where I share everything I cook, bake, and taste on the road.</p>
+          <p>My philosophy is simple: good food doesn't need to be complicated. I focus on seasonal ingredients, honest techniques, and recipes you'll actually make on a Tuesday night.</p>
+          <p>Thanks for being here. Pull up a chair, and let's get cooking.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <a href="#" class="logo" data-home>Savory<span>&amp;</span>Sweet</a>
+    <p>Recipes, travel notes, and kitchen experiments since 2019.</p>
+    <div class="socials">
+      <a href="#">Instagram</a>
+      <a href="#">Pinterest</a>
+      <a href="#">YouTube</a>
+      <a href="#">Email</a>
+    </div>
+    <p style="margin-top:1.2rem; font-size:0.8rem; opacity:0.7;">© 2026 Savory &amp; Sweet. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // ---------- Sample post data ----------
+    const posts = [
+      {
+        id: 1,
+        category: "Recipes",
+        title: "Slow-Roasted Tomato Pasta with Garlic Crumbs",
+        excerpt: "Sweet, jammy tomatoes and crunchy breadcrumbs make this weeknight pasta a total crowd-pleaser.",
+        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+        date: "Nov 10, 2026",
+        rating: 5,
+        prep: "15 min", cook: "45 min", serves: 4,
+        ingredients: [
+          "1 lb spaghetti or linguine",
+          "2 pints cherry tomatoes",
+          "6 cloves garlic, thinly sliced",
+          "1/3 cup good olive oil",
+          "1 cup panko breadcrumbs",
+          "Fresh basil, parmesan, flaky salt"
+        ],
+        steps: [
+          "Heat oven to 400°F. Toss tomatoes with half the oil, salt, and pepper on a sheet pan.",
+          "Roast 35–40 minutes until blistered and jammy.",
+          "Toast panko and garlic in the remaining oil until golden. Season well.",
+          "Cook pasta until al dente. Reserve a cup of pasta water.",
+          "Toss pasta with tomatoes, a splash of pasta water, and basil. Top with garlic crumbs and parmesan."
+        ],
+        body: "This is the recipe I make when the fridge is nearly empty but the farmers market tomatoes are looking too good to pass up. Roasting concentrates their sweetness, and the garlic crumbs bring the crunch that makes every bite interesting."
+      },
+      {
+        id: 2,
+        category: "Baking",
+        title: "Brown Butter Chocolate Chip Cookies",
+        excerpt: "Nutty brown butter, a long chill, and flaky salt on top. The only chocolate chip cookie recipe you'll need.",
+        image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=800&q=80",
+        date: "Oct 28, 2026",
+        rating: 5,
+        prep: "20 min", cook: "12 min", serves: 24,
+        ingredients: [
+          "1 cup (2 sticks) butter, browned and cooled",
+          "3/4 cup brown sugar",
+          "1/2 cup white sugar",
+          "2 eggs + 1 yolk",
+          "2 tsp vanilla",
+          "2 1/4 cups flour, 1 tsp baking soda, 1 tsp salt",
+          "2 cups chocolate chunks",
+          "Flaky sea salt for topping"
+        ],
+        steps: [
+          "Brown the butter in a light-colored pan until it smells nutty. Cool 10 minutes.",
+          "Whisk butter with both sugars. Add eggs, yolk, and vanilla.",
+          "Fold in dry ingredients, then chocolate. Chill dough at least 2 hours (overnight is better).",
+          "Scoop into balls and bake at 350°F for 11–13 minutes.",
+          "Sprinkle with flaky salt while still warm."
+        ],
+        body: "Browning the butter adds a toffee-like depth that plain melted butter just can't match. Give the dough a long rest and your cookies will come out thick, chewy, and golden at the edges."
+      },
+      {
+        id: 3,
+        category: "Travel",
+        title: "Three Days Eating Through Lisbon",
+        excerpt: "Custard tarts at sunrise, grilled sardines by the river, and the petiscos that turned into dinner every night.",
+        image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+        date: "Oct 12, 2026",
+        rating: null,
+        prep: null, cook: null, serves: null,
+        ingredients: null,
+        steps: null,
+        body: "Lisbon is a city that rewards wandering with a fork. We started each morning with pastéis de nata still warm from the bakery, spent afternoons in tiny tascas ordering whatever the chalkboard said, and ended every night with a glass of vinho verde and one more plate of something grilled. Our top pick: the sardines at a little spot near the Alfama stairs, eaten with fingers and no regrets."
+      },
+      {
+        id: 4,
+        category: "Recipes",
+        title: "Crispy Smashed Potatoes with Herby Yogurt",
+        excerpt: "Crackly, golden potatoes served with a cool, tangy dip. A side dish that quietly steals the show.",
+        image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
+        date: "Sep 30, 2026",
+        rating: 4,
+        prep: "10 min", cook: "40 min", serves: 4,
+        ingredients: [
+          "1.5 lb baby potatoes",
+          "3 tbsp olive oil",
+          "1 tsp flaky salt, plus more to finish",
+          "1 cup Greek yogurt",
+          "1 lemon, zested and juiced",
+          "Handful of dill, mint, and chives"
+        ],
+        steps: [
+          "Boil potatoes in salted water until fork-tender, about 15 minutes. Drain and dry.",
+          "Smash each potato gently with the bottom of a glass.",
+          "Roast at 425°F with oil and salt for 25 minutes until crisp.",
+          "Stir lemon zest and juice into yogurt. Fold in chopped herbs.",
+          "Serve potatoes hot with a generous spoonful of herby yogurt."
+        ],
+        body: "The trick is patience: let the potatoes sit undisturbed in the hot oven so they develop a crackly crust. The yogurt keeps everything bright and balanced."
+      },
+      {
+        id: 5,
+        category: "Baking",
+        title: "Lemon Ricotta Pancakes",
+        excerpt: "Light, fluffy, and bursting with lemon. Weekend breakfast just got a serious upgrade.",
+        image: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=800&q=80",
+        date: "Sep 14, 2026",
+        rating: 5,
+        prep: "10 min", cook: "20 min", serves: 3,
+        ingredients: [
+          "1 cup ricotta",
+          "2 eggs, separated",
+          "1/2 cup milk",
+          "3/4 cup flour",
+          "1 tbsp sugar, 1 tsp baking powder",
+          "Zest of 1 lemon",
+          "Maple syrup and berries for serving"
+        ],
+        steps: [
+          "Whisk ricotta, yolks, milk, and lemon zest together.",
+          "Stir in flour, sugar, and baking powder until just combined.",
+          "Beat egg whites to soft peaks and fold gently into the batter.",
+          "Cook 1/4-cup scoops on a buttered griddle over medium-low heat, 2 minutes per side.",
+          "Serve stacked with maple syrup, berries, and a squeeze of lemon."
+        ],
+        body: "Ricotta makes these pancakes unbelievably tender. Separating the eggs and folding in whipped whites is the extra step that makes a real difference."
+      },
+      {
+        id: 6,
+        category: "Travel",
+        title: "A Weekend of Street Food in Oaxaca",
+        excerpt: "Mole, mezcal, and memelas hot off the comal. Notes from a city that takes its food seriously.",
+        image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80",
+        date: "Aug 22, 2026",
+        rating: null,
+        prep: null, cook: null, serves: null,
+        ingredients: null,
+        steps: null,
+        body: "Oaxaca's markets are an education in chiles, chocolate, and corn. We ate tlayudas at the Mercado 20 de Noviembre, sipped mezcal in a courtyard with a bottle older than me, and learned to make tortillas by hand from a grandmother who laughed at our first attempts."
+      }
+    ];
+
+    // ---------- Helpers ----------
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+
+    const stars = (n) => n ? "★".repeat(n) + "☆".repeat(5 - n) : "";
+
+    let currentFilter = "All";
+    let currentSearch = "";
+
+    // ---------- Render grid ----------
+    function renderGrid() {
+      const grid = $("#postGrid");
+      const q = currentSearch.trim().toLowerCase();
+
+      const filtered = posts.filter(p => {
+        const matchCat = currentFilter === "All" || p.category === currentFilter;
+        const matchQ = !q ||
+          p.title.toLowerCase().includes(q) ||
+          p.excerpt.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+
+      grid.innerHTML = filtered.map(p => `
+        <article class="post-card">
+          <a href="#post-${p.id}" data-post="${p.id}">
+            <img src="${p.image}" alt="${p.title}" loading="lazy">
+          </a>
+          <div class="post-body">
+            <div class="cat">${p.category}</div>
+            <h3><a href="#post-${p.id}" data-post="${p.id}" style="color:inherit;">${p.title}</a></h3>
+            <p>${p.excerpt}</p>
+            <div class="post-footer">
+              <span>${p.date}</span>
+              ${p.rating ? `<span class="rating">${stars(p.rating)}</span>` : ""}
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      $("#emptyMsg").style.display = filtered.length ? "none" : "block";
+
+      const headings = { All: "Latest from the Kitchen", Recipes: "Recipes", Baking: "Baking", Travel: "Travel Notes" };
+      $("#latestHeading").textContent = headings[currentFilter] || "Latest";
+
+      updateCounts();
+    }
+
+    function updateCounts() {
+      $("#countAll").textContent = posts.length;
+      $("#countRecipes").textContent = posts.filter(p => p.category === "Recipes").length;
+      $("#countBaking").textContent = posts.filter(p => p.category === "Baking").length;
+      $("#countTravel").textContent = posts.filter(p => p.category === "Travel").length;
+    }
+
+    // ---------- Render single post ----------
+    function renderPost(id) {
+      const p = posts.find(x => x.id == id);
+      if (!p) return showHome();
+
+      const recipeBlock = p.ingredients ? `
+        <div class="recipe-card">
+          <h3>The Recipe</h3>
+          <div class="recipe-meta">
+            <span>⏱ Prep: ${p.prep}</span>
+            <span>🔥 Cook: ${p.cook}</span>
+            <span>🍽 Serves: ${p.serves}</span>
+          </div>
+          <h3 style="font-size:1.1rem; color:var(--charcoal);">Ingredients</h3>
+          <ul>${p.ingredients.map(i => `<li>${i}</li>`).join("")}</ul>
+          <h3 style="font-size:1.1rem; color:var(--charcoal);">Method</h3>
+          <ol>${p.steps.map(s => `<li>${s}</li>`).join("")}</ol>
+        </div>` : "";
+
+      $("#articleContainer").innerHTML = `
+        <img class="article-hero" src="${p.image}" alt="${p.title}">
+        <div class="article-body">
+          <div class="cat" style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:0.8rem;color:var(--olive);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">${p.category}</div>
+          <h1>${p.title}</h1>
+          <div class="byline">By Maya Lindqvist · ${p.date} ${p.rating ? "· " + stars(p.rating) : ""}</div>
+          <p>${p.body}</p>
+          ${recipeBlock}
+          <div class="comments">
+            <h3>Leave a Comment</h3>
+            <form class="comment-form" id="commentForm">
+              <input type="text" placeholder="Your name" required>
+              <textarea placeholder="How did it turn out?" required></textarea>
+              <button type="submit" class="btn">Post Comment</button>
+            </form>
+            <div id="commentList" style="margin-top:1.5rem;"></div>
+          </div>
+        </div>`;
+
+      $("#commentForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const [nameEl, textEl] = e.target.elements;
+        const list = $("#commentList");
+        const div = document.createElement("div");
+        div.className = "comment";
+        const strong = document.createElement("strong");
+        strong.textContent = nameEl.value;
+        const span = document.createElement("span");
+        span.textContent = "just now";
+        const para = document.createElement("p");
+        para.textContent = textEl.value;
+        div.append(strong, span, para);
+        list.prepend(div);
+        e.target.reset();
+      });
+
+      showView("article");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ---------- View switching ----------
+    function showView(view) {
+      $("#homeView").style.display = view === "home" ? "block" : "none";
+      $("#articleView").style.display = view === "article" ? "grid" : "none";
+      $("#aboutView").style.display = view === "about" ? "grid" : "none";
+      $$("nav a").forEach(a => a.classList.remove("active"));
+      if (view === "home") {
+        const home = document.querySelector("nav a[data-home]");
+        if (home) home.classList.add("active");
+      }
+    }
+
+    function showHome() {
+      showView("home");
+      renderGrid();
+    }
+
+    // ---------- Routing (hash based) ----------
+    function route() {
+      const hash = location.hash;
+      if (hash.startsWith("#post-")) {
+        renderPost(hash.replace("#post-", ""));
+      } else if (hash === "#about") {
+        showView("about");
+      } else {
+        showHome();
+        if (hash.startsWith("#recipes")) { currentFilter = "Recipes"; renderGrid(); }
+        if (hash.startsWith("#travel"))  { currentFilter = "Travel"; renderGrid(); }
+        if (hash.startsWith("#baking"))  { currentFilter = "Baking"; renderGrid(); }
+      }
+    }
+
+    // ---------- Event wiring ----------
+    document.addEventListener("click", e => {
+      const link = e.target.closest("a");
+      if (!link) return;
+
+      if (link.dataset.post) {
+        e.preventDefault();
+        location.hash = "post-" + link.dataset.post;
+        return;
+      }
+      if (link.hasAttribute("data-home")) {
+        e.preventDefault();
+        currentFilter = "All";
+        currentSearch = "";
+        $("#searchInput").value = "";
+        location.hash = "";
+        showHome();
+        return;
+      }
+      if (link.hasAttribute("data-about")) {
+        e.preventDefault();
+        location.hash = "about";
+        return;
+      }
+      if (link.dataset.filter) {
+        e.preventDefault();
+        currentFilter = link.dataset.filter;
+        location.hash = "";
+        showHome();
+        return;
+      }
+    });
+
+    $("#backBtn").addEventListener("click", e => {
+      e.preventDefault();
+      location.hash = "";
+      showHome();
+    });
+
+    $("#searchInput").addEventListener("input", e => {
+      currentSearch = e.target.value;
+      if (location.hash.startsWith("#post-") || location.hash === "#about") {
+        location.hash = "";
+      }
+      showHome();
+    });
+
+    $("#newsletterForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const msg = $("#newsletterMsg");
+      msg.style.display = "block";
+      e.target.reset();
+      setTimeout(() => msg.style.display = "none", 4000);
+    });
+
+    window.addEventListener("hashchange", route);
+
+    // Initial load
+    route();
+  </script>
+</body>
+</html>

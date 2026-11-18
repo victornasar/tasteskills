@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forge CLI Documentation</title>
+<meta name="description" content="Documentation for Forge, a command-line tool for building, testing, and deploying projects.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f6f8fa;
+    --text: #1f2328;
+    --muted: #59636e;
+    --border: #d1d9e0;
+    --accent: #0969da;
+    --accent-soft: #ddf4ff;
+    --code-bg: #f6f8fa;
+    --sidebar-w: 270px;
+    --warn-bg: #fff8c5;
+    --warn-border: #d4a72c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --bg-alt: #161b22;
+      --text: #e6edf3;
+      --muted: #9198a1;
+      --border: #30363d;
+      --accent: #4493f8;
+      --accent-soft: #112a45;
+      --code-bg: #161b22;
+      --warn-bg: #2d2a14;
+      --warn-border: #9e6a03;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  /* Layout */
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px; padding: 0 20px;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; }
+  .brand span { color: var(--accent); }
+  .menu-toggle {
+    display: none; background: none; border: 1px solid var(--border);
+    color: var(--text); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.95rem;
+  }
+  .top-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 0.92rem; }
+  .top-links a:hover { color: var(--accent); }
+
+  .wrap { display: flex; min-height: calc(100vh - 56px); }
+
+  nav.sidebar {
+    width: var(--sidebar-w); flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    background: var(--bg-alt);
+    padding: 20px 16px;
+    position: sticky; top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  .search {
+    width: 100%; padding: 8px 10px; margin-bottom: 16px;
+    border: 1px solid var(--border); border-radius: 6px;
+    background: var(--bg); color: var(--text); font-size: 0.9rem;
+  }
+  .search:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .nav-group { margin-bottom: 18px; }
+  .nav-group h4 {
+    margin: 0 0 6px; font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted);
+  }
+  .nav-group a {
+    display: block; padding: 5px 10px; margin: 1px 0;
+    border-radius: 6px; color: var(--text); text-decoration: none; font-size: 0.92rem;
+  }
+  .nav-group a:hover { background: var(--accent-soft); }
+  .nav-group a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .nav-group a.hidden { display: none; }
+  .nav-group.empty { display: none; }
+
+  main {
+    flex: 1; min-width: 0;
+    padding: 40px 56px 80px;
+    max-width: 900px;
+  }
+  h1 { font-size: 2.2rem; margin: 0 0 8px; line-height: 1.2; }
+  .lead { font-size: 1.12rem; color: var(--muted); margin: 0 0 32px; }
+  section { padding-top: 16px; margin-bottom: 48px; }
+  h2 {
+    font-size: 1.6rem; margin: 0 0 14px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 { font-size: 1.2rem; margin: 28px 0 10px; }
+  h4 { font-size: 1rem; margin: 20px 0 6px; }
+  p { margin: 0 0 14px; }
+  a { color: var(--accent); }
+  ul, ol { padding-left: 24px; margin: 0 0 14px; }
+  li { margin-bottom: 4px; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.87em;
+    background: var(--code-bg);
+    padding: 2px 6px; border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .codeblock {
+    position: relative; margin: 0 0 18px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--code-bg); overflow: hidden;
+  }
+  .codeblock .label {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 12px; font-size: 0.78rem; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .copy-btn {
+    background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    border-radius: 5px; padding: 2px 9px; font-size: 0.75rem; cursor: pointer;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .codeblock pre {
+    margin: 0; padding: 14px 16px; overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.87rem; line-height: 1.5;
+  }
+  .codeblock pre code { background: none; border: none; padding: 0; font-size: inherit; }
+  .prompt { color: var(--muted); user-select: none; }
+  .comment { color: var(--muted); }
+
+  .callout {
+    border-left: 4px solid var(--accent); background: var(--accent-soft);
+    padding: 12px 16px; border-radius: 6px; margin: 0 0 18px;
+  }
+  .callout.warn { border-left-color: var(--warn-border); background: var(--warn-bg); }
+  .callout strong { display: block; margin-bottom: 4px; }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 0.93rem;
+  }
+  th, td { text-align: left; padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--bg-alt); font-weight: 600; }
+  td code { white-space: nowrap; }
+
+  .cmd-meta {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: -4px 0 14px;
+  }
+  .badge {
+    font-size: 0.75rem; padding: 2px 8px; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+
+  .pager {
+    display: flex; justify-content: space-between; gap: 16px;
+    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .pager a {
+    flex: 1; padding: 12px 14px; border: 1px solid var(--border);
+    border-radius: 8px; text-decoration: none; color: var(--text);
+  }
+  .pager a:hover { border-color: var(--accent); }
+  .pager small { display: block; color: var(--muted); font-size: 0.8rem; }
+  .pager .next { text-align: right; }
+
+  footer {
+    margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border);
+    color: var(--muted); font-size: 0.88rem;
+  }
+
+  details {
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; margin-bottom: 10px; background: var(--bg);
+  }
+  summary { cursor: pointer; font-weight: 600; }
+  details[open] summary { margin-bottom: 8px; }
+
+  .no-results { display: none; color: var(--muted); font-size: 0.9rem; padding: 6px 10px; }
+
+  /* Responsive */
+  @media (max-width: 860px) {
+    .menu-toggle { display: inline-block; }
+    .wrap { display: block; }
+    nav.sidebar {
+      position: fixed; top: 56px; left: 0; z-index: 9;
+      transform: translateX(-100%); transition: transform 0.2s ease;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+    }
+    nav.sidebar.open { transform: translateX(0); }
+    main { padding: 28px 20px 60px; }
+    h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">Menu</button>
+    <a class="brand" href="#introduction">Forge<span>.docs</span></a>
+  </div>
+  <nav class="top-links">
+    <a href="https://example.com/forge" target="_blank" rel="noopener">GitHub</a>
+    <a href="#troubleshooting">Help</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <nav class="sidebar" id="sidebar" aria-label="Documentation navigation">
+    <input type="search" class="search" id="search" placeholder="Filter pages..." aria-label="Filter navigation">
+    <div class="no-results" id="noResults">No matching pages.</div>
+
+    <div class="nav-group" data-group>
+      <h4>Getting started</h4>
+      <a href="#introduction" data-target="introduction">Introduction</a>
+      <a href="#installation" data-target="installation">Installation</a>
+      <a href="#quickstart" data-target="quickstart">Quick start</a>
+    </div>
+
+    <div class="nav-group" data-group>
+      <h4>Commands</h4>
+      <a href="#cmd-init" data-target="cmd-init">forge init</a>
+      <a href="#cmd-build" data-target="cmd-build">forge build</a>
+      <a href="#cmd-test" data-target="cmd-test">forge test</a>
+      <a href="#cmd-deploy" data-target="cmd-deploy">forge deploy</a>
+      <a href="#cmd-config" data-target="cmd-config">forge config</a>
+    </div>
+
+    <div class="nav-group" data-group>
+      <h4>Reference</h4>
+      <a href="#configuration" data-target="configuration">Configuration file</a>
+      <a href="#global-options" data-target="global-options">Global options</a>
+      <a href="#exit-codes" data-target="exit-codes">Exit codes</a>
+      <a href="#environment" data-target="environment">Environment variables</a>
+    </div>
+
+    <div class="nav-group" data-group>
+      <h4>Guides</h4>
+      <a href="#ci" data-target="ci">Using in CI</a>
+      <a href="#troubleshooting" data-target="troubleshooting">Troubleshooting</a>
+      <a href="#faq" data-target="faq">FAQ</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <section id="introduction">
+      <h1>Forge CLI</h1>
+      <p class="lead">Forge is a command-line tool for scaffolding, building, testing, and deploying projects from a single consistent interface.</p>
+      <p>Forge reads a small configuration file at the root of your project and runs the same steps locally and in CI. It is designed to be predictable: every command prints what it is doing, returns a meaningful exit code, and can be run non-interactively.</p>
+      <h3>Key features</h3>
+      <ul>
+        <li><strong>One workflow</strong> for local development and continuous integration.</li>
+        <li><strong>Declarative configuration</strong> in <code>forge.yaml</code>, versioned with your code.</li>
+        <li><strong>Incremental builds</strong> that skip unchanged targets.</li>
+        <li><strong>Safe deploys</strong> with dry-run previews and automatic rollback on failure.</li>
+        <li><strong>Machine-readable output</strong> via <code>--json</code> for scripting.</li>
+      </ul>
+    </section>
+
+    <section id="installation">
+      <h2>Installation</h2>
+      <p>Forge is distributed as a single static binary for macOS, Linux, and Windows.</p>
+
+      <h3>Using Homebrew</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>brew install forge-cli/tap/forge</code></pre>
+      </div>
+
+      <h3>Using the install script</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>curl -fsSL https://example.com/forge/install.sh | sh</code></pre>
+      </div>
+
+      <h3>Verify the installation</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>forge --version
+<span class="comment"># forge 3.4.1 (linux/amd64)</span></code></pre>
+      </div>
+
+      <div class="callout">
+        <strong>Requirements</strong>
+        Forge has no runtime dependencies. Building container targets requires Docker 24 or later.
+      </div>
+    </section>
+
+    <section id="quickstart">
+      <h2>Quick start</h2>
+      <p>This walkthrough creates a new project, builds it, runs the tests, and deploys to a staging environment.</p>
+
+      <h3>1. Create a project</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>forge init my-service
+<span class="prompt">$ </span>cd my-service</code></pre>
+      </div>
+
+      <h3>2. Build and test</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>forge build
+<span class="prompt">$ </span>forge test</code></pre>
+      </div>
+
+      <h3>3. Deploy to staging</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>forge deploy --env staging --dry-run
+<span class="prompt">$ </span>forge deploy --env staging</code></pre>
+      </div>
+    </section>
+
+    <section id="cmd-init">
+      <h2><code>forge init</code></h2>
+      <div class="cmd-meta"><span class="badge">Creates files</span><span class="badge">Safe to re-run</span></div>
+      <p>Creates a new project directory with a starter <code>forge.yaml</code>, a sample source tree, and a <code>.forgeignore</code> file.</p>
+
+      <h3>Usage</h3>
+      <div class="codeblock">
+        <div class="label"><span>text</span><button class="copy-btn">Copy</button></div>
+        <pre><code>forge init [name] [flags]</code></pre>
+      </div>
+
+      <h3>Flags</h3>
+      <table>
+        <thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>--template</code></td><td><code>basic</code></td><td>Starter template to use: <code>basic</code>, <code>api</code>, or <code>worker</code>.</td></tr>
+          <tr><td><code>--force</code></td><td><code>false</code></td><td>Overwrite existing files in the target directory.</td></tr>
+          <tr><td><code>--no-git</code></td><td><code>false</code></td><td>Do not initialize a Git repository.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Example</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>forge init billing-api --template api</code></pre>
+      </div>
+    </section>
+
+    <section id="cmd-build">
+      <h2><code>forge build</code></h2>
+      <div class="cmd-meta"><span class="badge">Incremental</span><span class="badge">Writes to ./dist</span></div>
+      <p>Compiles all targets defined in <code>forge.yaml</code>. Targets whose inputs have not changed since the last successful build are skipped.</p>
+
+      <h3>Usage</h3>
+      <div class="codeblock">
+        <div class="label"><span>text</span><button class="copy-btn">Copy</button></div>
+        <pre><code>forge build [target...] [flags]</code></pre>
+      </div>
+
+      <h3>Flags</h3>
+      <table>
+        <thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>--clean</code></td><td><code>false</code></td><td>Remove the <code>dist/</code> directory before building.</td></tr>
+          <tr><td><code>--jobs, -j</code></td><td>CPU count</td><td>Maximum number of targets to build in parallel.</td></tr>
+          <tr><td><code>--release</code></td><td><code>false</code></td><td>Enable optimizations and strip debug symbols.</td></tr>
+          <tr><td><code>--no-cache</code></td><td><code>false</code></td><td>Ignore the build cache and rebuild every target.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Examples</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="comment"># Build everything</span>
+<span class="prompt">$ </span>forge build
+
+<span class="comment"># Build only the api target, optimized</span>
+<span class="prompt">$ </span>forge build api --release
+
+<span class="comment"># Clean rebuild with 4 workers</span>
+<span class="prompt">$ </span>forge build --clean -j 4</code></pre>
+      </div>
+    </section>
+
+    <section id="cmd-test">
+      <h2><code>forge test</code></h2>
+      <div class="cmd-meta"><span class="badge">Parallel</span><span class="badge">Exits non-zero on failure</span></div>
+      <p>Runs the test suites declared under <code>tests:</code> in <code>forge.yaml</code>. Results are printed in a summary table at the end of the run.</p>
+
+      <h3>Usage</h3>
+      <div class="codeblock">
+        <div class="label"><span>text</span><button class="copy-btn">Copy</button></div>
+        <pre><code>forge test [suite...] [flags]</code></pre>
+      </div>
+
+      <h3>Flags</h3>
+      <table>
+        <thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>--filter</code></td><td>none</td><td>Run only tests whose names match the given pattern.</td></tr>
+          <tr><td><code>--coverage</code></td><td><code>false</code></td><td>Collect and report line coverage.</td></tr>
+          <tr><td><code>--fail-fast</code></td><td><code>false</code></td><td>Stop the run after the first failing test.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Example</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>forge test --filter "auth*" --coverage</code></pre>
+      </div>
+    </section>
+
+    <section id="cmd-deploy">
+      <h2><code>forge deploy</code></h2>
+      <div class="cmd-meta"><span class="badge">Network access</span><span class="badge">Requires --env</span></div>
+      <p>Deploys the most recent build to the named environment. Forge keeps the previous release so that a failed health check triggers an automatic rollback.</p>
+
+      <div class="callout warn">
+        <strong>Always preview first</strong>
+        Use <code>--dry-run</code> to see the planned changes before applying them to production.
+      </div>
+
+      <h3>Usage</h3>
+      <div class="codeblock">
+        <div class="label"><span>text</span><button class="copy-btn">Copy</button></div>
+        <pre><code>forge deploy --env &lt;name&gt; [flags]</code></pre>
+      </div>
+
+      <h3>Flags</h3>
+      <table>
+        <thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>--env</code></td><td>required</td><td>Target environment defined in <code>forge.yaml</code>.</td></tr>
+          <tr><td><code>--dry-run</code></td><td><code>false</code></td><td>Print the planned changes without applying them.</td></tr>
+          <tr><td><code>--no-rollback</code></td><td><code>false</code></td><td>Disable automatic rollback when health checks fail.</td></tr>
+          <tr><td><code>--timeout</code></td><td><code>5m</code></td><td>Maximum time to wait for the deployment to become healthy.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Example</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>forge deploy --env production --timeout 10m</code></pre>
+      </div>
+    </section>
+
+    <section id="cmd-config">
+      <h2><code>forge config</code></h2>
+      <div class="cmd-meta"><span class="badge">Read / write</span></div>
+      <p>Reads and writes values in <code>forge.yaml</code> without opening an editor. Keys use dot notation.</p>
+
+      <h3>Subcommands</h3>
+      <table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>forge config get &lt;key&gt;</code></td><td>Print the value of a key.</td></tr>
+          <tr><td><code>forge config set &lt;key&gt; &lt;value&gt;</code></td><td>Set a key to a new value.</td></tr>
+          <tr><td><code>forge config list</code></td><td>Print the full resolved configuration.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Example</h3>
+      <div class="codeblock">
+        <div class="label"><span>bash</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="prompt">$ </span>forge config set build.jobs 8
+<span class="prompt">$ </span>forge config get build.jobs
+<span class="comment"># 8</span></code></pre>
+      </div>
+    </section>
+
+    <section id="configuration">
+      <h2>Configuration file</h2>
+      <p>Forge looks for <code>forge.yaml</code> in the current directory and then in each parent directory. The first file found is used.</p>
+
+      <h3>Example</h3>
+      <div class="codeblock">
+        <div class="label"><span>yaml</span><button class="copy-btn">Copy</button></div>
+        <pre><code><span class="comment"># forge.yaml</span>
+name: billing-api
+version: 1.0.0
+
+build:
+  jobs: 4
+  targets:
+    api:
+      source: ./cmd/api
+      output: dist/api
+    worker:
+      source: ./cmd/worker
+      output: dist/worker
+
+tests:
+  unit:
+    command: go test ./...
+  integration:
+    command: go test -tags=integration ./test/...
+
+environments:
+  staging:
+    url: https://staging.example.com
+  production:
+    url: https://api.example.com
+    require_approval: true</code></pre>
+      </div>
+
+      <h3>Top-level keys</h3>
+      <table>
+        <thead><tr><th>Key</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>name</code></td><td>string</td><td>Project name, used in output and deploy metadata.</td></tr>
+          <tr><td><code>version</code></td><td>string</td><td>Semantic version of the project.</td></tr>
+          <tr><td><code>build</code></td><td>map</td><td>Build targets and settings.</td></tr>
+          <tr><td><code>tests</code></td><td>map</td><td>Named test suites and their commands.</td></tr>
+          <tr><td><code>environments</code></td><td>map</td><td>Deployment environments.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="global-options">
+      <h2>Global options</h2>
+      <p>These flags work with every command.</p>
+      <table>
+        <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>-c, --config &lt;path&gt;</code></td><td>Use a specific configuration file.</td></tr>
+          <tr><td><code>-v, --verbose</code></td><td>Print detailed logs. Repeat for more detail (<code>-vv</code>).</td></tr>
+          <tr><td><code>-q, --quiet</code></td><td>Suppress all output except errors.</td></tr>
+          <tr><td><code>--json</code></td><td>Emit machine-readable JSON instead of formatted text.</td></tr>
+          <tr><td><code>--no-color</code></td><td>Disable colored output. Also respected via <code>NO_COLOR</code>.</td></tr>
+          <tr><td><code>-h, --help</code></td><td>Show help for a command.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="exit-codes">
+      <h2>Exit codes</h2>
+      <p>Forge uses consistent exit codes so that scripts can distinguish failure types.</p>
+      <table>
+        <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>0</code></td><td>Success.</td></tr>
+          <tr><td><code>1</code></td><td>General error.</td></tr>
+          <tr><td><code>2</code></td><td>Invalid usage or flags.</td></tr>
+          <tr><td><code>3</code></td><td>Configuration file is missing or invalid.</td></tr>
+          <tr><td><code>4</code></td><td>Build failed.</td></tr>
+          <tr><td><code>5</code></td><td>Tests failed.</td></tr>
+          <tr><td><code>6</code></td><td>Deployment failed (rollback may have run).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="environment">
+      <h2>Environment variables</h2>
+      <p>Environment variables override values in <code>forge.yaml</code>. Flags override both.</p>
+      <table>
+        <thead><tr><th>Variable</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>FORGE_CONFIG</code></td><td>Path to the configuration file.</td></tr>
+          <tr><td><code>FORGE_TOKEN</code></td><td>API token used for deploys. Prefer this over storing tokens in files.</td></tr>
+          <tr><td><code>FORGE_ENV</code></td><td>Default environment for <code>forge deploy</code>.</td></tr>
+          <tr><td><code>FORGE_CACHE_DIR</code></td><td>Location of the build cache. Defaults to <code>~/.cache/forge</code>.</td></tr>
+          <tr><td><code>NO_COLOR</code></td><td>Disable colored output when set to any value.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="ci">
+      <h2>Using Forge in CI</h2>
+      <p>Forge is non-interactive when <code>--json</code> or <code>--quiet</code> is set, and it never prompts when stdin is not a terminal. A typical pipeline runs build, test, and deploy as separate steps.</p>
+
+      <h3>Example: GitHub Actions</h3>
+      <div class="codeblock">
+        <div class="label"><span>yaml</span><button class="copy-btn">Copy</button></div>
+        <pre><code>name: ci
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Forge
+        run: curl -fsSL https://example.com/forge/install.sh | sh
+      - run: forge build --release
+      - run: forge test --coverage --json
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Forge
+        run: curl -fsSL https://example.com/forge/install.sh | sh
+      - run: forge deploy --env staging
+        env:
+          FORGE_TOKEN: ${{ secrets.FORGE_TOKEN }}</code></pre>
+      </div>
+    </section>
+
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+
+      <details>
+        <summary><code>error: no forge.yaml found</code></summary>
+        <p>Run Forge from your project directory, or pass the file explicitly with <code>--config</code>. Check that the file is named exactly <code>forge.yaml</code>, not <code>forge.yml</code>.</p>
+      </details>
+
+      <details>
+        <summary>Builds are slower than expected</summary>
+        <p>Run <code>forge build -vv</code> to see which targets are rebuilding. If the cache is being invalidated on every run, check for files that change during the build, such as generated timestamps, and add them to <code>.forgeignore</code>.</p>
+      </details>
+
+      <details>
+        <summary>Deploy times out</summary>
+        <p>Increase the wait with <code>--timeout 15m</code>. If the service never becomes healthy, check its logs; Forge will roll back automatically unless <code>--no-rollback</code> was set.</p>
+      </details>
+
+      <details>
+        <summary>Authentication failed during deploy</summary>
+        <p>Confirm that <code>FORGE_TOKEN</code> is set and has not expired. Run <code>forge config list</code> to verify which token source is being used.</p>
+      </details>
+    </section>
+
+    <section id="faq">
+      <h2>FAQ</h2>
+
+      <details>
+        <summary>Does Forge send telemetry?</summary>
+        <p>No. Forge does not collect usage data. Network requests are made only for deploys and for downloading optional build plugins.</p>
+      </details>
+
+      <details>
+        <summary>Can I use Forge without Docker?</summary>
+        <p>Yes. Docker is only required for targets that build container images. All other targets run natively.</p>
+      </details>
+
+      <details>
+        <summary>How do I report a bug?</summary>
+        <p>Open an issue on the project repository. Include the output of <code>forge --version</code> and the command you ran with <code>-vv</code> enabled.</p>
+      </details>
+    </section>
+
+    <nav class="pager" aria-label="Page navigation">
+      <a href="#installation">
+        <small>Previous</small>
+        Installation
+      </a>
+      <a href="#cmd-init" class="next">
+        <small>Next</small>
+        forge init
+      </a>
+    </nav>
+
+    <footer>
+      <p>Forge CLI documentation. Released under the MIT License.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Copy buttons for code blocks
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.codeblock').querySelector('code');
+      var text = code.innerText.replace(/\$ /g, '');
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+      });
+    });
+  });
+
+  // Sidebar filtering
+  var search = document.getElementById('search');
+  var noResults = document.getElementById('noResults');
+  search.addEventListener('input', function () {
+    var q = search.value.trim().toLowerCase();
+    var anyVisible = false;
+    document.querySelectorAll('.nav-group').forEach(function (group) {
+      var visibleInGroup = 0;
+      group.querySelectorAll('a').forEach(function (link) {
+        var match = link.textContent.toLowerCase().indexOf(q) !== -1;
+        link.classList.toggle('hidden', !match);
+        if (match) visibleInGroup++;
+      });
+      group.classList.toggle('empty', visibleInGroup === 0);
+      if (visibleInGroup > 0) anyVisible = true;
+    });
+    noResults.style.display = anyVisible ? 'none' : 'block';
+  });
+
+  // Mobile menu toggle
+  var sidebar = document.getElementById('sidebar');
+  document.getElementById('menuToggle').addEventListener('click', function () {
+    sidebar.classList.toggle('open');
+  });
+  sidebar.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () { sidebar.classList.remove('open'); });
+  });
+
+  // Highlight the current section in the sidebar
+  var sections = document.querySelectorAll('main section[id]');
+  var navLinks = document.querySelectorAll('.nav-group a[data-target]');
+  function updateActive() {
+    var current = sections[0] ? sections[0].id : '';
+    sections.forEach(function (sec) {
+      if (sec.getBoundingClientRect().top <= 120) current = sec.id;
+    });
+    navLinks.forEach(function (link) {
+      link.classList.toggle('active', link.dataset.target === current);
+    });
+  }
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+</script>
+
+</body>
+</html>

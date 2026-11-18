@@ -1,0 +1,13 @@
+{
+  "name": "tasteskills-lab-tools",
+  "private": true,
+  "type": "module",
+  "description": "Render pages and detect layout slop for the lab.",
+  "scripts": {
+    "detect": "node detect.mjs",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "1.56.1"
+  }
+}

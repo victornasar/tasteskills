@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alex Rivera — Freelance Web Developer</title>
+<meta name="description" content="Freelance full-stack developer building fast, accessible, and beautiful web experiences.">
+<style>
+  :root {
+    --bg: #0e1116;
+    --surface: #161b22;
+    --border: #262d38;
+    --text: #e6e9ef;
+    --muted: #9aa4b2;
+    --accent: #6ee7b7;
+    --accent-2: #60a5fa;
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --border: #e3e7ee;
+      --text: #12161c;
+      --muted: #5a6573;
+      --accent: #059669;
+      --accent-2: #2563eb;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  nav { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+  .logo { font-weight: 800; letter-spacing: -0.02em; }
+  .logo span { color: var(--accent); }
+  nav ul { display: flex; gap: 24px; list-style: none; }
+  nav ul a { color: var(--muted); font-size: 0.95rem; transition: color .2s; }
+  nav ul a:hover { color: var(--text); }
+
+  .hero { padding: 110px 0 80px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border: 1px solid var(--border);
+    border-radius: 999px; font-size: 0.85rem; color: var(--muted);
+    background: var(--surface);
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.08; letter-spacing: -0.03em;
+    margin: 24px 0 20px; max-width: 14ch;
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p { color: var(--muted); font-size: 1.15rem; max-width: 56ch; }
+  .cta { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+  .btn {
+    padding: 13px 24px; border-radius: 10px; font-weight: 600;
+    border: 1px solid var(--border); transition: transform .15s, border-color .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary { background: var(--accent); color: #05221a; border-color: transparent; }
+  .btn.ghost:hover { border-color: var(--accent); }
+
+  section { padding: 72px 0; }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: .12em; }
+  h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); letter-spacing: -0.02em; margin: 8px 0 36px; }
+
+  .grid { display: grid; gap: 20px; }
+  .services { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 26px;
+    transition: transform .2s, border-color .2s;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .card .icon { font-size: 1.6rem; margin-bottom: 12px; }
+  .card h3 { margin-bottom: 8px; font-size: 1.1rem; }
+  .card p { color: var(--muted); font-size: 0.95rem; }
+
+  .projects { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .project .thumb {
+    height: 170px; border-radius: 10px; margin-bottom: 18px;
+    display: grid; place-items: center; font-size: 2.6rem;
+  }
+  .t1 { background: linear-gradient(135deg, #34d399, #3b82f6); }
+  .t2 { background: linear-gradient(135deg, #f472b6, #a78bfa); }
+  .t3 { background: linear-gradient(135deg, #fbbf24, #f87171); }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .tags span {
+    font-size: 0.78rem; padding: 3px 10px; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+
+  .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
+  .about p { color: var(--muted); margin-bottom: 16px; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; }
+  .stat b { display: block; font-size: 1.9rem; color: var(--accent); }
+  .stat span { color: var(--muted); font-size: 0.85rem; }
+  .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+  .skills span { padding: 6px 14px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); font-size: 0.9rem; }
+
+  .quote { font-size: 1.05rem; }
+  .quote footer { margin-top: 14px; color: var(--muted); font-size: 0.9rem; }
+
+  form { display: grid; gap: 14px; max-width: 560px; }
+  label { font-size: 0.9rem; color: var(--muted); display: grid; gap: 6px; }
+  input, textarea {
+    font: inherit; color: var(--text); background: var(--surface);
+    border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  textarea { min-height: 130px; resize: vertical; }
+  button.btn { cursor: pointer; font: inherit; font-weight: 600; justify-self: start; }
+  #status { color: var(--accent); font-size: 0.9rem; min-height: 1.2em; }
+
+  footer.site { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: 0.88rem; }
+  footer.site .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  @media (max-width: 720px) {
+    nav ul { gap: 14px; }
+    .about { grid-template-columns: 1fr; }
+    .hero { padding: 70px 0 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="container" aria-label="Main">
+    <a href="#top" class="logo">alex<span>.</span>dev</a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container">
+      <span class="badge"><i class="dot"></i> Available for new projects</span>
+      <h1>I build <em>fast, polished</em> web products.</h1>
+      <p>Hi, I'm Alex — a freelance full-stack developer helping startups and small businesses ship reliable, accessible, and beautiful websites and apps.</p>
+      <div class="cta">
+        <a href="#contact" class="btn primary">Let's work together</a>
+        <a href="#work" class="btn ghost">View my work</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="eyebrow">What I do</div>
+      <h2>Services</h2>
+      <div class="grid services">
+        <article class="card"><div class="icon">🎨</div><h3>Front-End Development</h3><p>Responsive, accessible interfaces built with modern HTML, CSS, JavaScript, and React.</p></article>
+        <article class="card"><div class="icon">⚙️</div><h3>Back-End &amp; APIs</h3><p>Secure, scalable APIs and databases using Node.js, Python, and PostgreSQL.</p></article>
+        <article class="card"><div class="icon">🛒</div><h3>E-Commerce</h3><p>Custom storefronts and Shopify builds focused on speed and conversion.</p></article>
+        <article class="card"><div class="icon">🚀</div><h3>Performance &amp; SEO</h3><p>Audits and optimizations that improve Core Web Vitals and search visibility.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="container">
+      <div class="eyebrow">Selected work</div>
+      <h2>Recent projects</h2>
+      <div class="grid projects">
+        <article class="card project">
+          <div class="thumb t1" aria-hidden="true">📊</div>
+          <h3>Pulse Analytics Dashboard</h3>
+          <p>A real-time analytics platform for a SaaS startup, cutting report load times by 70%.</p>
+          <div class="tags"><span>React</span><span>Node.js</span><span>PostgreSQL</span></div>
+        </article>
+        <article class="card project">
+          <div class="thumb t2" aria-hidden="true">🛍️</div>
+          <h3>Bloom &amp; Co. Storefront</h3>
+          <p>Headless e-commerce site for a boutique florist with seamless checkout and inventory sync.</p>
+          <div class="tags"><span>Next.js</span><span>Stripe</span><span>Shopify</span></div>
+        </article>
+        <article class="card project">
+          <div class="thumb t3" aria-hidden="true">📅</div>
+          <h3>BookIt Scheduler</h3>
+          <p>Appointment booking app for local clinics with reminders and calendar integration.</p>
+          <div class="tags"><span>TypeScript</span><span>Express</span><span>Twilio</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="eyebrow">About</div>
+      <h2>Developer, problem-solver, partner.</h2>
+      <div class="about">
+        <div>
+          <p>I've spent 8+ years building for the web, from scrappy startups to established brands. I care about clean code, clear communication, and delivering work on time.</p>
+          <p>As a freelancer, you work directly with me — no account managers, no handoffs. Just honest estimates and steady progress.</p>
+          <div class="skills" aria-label="Skills">
+            <span>JavaScript</span><span>TypeScript</span><span>React</span><span>Next.js</span><span>Node.js</span><span>Python</span><span>PostgreSQL</span><span>Figma</span><span>AWS</span>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>8+</b><span>Years experience</span></div>
+          <div class="stat"><b>60+</b><span>Projects shipped</span></div>
+          <div class="stat"><b>35</b><span>Happy clients</span></div>
+          <div class="stat"><b>100%</b><span>Remote friendly</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="eyebrow">Kind words</div>
+      <h2>What clients say</h2>
+      <div class="grid services">
+        <blockquote class="card quote">“Alex delivered ahead of schedule and the result was better than we imagined.”<footer>— Jamie L., Founder at Pulse</footer></blockquote>
+        <blockquote class="card quote">“Communication was excellent throughout. Our sales went up within weeks of launch.”<footer>— Priya S., Owner of Bloom &amp; Co.</footer></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="eyebrow">Contact</div>
+      <h2>Have a project in mind?</h2>
+      <form id="contact-form">
+        <label>Name <input type="text" name="name" required autocomplete="name"></label>
+        <label>Email <input type="email" name="email" required autocomplete="email"></label>
+        <label>Message <textarea name="message" required></textarea></label>
+        <button class="btn primary" type="submit">Send message</button>
+        <div id="status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="container">
+    <span>© <span id="year"></span> Alex Rivera. All rights reserved.</span>
+    <span><a href="#">GitHub</a> · <a href="#">LinkedIn</a> · <a href="#">Twitter</a></span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('contact-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('status').textContent = "Thanks! Your message is ready to send — connect this form to your email service to go live.";
+    this.reset();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mira Okafor — Illustration</title>
+<meta name="description" content="Portfolio of Mira Okafor, illustrator working in editorial, picture books and packaging.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6efe4;
+    --paper-2:#efe4d2;
+    --ink:#1f1a17;
+    --ink-soft:#5b524b;
+    --tomato:#e4572e;
+    --mustard:#f2b134;
+    --teal:#1d7874;
+    --plum:#6b3e5e;
+    --sky:#9cc5d6;
+    --radius:18px;
+    --shadow:0 10px 30px -12px rgba(31,26,23,.35);
+    --display:"Fraunces", Georgia, serif;
+    --body:"Inter", system-ui, -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.08;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  a{color:inherit}
+  img,svg{display:block;max-width:100%}
+  .wrap{width:min(1180px,92vw);margin-inline:auto}
+  :focus-visible{outline:3px solid var(--tomato);outline-offset:3px;border-radius:6px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1.5px solid transparent;
+    transition:border-color .3s;
+  }
+  header.scrolled{border-color:var(--ink)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{
+    font-family:var(--display);font-weight:900;font-size:1.5rem;text-decoration:none;
+    display:flex;align-items:center;gap:.5rem;letter-spacing:-.02em;
+  }
+  .logo-mark{
+    width:34px;height:34px;border-radius:50%;background:var(--tomato);
+    display:grid;place-items:center;color:var(--paper);font-size:1rem;
+    transition:transform .5s cubic-bezier(.5,-0.5,.5,1.5);
+  }
+  .logo:hover .logo-mark{transform:rotate(-20deg) scale(1.1)}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{
+    text-decoration:none;font-weight:500;font-size:.95rem;position:relative;padding:.25rem 0;
+  }
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:-2px;height:2px;width:100%;
+    background:var(--tomato);transform:scaleX(0);transform-origin:right;transition:transform .3s;
+  }
+  .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+  .nav-toggle{display:none;background:none;border:0;cursor:pointer;width:44px;height:44px}
+  .nav-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px auto;transition:.3s}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:5rem 0 4rem;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:3rem;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--teal);margin-bottom:1.25rem;
+  }
+  .eyebrow::before{content:"";width:28px;height:2px;background:currentColor}
+  h1{
+    font-family:var(--display);font-weight:900;
+    font-size:clamp(2.8rem,7vw,5.6rem);line-height:.95;letter-spacing:-.035em;
+  }
+  h1 em{font-style:italic;font-weight:400;color:var(--tomato)}
+  h1 .squiggle{position:relative;display:inline-block}
+  h1 .squiggle svg{position:absolute;left:0;bottom:-.15em;width:100%;height:.3em;overflow:visible}
+  h1 .squiggle path{stroke-dasharray:400;stroke-dashoffset:400;animation:draw 1.4s .6s forwards ease-out}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .hero p.lead{font-size:1.15rem;color:var(--ink-soft);max-width:34rem;margin:1.75rem 0 2.25rem}
+  .btns{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;padding:.95rem 1.6rem;border-radius:999px;
+    font-weight:600;text-decoration:none;border:2px solid var(--ink);cursor:pointer;font-size:.95rem;
+    transition:transform .2s, box-shadow .2s, background .2s;font-family:inherit;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--tomato)}
+  .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--tomato)}
+  .btn-ghost{background:transparent;color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+  .btn svg{transition:transform .2s}
+  .btn:hover svg{transform:translateX(3px)}
+
+  .hero-art{position:relative;aspect-ratio:1/1.05}
+  .hero-art .card{
+    position:absolute;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+    border:2px solid var(--ink);background:var(--paper-2);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .hero-art .c1{width:62%;top:0;left:4%;transform:rotate(-5deg);z-index:2}
+  .hero-art .c2{width:52%;top:22%;right:0;transform:rotate(6deg);z-index:3}
+  .hero-art .c3{width:46%;bottom:0;left:16%;transform:rotate(2deg);z-index:1}
+  .hero-art:hover .c1{transform:rotate(-8deg) translate(-10px,-6px)}
+  .hero-art:hover .c2{transform:rotate(9deg) translate(10px,-4px)}
+  .hero-art:hover .c3{transform:rotate(-1deg) translateY(8px)}
+  .sticker{
+    position:absolute;z-index:4;right:6%;bottom:8%;width:120px;height:120px;
+    animation:spin 18s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    border-block:2px solid var(--ink);background:var(--mustard);overflow:hidden;
+    padding:1rem 0;transform:rotate(-1.2deg);margin:2rem -2vw 0;
+  }
+  .marquee-track{display:flex;gap:3rem;width:max-content;animation:scroll 30s linear infinite}
+  .marquee span{font-family:var(--display);font-size:1.6rem;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:3rem}
+  .marquee span::after{content:"✺";color:var(--tomato)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:6rem 0}
+  .section-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:3rem;flex-wrap:wrap}
+  h2{
+    font-family:var(--display);font-weight:900;font-size:clamp(2.2rem,5vw,3.6rem);
+    line-height:1;letter-spacing:-.03em;
+  }
+  h2 em{font-weight:400;font-style:italic;color:var(--teal)}
+
+  /* filters */
+  .filters{display:flex;gap:.5rem;flex-wrap:wrap}
+  .filter{
+    font-family:inherit;font-size:.9rem;font-weight:500;padding:.55rem 1.1rem;border-radius:999px;
+    border:1.5px solid var(--ink);background:transparent;cursor:pointer;transition:.2s;color:var(--ink);
+  }
+  .filter:hover{background:var(--paper-2)}
+  .filter[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+  /* gallery */
+  .gallery{columns:3 280px;column-gap:1.5rem}
+  .piece{
+    break-inside:avoid;margin-bottom:1.5rem;cursor:pointer;position:relative;
+    border-radius:var(--radius);overflow:hidden;border:2px solid var(--ink);background:var(--paper-2);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, opacity .35s;
+    display:block;width:100%;padding:0;font:inherit;color:inherit;text-align:left;
+  }
+  .piece:hover,.piece:focus-visible{transform:translateY(-6px) rotate(-.6deg);box-shadow:6px 8px 0 var(--ink)}
+  .piece svg{width:100%;height:auto;transition:transform .6s}
+  .piece:hover svg{transform:scale(1.04)}
+  .piece-info{
+    position:absolute;left:0;right:0;bottom:0;padding:1rem 1.2rem;
+    background:linear-gradient(transparent,rgba(31,26,23,.85));color:var(--paper);
+    transform:translateY(100%);transition:transform .35s;
+  }
+  .piece:hover .piece-info,.piece:focus-visible .piece-info{transform:none}
+  .piece-info h3{font-family:var(--display);font-size:1.2rem;font-weight:700;line-height:1.2}
+  .piece-info p{font-size:.8rem;opacity:.85;text-transform:uppercase;letter-spacing:.1em}
+  .piece.hide{display:none}
+  .piece.pop{animation:pop .45s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes pop{from{opacity:0;transform:scale(.94) translateY(12px)}}
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--teal);color:var(--paper);border-block:2px solid var(--ink);position:relative;overflow:hidden}
+  .about h2 em{color:var(--mustard)}
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:4rem;align-items:center}
+  .portrait{
+    border-radius:50% 50% var(--radius) var(--radius);overflow:hidden;border:2px solid var(--ink);
+    box-shadow:10px 10px 0 var(--mustard);background:var(--sky);max-width:420px;
+  }
+  .about p{font-size:1.1rem;margin-top:1.25rem;opacity:.92;max-width:38rem}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+  .stat{border-top:2px solid var(--paper);padding-top:1rem}
+  .stat strong{font-family:var(--display);font-size:2.6rem;font-weight:900;display:block;line-height:1}
+  .stat span{font-size:.85rem;opacity:.8}
+  .clients{margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;font-family:var(--display);font-style:italic;font-size:1.1rem;opacity:.85}
+  .clients b{font-family:var(--body);font-style:normal;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;width:100%;opacity:.7}
+
+  /* ---------- SERVICES ---------- */
+  .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+  .service{
+    border:2px solid var(--ink);border-radius:var(--radius);padding:2rem;background:var(--paper);
+    transition:transform .3s, box-shadow .3s;position:relative;
+  }
+  .service:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 var(--c,var(--tomato))}
+  .service .icon{width:64px;height:64px;margin-bottom:1.5rem}
+  .service h3{font-family:var(--display);font-size:1.5rem;font-weight:700;margin-bottom:.5rem}
+  .service p{color:var(--ink-soft);font-size:.95rem}
+  .service .num{position:absolute;top:1.5rem;right:1.5rem;font-family:var(--display);font-style:italic;color:var(--ink-soft)}
+
+  /* ---------- TESTIMONIAL ---------- */
+  .quote{text-align:center;padding:5rem 0;background:var(--paper-2);border-block:2px solid var(--ink)}
+  blockquote{font-family:var(--display);font-size:clamp(1.5rem,3.4vw,2.4rem);line-height:1.25;max-width:52rem;margin:0 auto;letter-spacing:-.01em}
+  blockquote::before{content:"“";display:block;font-size:5rem;line-height:.6;color:var(--tomato);margin-bottom:.5rem}
+  cite{display:block;margin-top:1.5rem;font-family:var(--body);font-style:normal;font-size:.95rem;color:var(--ink-soft)}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+  .contact-grid p{color:var(--ink-soft);font-size:1.1rem;margin:1.25rem 0 2rem}
+  .availability{
+    display:inline-flex;align-items:center;gap:.6rem;padding:.5rem 1rem;border-radius:999px;
+    background:var(--paper-2);border:1.5px solid var(--ink);font-size:.9rem;font-weight:500;
+  }
+  .dot{width:10px;height:10px;border-radius:50%;background:#2fb36b;box-shadow:0 0 0 0 rgba(47,179,107,.6);animation:pulse 2s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 10px rgba(47,179,107,0)}100%{box-shadow:0 0 0 0 rgba(47,179,107,0)}}
+  .socials{display:flex;gap:.75rem;margin-top:2rem}
+  .socials a{
+    width:48px;height:48px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;
+    transition:.2s;text-decoration:none;
+  }
+  .socials a:hover{background:var(--ink);color:var(--paper);transform:rotate(-10deg)}
+  form{display:grid;gap:1.1rem}
+  .field{display:grid;gap:.35rem}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+  label{font-size:.85rem;font-weight:600}
+  input,textarea,select{
+    font:inherit;padding:.9rem 1rem;border:2px solid var(--ink);border-radius:12px;background:var(--paper);
+    color:var(--ink);transition:box-shadow .2s;width:100%;
+  }
+  input:focus,textarea:focus,select:focus{outline:none;box-shadow:4px 4px 0 var(--teal)}
+  textarea{resize:vertical;min-height:140px}
+  .form-note{font-size:.9rem;min-height:1.4em;font-weight:500}
+  .form-note.ok{color:var(--teal)}
+  .form-note.err{color:var(--tomato)}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:var(--paper);padding:3rem 0;margin-top:2rem}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;font-size:.9rem}
+  .foot .big{font-family:var(--display);font-size:clamp(2.5rem,8vw,6rem);font-weight:900;letter-spacing:-.04em;line-height:1;width:100%;margin-bottom:1.5rem}
+  .foot .big em{color:var(--mustard);font-weight:400}
+  .to-top{background:none;border:1.5px solid var(--paper);color:var(--paper);border-radius:999px;padding:.5rem 1rem;cursor:pointer;font:inherit}
+  .to-top:hover{background:var(--paper);color:var(--ink)}
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{
+    position:fixed;inset:0;z-index:200;background:rgba(31,26,23,.92);display:grid;place-items:center;
+    opacity:0;visibility:hidden;transition:opacity .3s, visibility .3s;padding:2rem;
+  }
+  .lightbox.open{opacity:1;visibility:visible}
+  .lb-inner{
+    display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.8fr);gap:2rem;align-items:center;
+    max-width:1000px;width:100%;background:var(--paper);border-radius:var(--radius);padding:1.5rem;
+    border:2px solid var(--ink);transform:scale(.95) translateY(10px);transition:transform .35s cubic-bezier(.2,.8,.2,1);
+    max-height:90vh;overflow:auto;
+  }
+  .lightbox.open .lb-inner{transform:none}
+  .lb-art{border-radius:12px;overflow:hidden;border:2px solid var(--ink)}
+  .lb-art svg{width:100%;height:auto}
+  .lb-meta .tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.14em;font-weight:600;color:var(--teal)}
+  .lb-meta h3{font-family:var(--display);font-size:2rem;font-weight:900;line-height:1.05;margin:.5rem 0 1rem;letter-spacing:-.02em}
+  .lb-meta p{color:var(--ink-soft)}
+  .lb-meta dl{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1rem;margin-top:1.5rem;font-size:.9rem}
+  .lb-meta dt{font-weight:600}
+  .lb-meta dd{color:var(--ink-soft)}
+  .lb-btn{
+    position:absolute;background:var(--paper);border:2px solid var(--ink);width:52px;height:52px;border-radius:50%;
+    cursor:pointer;display:grid;place-items:center;transition:transform .2s;color:var(--ink);
+  }
+  .lb-btn:hover{transform:scale(1.1)}
+  .lb-close{top:1.5rem;right:1.5rem}
+  .lb-prev{left:1.5rem;top:50%;margin-top:-26px}
+  .lb-next{right:1.5rem;top:50%;margin-top:-26px}
+  .lb-count{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:var(--paper);font-size:.9rem;letter-spacing:.1em}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s, transform .8s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}
+    .hero-art{max-width:480px;margin:1rem auto 0;width:100%}
+    .portrait{margin:0 auto}
+    .lb-inner{grid-template-columns:1fr}
+    .lb-prev,.lb-next{top:auto;bottom:1.25rem;margin:0}
+    .lb-prev{left:1.25rem}.lb-next{right:1.25rem}
+  }
+  @media (max-width:720px){
+    .nav-toggle{display:block}
+    .nav-links{
+      position:fixed;inset:72px 0 auto 0;flex-direction:column;gap:0;background:var(--paper);
+      border-bottom:2px solid var(--ink);transform:translateY(-120%);transition:transform .35s;z-index:-1;
+    }
+    .nav-links.open{transform:none}
+    .nav-links li{border-top:1px solid var(--paper-2)}
+    .nav-links a{display:block;padding:1.1rem 4vw;font-size:1.1rem}
+    .row{grid-template-columns:1fr}
+    section{padding:4.5rem 0}
+    .stats{grid-template-columns:1fr 1fr 1fr}
+    .stat strong{font-size:2rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+    h1 .squiggle path{stroke-dashoffset:0}
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <nav class="wrap" aria-label="Main">
+    <a href="#top" class="logo"><span class="logo-mark" aria-hidden="true">✺</span>Mira Okafor</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">Illustrator · Lisbon</span>
+        <h1 id="hero-title">Drawing <em>small</em> worlds with <span class="squiggle">big
+          <svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M2 12 Q 25 2 50 12 T 100 12 T 150 12 T 198 10" fill="none" stroke="#f2b134" stroke-width="5" stroke-linecap="round"/></svg>
+        </span> hearts.</h1>
+        <p class="lead">I make bright, textured illustrations for editorial, picture books, packaging and brands that like a bit of warmth and a bit of weird.</p>
+        <div class="btns">
+          <a href="#work" class="btn btn-primary">See the work
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost">Commission me</a>
+        </div>
+      </div>
+
+      <div class="hero-art reveal" aria-hidden="true">
+        <div class="card c1" data-art="sunset"></div>
+        <div class="card c2" data-art="plant"></div>
+        <div class="card c3" data-art="moon"></div>
+        <svg class="sticker" viewBox="0 0 120 120">
+          <defs><path id="circ" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+          <circle cx="60" cy="60" r="58" fill="#e4572e" stroke="#1f1a17" stroke-width="2"/>
+          <text font-family="Inter, sans-serif" font-size="11.5" font-weight="600" letter-spacing="3" fill="#f6efe4">
+            <textPath href="#circ">OPEN FOR COMMISSIONS • 2027 • </textPath>
+          </text>
+          <text x="60" y="68" text-anchor="middle" font-size="24" fill="#f6efe4">✎</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Editorial</span><span>Picture Books</span><span>Packaging</span><span>Murals</span><span>Brand Worlds</span><span>Posters</span>
+        <span>Editorial</span><span>Picture Books</span><span>Packaging</span><span>Murals</span><span>Brand Worlds</span><span>Posters</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="work-title">Selected <em>work</em></h2>
+        <div class="filters" role="group" aria-label="Filter work by category">
+          <button class="filter" aria-pressed="true" data-filter="all">All</button>
+          <button class="filter" aria-pressed="false" data-filter="editorial">Editorial</button>
+          <button class="filter" aria-pressed="false" data-filter="books">Books</button>
+          <button class="filter" aria-pressed="false" data-filter="packaging">Packaging</button>
+          <button class="filter" aria-pressed="false" data-filter="personal">Personal</button>
+        </div>
+      </div>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about" aria-labelledby="about-title">
+    <div class="wrap about-grid">
+      <div class="portrait reveal" data-art="portrait" aria-label="Illustrated self-portrait" role="img"></div>
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--mustard)">Hello there</span>
+        <h2 id="about-title">I'm Mira, and I <em>draw</em> for a living.</h2>
+        <p>I grew up between Lagos and Lisbon, filling sketchbooks on long bus rides. Today I work from a sunny studio above a bakery, mixing gouache, risograph textures and digital collage into pictures that feel handmade and alive.</p>
+        <p>I love projects that tell a story — whether that's a 32-page picture book, a magazine cover on a Tuesday deadline, or a tin of tea that deserves to be kept long after it's empty.</p>
+        <div class="stats">
+          <div class="stat"><strong data-count="9">0</strong><span>years drawing professionally</span></div>
+          <div class="stat"><strong data-count="14">0</strong><span>picture books published</span></div>
+          <div class="stat"><strong data-count="120" data-suffix="+">0</strong><span>editorial commissions</span></div>
+        </div>
+        <div class="clients">
+          <b>Selected clients</b>
+          <span>The Weekly Fern</span><span>Lumen Books</span><span>Pico Tea Co.</span><span>Harbour Museum</span><span>Orbit Magazine</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 id="services-title">How I can <em>help</em></h2>
+        <p style="max-width:26rem;color:var(--ink-soft)">Every project starts with a chat and a few scribbles. Here's what I do most often.</p>
+      </div>
+      <div class="services">
+        <article class="service reveal" style="--c:var(--tomato)">
+          <span class="num">01</span>
+          <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="10" width="40" height="48" rx="4" fill="#e4572e" stroke="#1f1a17" stroke-width="2"/><rect x="16" y="6" width="40" height="48" rx="4" fill="#f6efe4" stroke="#1f1a17" stroke-width="2"/><path d="M23 18h26M23 26h26M23 34h16" stroke="#1f1a17" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <h3>Editorial</h3>
+          <p>Covers, spot illustrations and features for magazines, newspapers and online publications. Fast, thoughtful, on deadline.</p>
+        </article>
+        <article class="service reveal" style="--c:var(--mustard)">
+          <span class="num">02</span>
+          <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 14 C22 8 10 8 4 12 V54 C10 50 22 50 32 56 C42 50 54 50 60 54 V12 C54 8 42 8 32 14Z" fill="#f2b134" stroke="#1f1a17" stroke-width="2" stroke-linejoin="round"/><path d="M32 14V56" stroke="#1f1a17" stroke-width="2"/></svg>
+          <h3>Picture books</h3>
+          <p>Character design, page spreads and full books from manuscript to print-ready files, working closely with authors and editors.</p>
+        </article>
+        <article class="service reveal" style="--c:var(--teal)">
+          <span class="num">03</span>
+          <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><rect x="14" y="16" width="36" height="42" rx="6" fill="#1d7874" stroke="#1f1a17" stroke-width="2"/><rect x="18" y="8" width="28" height="10" rx="3" fill="#f6efe4" stroke="#1f1a17" stroke-width="2"/><circle cx="32" cy="37" r="9" fill="#f2b134" stroke="#1f1a17" stroke-width="2"/></svg>
+          <h3>Packaging</h3>
+          <p>Labels, tins, boxes and full brand worlds that make products impossible to leave on the shelf.</p>
+        </article>
+        <article class="service reveal" style="--c:var(--plum)">
+          <span class="num">04</span>
+          <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="52" height="36" rx="3" fill="#6b3e5e" stroke="#1f1a17" stroke-width="2"/><circle cx="22" cy="30" r="7" fill="#f2b134"/><path d="M6 46 L24 34 L36 42 L46 34 L58 44 V50 H6Z" fill="#9cc5d6" stroke="#1f1a17" stroke-width="2" stroke-linejoin="round"/></svg>
+          <h3>Murals &amp; posters</h3>
+          <p>Large-scale walls for cafés, schools and offices, plus limited-edition prints and event posters.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="quote" aria-label="Testimonial">
+    <div class="wrap reveal">
+      <blockquote>
+        Mira turned a vague brief and a mood board into a cover our readers still write in about. Joyful to work with, and every sketch round got better.
+        <cite>— Art Director, Orbit Magazine</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact-grid">
+      <div class="reveal">
+        <h2 id="contact-title">Let's make something <em>lovely</em>.</h2>
+        <p>Tell me about your project, timeline and budget. I usually reply within two working days.</p>
+        <span class="availability"><span class="dot" aria-hidden="true"></span>Booking projects from January 2027</span>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Behance"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.2 11.4c.9-.4 1.4-1.1 1.4-2.1 0-2-1.5-2.8-3.4-2.8H1v11.2h5.4c2 0 3.9-1 3.9-3.2 0-1.4-.7-2.5-2.1-3.1zM3.4 8.4h2.3c.9 0 1.6.2 1.6 1.2 0 .9-.6 1.2-1.4 1.2H3.4V8.4zm2.6 7.5H3.4v-3.1h2.7c1.1 0 1.8.5 1.8 1.6 0 1.2-.8 1.5-1.9 1.5zM17.4 9.2c-2.6 0-4.3 1.9-4.3 4.4 0 2.6 1.6 4.3 4.3 4.3 2 0 3.3-.9 3.9-2.8h-2c-.2.7-1.1 1.1-1.8 1.1-1.3 0-2-.8-2-2.1h6c.1-2.7-1.4-4.9-4.1-4.9zm-1.9 3.4c.1-1.1.8-1.7 1.9-1.7 1.1 0 1.7.7 1.8 1.7h-3.7zM15 6.9h4.7v1.2H15z"/></svg></a>
+          <a href="#" aria-label="Dribbble"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 3.9c3.5 4.4 5.6 9.6 6.6 16.6M3.2 10.5c6 .3 11-1 15-4.6M5.6 18.4c3-4 7.5-5.6 15.2-4"/></svg></a>
+        </div>
+      </div>
+
+      <form class="reveal" id="contact-form" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="type">Project type</label>
+            <select id="type" name="type">
+              <option>Editorial</option>
+              <option>Picture book</option>
+              <option>Packaging</option>
+              <option>Mural / poster</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="budget">Budget</label>
+            <select id="budget" name="budget">
+              <option>Under €1k</option>
+              <option>€1k – €3k</option>
+              <option>€3k – €8k</option>
+              <option>€8k+</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">Tell me about it</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-self:start">Send message
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="big">Say <em>hi</em> ✺</div>
+    <span>© <span id="year"></span> Mira Okafor. All illustrations are original works.</span>
+    <button class="to-top" id="to-top">Back to top ↑</button>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title" aria-hidden="true">
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous piece"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Next piece"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+  <div class="lb-inner">
+    <div class="lb-art" id="lb-art"></div>
+    <div class="lb-meta">
+      <span class="tag" id="lb-tag"></span>
+      <h3 id="lb-title"></h3>
+      <p id="lb-desc"></p>
+      <dl>
+        <dt>Client</dt><dd id="lb-client"></dd>
+        <dt>Year</dt><dd id="lb-year"></dd>
+        <dt>Medium</dt><dd id="lb-medium"></dd>
+      </dl>
+    </div>
+  </div>
+  <div class="lb-count" id="lb-count"></div>
+</div>
+
+<script>
+(() => {
+  /* ---------- ARTWORK (inline SVG illustrations) ---------- */
+  const C = {ink:'#1f1a17',paper:'#f6efe4',tomato:'#e4572e',mustard:'#f2b134',teal:'#1d7874',plum:'#6b3e5e',sky:'#9cc5d6',pink:'#f4a6a0',green:'#5f9e6e',cream:'#fff7ea'};
+  const grain = id => `<filter id="g${id}"><feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" result="t"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .18"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>`;
+  let uid = 0;
+  const wrap = (w,h,body) => { const id = ++uid; return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><defs>${grain(id)}</defs><g filter="url(#g${id})">${body}</g></svg>`; };
+
+  const ART = {
+    sunset: () => wrap(400,500,`
+      <rect width="400" height="500" fill="${C.pink}"/>
+      <circle cx="200" cy="230" r="110" fill="${C.mustard}"/>
+      <circle cx="200" cy="230" r="80" fill="${C.tomato}" opacity=".5"/>
+      <path d="M0 320 Q100 250 200 310 T400 290 V500 H0Z" fill="${C.plum}"/>
+      <path d="M0 380 Q120 320 240 380 T400 360 V500 H0Z" fill="${C.teal}"/>
+      <path d="M0 440 Q140 400 260 440 T400 430 V500 H0Z" fill="${C.ink}"/>
+      <g fill="${C.ink}"><path d="M90 120 q10 -8 20 0 q10 -8 20 0" stroke="${C.ink}" stroke-width="3" fill="none"/><path d="M270 90 q8 -6 16 0 q8 -6 16 0" stroke="${C.ink}" stroke-width="3" fill="none"/></g>`),
+
+    plant: () => wrap(400,460,`
+      <rect width="400" height="460" fill="${C.sky}"/>
+      <rect x="0" y="330" width="400" height="130" fill="${C.cream}"/>
+      <path d="M200 300 C120 260 90 180 120 120 C170 160 200 220 200 300Z" fill="${C.green}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M200 300 C280 250 320 170 290 100 C240 150 205 220 200 300Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M200 300 C190 220 200 140 230 70 C250 150 230 230 200 300Z" fill="${C.green}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M140 290 H260 L245 400 H155Z" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>
+      <rect x="132" y="280" width="136" height="24" rx="4" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3"/>
+      <g fill="${C.paper}"><circle cx="180" cy="345" r="5"/><circle cx="200" cy="360" r="5"/><circle cx="220" cy="345" r="5"/></g>`),
+
+    moon: () => wrap(400,400,`
+      <rect width="400" height="400" fill="${C.plum}"/>
+      <g fill="${C.cream}"><circle cx="60" cy="60" r="2.5"/><circle cx="330" cy="50" r="2"/><circle cx="120" cy="140" r="1.8"/><circle cx="360" cy="160" r="2.5"/><circle cx="250" cy="30" r="1.6"/></g>
+      <circle cx="240" cy="130" r="70" fill="${C.cream}"/>
+      <circle cx="268" cy="112" r="62" fill="${C.plum}"/>
+      <rect y="250" width="400" height="150" fill="${C.teal}"/>
+      <g stroke="${C.sky}" stroke-width="4" stroke-linecap="round" fill="none"><path d="M40 290 q20 -10 40 0 q20 10 40 0"/><path d="M220 320 q20 -10 40 0 q20 10 40 0"/><path d="M90 360 q20 -10 40 0 q20 10 40 0"/></g>
+      <path d="M150 260 L250 260 L230 290 H170Z" fill="${C.mustard}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M200 260 V180 L240 250Z" fill="${C.paper}" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>`),
+
+    fox: () => wrap(400,520,`
+      <rect width="400" height="520" fill="${C.mustard}"/>
+      <circle cx="320" cy="90" r="40" fill="${C.cream}"/>
+      <path d="M0 400 Q200 340 400 400 V520 H0Z" fill="${C.green}"/>
+      <path d="M200 160 L130 110 L140 220Z" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M200 160 L270 110 L260 220Z" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M120 210 Q200 150 280 210 L200 330Z" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M150 250 L200 330 L250 250 Q200 280 150 250Z" fill="${C.cream}"/>
+      <circle cx="170" cy="235" r="7" fill="${C.ink}"/><circle cx="230" cy="235" r="7" fill="${C.ink}"/>
+      <circle cx="200" cy="322" r="8" fill="${C.ink}"/>
+      <path d="M160 330 Q200 420 140 470 H260 Q200 420 240 330Z" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M260 450 Q340 430 320 360 Q300 420 250 420Z" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M320 360 Q312 380 300 392 Q322 388 320 360Z" fill="${C.cream}"/>`),
+
+    city: () => wrap(400,300,`
+      <rect width="400" height="300" fill="${C.cream}"/>
+      <circle cx="80" cy="70" r="34" fill="${C.tomato}"/>
+      <g stroke="${C.ink}" stroke-width="3">
+        <rect x="20" y="140" width="70" height="160" fill="${C.teal}"/>
+        <rect x="90" y="100" width="60" height="200" fill="${C.mustard}"/>
+        <rect x="150" y="160" width="80" height="140" fill="${C.plum}"/>
+        <rect x="230" y="80" width="60" height="220" fill="${C.sky}"/>
+        <rect x="290" y="130" width="90" height="170" fill="${C.pink}"/>
+      </g>
+      <g fill="${C.cream}">${Array.from({length:30},(_,i)=>{const cols=[[35,150],[105,115],[165,175],[245,95],[305,145]][i%5];const r=Math.floor(i/5);return `<rect x="${cols[0]+(r%2)*22}" y="${cols[1]+Math.floor(r/2)*34}" width="14" height="18"/>`}).join('')}</g>`),
+
+    whale: () => wrap(400,420,`
+      <rect width="400" height="420" fill="${C.sky}"/>
+      <g fill="${C.cream}" opacity=".7"><circle cx="70" cy="80" r="16"/><circle cx="330" cy="120" r="10"/><circle cx="300" cy="320" r="14"/><circle cx="90" cy="340" r="8"/></g>
+      <path d="M60 230 Q80 130 220 140 Q330 150 340 230 Q330 300 220 300 Q110 305 60 230Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M90 260 Q200 320 320 250 Q300 295 220 300 Q130 305 90 260Z" fill="${C.cream}"/>
+      <path d="M340 220 L380 180 L372 230 L392 270 L340 240Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="120" cy="205" r="7" fill="${C.ink}"/>
+      <path d="M180 280 Q170 330 200 340" stroke="${C.ink}" stroke-width="3" fill="${C.teal}"/>
+      <path d="M160 130 Q150 80 130 70 M160 130 Q170 80 190 70" stroke="${C.cream}" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M100 360 q20 -12 40 0 q20 12 40 0 q20 -12 40 0 q20 12 40 0" stroke="${C.ink}" stroke-width="3" fill="none"/>`),
+
+    tea: () => wrap(400,500,`
+      <rect width="400" height="500" fill="${C.teal}"/>
+      <rect x="100" y="110" width="200" height="300" rx="20" fill="${C.mustard}" stroke="${C.ink}" stroke-width="3"/>
+      <rect x="92" y="90" width="216" height="40" rx="10" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3"/>
+      <rect x="120" y="170" width="160" height="170" rx="80" fill="${C.cream}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M200 300 C160 280 150 230 170 200 C195 225 205 260 200 300Z" fill="${C.green}" stroke="${C.ink}" stroke-width="2.5"/>
+      <path d="M200 300 C240 280 250 230 230 200 C205 225 195 260 200 300Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="2.5"/>
+      <text x="200" y="378" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-weight="900" font-size="30" fill="${C.ink}">PICO</text>
+      <g fill="${C.cream}" opacity=".5"><circle cx="40" cy="60" r="6"/><circle cx="360" cy="440" r="8"/><circle cx="350" cy="70" r="4"/><circle cx="50" cy="450" r="5"/></g>`),
+
+    portrait: () => wrap(400,480,`
+      <rect width="400" height="480" fill="${C.sky}"/>
+      <circle cx="200" cy="200" r="150" fill="${C.mustard}" opacity=".6"/>
+      <path d="M90 480 Q100 340 200 330 Q300 340 310 480Z" fill="${C.tomato}" stroke="${C.ink}" stroke-width="3"/>
+      <rect x="175" y="280" width="50" height="60" fill="#8d5a3b" stroke="${C.ink}" stroke-width="3"/>
+      <circle cx="200" cy="140" r="78" fill="${C.ink}"/>
+      <circle cx="140" cy="110" r="40" fill="${C.ink}"/><circle cx="260" cy="110" r="40" fill="${C.ink}"/><circle cx="200" cy="72" r="44" fill="${C.ink}"/>
+      <ellipse cx="200" cy="210" rx="66" ry="80" fill="#8d5a3b" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M140 170 Q200 110 262 170 Q240 130 200 128 Q160 130 140 170Z" fill="${C.ink}"/>
+      <circle cx="178" cy="205" r="6" fill="${C.ink}"/><circle cx="222" cy="205" r="6" fill="${C.ink}"/>
+      <circle cx="165" cy="235" r="10" fill="${C.pink}" opacity=".7"/><circle cx="235" cy="235" r="10" fill="${C.pink}" opacity=".7"/>
+      <path d="M182 250 Q200 266 218 250" stroke="${C.ink}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="136" cy="225" r="7" fill="${C.mustard}" stroke="${C.ink}" stroke-width="2"/>
+      <circle cx="264" cy="225" r="7" fill="${C.mustard}" stroke="${C.ink}" stroke-width="2"/>
+      <path d="M300 300 l40 -70" stroke="${C.ink}" stroke-width="10" stroke-linecap="round"/><path d="M340 230 l6 -12" stroke="${C.tomato}" stroke-width="10" stroke-linecap="round"/>`),
+
+    bike: () => wrap(400,330,`
+      <rect width="400" height="330" fill="${C.pink}"/>
+      <rect y="250" width="400" height="80" fill="${C.cream}"/>
+      <g fill="none" stroke="${C.ink}" stroke-width="5">
+        <circle cx="110" cy="230" r="55" fill="${C.cream}"/><circle cx="290" cy="230" r="55" fill="${C.cream}"/>
+        <path d="M110 230 L170 150 L260 150 L290 230 M170 150 L200 230 L260 150 M200 230 L110 230 M255 130 L262 152 M240 128 h30 M160 140 h30" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <rect x="250" y="100" width="70" height="40" rx="6" fill="${C.mustard}" stroke="${C.ink}" stroke-width="3"/>
+      <g fill="${C.tomato}"><circle cx="270" cy="96" r="12"/><circle cx="295" cy="92" r="14"/></g>
+      <path d="M300 90 q6 -14 18 -14" stroke="${C.green}" stroke-width="4" fill="none" stroke-linecap="round"/>`),
+
+    garden: () => wrap(400,460,`
+      <rect width="400" height="460" fill="${C.cream}"/>
+      ${[[70,320,C.tomato],[150,260,C.mustard],[240,300,C.plum],[320,240,C.pink],[110,180,C.teal],[280,150,C.tomato],[200,120,C.mustard]].map(([x,y,c])=>`
+        <path d="M${x} ${y} V460" stroke="${C.green}" stroke-width="5"/>
+        <path d="M${x} ${y+60} q-30 -10 -34 -36 q28 4 34 36Z" fill="${C.green}"/>
+        <g transform="translate(${x} ${y})">${[0,72,144,216,288].map(a=>`<ellipse cx="0" cy="-22" rx="14" ry="22" fill="${c}" stroke="${C.ink}" stroke-width="2.5" transform="rotate(${a})"/>`).join('')}<circle r="11" fill="${C.ink}"/></g>`).join('')}
+      <path d="M40 60 q12 -16 24 0 q12 -16 24 0" stroke="${C.ink}" stroke-width="3" fill="none"/>`),
+
+    reader: () => wrap(400,400,`
+      <rect width="400" height="400" fill="${C.tomato}"/>
+      <circle cx="200" cy="200" r="150" fill="${C.pink}"/>
+      <path d="M90 300 Q200 230 310 300 L310 330 H90Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="3"/>
+      <circle cx="200" cy="170" r="50" fill="#c68b5e" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M150 160 Q160 100 220 110 Q260 120 252 170 Q240 135 200 132 Q165 132 150 160Z" fill="${C.ink}"/>
+      <path d="M130 250 L200 230 L270 250 L270 300 L200 280 L130 300Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M200 230 V280" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M180 178 q8 6 16 0 M206 178 q8 6 16 0" stroke="${C.ink}" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g fill="${C.mustard}" stroke="${C.ink}" stroke-width="2"><path d="M80 90 l6 14 15 2 -11 10 3 15 -13 -8 -13 8 3 -15 -11 -10 15 -2Z"/><path d="M320 80 l4 10 11 1 -8 7 2 11 -9 -6 -9 6 2 -11 -8 -7 11 -1Z"/></g>`)
+  };
+
+  const WORKS = [
+    {art:'fox', cat:'books', title:'The Fox Who Kept Time', client:'Lumen Books', year:'2026', medium:'Gouache & digital', desc:'Cover and 32 interior spreads for a picture book about a fox who collects lost minutes in a meadow.'},
+    {art:'city', cat:'editorial', title:'The Quiet City', client:'The Weekly Fern', year:'2026', medium:'Risograph texture, digital', desc:'Feature illustration for a long-read on how cities sound after midnight.'},
+    {art:'tea', cat:'packaging', title:'Pico Tea — Garden Blend', client:'Pico Tea Co.', year:'2025', medium:'Digital, foil print', desc:'Tin design for a seasonal herbal blend. Part of a six-flavour range with interchangeable leaf motifs.'},
+    {art:'whale', cat:'books', title:'Big Blue Lullaby', client:'Lumen Books', year:'2025', medium:'Watercolour & pencil', desc:'A bedtime board book following a gentle whale across five oceans.'},
+    {art:'moon', cat:'personal', title:'Night Sailing', client:'Personal', year:'2025', medium:'Gouache on paper', desc:'From a series of small paintings made during a month by the sea.'},
+    {art:'reader', cat:'editorial', title:'Reading Is Resting', client:'Orbit Magazine', year:'2024', medium:'Digital collage', desc:'Cover for a special issue on rest, slowness and the joy of a good book.'},
+    {art:'garden', cat:'packaging', title:'Wildflower Seed Kit', client:'Harbour Museum Shop', year:'2024', medium:'Screen print', desc:'Box and seed packets for a children\'s gardening kit sold at the museum shop.'},
+    {art:'bike', cat:'personal', title:'Saturday Market', client:'Personal', year:'2024', medium:'Risograph print', desc:'A two-colour riso print, sold as a limited edition of 50.'},
+    {art:'sunset', cat:'editorial', title:'Holiday Feelings', client:'The Weekly Fern', year:'2023', medium:'Gouache & digital', desc:'Opening spread for a summer travel supplement.'},
+    {art:'plant', cat:'personal', title:'Studio Friend', client:'Personal', year:'2023', medium:'Digital', desc:'A portrait of the monstera that has survived three studio moves.'}
+  ];
+
+  /* render static art slots */
+  document.querySelectorAll('[data-art]').forEach(el => { el.innerHTML = ART[el.dataset.art](); });
+
+  /* render gallery */
+  const gallery = document.getElementById('gallery');
+  const catLabel = {editorial:'Editorial',books:'Picture book',packaging:'Packaging',personal:'Personal'};
+  WORKS.forEach((w,i) => {
+    const b = document.createElement('button');
+    b.className = 'piece reveal';
+    b.dataset.cat = w.cat;
+    b.dataset.index = i;
+    b.setAttribute('aria-label', `${w.title}, ${catLabel[w.cat]}. Open larger view`);
+    b.innerHTML = ART[w.art]() + `<div class="piece-info"><h3>${w.title}</h3><p>${catLabel[w.cat]} · ${w.year}</p></div>`;
+    gallery.appendChild(b);
+  });
+
+  /* filters */
+  const filters = document.querySelectorAll('.filter');
+  filters.forEach(f => f.addEventListener('click', () => {
+    filters.forEach(x => x.setAttribute('aria-pressed', x === f));
+    const val = f.dataset.filter;
+    gallery.querySelectorAll('.piece').forEach(p => {
+      const show = val === 'all' || p.dataset.cat === val;
+      p.classList.toggle('hide', !show);
+      p.classList.remove('pop');
+      if (show) { void p.offsetWidth; p.classList.add('pop', 'in'); }
+    });
+  }));
+
+  /* lightbox */
+  const lb = document.getElementById('lightbox');
+  const $ = id => document.getElementById(id);
+  let current = 0, lastFocus = null;
+  const visible = () => [...gallery.querySelectorAll('.piece:not(.hide)')].map(p => +p.dataset.index);
+
+  function show(i){
+    const w = WORKS[i]; current = i;
+    $('lb-art').innerHTML = ART[w.art]();
+    $('lb-tag').textContent = catLabel[w.cat];
+    $('lb-title').textContent = w.title;
+    $('lb-desc').textContent = w.desc;
+    $('lb-client').textContent = w.client;
+    $('lb-year').textContent = w.year;
+    $('lb-medium').textContent = w.medium;
+    const v = visible();
+    $('lb-count').textContent = `${v.indexOf(i)+1} / ${v.length}`;
+  }
+  function open(i){
+    lastFocus = document.activeElement;
+    show(i);
+    lb.classList.add('open'); lb.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    $('lb-close').focus();
+  }
+  function close(){
+    lb.classList.remove('open'); lb.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    lastFocus && lastFocus.focus();
+  }
+  function step(d){
+    const v = visible(); const pos = v.indexOf(current);
+    show(v[(pos + d + v.length) % v.length]);
+  }
+  gallery.addEventListener('click', e => { const p = e.target.closest('.piece'); if (p) open(+p.dataset.index); });
+  $('lb-close').onclick = close;
+  $('lb-prev').onclick = () => step(-1);
+  $('lb-next').onclick = () => step(1);
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'Tab') {
+      const f = [...lb.querySelectorAll('button')];
+      const first = f[0], last = f[f.length-1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* nav */
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.getElementById('nav-links');
+  toggle.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', !open);
+    links.classList.toggle('open', !open);
+  });
+  links.addEventListener('click', e => {
+    if (e.target.tagName === 'A'){ toggle.setAttribute('aria-expanded', false); links.classList.remove('open'); }
+  });
+  const header = document.querySelector('header');
+  addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 10), {passive:true});
+
+  /* reveal + counters */
+  const counted = new WeakSet();
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('in');
+      en.target.querySelectorAll('[data-count]').forEach(el => {
+        if (counted.has(el)) return; counted.add(el);
+        const target = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now(), dur = 1400;
+        const tick = now => {
+          const p = Math.min((now - t0)/dur, 1), e = 1 - Math.pow(1-p, 3);
+          el.textContent = Math.round(target*e) + (p === 1 ? suf : '');
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+      io.unobserve(en.target);
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* form */
+  const form = document.getElementById('contact-form');
+  const note = document.getElementById('form-note');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = form.name.value.trim(), email = form.email.value.trim(), msg = form.message.value.trim();
+    if (!name || !msg || !/^\S+@\S+\.\S+$/.test(email)){
+      note.className = 'form-note err';
+      note.textContent = 'Please add your name, a valid email and a short message.';
+      return;
+    }
+    note.className = 'form-note ok';
+    note.textContent = `Thanks, ${name}! Your message is on its way — I'll be in touch soon.`;
+    form.reset();
+  });
+
+  /* footer */
+  $('year').textContent = new Date().getFullYear();
+  $('to-top').onclick = () => scrollTo({top:0, behavior:'smooth'});
+})();
+</script>
+</body>
+</html>

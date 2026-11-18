@@ -1,0 +1,5 @@
+- **Fonts:** Synonym for headlines and Sentient for body, both picked by find-font (Fontshare, FFL licence). You need to self-host them: put the woff2 files in `./fonts/` (keep them out of public repos). Until you do, the page uses system sans and Georgia.
+- **Colours:** Club Cream from find-color: cream `#F5E7C3` with burgundy `#5B1D26`, at 10.37:1 contrast. I chose it over the default pick, Clay and Linen, because that palette is for photo-led sites and this page has no photos.
+- **Is it open:** the first thing on the page is a live "Open now / Closed, opens Wednesday at 7:00" status based on London time. Today's row is also highlighted in the hours table, since most visitors are on a phone checking exactly that.
+- **Cake orders:** they get a full-width burgundy band with a tap-to-call button. I added one line that isn't in the brief ("Need it for Wednesday? Get in touch by Sunday."); cut it if you'd rather not. The brief has no Instagram handle, so those two links are `#` placeholders for you to fill in.
+- **No images:** the photo and map spots are clearly labelled placeholders, drawn in CSS (a tray of nata, a street grid with a pin).

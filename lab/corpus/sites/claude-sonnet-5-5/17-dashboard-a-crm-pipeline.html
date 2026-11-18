@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRM Pipeline Dashboard</title>
+<style>
+  :root{
+    --bg:#f4f6fa; --card:#fff; --text:#1c2333; --muted:#6b7488; --border:#e3e7ef;
+    --primary:#4f46e5; --green:#16a34a; --red:#dc2626; --amber:#d97706; --blue:#2563eb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+  header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:18px 28px;background:var(--card);border-bottom:1px solid var(--border)}
+  h1{font-size:20px}
+  .controls{display:flex;gap:10px;flex-wrap:wrap}
+  select,input[type=search]{padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:14px;color:var(--text)}
+  button{padding:8px 14px;border:0;border-radius:8px;background:var(--primary);color:#fff;font-size:14px;cursor:pointer}
+  button.secondary{background:#eef0f7;color:var(--text)}
+  main{padding:24px 28px;max-width:1400px;margin:0 auto}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .kpi .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  .kpi .value{font-size:28px;font-weight:700;margin-top:6px}
+  .kpi .sub{font-size:12px;color:var(--muted);margin-top:4px}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  h2{font-size:15px;margin-bottom:14px}
+  .funnel .row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .funnel .name{width:110px;color:var(--muted)}
+  .funnel .bar-wrap{flex:1;background:#eef0f7;border-radius:6px;height:28px;overflow:hidden}
+  .funnel .bar{height:100%;display:flex;align-items:center;padding-left:10px;color:#fff;font-weight:600;font-size:12px;transition:width .4s}
+  .funnel .amt{width:90px;text-align:right;font-weight:600}
+  .legend{display:flex;flex-direction:column;gap:8px}
+  .legend div{display:flex;justify-content:space-between;align-items:center}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+  .donut-wrap{display:flex;justify-content:center;margin-bottom:14px}
+  .board{display:grid;grid-template-columns:repeat(5,minmax(200px,1fr));gap:12px;overflow-x:auto;padding-bottom:6px}
+  .col{background:#eef0f7;border-radius:10px;padding:10px;min-height:120px}
+  .col h3{font-size:13px;display:flex;justify-content:space-between;margin-bottom:10px}
+  .col h3 span{color:var(--muted);font-weight:500}
+  .deal{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;cursor:grab}
+  .deal.dragging{opacity:.4}
+  .deal .t{font-weight:600;margin-bottom:2px}
+  .deal .c{color:var(--muted);font-size:12px;margin-bottom:6px}
+  .deal .m{display:flex;justify-content:space-between;font-size:12px}
+  .col.over{outline:2px dashed var(--primary)}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;user-select:none}
+  .badge{padding:3px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#fff}
+  .section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .section-head h2{margin:0}
+  dialog{border:0;border-radius:12px;padding:22px;width:min(420px,92vw);box-shadow:0 20px 50px rgba(0,0,0,.25)}
+  dialog::backdrop{background:rgba(20,25,40,.45)}
+  dialog label{display:block;margin-bottom:12px;font-size:12px;color:var(--muted)}
+  dialog input,dialog select{width:100%;margin-top:4px;padding:8px;border:1px solid var(--border);border-radius:8px;font-size:14px}
+  .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+  .pos{color:var(--green)} .neg{color:var(--red)}
+</style>
+</head>
+<body>
+<header>
+  <h1>📈 CRM Pipeline</h1>
+  <div class="controls">
+    <input type="search" id="search" placeholder="Search deals or companies…">
+    <select id="ownerFilter"></select>
+    <select id="rangeFilter">
+      <option value="all">All close dates</option>
+      <option value="30">Closing in 30 days</option>
+      <option value="90">Closing in 90 days</option>
+    </select>
+    <button id="addBtn">+ New deal</button>
+  </div>
+</header>
+
+<main>
+  <section class="kpis" id="kpis"></section>
+
+  <section class="grid">
+    <div class="card funnel"><h2>Pipeline by stage</h2><div id="funnel"></div></div>
+    <div class="card">
+      <h2>Deal mix by source</h2>
+      <div class="donut-wrap"><svg id="donut" width="170" height="170" viewBox="0 0 42 42"></svg></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-bottom:20px">
+    <div class="section-head"><h2>Kanban board</h2><span style="color:var(--muted);font-size:12px">Drag cards between stages</span></div>
+    <div class="board" id="board"></div>
+  </section>
+
+  <section class="card">
+    <div class="section-head"><h2>All deals</h2><button class="secondary" id="exportBtn">Export CSV</button></div>
+    <table>
+      <thead><tr>
+        <th data-k="name">Deal</th><th data-k="company">Company</th><th data-k="owner">Owner</th>
+        <th data-k="stage">Stage</th><th data-k="value">Value</th><th data-k="prob">Prob.</th><th data-k="close">Close date</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <h2>New deal</h2>
+    <label>Deal name<input name="name" required></label>
+    <label>Company<input name="company" required></label>
+    <label>Owner<select name="owner"></select></label>
+    <label>Stage<select name="stage"></select></label>
+    <label>Source<select name="source"></select></label>
+    <label>Value (USD)<input name="value" type="number" min="0" required></label>
+    <label>Expected close<input name="close" type="date" required></label>
+    <div class="actions">
+      <button type="button" class="secondary" id="cancel">Cancel</button>
+      <button type="submit">Add deal</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const STAGES = [
+  {id:"Lead",       prob:.10, color:"#94a3b8"},
+  {id:"Qualified",  prob:.25, color:"#60a5fa"},
+  {id:"Proposal",   prob:.50, color:"#818cf8"},
+  {id:"Negotiation",prob:.75, color:"#f59e0b"},
+  {id:"Won",        prob:1,   color:"#16a34a"}
+];
+const SOURCES = ["Inbound","Outbound","Referral","Partner","Event"];
+const SRC_COLORS = ["#4f46e5","#0ea5e9","#16a34a","#f59e0b","#ec4899"];
+const OWNERS = ["Ava Chen","Marcus Lee","Priya Patel","Diego Alvarez","Sam Okafor"];
+
+const day = n => { const d = new Date(); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); };
+let nextId = 1;
+let deals = [
+  ["Platform rollout","Northwind Traders","Ava Chen","Negotiation","Inbound",84000,12],
+  ["Annual renewal","Globex Corp","Marcus Lee","Won","Referral",120000,-5],
+  ["Analytics add-on","Initech","Priya Patel","Proposal","Outbound",36000,28],
+  ["Pilot program","Umbrella Health","Diego Alvarez","Qualified","Event",18000,45],
+  ["Enterprise license","Stark Industries","Sam Okafor","Negotiation","Partner",250000,20],
+  ["Security suite","Wayne Enterprises","Ava Chen","Proposal","Inbound",67000,35],
+  ["Team expansion","Hooli","Marcus Lee","Lead","Outbound",22000,70],
+  ["Data migration","Soylent Co.","Priya Patel","Qualified","Referral",41000,52],
+  ["Support upgrade","Wonka Industries","Diego Alvarez","Won","Inbound",29000,-12],
+  ["Integration project","Cyberdyne","Sam Okafor","Lead","Event",54000,85],
+  ["Multi-year deal","Acme Corp","Ava Chen","Proposal","Partner",98000,40],
+  ["Starter plan","Pied Piper","Marcus Lee","Won","Inbound",9500,-20],
+  ["Compliance package","Oscorp","Priya Patel","Negotiation","Outbound",73000,9],
+  ["Regional rollout","Tyrell Corp","Diego Alvarez","Lead","Referral",31000,60]
+].map(([name,company,owner,stage,source,value,c])=>({id:nextId++,name,company,owner,stage,source,value,close:day(c)}));
+
+const state = {search:"",owner:"all",range:"all",sortKey:"value",sortDir:-1};
+const $ = s => document.querySelector(s);
+const fmt = n => "$" + Math.round(n).toLocaleString();
+const stageOf = id => STAGES.find(s=>s.id===id);
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function filtered(){
+  const q = state.search.toLowerCase();
+  const limit = state.range==="all" ? null : new Date(day(+state.range));
+  const today = new Date(day(0));
+  return deals.filter(d=>{
+    if(state.owner!=="all" && d.owner!==state.owner) return false;
+    if(q && !(d.name+" "+d.company).toLowerCase().includes(q)) return false;
+    if(limit){ const c=new Date(d.close); if(c<today||c>limit) return false; }
+    return true;
+  });
+}
+
+function renderKPIs(list){
+  const open = list.filter(d=>d.stage!=="Won");
+  const won = list.filter(d=>d.stage==="Won");
+  const openVal = open.reduce((a,d)=>a+d.value,0);
+  const weighted = open.reduce((a,d)=>a+d.value*stageOf(d.stage).prob,0);
+  const wonVal = won.reduce((a,d)=>a+d.value,0);
+  const winRate = list.length ? won.length/list.length*100 : 0;
+  const avg = list.length ? list.reduce((a,d)=>a+d.value,0)/list.length : 0;
+  const k = [
+    ["Open pipeline",fmt(openVal),open.length+" open deals"],
+    ["Weighted forecast",fmt(weighted),"Probability-adjusted"],
+    ["Closed won",fmt(wonVal),won.length+" deals won"],
+    ["Win rate",winRate.toFixed(0)+"%","Won ÷ all deals"],
+    ["Avg. deal size",fmt(avg),list.length+" deals total"]
+  ];
+  $("#kpis").innerHTML = k.map(([l,v,s])=>`<div class="card kpi"><div class="label">${l}</div><div class="value">${v}</div><div class="sub">${s}</div></div>`).join("");
+}
+
+function renderFunnel(list){
+  const totals = STAGES.map(s=>({s,sum:list.filter(d=>d.stage===s.id).reduce((a,d)=>a+d.value,0),n:list.filter(d=>d.stage===s.id).length}));
+  const max = Math.max(...totals.map(t=>t.sum),1);
+  $("#funnel").innerHTML = totals.map(t=>`
+    <div class="row">
+      <div class="name">${t.s.id}</div>
+      <div class="bar-wrap"><div class="bar" style="width:${Math.max(t.sum/max*100,t.n?6:0)}%;background:${t.s.color}">${t.n}</div></div>
+      <div class="amt">${fmt(t.sum)}</div>
+    </div>`).join("");
+}
+
+function renderDonut(list){
+  const sums = SOURCES.map(s=>list.filter(d=>d.source===s).reduce((a,d)=>a+d.value,0));
+  const total = sums.reduce((a,b)=>a+b,0);
+  const svg = $("#donut");
+  const r = 15.915;
+  let offset = 25, html = `<circle cx="21" cy="21" r="${r}" fill="none" stroke="#eef0f7" stroke-width="6"/>`;
+  if(total){
+    sums.forEach((v,i)=>{
+      const pct = v/total*100;
+      html += `<circle cx="21" cy="21" r="${r}" fill="none" stroke="${SRC_COLORS[i]}" stroke-width="6" stroke-dasharray="${pct} ${100-pct}" stroke-dashoffset="${offset}"/>`;
+      offset -= pct;
+    });
+  }
+  svg.innerHTML = html;
+  $("#legend").innerHTML = SOURCES.map((s,i)=>`<div><span><span class="dot" style="background:${SRC_COLORS[i]}"></span>${s}</span><strong>${total?Math.round(sums[i]/total*100):0}%</strong></div>`).join("");
+}
+
+function renderBoard(list){
+  $("#board").innerHTML = STAGES.map(s=>{
+    const items = list.filter(d=>d.stage===s.id);
+    return `<div class="col" data-stage="${s.id}">
+      <h3>${s.id}<span>${items.length} · ${fmt(items.reduce((a,d)=>a+d.value,0))}</span></h3>
+      ${items.map(d=>`<div class="deal" draggable="true" data-id="${d.id}">
+        <div class="t">${esc(d.name)}</div><div class="c">${esc(d.company)}</div>
+        <div class="m"><strong>${fmt(d.value)}</strong><span>${esc(d.owner.split(" ")[0])}</span></div>
+      </div>`).join("")}
+    </div>`;
+  }).join("");
+
+  document.querySelectorAll(".deal").forEach(el=>{
+    el.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",el.dataset.id);el.classList.add("dragging")});
+    el.addEventListener("dragend",()=>el.classList.remove("dragging"));
+  });
+  document.querySelectorAll(".col").forEach(col=>{
+    col.addEventListener("dragover",e=>{e.preventDefault();col.classList.add("over")});
+    col.addEventListener("dragleave",()=>col.classList.remove("over"));
+    col.addEventListener("drop",e=>{
+      e.preventDefault();
+      const d = deals.find(x=>x.id==e.dataTransfer.getData("text/plain"));
+      if(d){ d.stage = col.dataset.stage; render(); }
+    });
+  });
+}
+
+function renderTable(list){
+  const {sortKey:k,sortDir:dir} = state;
+  const val = d => k==="prob" ? stageOf(d.stage).prob : d[k];
+  const sorted = [...list].sort((a,b)=>{
+    const x=val(a), y=val(b);
+    return (x>y?1:x<y?-1:0)*dir;
+  });
+  $("#tbody").innerHTML = sorted.map(d=>{
+    const s = stageOf(d.stage);
+    const overdue = d.stage!=="Won" && d.close < day(0);
+    return `<tr>
+      <td>${esc(d.name)}</td><td>${esc(d.company)}</td><td>${esc(d.owner)}</td>
+      <td><span class="badge" style="background:${s.color}">${s.id}</span></td>
+      <td>${fmt(d.value)}</td><td>${Math.round(s.prob*100)}%</td>
+      <td class="${overdue?"neg":""}">${d.close}${overdue?" (overdue)":""}</td>
+    </tr>`;
+  }).join("") || `<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px">No deals match your filters.</td></tr>`;
+}
+
+function render(){
+  const list = filtered();
+  renderKPIs(list); renderFunnel(list); renderDonut(list); renderBoard(list); renderTable(list);
+}
+
+/* Controls */
+$("#ownerFilter").innerHTML = `<option value="all">All owners</option>` + OWNERS.map(o=>`<option>${o}</option>`).join("");
+$("#search").addEventListener("input",e=>{state.search=e.target.value;render()});
+$("#ownerFilter").addEventListener("change",e=>{state.owner=e.target.value;render()});
+$("#rangeFilter").addEventListener("change",e=>{state.range=e.target.value;render()});
+document.querySelectorAll("th[data-k]").forEach(th=>th.addEventListener("click",()=>{
+  const k = th.dataset.k;
+  state.sortDir = state.sortKey===k ? -state.sortDir : (k==="value"||k==="prob"?-1:1);
+  state.sortKey = k; render();
+}));
+
+/* New deal dialog */
+const dlg = $("#dlg"), form = $("#form");
+form.owner.innerHTML = OWNERS.map(o=>`<option>${o}</option>`).join("");
+form.stage.innerHTML = STAGES.map(s=>`<option>${s.id}</option>`).join("");
+form.source.innerHTML = SOURCES.map(s=>`<option>${s}</option>`).join("");
+$("#addBtn").addEventListener("click",()=>{form.reset();form.close.value=day(30);dlg.showModal()});
+$("#cancel").addEventListener("click",()=>dlg.close());
+form.addEventListener("submit",()=>{
+  const f = new FormData(form);
+  deals.push({id:nextId++,name:f.get("name"),company:f.get("company"),owner:f.get("owner"),
+    stage:f.get("stage"),source:f.get("source"),value:+f.get("value"),close:f.get("close")});
+  render();
+});
+
+/* CSV export */
+$("#exportBtn").addEventListener("click",()=>{
+  const cols = ["name","company","owner","stage","source","value","close"];
+  const q = v => `"${String(v).replace(/"/g,'""')}"`;
+  const csv = [cols.join(","), ...filtered().map(d=>cols.map(c=>q(d[c])).join(","))].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  a.download = "pipeline.csv"; a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+render();
+</script>
+</body>
+</html>

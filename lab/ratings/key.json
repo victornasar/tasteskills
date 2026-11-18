@@ -1,0 +1,128 @@
+{
+  "p01": {
+    "brief": "fennel-street",
+    "model": "claude-sonnet-5-5",
+    "run": 1,
+    "left": "A",
+    "right": "B"
+  },
+  "p02": {
+    "brief": "tallyroll",
+    "model": "claude-haiku-5-5",
+    "run": 2,
+    "left": "B",
+    "right": "A"
+  },
+  "p03": {
+    "brief": "fennel-street",
+    "model": "claude-haiku-5-5",
+    "run": 2,
+    "left": "B",
+    "right": "A"
+  },
+  "p04": {
+    "brief": "tallyroll",
+    "model": "claude-haiku-5-5",
+    "run": 3,
+    "left": "A",
+    "right": "B"
+  },
+  "p05": {
+    "brief": "fennel-street",
+    "model": "claude-haiku-5-5",
+    "run": 3,
+    "left": "A",
+    "right": "B"
+  },
+  "p06": {
+    "brief": "tallyroll",
+    "model": "claude-haiku-5-5",
+    "run": 1,
+    "left": "B",
+    "right": "A"
+  },
+  "p07": {
+    "brief": "fennel-street",
+    "model": "claude-sonnet-5-5",
+    "run": 3,
+    "left": "A",
+    "right": "B"
+  },
+  "p08": {
+    "brief": "tallyroll",
+    "model": "claude-sonnet-5-5",
+    "run": 2,
+    "left": "A",
+    "right": "B"
+  },
+  "p09": {
+    "brief": "tallyroll",
+    "model": "claude-sonnet-5-5",
+    "run": 1,
+    "left": "A",
+    "right": "B"
+  },
+  "p10": {
+    "brief": "tallyroll",
+    "model": "claude-opus-5-5",
+    "run": 1,
+    "left": "A",
+    "right": "B"
+  },
+  "p11": {
+    "brief": "tallyroll",
+    "model": "claude-opus-5-5",
+    "run": 2,
+    "left": "A",
+    "right": "B"
+  },
+  "p12": {
+    "brief": "tallyroll",
+    "model": "claude-sonnet-5-5",
+    "run": 3,
+    "left": "A",
+    "right": "B"
+  },
+  "p13": {
+    "brief": "fennel-street",
+    "model": "claude-opus-5-5",
+    "run": 3,
+    "left": "A",
+    "right": "B"
+  },
+  "p14": {
+    "brief": "tallyroll",
+    "model": "claude-opus-5-5",
+    "run": 3,
+    "left": "A",
+    "right": "B"
+  },
+  "p15": {
+    "brief": "fennel-street",
+    "model": "claude-opus-5-5",
+    "run": 1,
+    "left": "A",
+    "right": "B"
+  },
+  "p16": {
+    "brief": "fennel-street",
+    "model": "claude-sonnet-5-5",
+    "run": 2,
+    "left": "A",
+    "right": "B"
+  },
+  "p17": {
+    "brief": "fennel-street",
+    "model": "claude-haiku-5-5",
+    "run": 1,
+    "left": "A",
+    "right": "B"
+  },
+  "p18": {
+    "brief": "fennel-street",
+    "model": "claude-opus-5-5",
+    "run": 2,
+    "left": "A",
+    "right": "B"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "00": {
+    "kind": "landing page",
+    "subject": "a meal-kit startup",
+    "prompt": "Build a landing page for a meal-kit startup. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "01": {
+    "kind": "landing page",
+    "subject": "a B2B invoicing SaaS",
+    "prompt": "Build a landing page for a B2B invoicing SaaS. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "02": {
+    "kind": "landing page",
+    "subject": "an AI note-taking app",
+    "prompt": "Build a landing page for an AI note-taking app. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "03": {
+    "kind": "landing page",
+    "subject": "a climate-tech nonprofit",
+    "prompt": "Build a landing page for a climate-tech nonprofit. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "04": {
+    "kind": "landing page",
+    "subject": "a mobile banking app",
+    "prompt": "Build a landing page for a mobile banking app. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "05": {
+    "kind": "portfolio site",
+    "subject": "a product designer",
+    "prompt": "Build a portfolio site for a product designer. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "06": {
+    "kind": "portfolio site",
+    "subject": "a wedding photographer",
+    "prompt": "Build a portfolio site for a wedding photographer. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "07": {
+    "kind": "portfolio site",
+    "subject": "a freelance developer",
+    "prompt": "Build a portfolio site for a freelance developer. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "08": {
+    "kind": "portfolio site",
+    "subject": "an architecture studio",
+    "prompt": "Build a portfolio site for an architecture studio. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "09": {
+    "kind": "portfolio site",
+    "subject": "an illustrator",
+    "prompt": "Build a portfolio site for an illustrator. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "10": {
+    "kind": "blog",
+    "subject": "a personal tech blog",
+    "prompt": "Build a blog for a personal tech blog. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "11": {
+    "kind": "blog",
+    "subject": "a travel writer",
+    "prompt": "Build a blog for a travel writer. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "12": {
+    "kind": "blog",
+    "subject": "a food blog",
+    "prompt": "Build a blog for a food blog. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "13": {
+    "kind": "blog",
+    "subject": "a company engineering blog",
+    "prompt": "Build a blog for a company engineering blog. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "14": {
+    "kind": "blog",
+    "subject": "a parenting newsletter",
+    "prompt": "Build a blog for a parenting newsletter. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "15": {
+    "kind": "dashboard",
+    "subject": "SaaS revenue analytics",
+    "prompt": "Build a dashboard for SaaS revenue analytics. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "16": {
+    "kind": "dashboard",
+    "subject": "server monitoring",
+    "prompt": "Build a dashboard for server monitoring. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "17": {
+    "kind": "dashboard",
+    "subject": "a CRM pipeline",
+    "prompt": "Build a dashboard for a CRM pipeline. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "18": {
+    "kind": "dashboard",
+    "subject": "a personal finance tracker",
+    "prompt": "Build a dashboard for a personal finance tracker. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "19": {
+    "kind": "dashboard",
+    "subject": "warehouse inventory",
+    "prompt": "Build a dashboard for warehouse inventory. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "20": {
+    "kind": "documentation site",
+    "subject": "a JavaScript library",
+    "prompt": "Build a documentation site for a JavaScript library. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "21": {
+    "kind": "documentation site",
+    "subject": "a public REST API",
+    "prompt": "Build a documentation site for a public REST API. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "22": {
+    "kind": "documentation site",
+    "subject": "a CLI tool",
+    "prompt": "Build a documentation site for a CLI tool. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "23": {
+    "kind": "documentation site",
+    "subject": "an internal design system",
+    "prompt": "Build a documentation site for an internal design system. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "24": {
+    "kind": "documentation site",
+    "subject": "a database product",
+    "prompt": "Build a documentation site for a database product. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "25": {
+    "kind": "online shop",
+    "subject": "a coffee roaster",
+    "prompt": "Build a online shop for a coffee roaster. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "26": {
+    "kind": "online shop",
+    "subject": "a sneaker brand",
+    "prompt": "Build a online shop for a sneaker brand. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "27": {
+    "kind": "online shop",
+    "subject": "a houseplant store",
+    "prompt": "Build a online shop for a houseplant store. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "28": {
+    "kind": "online shop",
+    "subject": "a skincare brand",
+    "prompt": "Build a online shop for a skincare brand. Reply with the complete page as a single HTML file in one code block, nothing else."
+  },
+  "29": {
+    "kind": "online shop",
+    "subject": "a bookshop",
+    "prompt": "Build a online shop for a bookshop. Reply with the complete page as a single HTML file in one code block, nothing else."
+  }
+}

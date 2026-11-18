@@ -52,6 +52,13 @@ class ValidatorTest(unittest.TestCase):
         errors = broken(lambda d: d["fonts"][0].update(scripts=["latin-ext"]))
         self.assertTrue(any("latin-ext requires latin" in e for e in errors), errors)
 
+    def test_one_font_replacing_too_many_defaults(self):
+        def mutate(d):
+            for a in d["avoid"][:4]:
+                a["instead"] = ["iosevka"]
+        errors = broken(mutate)
+        self.assertTrue(any("'iosevka' replaces 4 avoid entries" in e for e in errors), errors)
+
     def test_duplicate_id(self):
         errors = broken(lambda d: d["fonts"].append(copy.deepcopy(d["fonts"][0])))
         self.assertTrue(any("duplicate id" in e for e in errors), errors)
