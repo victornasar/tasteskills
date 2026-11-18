@@ -29,6 +29,16 @@
       "catalog_font_share": 1.0,
       "direction_written_share": 0.0,
       "direction_tagged_share": 0.0
+    },
+    "D": {
+      "pages": 18,
+      "slop_patterns_per_page": 0.16666666666666666,
+      "default_font_share": 0.0,
+      "structure_change_from_A": 0.5879629629629629,
+      "run_to_run_variation": 0.5833333333333335,
+      "catalog_font_share": 1.0,
+      "direction_written_share": 1.0,
+      "direction_tagged_share": 1.0
     }
   },
   "haiku-5-5": {
@@ -61,6 +71,16 @@
       "catalog_font_share": 1.0,
       "direction_written_share": 0.0,
       "direction_tagged_share": 0.0
+    },
+    "D": {
+      "pages": 6,
+      "slop_patterns_per_page": 0.3333333333333333,
+      "default_font_share": 0.0,
+      "structure_change_from_A": 0.4222222222222223,
+      "run_to_run_variation": 0.4388888888888889,
+      "catalog_font_share": 1.0,
+      "direction_written_share": 1.0,
+      "direction_tagged_share": 1.0
     }
   },
   "opus-5-5": {
@@ -93,6 +113,16 @@
       "catalog_font_share": 1.0,
       "direction_written_share": 0.0,
       "direction_tagged_share": 0.0
+    },
+    "D": {
+      "pages": 6,
+      "slop_patterns_per_page": 0.0,
+      "default_font_share": 0.0,
+      "structure_change_from_A": 0.65,
+      "run_to_run_variation": 0.7000000000000001,
+      "catalog_font_share": 1.0,
+      "direction_written_share": 1.0,
+      "direction_tagged_share": 1.0
     }
   },
   "sonnet-5-5": {
@@ -125,6 +155,16 @@
       "catalog_font_share": 1.0,
       "direction_written_share": 0.0,
       "direction_tagged_share": 0.0
+    },
+    "D": {
+      "pages": 6,
+      "slop_patterns_per_page": 0.16666666666666666,
+      "default_font_share": 0.0,
+      "structure_change_from_A": 0.6916666666666668,
+      "run_to_run_variation": 0.6111111111111112,
+      "catalog_font_share": 1.0,
+      "direction_written_share": 1.0,
+      "direction_tagged_share": 1.0
     }
   },
   "within_brief": {
@@ -146,6 +186,12 @@
       "top": "Synonym",
       "top_share": 0.56
     },
+    "fennel-street/D": {
+      "headings": 3,
+      "skeletons": 8,
+      "top": "Synonym",
+      "top_share": 0.67
+    },
     "tallyroll/A": {
       "headings": 2,
       "skeletons": 9,
@@ -163,6 +209,12 @@
       "skeletons": 8,
       "top": "IBM Plex Serif",
       "top_share": 0.22
+    },
+    "tallyroll/D": {
+      "headings": 5,
+      "skeletons": 8,
+      "top": "IBM Plex Serif",
+      "top_share": 0.33
     }
   }
 }

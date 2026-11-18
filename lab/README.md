@@ -6,9 +6,9 @@ The color and typography skills pick better parts. The lab asks the bigger quest
 AI agent from an acceptable website to a distinctive one, and how much of that is the model versus the tools
 and process around it?**
 
-**Status:** a 90-site corpus of AI defaults is measured; 54 runs across three conditions (no skills, font and
-color skills, plus check-layout) are measured automatically; condition D (`/taste` fast mode) is wired and ready
-to run against C; blind human ratings are open. Results so far are in [`findings.md`](findings.md).
+**Status:** a 90-site corpus of AI defaults is measured; 72 runs across four conditions (no skills, font and
+color skills, plus check-layout, plus `/taste` fast mode) are measured automatically; blind human ratings are
+open. Results so far are in [`findings.md`](findings.md).
 
 ## What's here
 

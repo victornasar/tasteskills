@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Neighbourhood bakery on Fennel Street, London E8. Sourdough, pastel de nata and seasonal cakes. Open Wednesday to Sunday, 7:00 to 14:00.">
+<style>
+/* Fonts (find-font: synonym + sentient). Self-hosted: drop the Fontshare woff2 files into ./fonts/ or replace with base64. */
+@font-face { font-family: "Synonym"; src: local("Synonym"), url("./fonts/Synonym.woff2") format("woff2"); font-weight: 200 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sentient"; src: local("Sentient"), url("./fonts/Sentient.woff2") format("woff2"); font-weight: 200 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sentient"; src: local("Sentient Italic"), url("./fonts/Sentient-Italic.woff2") format("woff2"); font-weight: 200 700; font-style: italic; font-display: swap; }
+
+/* Color (find-color: lib.clay-and-linen) */
+:root {
+  --color-ground: #F5EDE4;      --color-ground: oklch(0.95 0.015 75);
+  --color-figure: #8D5951;      --color-figure: oklch(0.52 0.07 30);
+  --color-text: #3D3832;        --color-text: oklch(0.345 0.012 75);
+  --color-text-muted: #6C6761;  --color-text-muted: oklch(0.518 0.012 75);
+  --color-tint-2: #CBA199;      --color-tint-2: oklch(0.745 0.0521 30);
+  --color-tint-3: #E1CAC6;      --color-tint-3: oklch(0.857 0.026 30);
+  --color-shade-1: #6A423C;     --color-shade-1: oklch(0.425 0.0573 30);
+  --color-shade-3: #2B1815;     --color-shade-3: oklch(0.235 0.0317 30);
+
+  --font-head: "Synonym", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Sentient", Georgia, "Times New Roman", serif;
+  --gutter: clamp(16px, 5vw, 56px);
+  --measure: 1120px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+a { color: var(--color-figure); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { color: var(--color-shade-1); }
+:focus-visible { outline: 2px solid var(--color-figure); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--font-head); font-weight: 600; color: var(--color-shade-3); margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.15; }
+p { margin: 0 0 1em; }
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
+.label {
+  font-family: var(--font-head); font-size: 0.8125rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted);
+}
+
+/* ---------- Top ---------- */
+.top { border-bottom: 1px solid var(--color-tint-3); }
+.top .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-top: 18px; padding-bottom: 16px; flex-wrap: wrap; }
+.wordmark { font-family: var(--font-head); font-weight: 700; font-size: 1.125rem; color: var(--color-shade-3); text-decoration: none; }
+.top nav { display: flex; gap: 20px; font-family: var(--font-head); font-size: 0.9375rem; }
+.top nav a { color: var(--color-text); text-decoration: none; }
+.top nav a:hover { color: var(--color-figure); text-decoration: underline; }
+
+/* ---------- Today ---------- */
+.today { padding: clamp(28px, 6vw, 72px) 0 clamp(36px, 6vw, 64px); }
+.status {
+  font-family: var(--font-head); font-weight: 600; font-size: 1.0625rem;
+  color: var(--color-shade-1); margin: 0 0 18px; display: flex; align-items: center; gap: 10px;
+}
+.status::before { content: ""; width: 10px; height: 10px; background: var(--color-figure); flex: none; }
+.status[data-state="closed"]::before { background: transparent; border: 2px solid var(--color-text-muted); }
+.status[data-state="closed"] { color: var(--color-text); }
+.status small { font-weight: 400; color: var(--color-text-muted); font-size: inherit; }
+h1 { font-size: clamp(2.25rem, 7.2vw, 5.25rem); line-height: 1.02; max-width: 15ch; letter-spacing: -0.025em; }
+.where { display: flex; flex-wrap: wrap; gap: 6px 28px; margin-top: 24px; font-size: 1.125rem; }
+.where a { white-space: nowrap; }
+
+/* The day, as a line */
+.day { margin-top: clamp(36px, 6vw, 64px); position: relative; }
+.day ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 2fr 5fr; border-top: 2px solid var(--color-shade-3); position: relative; }
+.day li { padding-top: 12px; position: relative; padding-right: 12px; }
+.day li::before { content: ""; position: absolute; top: -8px; left: 0; width: 2px; height: 14px; background: var(--color-shade-3); }
+.day li:last-child { position: absolute; right: 0; top: 0; text-align: right; padding-right: 0; white-space: nowrap; }
+.day li:last-child::before { left: auto; right: 0; }
+.day time { display: block; font-family: var(--font-head); font-weight: 600; font-size: clamp(1.125rem, 2.4vw, 1.5rem); color: var(--color-shade-3); }
+.day span { color: var(--color-text-muted); font-size: 0.9375rem; }
+.now-mark { position: absolute; top: -6px; width: 0; height: 0; display: none; }
+.now-mark::before { content: ""; position: absolute; left: -5px; top: 0; width: 10px; height: 10px; background: var(--color-figure); border-radius: 50%; }
+.now-mark::after { content: "now"; position: absolute; left: -12px; top: -22px; font-family: var(--font-head); font-size: 0.75rem; color: var(--color-figure); font-weight: 600; }
+
+/* ---------- Menu ---------- */
+.menu { padding: clamp(40px, 6vw, 72px) 0; background: #fff; background: color-mix(in oklch, var(--color-ground) 55%, white); border-top: 1px solid var(--color-tint-3); border-bottom: 1px solid var(--color-tint-3); }
+.menu-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
+.menu h2 { margin-bottom: 6px; }
+.menu .label { margin: 0 0 18px; }
+.board { list-style: none; margin: 0 0 40px; padding: 0; }
+.board li { display: flex; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--color-tint-3); }
+.board li:first-child { border-top: 1px solid var(--color-tint-3); }
+.board .item { flex: 0 1 auto; }
+.board .item em { display: block; font-size: 0.9375rem; color: var(--color-text-muted); }
+.board .lead { flex: 1 1 24px; border-bottom: 1px dotted var(--color-tint-2); transform: translateY(-5px); min-width: 24px; }
+.board .price { font-family: var(--font-head); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; color: var(--color-shade-3); }
+.board .price small { display: block; font-weight: 400; font-size: 0.875rem; color: var(--color-text-muted); }
+.season h3 { font-size: 1.25rem; margin-bottom: 4px; }
+
+.ph {
+  display: grid; place-items: end start; padding: 14px;
+  background-color: var(--color-tint-3);
+  background-image: repeating-linear-gradient(135deg, transparent 0 11px, rgba(255,255,255,.45) 11px 12px);
+  color: var(--color-shade-1); font-family: var(--font-head); font-size: 0.875rem;
+}
+.ph::before { content: "Photo placeholder"; display: block; font-weight: 600; font-size: 0.75rem; letter-spacing: .08em; text-transform: uppercase; }
+.ph span { display: block; }
+.ph-tarts { aspect-ratio: 4 / 5; }
+
+/* ---------- Cakes ---------- */
+.cakes { padding: clamp(48px, 8vw, 104px) 0 clamp(40px, 6vw, 72px); }
+.cakes .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(24px, 6vw, 80px); align-items: end; }
+.cakes h2 { font-size: clamp(1.75rem, 4.2vw, 3rem); line-height: 1.05; }
+.cakes p.lede { font-size: 1.25rem; max-width: 34ch; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 8px; }
+.btn {
+  display: inline-block; background: var(--color-figure); color: var(--color-ground);
+  font-family: var(--font-head); font-weight: 600; font-size: 1.0625rem;
+  padding: 14px 22px; border-radius: 4px; text-decoration: none;
+}
+.btn:hover { background: var(--color-shade-1); color: var(--color-ground); }
+
+/* ---------- Visit ---------- */
+.visit { padding: clamp(40px, 6vw, 72px) 0; border-top: 2px solid var(--color-shade-3); }
+.visit-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 64px); }
+.visit h2 { margin-bottom: 16px; }
+.hours { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.hours th, .hours td { text-align: left; padding: 7px 0; border-bottom: 1px solid var(--color-tint-3); font-weight: 400; }
+.hours td { text-align: right; font-family: var(--font-head); }
+.hours tr.closed td { color: var(--color-text-muted); }
+.hours tr.is-today th, .hours tr.is-today td { color: var(--color-shade-3); font-weight: 700; }
+.hours tr.is-today th::after { content: " · today"; font-weight: 400; color: var(--color-figure); font-family: var(--font-head); font-size: 0.875rem; }
+.note { color: var(--color-text-muted); font-size: 0.9375rem; margin-top: 12px; }
+address { font-style: normal; font-size: 1.25rem; line-height: 1.4; margin-bottom: 12px; }
+.ph-map { aspect-ratio: 4 / 3; }
+
+/* ---------- About ---------- */
+.about { padding: clamp(48px, 8vw, 96px) 0; background: var(--color-shade-3); color: var(--color-ground); }
+.about .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 6vw, 80px); align-items: center; }
+.about p { font-size: clamp(1.25rem, 2.6vw, 1.75rem); line-height: 1.4; max-width: 30ch; margin: 0 0 .6em; }
+.about p:last-child { margin: 0; }
+.about .label { color: var(--color-tint-2); margin-bottom: 18px; }
+.ph-sisters { aspect-ratio: 3 / 2; background-color: var(--color-shade-1); color: var(--color-tint-3);
+  background-image: repeating-linear-gradient(135deg, transparent 0 11px, rgba(255,255,255,.08) 11px 12px); }
+
+/* ---------- Footer ---------- */
+footer { padding: 28px 0 40px; font-family: var(--font-head); font-size: 0.9375rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
+footer nav { display: flex; gap: 8px; flex-wrap: wrap; }
+footer nav span { color: var(--color-tint-2); }
+footer p { margin: 0; color: var(--color-text-muted); }
+
+/* ---------- Phone ---------- */
+@media (max-width: 760px) {
+  .top nav { display: none; }
+  .menu-grid, .cakes .wrap, .about .wrap, .visit-grid { grid-template-columns: minmax(0, 1fr); }
+  .ph-tarts { aspect-ratio: 16 / 9; }
+  .ph-map { aspect-ratio: 16 / 9; }
+  .where { flex-direction: column; font-size: 1.0625rem; margin-top: 18px; }
+  .today { padding-top: 22px; }
+  .day span { font-size: 0.8125rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wordmark" href="#">Fennel Street Bakery</a>
+    <nav aria-label="Sections">
+      <a href="#menu">What's baked</a>
+      <a href="#cakes">Order a cake</a>
+      <a href="#visit">Hours &amp; find us</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="today" aria-labelledby="line">
+    <div class="wrap">
+      <p class="status" id="status" data-state="unknown" aria-live="polite">Wednesday to Sunday, 7:00 to 14:00</p>
+      <h1 id="line">Bread at seven, tarts by&nbsp;nine, gone by&nbsp;two.</h1>
+      <div class="where">
+        <a href="#visit">14 Fennel Street, London E8</a>
+        <a href="tel:+442079460381">Cake orders: 020 7946 0381</a>
+      </div>
+
+      <div class="day" aria-label="The baking day">
+        <ol>
+          <li><time>7:00</time><span>Bread out</span></li>
+          <li><time>9:00</time><span>Tarts out</span></li>
+          <li><time>14:00</time><span>Gone</span></li>
+        </ol>
+        <i class="now-mark" id="nowMark" aria-hidden="true"></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu" id="menu" aria-labelledby="menu-h">
+    <div class="wrap menu-grid">
+      <div>
+        <h2 id="menu-h">What's baked</h2>
+        <p class="label">Every day we're open</p>
+        <ul class="board">
+          <li><span class="item">Country sourdough</span><span class="lead"></span><span class="price">£5.20</span></li>
+          <li><span class="item">Seeded rye</span><span class="lead"></span><span class="price">£5.60</span></li>
+          <li><span class="item">Pastel de nata</span><span class="lead"></span><span class="price">£2.10<small>six for £11</small></span></li>
+          <li><span class="item">Cardamom buns</span><span class="lead"></span><span class="price">£3.00</span></li>
+          <li><span class="item">Olive oil focaccia<em>by the slice</em></span><span class="lead"></span><span class="price">£2.80</span></li>
+        </ul>
+
+        <div class="season">
+          <p class="label">This season</p>
+          <ul class="board">
+            <li><span class="item">Orange and almond cake</span><span class="lead"></span><span class="price">£28<small>whole · £4 a slice</small></span></li>
+            <li><span class="item">Fig and walnut loaf</span><span class="lead"></span><span class="price">£6.40</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ph ph-tarts" role="img" aria-label="Photo placeholder: a tray of pastéis de nata">
+        <span>A tray of pastéis de nata, fresh out of the oven</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cakes" id="cakes" aria-labelledby="cakes-h">
+    <div class="wrap">
+      <h2 id="cakes-h">Want a whole cake? Give us 48&nbsp;hours.</h2>
+      <div>
+        <p class="lede">Whole cakes with 48 hours' notice. Message us or call.</p>
+        <div class="actions">
+          <a class="btn" href="tel:+442079460381">Call 020 7946 0381</a>
+          <a href="#" data-open="instagram-handle">Message us on Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" id="visit" aria-labelledby="hours-h">
+    <div class="wrap visit-grid">
+      <div>
+        <h2 id="hours-h">Hours</h2>
+        <table class="hours" id="hours">
+          <tbody>
+            <tr data-day="3"><th scope="row">Wednesday</th><td>7:00–14:00</td></tr>
+            <tr data-day="4"><th scope="row">Thursday</th><td>7:00–14:00</td></tr>
+            <tr data-day="5"><th scope="row">Friday</th><td>7:00–14:00</td></tr>
+            <tr data-day="6"><th scope="row">Saturday</th><td>7:00–14:00</td></tr>
+            <tr data-day="0"><th scope="row">Sunday</th><td>7:00–14:00</td></tr>
+            <tr data-day="1" class="closed"><th scope="row">Monday</th><td>Closed</td></tr>
+            <tr data-day="2" class="closed"><th scope="row">Tuesday</th><td>Closed</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Or until we sell out.</p>
+      </div>
+      <div>
+        <h2>Find us</h2>
+        <address>14 Fennel Street<br>London E8</address>
+        <p><a href="https://www.openstreetmap.org/search?query=14%20Fennel%20Street%2C%20London%20E8">Open in a map</a><br>
+        <a href="tel:+442079460381">020 7946 0381</a></p>
+      </div>
+      <div class="ph ph-map" role="img" aria-label="Placeholder: shop front or street map of 14 Fennel Street">
+        <span>The shop front on Fennel Street</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" aria-labelledby="about-h">
+    <div class="wrap">
+      <div>
+        <h2 id="about-h" class="label">Who bakes</h2>
+        <p>Ana bakes the bread. Rita does everything with custard.</p>
+        <p>We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+      </div>
+      <div class="ph ph-sisters" role="img" aria-label="Photo placeholder: Ana and Rita Duarte at the oven">
+        <span>Ana and Rita Duarte at the oven</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="#" data-open="instagram-handle">Instagram</a><span aria-hidden="true">·</span>
+      <a href="#cakes">Order a cake</a><span aria-hidden="true">·</span>
+      <a href="#visit">Find us</a>
+    </nav>
+    <p>© 2026 Fennel Street Bakery</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Hours from the brief: Wed–Sun 7:00–14:00 (London time). Closed Mon & Tue.
+  var OPEN = 7 * 60, CLOSE = 14 * 60;
+  var openDays = [0, 3, 4, 5, 6];
+  var names = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var now;
+  try {
+    var parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
+    var get = function (t) { return (parts.find(function (p) { return p.type === t; }) || {}).value; };
+    var wd = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(get("weekday"));
+    now = { day: wd, mins: parseInt(get("hour"), 10) * 60 + parseInt(get("minute"), 10) };
+    if (wd < 0 || isNaN(now.mins)) throw 0;
+  } catch (e) { return; }
+
+  var status = document.getElementById("status");
+  var isOpenDay = openDays.indexOf(now.day) !== -1;
+  function nextOpen(fromDay) {
+    for (var i = 1; i <= 7; i++) { var d = (fromDay + i) % 7; if (openDays.indexOf(d) !== -1) return i === 1 ? "tomorrow" : names[d]; }
+  }
+  if (isOpenDay && now.mins >= OPEN && now.mins < CLOSE) {
+    status.dataset.state = "open";
+    status.innerHTML = "Open now <small>until 14:00, or until we sell out</small>";
+  } else if (isOpenDay && now.mins < OPEN) {
+    status.dataset.state = "closed";
+    status.innerHTML = "Opens at 7:00 today <small>bread first</small>";
+  } else {
+    status.dataset.state = "closed";
+    status.innerHTML = "Closed now <small>back " + nextOpen(now.day) + " at 7:00</small>";
+  }
+
+  var row = document.querySelector('#hours tr[data-day="' + now.day + '"]');
+  if (row) row.classList.add("is-today");
+
+  // "now" marker on the day line, open hours only. Line spans 7:00 → 14:00.
+  if (isOpenDay && now.mins >= OPEN && now.mins < CLOSE) {
+    var mark = document.getElementById("nowMark");
+    mark.style.left = ((now.mins - OPEN) / (CLOSE - OPEN) * 100) + "%";
+    mark.style.display = "block";
+  }
+})();
+</script>
+</body>
+</html>

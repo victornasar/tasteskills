@@ -122,8 +122,9 @@ agents start with its `AGENTS.md`.
 - **Layout:** adding `check-layout` cut the overused layout patterns from 1.33 per page to 0.06 and changed page
   structure beyond normal run-to-run variation for Opus and Sonnet (not yet for Haiku).
 - **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open. Guided-mode
-  discovery for `/taste` is designed but not scored (persona-B calibration pending). Condition D (fast mode)
-  is wired in the lab and has not been measured against C yet.
+  discovery for `/taste` is designed but not scored (persona-B calibration pending). In fast mode on the lab's
+  two rich briefs, `/taste` wrote an honestly tagged `DIRECTION.md` every time and kept check-layout's gains,
+  but didn't change pages beyond what check-layout already does.
 
 ## Words used here
 

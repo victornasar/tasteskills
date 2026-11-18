@@ -1,0 +1,9 @@
+- **Fonts (find-font picks):** Overpass for headlines, IBM Plex Sans for body and Commit Mono for figures. All three are OFL. No font files are bundled and nothing loads from a third party. `@font-face` tries `local()` first, then `./fonts/*.woff2`, so add the files there or the page falls back to system fonts.
+- **Colors (find-color):** Bottle Green Ledger, with cream ground `#F6F2E7` and green ink `#194430`. It is a quiet finance palette rather than the default dev-tool blue.
+- **Layout:** The headline is left-aligned. The invoice line is the hero artifact and opens into 31 daily rows. The page has no cards, stat rows, testimonials or gradients, and it uses ruled lines instead of boxes. The layout checker found none of its nine patterns on desktop or phone, so no fix rounds were needed.
+- **Open items:**
+  - **Placeholders:** the daily call totals are generated and labelled illustrative, and all links use `#`.
+  - **Not tested:** the expanded invoice state was not rendered or clicked.
+  - **Missing input:** fennel-street.md wasn't supplied, so I read "the opposite" as quiet and unornamented.
+  - **Approvals:** nothing was approved (non-interactive run), so DIRECTION.md stays `Status: draft`.
+- **Files:** DIRECTION.md and index.html are saved in the project folder.

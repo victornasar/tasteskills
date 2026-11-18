@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Bread at seven, tarts by nine, gone by two. Neighbourhood bakery at 14 Fennel Street, London E8.">
+<style>
+/* Fonts: Red Hat Display (headlines) + Source Sans 3 (body), both OFL. Self-host: put woff2 files in ./fonts/ */
+@font-face{font-family:"Red Hat Display";src:local("Red Hat Display"),url("./fonts/RedHatDisplay.woff2") format("woff2");font-weight:300 900;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:local("Source Sans 3"),url("./fonts/SourceSans3.woff2") format("woff2");font-weight:200 900;font-display:swap}
+:root{
+  --color-ground:#F5EDE4;--color-figure:#8D5951;--color-text:#3D3832;--color-text-muted:#6C6761;
+  --color-tint-3:#E1CAC6;--color-shade-1:#6A423C;--color-shade-3:#2B1815;
+  --head:"Red Hat Display","Avenir Next",system-ui,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-ground);color:var(--color-text);font:400 18px/1.55 var(--body)}
+a{color:var(--color-figure)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 0;font-size:16px}
+nav b{font:800 17px var(--head);color:var(--color-shade-3)}
+nav a{display:inline-flex;align-items:center;font-weight:600;min-height:44px}
+h1{font:800 clamp(44px,11vw,92px)/.95 var(--head);color:var(--color-shade-3);margin:20px 0 22px;letter-spacing:-.02em;max-width:11ch}
+h2{font:700 15px var(--head);letter-spacing:.12em;text-transform:uppercase;color:var(--color-figure);margin:0 0 14px}
+.status{border-top:3px solid var(--color-shade-3);border-bottom:1px solid var(--color-shade-3);padding:14px 0}
+.status strong{font:800 24px/1.2 var(--head);color:var(--color-shade-3);display:block}
+.status span{color:var(--color-text-muted)}
+.grid{display:grid;gap:48px;margin:48px 0}
+@media(min-width:760px){.grid{grid-template-columns:1.5fr 1fr;gap:72px}}
+ul.list{list-style:none;margin:0 0 44px;padding:0}
+.list li{display:flex;align-items:baseline;gap:8px;padding:9px 0}
+.list .n{font-weight:600}
+.list .d{flex:1;border-bottom:2px dotted var(--color-figure);opacity:.45;transform:translateY(-4px);min-width:16px}
+.list .p{font-variant-numeric:tabular-nums;font-weight:600;text-align:right}
+.list small{display:block;color:var(--color-text-muted);font-weight:400;font-size:15px}
+.ph{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,var(--color-tint-3) 0 2px,transparent 2px 14px);border:1px dashed var(--color-figure);display:flex;align-items:flex-end;padding:12px;color:var(--color-shade-1);font-size:14px;margin-bottom:40px}
+.cake{background:var(--color-shade-3);color:var(--color-ground);padding:56px 0;margin-top:72px}
+.cake h2{color:var(--color-tint-3)}
+.cake p.big{font:700 clamp(26px,6vw,40px)/1.15 var(--head);max-width:20ch;margin:0 0 20px}
+.cake p{max-width:46ch;margin:0 0 24px}
+.btn{display:inline-block;background:var(--color-figure);color:var(--color-ground);font:700 19px var(--head);padding:14px 22px;border-radius:2px;text-decoration:none;min-height:48px}
+.cake .btn{background:var(--color-ground);color:var(--color-shade-3)}
+dl{margin:0}dt{font-weight:700}dd{margin:0 0 12px}
+.about{max-width:52ch;margin:0}
+.addr{font:700 28px/1.2 var(--head);margin:0}
+footer{padding:32px 0 40px;font-size:16px;color:var(--color-text-muted)}
+footer nav{padding:0;flex-wrap:wrap;justify-content:flex-start;gap:0 24px}
+:focus-visible{outline:3px solid var(--color-figure);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><b>Fennel Street Bakery</b><a href="#cakes">Order a cake</a></nav>
+  <h1>Bread at seven, tarts by nine, gone by two.</h1>
+  <div class="status" aria-live="polite">
+    <strong id="now">Wednesday to Sunday, 7:00 to 14:00</strong>
+    <span>Wednesday to Sunday, 7:00 to 14:00, or until we sell out. Closed Monday and Tuesday. 14 Fennel Street, London E8.</span>
+  </div>
+
+  <div class="grid">
+    <main>
+      <h2>Baked daily</h2>
+      <ul class="list">
+        <li><span class="n">Country sourdough</span><span class="d"></span><span class="p">£5.20</span></li>
+        <li><span class="n">Seeded rye</span><span class="d"></span><span class="p">£5.60</span></li>
+        <li><span class="n">Pastel de nata<small>Six for £11</small></span><span class="d"></span><span class="p">£2.10</span></li>
+        <li><span class="n">Cardamom buns</span><span class="d"></span><span class="p">£3.00</span></li>
+        <li><span class="n">Olive oil focaccia<small>By the slice</small></span><span class="d"></span><span class="p">£2.80</span></li>
+      </ul>
+      <h2>This season</h2>
+      <ul class="list">
+        <li><span class="n">Orange and almond cake<small>Whole £28, slice £4</small></span><span class="d"></span><span class="p">£28</span></li>
+        <li><span class="n">Fig and walnut loaf</span><span class="d"></span><span class="p">£6.40</span></li>
+      </ul>
+    </main>
+    <aside>
+      <div class="ph" role="img" aria-label="Photo placeholder">Photo goes here: a tray of pastéis de nata</div>
+      <h2>About</h2>
+      <p class="about">Ana bakes the bread. Rita does everything with custard. We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+    </aside>
+  </div>
+</div>
+
+<section class="cake" id="cakes">
+  <div class="wrap">
+    <h2>Cake orders</h2>
+    <p class="big">Whole cakes with 48 hours' notice.</p>
+    <p>Message us or call 020 7946 0381.</p>
+    <a class="btn" href="tel:+442079460381">Call 020 7946 0381</a>
+  </div>
+</section>
+
+<div class="wrap" id="find">
+  <div class="grid" style="margin-bottom:0">
+    <div>
+      <h2>Find us</h2>
+      <p class="addr">14 Fennel Street,<br>London E8</p>
+    </div>
+    <dl>
+      <dt>Wednesday to Sunday</dt><dd>7:00 to 14:00, or until we sell out</dd>
+      <dt>Monday and Tuesday</dt><dd>Closed</dd>
+    </dl>
+  </div>
+  <footer>
+    <nav><a href="#">Instagram</a><a href="#cakes">Order a cake</a><a href="#find">Find us</a></nav>
+    <p>© 2026 Fennel Street Bakery</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  try{
+    var g={};
+    new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/London",weekday:"long",hour:"numeric",minute:"numeric",hourCycle:"h23"}).formatToParts(new Date()).forEach(function(x){g[x.type]=x.value});
+    var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        d=days.indexOf(g.weekday),m=+g.hour*60+ +g.minute,open=[3,4,5,6,0],t;
+    if(open.indexOf(d)>-1&&m>=420&&m<840){t="Open now, until 14:00 or sell-out"}
+    else{
+      var n=-1,i,s=(open.indexOf(d)>-1&&m<420)?0:1;
+      for(i=s;i<8;i++){if(open.indexOf((d+i)%7)>-1){n=i;break}}
+      t=n===0?"Opens today at 7:00":n===1?"Closed now. Opens tomorrow at 7:00":"Closed now. Opens "+days[(d+n)%7]+" at 7:00";
+    }
+    document.getElementById("now").textContent=t;
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

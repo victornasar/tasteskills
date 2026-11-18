@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyroll: Every cent traces back to an event</title>
+<meta name="description" content="Tallyroll turns raw usage into invoices your finance team can reconcile line by line.">
+<style>
+  /* Fonts: self-hosted. Place the files in ./fonts/ (see DIRECTION.md, Typography).
+     Technor: Fontshare FFL, self-host only, keep out of public repos.
+     IBM Plex Serif: OFL. Until the files exist, the fallback stacks render. */
+  @font-face {
+    font-family: "Technor";
+    src: url("./fonts/Technor.woff2") format("woff2");
+    font-weight: 200 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "IBM Plex Serif";
+    src: url("./fonts/IBMPlexSerif.woff2") format("woff2");
+    font-weight: 100 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Colour tokens: Graphite and Signal (lib.graphite-and-signal), via find-color. */
+  :root {
+    --color-ground: #F9FAFB;
+    --color-ground: oklch(0.985 0.002 250);
+    --color-figure: #15181E;
+    --color-figure: oklch(0.21 0.012 260);
+    --color-accent: #0E6EE6;
+    --color-accent: oklch(0.56 0.2 258);
+    --color-text: #3C3F46;
+    --color-text: oklch(0.368 0.012 260);
+    --color-text-muted: #6B6F76;
+    --color-text-muted: oklch(0.542 0.012 260);
+    --color-tint-1: #44484F;
+    --color-tint-1: oklch(0.4 0.0132 260);
+    --color-tint-2: #797E85;
+    --color-tint-2: oklch(0.59 0.0132 260);
+    --color-tint-3: #B2B8C0;
+    --color-tint-3: oklch(0.78 0.0132 260);
+
+    --font-head: "Technor", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-body: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --gutter: 16px;
+    --measure: 1120px;
+    --body-size: 1.0625rem;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--color-ground);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--color-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  .wrap {
+    width: 100%;
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-head);
+    color: var(--color-figure);
+    font-weight: 500;
+    line-height: 1.08;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  p { margin: 0; }
+  .muted { color: var(--color-text-muted); }
+  code, .mono {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+  }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* Top bar */
+  .topbar {
+    border-bottom: 1px solid var(--color-tint-3);
+  }
+  .topbar .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 60px;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .wordmark {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--color-figure);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .topnav {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9375rem;
+  }
+  .topnav a { color: var(--color-text); text-decoration: none; }
+  .topnav a:hover { color: var(--color-accent); }
+
+  /* Hero: left edge is the spine */
+  .hero {
+    padding-top: clamp(56px, 9vw, 112px);
+    padding-bottom: clamp(48px, 7vw, 88px);
+  }
+  .hero h1 {
+    font-size: clamp(2.75rem, 6.2vw, 4.5rem);
+    max-width: 16ch;
+  }
+  .lede {
+    margin-top: 24px;
+    max-width: 38ch;
+    font-size: 1.1875rem;
+    color: var(--color-text);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .btn {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1;
+    padding: 14px 20px;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid var(--color-figure);
+  }
+  .btn-primary {
+    background: var(--color-figure);
+    color: var(--color-ground);
+  }
+  .btn-primary:hover { background: var(--color-tint-1); border-color: var(--color-tint-1); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-figure);
+    border-color: var(--color-tint-2);
+  }
+  .btn-secondary:hover { border-color: var(--color-figure); }
+
+  /* Invoice line: the page's one artifact, built in HTML */
+  .invoice {
+    margin: clamp(40px, 6vw, 72px) 0 0;
+    border-top: 1px solid var(--color-figure);
+    border-bottom: 1px solid var(--color-tint-3);
+  }
+  .invoice-caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 12px 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  .invoice details { border-top: 1px solid var(--color-tint-3); }
+  .invoice summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "desc amt"
+      "calc amt";
+    column-gap: 24px;
+    row-gap: 4px;
+    align-items: baseline;
+    padding: 20px 0;
+  }
+  .invoice summary::-webkit-details-marker { display: none; }
+  .invoice .desc {
+    grid-area: desc;
+    font-family: var(--font-head);
+    font-size: 1.25rem;
+    color: var(--color-figure);
+  }
+  .invoice .desc::after {
+    content: "Show events";
+    display: inline-block;
+    margin-left: 12px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .invoice details[open] .desc::after { content: "Hide events"; }
+  .invoice .calc {
+    grid-area: calc;
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .invoice .amt {
+    grid-area: amt;
+    font-family: var(--font-head);
+    font-size: 1.25rem;
+    color: var(--color-figure);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  .days {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 6px;
+  }
+  .days li {
+    border: 1px solid var(--color-tint-3);
+    border-radius: 2px;
+    padding: 8px 10px;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-mono);
+  }
+  .days li b {
+    display: block;
+    font-weight: 400;
+    color: var(--color-figure);
+  }
+  .days-note {
+    padding: 0 0 20px;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  .invoice details[open] .days { animation: reveal 150ms ease-out; }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(-2px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .invoice details[open] .days { animation: none; }
+  }
+
+  /* Sections */
+  /* Spacing follows content: the sequence is tight, the audience split is open, pricing is short. */
+  #how { padding-top: clamp(64px, 8vw, 88px); }
+  #for-teams { padding-top: clamp(112px, 16vw, 184px); }
+  #pricing { padding-top: clamp(48px, 5vw, 56px); }
+  .block-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .kicker {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    padding-top: 6px;
+  }
+  .block h2 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+  }
+
+  /* How it works: a numbered sequence, not cards */
+  .steps {
+    list-style: none;
+    margin: 40px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--color-tint-3);
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--color-tint-3);
+  }
+  .steps .num {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    padding-top: 4px;
+  }
+  .steps h3 {
+    font-size: 1.375rem;
+    margin-bottom: 8px;
+  }
+  .steps p { max-width: 60ch; }
+  .steps code {
+    color: var(--color-figure);
+    background: transparent;
+    border: 1px solid var(--color-tint-3);
+    border-radius: 2px;
+    padding: 1px 6px;
+  }
+
+  /* For finance / for engineering: two columns of ruled lists */
+  .audiences {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 48px;
+  }
+  .audience {
+    border-top: 1px solid var(--color-figure);
+    padding-top: 16px;
+  }
+  .audience h3 {
+    font-size: 1.375rem;
+    margin-bottom: 12px;
+  }
+  .audience ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .audience li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-tint-3);
+  }
+  .audience li strong {
+    display: block;
+    font-weight: 600;
+    color: var(--color-figure);
+    font-size: 1rem;
+  }
+
+  /* Pricing: stated as a rule */
+  .pricing {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    border-top: 1px solid var(--color-tint-3);
+    padding-top: 28px;
+  }
+  .price-rule {
+    font-family: var(--font-head);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-figure);
+    line-height: 1.2;
+  }
+  .price-note {
+    margin-top: 12px;
+    max-width: 52ch;
+    color: var(--color-text);
+  }
+
+  /* Closing actions */
+  .close {
+    margin-top: clamp(56px, 8vw, 96px);
+    border-top: 1px solid var(--color-figure);
+    padding-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  footer {
+    margin-top: 56px;
+    border-top: 1px solid var(--color-tint-3);
+    padding: 24px 0 40px;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+  }
+  footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+  footer a { color: var(--color-text); text-decoration: none; }
+  footer a:hover { color: var(--color-accent); text-decoration: underline; }
+
+  /* Narrow screens */
+  @media (max-width: 760px) {
+    .block-head,
+    .steps li,
+    .pricing {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .kicker { padding-top: 0; }
+    .steps .num { padding-top: 0; }
+    .audiences {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .invoice summary {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "desc"
+        "calc"
+        "amt";
+    }
+    .invoice .amt { text-align: left; }
+    .topnav { gap: 14px; font-size: 0.875rem; }
+  }
+  @media (max-width: 420px) {
+    .topnav a:not(.keep) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="wordmark" href="#top">Tallyroll</a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="#docs">Docs</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#security">Security</a>
+      <a class="keep" href="#demo">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="wrap hero">
+    <h1>Every cent traces back to an event.</h1>
+    <p class="lede">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#docs">Read the docs</a>
+      <a class="btn btn-secondary" href="#demo">Book a demo</a>
+    </div>
+
+    <figure class="invoice" aria-label="Example invoice line">
+      <div class="invoice-caption">
+        <span>Example invoice line</span>
+        <span>Open the line to see the events behind it</span>
+      </div>
+      <details>
+        <summary>
+          <span class="desc">API calls, March</span>
+          <span class="calc">1,204,388 calls × $0.0004</span>
+          <span class="amt">$481.76</span>
+        </summary>
+        <p class="days-note">Expands to the 31 daily totals behind it.</p>
+        <ol class="days" aria-label="31 daily totals, March">
+          <li><b>Mar 01</b>daily total</li>
+          <li><b>Mar 02</b>daily total</li>
+          <li><b>Mar 03</b>daily total</li>
+          <li><b>Mar 04</b>daily total</li>
+          <li><b>Mar 05</b>daily total</li>
+          <li><b>Mar 06</b>daily total</li>
+          <li><b>Mar 07</b>daily total</li>
+          <li><b>Mar 08</b>daily total</li>
+          <li><b>Mar 09</b>daily total</li>
+          <li><b>Mar 10</b>daily total</li>
+          <li><b>Mar 11</b>daily total</li>
+          <li><b>Mar 12</b>daily total</li>
+          <li><b>Mar 13</b>daily total</li>
+          <li><b>Mar 14</b>daily total</li>
+          <li><b>Mar 15</b>daily total</li>
+          <li><b>Mar 16</b>daily total</li>
+          <li><b>Mar 17</b>daily total</li>
+          <li><b>Mar 18</b>daily total</li>
+          <li><b>Mar 19</b>daily total</li>
+          <li><b>Mar 20</b>daily total</li>
+          <li><b>Mar 21</b>daily total</li>
+          <li><b>Mar 22</b>daily total</li>
+          <li><b>Mar 23</b>daily total</li>
+          <li><b>Mar 24</b>daily total</li>
+          <li><b>Mar 25</b>daily total</li>
+          <li><b>Mar 26</b>daily total</li>
+          <li><b>Mar 27</b>daily total</li>
+          <li><b>Mar 28</b>daily total</li>
+          <li><b>Mar 29</b>daily total</li>
+          <li><b>Mar 30</b>daily total</li>
+          <li><b>Mar 31</b>daily total</li>
+        </ol>
+      </details>
+    </figure>
+  </div>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="block-head">
+        <p class="kicker">Process</p>
+        <h2>How it works</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <span class="num">01</span>
+          <div>
+            <h3>Send events.</h3>
+            <p>Post usage events from your product as they happen: <code>POST /v1/events</code>.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <div>
+            <h3>Define pricing.</h3>
+            <p>Tiers, minimums, credits and commitments, written as rules you can read.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <div>
+            <h3>Invoice.</h3>
+            <p>Each line on an invoice opens up into the events that produced it.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="for-teams">
+    <div class="wrap">
+      <div class="block-head">
+        <p class="kicker">Audiences</p>
+        <h2>For finance and for engineering</h2>
+      </div>
+      <div class="audiences">
+        <div class="audience" id="security">
+          <h3>For finance</h3>
+          <ul>
+            <li><strong>Line-level audit trail</strong></li>
+            <li><strong>Exports to NetSuite and QuickBooks</strong></li>
+            <li><strong>Revenue recognition schedules</strong></li>
+          </ul>
+        </div>
+        <div class="audience">
+          <h3>For engineering</h3>
+          <ul>
+            <li><strong>Idempotent event ingestion</strong></li>
+            <li><strong>Webhooks for every invoice state</strong></li>
+            <li><strong>SDKs for TypeScript, Python and Go</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="pricing">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Pricing</h2>
+      </div>
+      <div class="pricing">
+        <p class="price-rule">0.5% of billed revenue</p>
+        <div>
+          <p class="price-note">No platform fee. Free until you bill $10,000 a month.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="close">
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn-primary" href="#docs">Read the docs</a>
+        <a class="btn btn-secondary" href="#demo">Book a demo</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="#docs">Docs</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#status">Status</a>
+      <a href="#security">Security</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span>© 2026 Tallyroll.</span>
+  </div>
+</footer>
+
+</body>
+</html>
