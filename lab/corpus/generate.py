@@ -44,6 +44,8 @@ def slug(text):
 def extract_html(text):
     blocks = re.findall(r"```(?:html)?\s*\n(.*?)```", text, re.S)
     html = max(blocks, key=len) if blocks else text
+    # Models write example API keys into docs pages; redact anything key-shaped so pushes aren't blocked.
+    html = re.sub(r"\b(sk|pk|rk)_(test|live)_[A-Za-z0-9]{10,}", r"\1_\2_EXAMPLE_KEY_REDACTED", html)
     return html if "<" in html else ""
 
 

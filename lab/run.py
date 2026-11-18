@@ -45,7 +45,9 @@ def split_reply(text):
     if not blocks:
         return "", text
     page = max(blocks, key=lambda m: len(m.group(1)))
-    return page.group(1), (text[:page.start()] + text[page.end():]).strip()
+    # Models write example API keys into pages; redact anything key-shaped so pushes aren't blocked.
+    html = re.sub(r"\b(sk|pk|rk)_(test|live)_[A-Za-z0-9]{10,}", r"\1_\2_EXAMPLE_KEY_REDACTED", page.group(1))
+    return html, (text[:page.start()] + text[page.end():]).strip()
 
 
 def run_one(brief, condition, model, n):
