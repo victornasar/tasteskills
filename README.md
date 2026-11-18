@@ -11,14 +11,37 @@ This repo gives agents better defaults to reach for, and the evidence for why th
 - **Curated choices.** A short list of fonts and color pairs, each picked by a person, tagged so an agent can
   match them to a brief.
 - **Avoid lists.** The fonts and patterns agents overuse, measured from real AI output.
-- **Skills.** Commands an agent runs (`/find-font`, `/find-color`) that turn a brief like "cozy bakery
-  website" into specific picks, with reasons.
+- **Skills.** Commands an agent runs (`/taste`, `/find-font`, `/find-color`, `/check-layout`) that turn a brief
+  into a direction and specific picks, with reasons.
 - **Evals.** Checks that the picks avoid the defaults and that different briefs get different answers.
 
 ## Quick start
 
-Three skills are ready to use today. All work in Claude Code, Cursor, Codex and any agent that supports skills.
-Each one ships with its data and a small script, so the picks are the same every time for the same brief.
+Four skills are ready to use today. All work in Claude Code, Cursor, Codex and any agent that supports skills.
+The three engines ship with their data and a small script, so the picks are the same every time for the same
+brief. `/taste` coordinates them.
+
+### Design direction: `/taste`
+
+Orchestrates the skills below into one workflow: discover the brief, write `DIRECTION.md`, pick type and color
+from the engines, plan layout, build, then critique against the direction (at most two fix rounds). Needs the
+sibling skills installed for full runs; if one is missing it says so and does not invent replacements.
+
+```bash
+npx skills add https://github.com/victornasar/tasteskills --skill taste
+npx skills add https://github.com/victornasar/tasteskills --skill find-font
+npx skills add https://github.com/victornasar/tasteskills --skill find-color
+npx skills add https://github.com/victornasar/tasteskills --skill check-layout
+```
+
+Then ask your agent:
+
+```
+/taste independent daycare for local families
+```
+
+Fast mode (written brief, no interview) is the primary path and what the lab measures. Guided mode
+(conversational discovery) ships labelled **experimental**. More in [`direction/README.md`](direction/README.md).
 
 ### Pick colors: `/find-color`
 
@@ -70,13 +93,15 @@ instead of the usual template. After building, it renders the page, checks for t
 overuse (pill badges, emoji icons, rounded boxes everywhere and six more) and fixes the ones the brief doesn't
 justify. More in [`layout/README.md`](layout/README.md).
 
-Agent without skills support? Point it at the skill's `SKILL.md` (in [`color/skills/`](color/skills/),
-[`typography/skills/`](typography/skills/) or [`layout/skills/`](layout/skills/)) and give it the brief.
+Agent without skills support? Point it at the skill's `SKILL.md` (in [`direction/skills/`](direction/skills/),
+[`color/skills/`](color/skills/), [`typography/skills/`](typography/skills/) or
+[`layout/skills/`](layout/skills/)) and give it the brief.
 
 ## What's in the repo
 
 | Folder | What it is | Status |
 | --- | --- | --- |
+| [`direction/`](direction/) | The `/taste` skill: design-director workflow that writes `DIRECTION.md` and coordinates the engines below | Ready to use (guided mode experimental) |
 | [`color/`](color/) | 51 curated color directions, a script that picks and applies them, and research on 6,295 award-winning sites | Ready to use |
 | [`typography/`](typography/) | 63 curated free fonts, an avoid list of 27 overused ones, and the `/find-font` skill | Ready to use |
 | [`layout/`](layout/) | The `check-layout` skill: plans page structure from the brief and checks the rendered page for nine overused layout patterns | Ready to use |
@@ -96,7 +121,10 @@ agents start with its `AGENTS.md`.
   [`lab/findings.md`](lab/findings.md).
 - **Layout:** adding `check-layout` cut the overused layout patterns from 1.33 per page to 0.06 and changed page
   structure beyond normal run-to-run variation for Opus and Sonnet (not yet for Haiku).
-- **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open.
+- **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open. Guided-mode
+  discovery for `/taste` is designed but not scored (persona-B calibration pending). In fast mode on the lab's
+  two rich briefs, `/taste` wrote an honestly tagged `DIRECTION.md` every time and kept check-layout's gains,
+  but didn't change pages beyond what check-layout already does.
 
 ## Words used here
 
@@ -114,6 +142,9 @@ agents start with its `AGENTS.md`.
 Work in one folder at a time and follow its `AGENTS.md`. Before committing, run that folder's checks:
 
 ```bash
+# Direction: static checks for the /taste conductor (no model calls)
+cd direction && node --test tests/test_skill.mjs
+
 # Typography: validates the catalog and regenerates its README
 cd typography && python3 scripts/build.py --check && python3 -m unittest discover -s tests -q
 

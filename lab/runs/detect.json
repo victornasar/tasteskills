@@ -1,6 +1,6 @@
 [
   {
-    "file": "runs/fennel-street/A/claude-haiku-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/A/claude-haiku-5-5-1/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -62,7 +62,7 @@
     "height": 2278
   },
   {
-    "file": "runs/fennel-street/A/claude-haiku-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/A/claude-haiku-5-5-2/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -128,7 +128,7 @@
     "height": 2267
   },
   {
-    "file": "runs/fennel-street/A/claude-haiku-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/A/claude-haiku-5-5-3/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -194,7 +194,7 @@
     "height": 2179
   },
   {
-    "file": "runs/fennel-street/A/claude-opus-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/A/claude-opus-5-5-1/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -261,7 +261,7 @@
     "height": 2467
   },
   {
-    "file": "runs/fennel-street/A/claude-opus-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/A/claude-opus-5-5-2/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -326,7 +326,7 @@
     "height": 2602
   },
   {
-    "file": "runs/fennel-street/A/claude-opus-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/A/claude-opus-5-5-3/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -390,7 +390,7 @@
     "height": 2405
   },
   {
-    "file": "runs/fennel-street/A/claude-sonnet-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/A/claude-sonnet-5-5-1/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -427,7 +427,7 @@
       },
       "pillBadge": {
         "hit": true,
-        "text": "Closed · opens today at 7:00"
+        "text": "Closed · opens tomorrow at 7:00"
       },
       "statsRow": {
         "hit": false,
@@ -455,7 +455,7 @@
     "height": 2148
   },
   {
-    "file": "runs/fennel-street/A/claude-sonnet-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/A/claude-sonnet-5-5-2/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -520,7 +520,7 @@
     "height": 2810
   },
   {
-    "file": "runs/fennel-street/A/claude-sonnet-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/A/claude-sonnet-5-5-3/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -557,7 +557,7 @@
       },
       "pillBadge": {
         "hit": true,
-        "text": "Closed now, opening today at 7:00"
+        "text": "Closed for today, back tomorrow at 7:00"
       },
       "statsRow": {
         "hit": false,
@@ -586,7 +586,7 @@
     "height": 2417
   },
   {
-    "file": "runs/fennel-street/B/claude-haiku-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/B/claude-haiku-5-5-1/index.html",
     "suppliedFonts": [
       "Source Sans 3",
       "Cormorant"
@@ -655,7 +655,7 @@
     "height": 2488
   },
   {
-    "file": "runs/fennel-street/B/claude-haiku-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/B/claude-haiku-5-5-2/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -721,7 +721,7 @@
     "height": 2381
   },
   {
-    "file": "runs/fennel-street/B/claude-haiku-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/B/claude-haiku-5-5-3/index.html",
     "suppliedFonts": [
       "Source Sans 3",
       "Cormorant"
@@ -787,7 +787,7 @@
     "height": 2636
   },
   {
-    "file": "runs/fennel-street/B/claude-opus-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/B/claude-opus-5-5-1/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -852,10 +852,10 @@
         "body": true
       }
     },
-    "height": 2980
+    "height": 2979
   },
   {
-    "file": "runs/fennel-street/B/claude-opus-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/B/claude-opus-5-5-2/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -895,7 +895,7 @@
       },
       "pillBadge": {
         "hit": true,
-        "text": "Closed · opens today at 7:00"
+        "text": "Closed · opens tomorrow at 7:00"
       },
       "statsRow": {
         "hit": false,
@@ -924,7 +924,7 @@
     "height": 2617
   },
   {
-    "file": "runs/fennel-street/B/claude-opus-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/B/claude-opus-5-5-3/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -964,7 +964,7 @@
       },
       "pillBadge": {
         "hit": true,
-        "text": "Closed opens today at 7:00"
+        "text": "Closed opens tomorrow at 7:00"
       },
       "statsRow": {
         "hit": false,
@@ -990,10 +990,10 @@
         "body": true
       }
     },
-    "height": 2706
+    "height": 2710
   },
   {
-    "file": "runs/fennel-street/B/claude-sonnet-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/B/claude-sonnet-5-5-1/index.html",
     "suppliedFonts": [
       "Source Sans 3",
       "Cormorant"
@@ -1033,7 +1033,7 @@
       },
       "pillBadge": {
         "hit": true,
-        "text": "Opens today at 7:00"
+        "text": "Closed for today. Open Wednesday to Sunday, 7:00 to 14:00"
       },
       "statsRow": {
         "hit": false,
@@ -1063,7 +1063,7 @@
     "height": 3574
   },
   {
-    "file": "runs/fennel-street/B/claude-sonnet-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/B/claude-sonnet-5-5-2/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -1129,10 +1129,10 @@
         "body": true
       }
     },
-    "height": 2891
+    "height": 2890
   },
   {
-    "file": "runs/fennel-street/B/claude-sonnet-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/B/claude-sonnet-5-5-3/index.html",
     "suppliedFonts": [
       "Source Sans 3",
       "Cormorant"
@@ -1201,7 +1201,7 @@
     "height": 3006
   },
   {
-    "file": "runs/fennel-street/C/claude-haiku-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/C/claude-haiku-5-5-1/index.html",
     "suppliedFonts": [
       "Source Sans 3",
       "Cormorant"
@@ -1270,7 +1270,7 @@
     "height": 1887
   },
   {
-    "file": "runs/fennel-street/C/claude-haiku-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/C/claude-haiku-5-5-2/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -1340,7 +1340,7 @@
     "height": 2255
   },
   {
-    "file": "runs/fennel-street/C/claude-haiku-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/C/claude-haiku-5-5-3/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -1408,7 +1408,7 @@
     "height": 1624
   },
   {
-    "file": "runs/fennel-street/C/claude-opus-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/C/claude-opus-5-5-1/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -1474,10 +1474,10 @@
         "body": true
       }
     },
-    "height": 2383
+    "height": 2382
   },
   {
-    "file": "runs/fennel-street/C/claude-opus-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/C/claude-opus-5-5-2/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -1542,10 +1542,10 @@
         "body": true
       }
     },
-    "height": 2055
+    "height": 2140
   },
   {
-    "file": "runs/fennel-street/C/claude-opus-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/C/claude-opus-5-5-3/index.html",
     "suppliedFonts": [
       "Sentient",
       "Synonym"
@@ -1610,10 +1610,10 @@
         "body": true
       }
     },
-    "height": 2440
+    "height": 2525
   },
   {
-    "file": "runs/fennel-street/C/claude-sonnet-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/C/claude-sonnet-5-5-1/index.html",
     "suppliedFonts": [
       "Source Sans 3",
       "Cormorant"
@@ -1680,7 +1680,7 @@
     "height": 1848
   },
   {
-    "file": "runs/fennel-street/C/claude-sonnet-5-5-2/index.html",
+    "file": "lab/runs/fennel-street/C/claude-sonnet-5-5-2/index.html",
     "suppliedFonts": [
       "Source Sans 3",
       "Red Hat Display"
@@ -1748,7 +1748,7 @@
     "height": 2518
   },
   {
-    "file": "runs/fennel-street/C/claude-sonnet-5-5-3/index.html",
+    "file": "lab/runs/fennel-street/C/claude-sonnet-5-5-3/index.html",
     "suppliedFonts": [
       "Source Sans 3",
       "Cormorant"
@@ -1815,7 +1815,624 @@
     "height": 1859
   },
   {
-    "file": "runs/tallyroll/A/claude-haiku-5-5-1/index.html",
+    "file": "lab/runs/fennel-street/D/claude-haiku-5-5-1/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": true,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 9
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 6,
+        "sharedPadding": 3
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 29,
+        "cta": "Message us"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "2",
+      "1",
+      "2",
+      "1",
+      "2"
+    ],
+    "ground": {
+      "color": "rgb(245, 237, 228)",
+      "lightness": 0.95
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Sentient",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2197
+  },
+  {
+    "file": "lab/runs/fennel-street/D/claude-haiku-5-5-2/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 7
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 29,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1",
+      "1c",
+      "1",
+      "1",
+      "1"
+    ],
+    "ground": {
+      "color": "rgb(245, 237, 228)",
+      "lightness": 0.95
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Sentient",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2790
+  },
+  {
+    "file": "lab/runs/fennel-street/D/claude-haiku-5-5-3/index.html",
+    "suppliedFonts": [
+      "Source Sans 3",
+      "Cormorant"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 3
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": null
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "ground": {
+      "color": "oklch(0.95 0.015 75)",
+      "lightness": 0.19
+    },
+    "fonts": {
+      "heading": "Cormorant",
+      "body": "Cormorant",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1309
+  },
+  {
+    "file": "lab/runs/fennel-street/D/claude-opus-5-5-1/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 9
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 0
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 265,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "2",
+      "2b",
+      "2",
+      "2"
+    ],
+    "ground": {
+      "color": "oklch(0.95 0.015 75)",
+      "lightness": 0.19
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Sentient",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2562
+  },
+  {
+    "file": "lab/runs/fennel-street/D/claude-opus-5-5-2/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 10
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 3
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 267,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "2b",
+      "1",
+      "3",
+      "1b"
+    ],
+    "ground": {
+      "color": "oklch(0.95 0.015 75)",
+      "lightness": 0.19
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Synonym",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2858
+  },
+  {
+    "file": "lab/runs/fennel-street/D/claude-opus-5-5-3/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 10
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 2
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "ground": {
+      "color": "oklch(0.93 0.05 90)",
+      "lightness": 0.21
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Sentient",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2543
+  },
+  {
+    "file": "lab/runs/fennel-street/D/claude-sonnet-5-5-1/index.html",
+    "suppliedFonts": [
+      "Source Sans 3",
+      "Red Hat Display"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 4
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 1,
+        "sharedPadding": 0
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1"
+    ],
+    "ground": {
+      "color": "rgb(245, 237, 228)",
+      "lightness": 0.95
+    },
+    "fonts": {
+      "heading": "Red Hat Display",
+      "body": "Source Sans 3",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1839
+  },
+  {
+    "file": "lab/runs/fennel-street/D/claude-sonnet-5-5-2/index.html",
+    "suppliedFonts": [
+      "Sentient",
+      "Synonym"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Fennel Street Bakery"
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 10
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 5,
+        "sharedPadding": 2
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "2",
+      "1b",
+      "1",
+      "1"
+    ],
+    "ground": {
+      "color": "rgb(245, 231, 195)",
+      "lightness": 0.93
+    },
+    "fonts": {
+      "heading": "Synonym",
+      "body": "Synonym",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2486
+  },
+  {
+    "file": "lab/runs/fennel-street/D/claude-sonnet-5-5-3/index.html",
+    "suppliedFonts": [
+      "Source Sans 3",
+      "Cormorant"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": true,
+        "heading": "Bread at seven, tarts by nine, gone by two."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 4
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 2,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 265,
+        "cta": "Call 020 7946 0381"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1b",
+      "3"
+    ],
+    "ground": {
+      "color": "oklch(0.95 0.015 75)",
+      "lightness": 0.19
+    },
+    "fonts": {
+      "heading": "Cormorant",
+      "body": "Source Sans 3",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2157
+  },
+  {
+    "file": "lab/runs/tallyroll/A/claude-haiku-5-5-1/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -1881,7 +2498,7 @@
     "height": 1755
   },
   {
-    "file": "runs/tallyroll/A/claude-haiku-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/A/claude-haiku-5-5-2/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -1947,7 +2564,7 @@
     "height": 1811
   },
   {
-    "file": "runs/tallyroll/A/claude-haiku-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/A/claude-haiku-5-5-3/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -2014,7 +2631,7 @@
     "height": 1949
   },
   {
-    "file": "runs/tallyroll/A/claude-opus-5-5-1/index.html",
+    "file": "lab/runs/tallyroll/A/claude-opus-5-5-1/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -2080,7 +2697,7 @@
     "height": 2489
   },
   {
-    "file": "runs/tallyroll/A/claude-opus-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/A/claude-opus-5-5-2/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -2146,7 +2763,7 @@
     "height": 2870
   },
   {
-    "file": "runs/tallyroll/A/claude-opus-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/A/claude-opus-5-5-3/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -2213,7 +2830,7 @@
     "height": 2874
   },
   {
-    "file": "runs/tallyroll/A/claude-sonnet-5-5-1/index.html",
+    "file": "lab/runs/tallyroll/A/claude-sonnet-5-5-1/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -2279,7 +2896,7 @@
     "height": 1836
   },
   {
-    "file": "runs/tallyroll/A/claude-sonnet-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/A/claude-sonnet-5-5-2/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -2345,7 +2962,7 @@
     "height": 2391
   },
   {
-    "file": "runs/tallyroll/A/claude-sonnet-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/A/claude-sonnet-5-5-3/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -2411,7 +3028,7 @@
     "height": 2098
   },
   {
-    "file": "runs/tallyroll/B/claude-haiku-5-5-1/index.html",
+    "file": "lab/runs/tallyroll/B/claude-haiku-5-5-1/index.html",
     "suppliedFonts": [
       "Iosevka",
       "IBM Plex Sans",
@@ -2481,7 +3098,7 @@
     "height": 2193
   },
   {
-    "file": "runs/tallyroll/B/claude-haiku-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/B/claude-haiku-5-5-2/index.html",
     "suppliedFonts": [
       "Mona Sans"
     ],
@@ -2549,7 +3166,7 @@
     "height": 2135
   },
   {
-    "file": "runs/tallyroll/B/claude-haiku-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/B/claude-haiku-5-5-3/index.html",
     "suppliedFonts": [
       "IBM Plex Mono",
       "IBM Plex Sans"
@@ -2615,7 +3232,7 @@
     "height": 2278
   },
   {
-    "file": "runs/tallyroll/B/claude-opus-5-5-1/index.html",
+    "file": "lab/runs/tallyroll/B/claude-opus-5-5-1/index.html",
     "suppliedFonts": [
       "IBM Plex Mono",
       "IBM Plex Serif",
@@ -2685,7 +3302,7 @@
     "height": 2859
   },
   {
-    "file": "runs/tallyroll/B/claude-opus-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/B/claude-opus-5-5-2/index.html",
     "suppliedFonts": [
       "Steps Mono"
     ],
@@ -2753,7 +3370,7 @@
     "height": 3285
   },
   {
-    "file": "runs/tallyroll/B/claude-opus-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/B/claude-opus-5-5-3/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -2819,7 +3436,7 @@
     "height": 2978
   },
   {
-    "file": "runs/tallyroll/B/claude-sonnet-5-5-1/index.html",
+    "file": "lab/runs/tallyroll/B/claude-sonnet-5-5-1/index.html",
     "suppliedFonts": [
       "Commit Mono",
       "IBM Plex Serif",
@@ -2889,7 +3506,7 @@
     "height": 2380
   },
   {
-    "file": "runs/tallyroll/B/claude-sonnet-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/B/claude-sonnet-5-5-2/index.html",
     "suppliedFonts": [
       "IBM Plex Mono",
       "IBM Plex Sans"
@@ -2958,7 +3575,7 @@
     "height": 2243
   },
   {
-    "file": "runs/tallyroll/B/claude-sonnet-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/B/claude-sonnet-5-5-3/index.html",
     "suppliedFonts": [
       "Commit Mono",
       "IBM Plex Serif",
@@ -3028,7 +3645,7 @@
     "height": 2453
   },
   {
-    "file": "runs/tallyroll/C/claude-haiku-5-5-1/index.html",
+    "file": "lab/runs/tallyroll/C/claude-haiku-5-5-1/index.html",
     "suppliedFonts": [
       "IBM Plex Sans",
       "Technor"
@@ -3093,7 +3710,7 @@
     "height": 2156
   },
   {
-    "file": "runs/tallyroll/C/claude-haiku-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/C/claude-haiku-5-5-2/index.html",
     "suppliedFonts": [
       "IBM Plex Sans",
       "Technor"
@@ -3161,7 +3778,7 @@
     "height": 1956
   },
   {
-    "file": "runs/tallyroll/C/claude-haiku-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/C/claude-haiku-5-5-3/index.html",
     "suppliedFonts": [
       "Commit Mono",
       "IBM Plex Serif",
@@ -3230,7 +3847,7 @@
     "height": 2144
   },
   {
-    "file": "runs/tallyroll/C/claude-opus-5-5-1/index.html",
+    "file": "lab/runs/tallyroll/C/claude-opus-5-5-1/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -3296,7 +3913,7 @@
     "height": 2251
   },
   {
-    "file": "runs/tallyroll/C/claude-opus-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/C/claude-opus-5-5-2/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -3361,7 +3978,7 @@
     "height": 2658
   },
   {
-    "file": "runs/tallyroll/C/claude-opus-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/C/claude-opus-5-5-3/index.html",
     "suppliedFonts": [],
     "patterns": {
       "centeredHero": {
@@ -3426,7 +4043,7 @@
     "height": 2368
   },
   {
-    "file": "runs/tallyroll/C/claude-sonnet-5-5-1/index.html",
+    "file": "lab/runs/tallyroll/C/claude-sonnet-5-5-1/index.html",
     "suppliedFonts": [
       "Commit Mono",
       "IBM Plex Serif",
@@ -3495,7 +4112,7 @@
     "height": 2022
   },
   {
-    "file": "runs/tallyroll/C/claude-sonnet-5-5-2/index.html",
+    "file": "lab/runs/tallyroll/C/claude-sonnet-5-5-2/index.html",
     "suppliedFonts": [
       "Commit Mono",
       "IBM Plex Sans",
@@ -3565,7 +4182,7 @@
     "height": 1829
   },
   {
-    "file": "runs/tallyroll/C/claude-sonnet-5-5-3/index.html",
+    "file": "lab/runs/tallyroll/C/claude-sonnet-5-5-3/index.html",
     "suppliedFonts": [
       "Iosevka",
       "Mona Sans"
@@ -3632,5 +4249,615 @@
       }
     },
     "height": 1999
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-haiku-5-5-1/index.html",
+    "suppliedFonts": [
+      "IBM Plex Sans",
+      "Supreme"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": true,
+        "rows": 1
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 20
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1",
+      "2",
+      "1",
+      "2"
+    ],
+    "ground": {
+      "color": "rgb(249, 250, 251)",
+      "lightness": 0.98
+    },
+    "fonts": {
+      "heading": "Supreme",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1938
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-haiku-5-5-2/index.html",
+    "suppliedFonts": [
+      "IBM Plex Serif",
+      "Technor"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 44
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "Technor",
+      "body": "IBM Plex Serif",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2319
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-haiku-5-5-3/index.html",
+    "suppliedFonts": [
+      "IBM Plex Serif",
+      "Switzer"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 11
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 3,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1",
+      "2"
+    ],
+    "ground": {
+      "color": "rgb(249, 250, 251)",
+      "lightness": 0.98
+    },
+    "fonts": {
+      "heading": "Switzer",
+      "body": "IBM Plex Serif",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2036
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-opus-5-5-1/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 52
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 2
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "2",
+      "2",
+      "2",
+      "2"
+    ],
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "IBM Plex Serif",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2870
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-opus-5-5-2/index.html",
+    "suppliedFonts": [],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 12
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 2
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "IBM Plex Serif",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 2770
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-opus-5-5-3/index.html",
+    "suppliedFonts": [
+      "Commit Mono"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 15
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 2,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "1",
+      "2",
+      "2"
+    ],
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "IBM Plex Serif",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1966
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-sonnet-5-5-1/index.html",
+    "suppliedFonts": [
+      "IBM Plex Mono",
+      "IBM Plex Sans",
+      "Overpass"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 19
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 1
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "1",
+      "2",
+      "3",
+      "2",
+      "2b"
+    ],
+    "ground": {
+      "color": "rgb(246, 242, 231)",
+      "lightness": 0.96
+    },
+    "fonts": {
+      "heading": "Overpass",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1978
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-sonnet-5-5-2/index.html",
+    "suppliedFonts": [
+      "Iosevka",
+      "IBM Plex Sans",
+      "Overpass"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 18
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 2
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": 264,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "2",
+      "2",
+      "2",
+      "2",
+      "1"
+    ],
+    "ground": {
+      "color": "oklch(0.985 0.002 250)",
+      "lightness": 0.45
+    },
+    "fonts": {
+      "heading": "Overpass",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1910
+  },
+  {
+    "file": "lab/runs/tallyroll/D/claude-sonnet-5-5-3/index.html",
+    "suppliedFonts": [
+      "Commit Mono",
+      "IBM Plex Sans",
+      "Overpass"
+    ],
+    "patterns": {
+      "centeredHero": {
+        "hit": false,
+        "heading": "Every cent traces back to an event."
+      },
+      "threeCardRow": {
+        "hit": false,
+        "rows": 0
+      },
+      "gradient": {
+        "hit": false,
+        "backgrounds": 0,
+        "text": 0
+      },
+      "emojiIcons": {
+        "hit": false,
+        "count": 0
+      },
+      "roundedEverything": {
+        "hit": false,
+        "rounded": 0,
+        "boxes": 21
+      },
+      "uniformSpacing": {
+        "hit": false,
+        "sections": 4,
+        "sharedPadding": 2
+      },
+      "purpleAccent": {
+        "hit": false,
+        "hue": null,
+        "cta": "Read the docs"
+      },
+      "pillBadge": {
+        "hit": false,
+        "text": null
+      },
+      "statsRow": {
+        "hit": false,
+        "rows": 0
+      }
+    },
+    "skeleton": [
+      "2",
+      "1",
+      "2",
+      "1"
+    ],
+    "ground": {
+      "color": "rgb(246, 242, 231)",
+      "lightness": 0.96
+    },
+    "fonts": {
+      "heading": "Overpass",
+      "body": "IBM Plex Sans",
+      "loaded": {
+        "heading": true,
+        "body": true
+      }
+    },
+    "height": 1982
   }
 ]

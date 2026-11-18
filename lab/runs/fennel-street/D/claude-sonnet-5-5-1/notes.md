@@ -1,0 +1,5 @@
+- **Lead with the hours:** the first screen on a phone is the slogan plus a live line ("Open now" or "Closed now. Opens tomorrow at 7:00"), worked out from London time. The price list comes straight after.
+- **Menu as a price board:** dotted leaders, left-aligned, no hero, no card rows, no stats. check-layout found none of the nine overused patterns on the 390px render.
+- **Fonts:** Red Hat Display for headlines and Source Sans 3 for body (both OFL, picked by find-font). I skipped its first headline pick, Recursive, because it is monospace-based. I did not bundle the font files, so it falls back to system fonts until you add the woff2 files to `./fonts/`.
+- **Colour:** Clay and Linen, find-color's pick, using its exact values; a dark cake-order band marks the change of subject.
+- **Open decisions** (in `DIRECTION.md`): the Instagram link is a placeholder, the copy names no message channel, the photo is a labelled placeholder, and `tallyroll.md` wasn't in the project. The spec is unapproved because this was a non-interactive run. I also only checked the 390px render; I didn't render desktop. `DIRECTION.md` and `index.html` are saved in the project.

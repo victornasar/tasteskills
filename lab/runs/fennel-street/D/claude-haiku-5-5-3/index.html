@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Bread at seven, tarts by nine, gone by two. A neighbourhood bakery at 14 Fennel Street, London E8.">
+<style>
+/* Fonts: Cormorant (headlines) and Source Sans 3 (body), OFL, expected self-hosted at ./fonts/.
+   Not bundled in this file; the fallback stacks render until the files are added. */
+@font-face {
+  font-family: "Cormorant";
+  src: url("./fonts/Cormorant.woff2") format("woff2"), local("Cormorant");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("./fonts/SourceSans3.woff2") format("woff2"), local("Source Sans 3");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --color-ground: #F5EDE4;
+  --color-ground: oklch(0.95 0.015 75);
+  --color-figure: #8D5951;
+  --color-figure: oklch(0.52 0.07 30);
+  --color-text: #3D3832;
+  --color-text: oklch(0.345 0.012 75);
+  --color-text-muted: #6C6761;
+  --color-text-muted: oklch(0.518 0.012 75);
+  --color-tint-2: #CBA199;
+  --color-tint-3: #E1CAC6;
+  --color-shade-2: #4A2D28;
+
+  --font-head: "Cormorant", Georgia, "Times New Roman", serif;
+  --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --gutter: 16px;
+  --unit: 8px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-ground);
+  color: var(--color-text);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: calc(var(--unit) * 4) var(--gutter) calc(var(--unit) * 6);
+}
+
+a {
+  color: var(--color-figure);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover { color: var(--color-shade-2); }
+a:focus-visible { outline: 2px solid var(--color-figure); outline-offset: 3px; }
+
+h1, h2 {
+  font-family: var(--font-head);
+  font-weight: 500;
+  color: var(--color-figure);
+  line-height: 1.05;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(3rem, 14vw, 4.75rem);
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 2.125rem;
+  margin-bottom: calc(var(--unit) * 2);
+}
+
+/* Sections vary in spacing by how much each one has to say */
+#about { padding-top: calc(var(--unit) * 5); }
+#daily { padding-top: calc(var(--unit) * 6); }
+#season { padding-top: calc(var(--unit) * 3); }
+#order { padding-top: calc(var(--unit) * 5); }
+#find { padding-top: calc(var(--unit) * 2); }
+
+.line {
+  font-family: var(--font-head);
+  font-style: italic;
+  font-size: 1.375rem;
+  color: var(--color-text);
+  margin: calc(var(--unit) * 1.5) 0 0;
+}
+
+/* Hours block: the first thing a phone visitor needs */
+.hours {
+  margin-top: calc(var(--unit) * 4);
+  padding: calc(var(--unit) * 2.5) 0;
+  border-top: 1px solid var(--color-tint-2);
+  border-bottom: 1px solid var(--color-tint-2);
+}
+.status {
+  display: block;
+  font-weight: 600;
+  color: var(--color-shade-2);
+  margin-bottom: var(--unit);
+}
+.hours p { margin: 0; }
+.order-link {
+  display: inline-block;
+  margin-top: calc(var(--unit) * 1.5);
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+
+/* Photo placeholder: stands in for the counter photo, labelled, no external image */
+.photo {
+  margin: calc(var(--unit) * 4) 0 0;
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--color-figure);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--unit);
+  color: var(--color-text-muted);
+  background: var(--color-tint-3);
+  font-size: 0.9375rem;
+}
+
+.about p { margin: calc(var(--unit) * 2) 0 0; }
+
+/* Price lists: name, dotted leader, price */
+.list {
+  list-style: none;
+  margin: calc(var(--unit) * 2) 0 0;
+  padding: 0;
+}
+.list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--unit);
+  padding: calc(var(--unit) * 1.25) 0;
+  border-bottom: 1px dotted var(--color-tint-2);
+}
+.list .name { flex: 0 1 auto; }
+.list .dots { flex: 1 1 auto; }
+.list .price {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--color-figure);
+  white-space: nowrap;
+}
+.list small {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.note {
+  margin: calc(var(--unit) * 1.5) 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+/* Cake order block */
+.order {
+  margin-top: calc(var(--unit) * 2);
+  padding-top: calc(var(--unit) * 2);
+}
+.order p { margin: 0 0 var(--unit); }
+.order .phone {
+  font-family: var(--font-head);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-figure);
+  text-decoration: none;
+  display: inline-block;
+  margin-top: var(--unit);
+}
+
+.address p { margin: calc(var(--unit) * 2) 0 0; }
+
+footer {
+  margin-top: calc(var(--unit) * 6);
+  padding-top: calc(var(--unit) * 2.5);
+  border-top: 1px solid var(--color-tint-2);
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+}
+footer nav a { margin-right: calc(var(--unit) * 2); }
+footer p { margin: var(--unit) 0 0; }
+
+@media (min-width: 640px) {
+  h2 { font-size: 2.5rem; }
+}
+
+/* Desktop: name, hours and photo on the left; the list and orders on the right. Left-aligned, no centered hero. */
+@media (min-width: 900px) {
+  .wrap {
+    max-width: 68rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    column-gap: calc(var(--unit) * 8);
+    align-items: start;
+    padding-top: calc(var(--unit) * 8);
+  }
+  .wrap > header {
+    grid-column: 1;
+    grid-row: 1 / span 6;
+    position: sticky;
+    top: calc(var(--unit) * 4);
+  }
+  .wrap > section { grid-column: 2; }
+  .wrap > footer { grid-column: 1 / -1; }
+  #about { padding-top: 0; }
+  #daily { padding-top: calc(var(--unit) * 5); }
+  #season { padding-top: calc(var(--unit) * 6); }
+  #order { padding-top: calc(var(--unit) * 4); }
+  #find { padding-top: calc(var(--unit) * 2); }
+  h1 { font-size: clamp(3.5rem, 6vw, 5.25rem); }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header>
+    <h1>Fennel Street Bakery</h1>
+    <p class="line">Bread at seven, tarts by nine, gone by two.</p>
+
+    <div class="hours" id="hours">
+      <span class="status" id="status">Check opening hours below</span>
+      <p>Wednesday to Sunday, 7:00 to 14:00, or until we sell out.</p>
+      <p>Closed Monday and Tuesday.</p>
+      <a class="order-link" href="#order">Order a cake &rarr;</a>
+    </div>
+
+    <figure class="photo" role="img" aria-label="Photo placeholder: the counter with the morning bake">
+      Photo placeholder: the counter with the morning bake
+    </figure>
+  </header>
+
+  <section class="about" id="about" aria-labelledby="about-h">
+    <h2 id="about-h">About</h2>
+    <p>Ana bakes the bread. Rita does everything with custard.</p>
+    <p>We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+  </section>
+
+  <section id="daily" aria-labelledby="daily-h">
+    <h2 id="daily-h">Daily</h2>
+    <ul class="list">
+      <li><span class="name">Country sourdough</span><span class="dots" aria-hidden="true"></span><span class="price">£5.20</span></li>
+      <li><span class="name">Seeded rye</span><span class="dots" aria-hidden="true"></span><span class="price">£5.60</span></li>
+      <li><span class="name">Pastel de nata</span><span class="dots" aria-hidden="true"></span><span class="price">£2.10<small>or six for £11</small></span></li>
+      <li><span class="name">Cardamom buns</span><span class="dots" aria-hidden="true"></span><span class="price">£3.00</span></li>
+      <li><span class="name">Olive oil focaccia<small>by the slice</small></span><span class="dots" aria-hidden="true"></span><span class="price">£2.80</span></li>
+    </ul>
+  </section>
+
+  <section id="season" aria-labelledby="season-h">
+    <h2 id="season-h">This season</h2>
+    <ul class="list">
+      <li><span class="name">Orange and almond cake</span><span class="dots" aria-hidden="true"></span><span class="price">whole £28<small>slice £4</small></span></li>
+      <li><span class="name">Fig and walnut loaf</span><span class="dots" aria-hidden="true"></span><span class="price">£6.40</span></li>
+    </ul>
+  </section>
+
+  <section id="order" aria-labelledby="order-h">
+    <h2 id="order-h">Cake orders</h2>
+    <div class="order">
+      <p>Whole cakes with 48 hours&rsquo; notice.</p>
+      <p>Message us or call:</p>
+      <a class="phone" href="tel:+442079460381">020 7946 0381</a>
+    </div>
+  </section>
+
+  <section id="find" class="address" aria-labelledby="find-h">
+    <h2 id="find-h">Find us</h2>
+    <p>14 Fennel Street, London E8.</p>
+  </section>
+
+  <footer>
+    <nav aria-label="Footer">
+      <a href="#" aria-label="Instagram (link to be added)">Instagram</a>
+      <a href="#order">Order a cake</a>
+      <a href="#find">Find us</a>
+    </nav>
+    <p>&copy; 2026 Fennel Street Bakery.</p>
+  </footer>
+
+</main>
+
+<script>
+/* Open-now label, in London time. Hours: Wed to Sun, 07:00 to 14:00. Falls back to the static text. */
+(function () {
+  try {
+    var parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Europe/London", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false
+    }).formatToParts(new Date());
+    var get = function (t) { return parts.filter(function (p) { return p.type === t; })[0].value; };
+    var day = get("weekday");
+    var mins = parseInt(get("hour"), 10) * 60 + parseInt(get("minute"), 10);
+    var openDays = ["Wed", "Thu", "Fri", "Sat", "Sun"];
+    var isOpen = openDays.indexOf(day) !== -1 && mins >= 7 * 60 && mins < 14 * 60;
+    document.getElementById("status").textContent = isOpen
+      ? "Open now, until 14:00 or until we sell out"
+      : "Closed now";
+  } catch (e) {
+    /* keep the static text */
+  }
+})();
+</script>
+</body>
+</html>

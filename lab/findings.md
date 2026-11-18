@@ -3,6 +3,48 @@
 What the lab has measured, newest first. Each finding names its evidence and its limits. A finding here is what
 allows a new skill or rule elsewhere in the repo.
 
+## 2026-11-18 · /taste keeps C's gains and writes an honest direction, but doesn't move the page further yet
+
+**Evidence:** 18 runs, condition D: C plus [`taste`](../direction/) in fast mode, asked to write `DIRECTION.md`
+from the brief with provenance tags, use the sibling skills, build against it and critique for at most two
+rounds. Non-interactive, so no gate could be approved. Same briefs, models and run counts as A–C. Measures in
+[`runs/measures.md`](runs/measures.md); each run's `DIRECTION.md` sits next to its page.
+
+| Measure (all models) | A | B | C | D |
+|---|---|---|---|---|
+| Layout slop patterns per page (of 9) | 1.83 | 1.33 | 0.06 | 0.17 |
+| Pages using an avoid-list font | 50% | 0% | 0% | 0% |
+| Heading and body fonts from the catalog | 50% | 100% | 100% | 100% |
+| Structure change from A | – | 0.47 | 0.65 | 0.59 |
+| Run-to-run structure variation (noise floor) | 0.45 | 0.45 | 0.59 | 0.58 |
+
+- **The workflow ran as written.** All 18 runs wrote a `DIRECTION.md` using at least three provenance tags,
+  none marked anything `approved`, and every one kept `Status: draft` and noted that no approval was given.
+  Gaps were tagged as inferences rather than client facts (for example, "visitor's first question is 'is it
+  open right now?' — [inferred]"). Overrides of the engine were recorded with a reason (Sonnet dropped
+  find-font's top headline pick as "reads technical" for a bakery).
+- **No invented fonts.** Every page's heading and body fonts are in the catalog, as in B and C.
+- **Automatic measures match C, not beyond it.** Patterns stay near zero (three pages of 18 keep one).
+  Structure change from A is 0.59 against a noise floor of 0.58; by model, Sonnet moves (0.69 against 0.61),
+  Opus and Haiku don't beat their own run-to-run variation. Fast mode on a rich brief adds a written direction,
+  not a different page.
+- **The "one memorable thing" comes from the brief, which is the point.** All 9 Tallyroll runs led with the
+  brief's own expandable invoice line; bakery runs led with the hours or the day's bake list. Grounded, not
+  novel for its own sake, but it also means the brief, not the skill, supplied the idea.
+- **Convergence inside a model.** On Tallyroll each model chose the same heading font in all three runs (Opus
+  IBM Plex Serif, Sonnet Overpass), and IBM Plex Sans was the body font on 6 of 9 pages. Across models the
+  spread is unchanged (5 heading fonts). IBM Plex as a technical default stays an open typography question.
+- **Self-critique is uneven.** 13 of 18 directions recorded constraint results in Checkpoints; five left it
+  empty. These are the agent grading its own constraints, so they aren't evidence of quality.
+- **Cost:** 2–5½ minutes a run, about the same as C.
+
+**What it doesn't show:** anything about guided mode (still experimental, untested), whether the direction
+holds across sessions, or whether people prefer D. Fast mode's value should show most on thin briefs, where C
+has nothing to plan from; both lab briefs are rich.
+
+**Next:** run D against C on thin one-line briefs from the corpus; build the persona-B simulator for guided
+mode; add D pairs to the rating page.
+
 ## 2026-11-17 · check-layout removes the overused patterns and changes structure, except on Haiku
 
 **Evidence:** 18 more runs, condition C: B plus [`check-layout`](../layout/), which has the agent plan the page's

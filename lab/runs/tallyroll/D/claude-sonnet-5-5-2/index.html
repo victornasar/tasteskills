@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tallyroll — Every cent traces back to an event</title>
+<meta name="description" content="Tallyroll turns raw usage into invoices your finance team can reconcile line by line.">
+<style>
+@font-face{font-family:"Overpass";src:local("Overpass"),url("./fonts/Overpass.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:local("IBM Plex Sans"),url("./fonts/IBMPlexSans.woff2") format("woff2");font-weight:100 700;font-display:swap}
+@font-face{font-family:"Iosevka";src:local("Iosevka"),url("./fonts/Iosevka.woff2") format("woff2");font-weight:400;font-display:swap}
+:root{
+  --color-ground:#F9FAFB;--color-ground:oklch(0.985 0.002 250);
+  --color-figure:#15181E;--color-figure:oklch(0.21 0.012 260);
+  --color-accent:#0E6EE6;--color-accent:oklch(0.56 0.2 258);
+  --color-text:#3C3F46;--color-text:oklch(0.368 0.012 260);
+  --color-text-muted:#6B6F76;--color-text-muted:oklch(0.542 0.012 260);
+  --color-tint-3:#B2B8C0;--color-tint-3:oklch(0.78 0.0132 260);
+  --head:"Overpass","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"Iosevka",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --gut:clamp(16px,5vw,64px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--color-ground);color:var(--color-text);font:400 17px/1.6 var(--body)}
+a{color:var(--color-accent)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+code,.mono{font-family:var(--mono);font-size:.94em}
+.wrap{max-width:1120px;margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{font-family:var(--head);color:var(--color-figure);margin:0}
+h2{font-size:1.5rem;font-weight:600;line-height:1.2;letter-spacing:-.01em}
+
+header{border-bottom:1px solid var(--color-tint-3)}
+header .wrap{display:flex;justify-content:space-between;align-items:baseline;padding-top:18px;padding-bottom:18px;gap:16px}
+.logo{font:700 1.15rem var(--head);color:var(--color-figure);letter-spacing:-.01em}
+nav{display:flex;gap:22px;font-size:.95rem}
+nav a{color:var(--color-text);text-decoration:none}
+nav a:hover{color:var(--color-figure);text-decoration:underline}
+
+.hero{padding-top:72px;padding-bottom:80px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(32px,6vw,88px);align-items:start}
+h1{font-size:clamp(2.6rem,6.2vw,4.6rem);font-weight:700;line-height:1.02;letter-spacing:-.03em;margin-bottom:24px}
+.sub{font-size:1.2rem;max-width:30em;margin:0 0 32px}
+.actions{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.btn{display:inline-block;background:var(--color-figure);color:var(--color-ground);font:600 1rem var(--body);padding:13px 22px;border-radius:2px;text-decoration:none}
+.btn:hover{background:#44484F}
+.btn:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+.link2{font-weight:600}
+
+/* invoice line */
+.inv{border-top:2px solid var(--color-figure);border-bottom:1px solid var(--color-tint-3);background:#fff;border-radius:2px}
+.inv-head{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--color-tint-3);font-size:.82rem;color:var(--color-text-muted);gap:12px}
+details summary{list-style:none;cursor:pointer;padding:18px 16px;display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+.eq{font-family:var(--mono);color:var(--color-figure);font-size:.98rem;line-height:1.5}
+.eq b{font-weight:400;color:var(--color-figure)}
+.total{font-family:var(--mono);font-size:1.25rem;color:var(--color-figure);white-space:nowrap}
+.tog{grid-column:1/-1;color:var(--color-accent);font-size:.9rem;font-weight:600}
+.tog::before{content:"+ "}
+details[open] .tog::before{content:"− "}
+details[open] .tog span.c{display:none}
+.tog span.o{display:none}
+details[open] .tog span.o{display:inline}
+.days{max-height:280px;overflow:auto;border-top:1px solid var(--color-tint-3)}
+.days table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.88rem}
+.days td{padding:5px 16px;border-bottom:1px solid #E4E7EB}
+.days td+td{text-align:right;font-variant-numeric:tabular-nums}
+.days tr.sum td{position:sticky;bottom:0;background:#fff;color:var(--color-figure);font-weight:700;border-top:1px solid var(--color-figure)}
+.note{margin:0;padding:10px 16px;font-size:.8rem;color:var(--color-text-muted);border-top:1px solid var(--color-tint-3)}
+
+section.s{border-top:1px solid var(--color-tint-3)}
+.how{padding:72px 0 96px}
+.how .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:clamp(24px,6vw,88px)}
+ol{list-style:none;margin:0;padding:0}
+ol li{display:grid;grid-template-columns:3rem 1fr;padding:22px 0;border-bottom:1px solid var(--color-tint-3)}
+ol li:first-child{padding-top:0}
+ol li:last-child{border-bottom:0}
+.n{font-family:var(--mono);color:var(--color-text-muted)}
+ol h3{font-size:1.15rem;font-weight:600;margin-bottom:4px}
+ol p{margin:0}
+code{background:#EEF0F3;padding:1px 6px;border-radius:2px;color:var(--color-figure)}
+
+.two{padding:56px 0 64px}
+.two .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,8vw,120px)}
+.two h2{margin-bottom:16px}
+dl{margin:0}
+.two ul{list-style:none;margin:0;padding:0}
+.two li{padding:10px 0;border-top:1px solid var(--color-tint-3)}
+.two li:last-child{border-bottom:1px solid var(--color-tint-3)}
+
+.price{padding:96px 0 40px}
+.price .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:clamp(24px,6vw,88px);align-items:start}
+.price p.big{font:600 clamp(1.6rem,3.4vw,2.3rem)/1.2 var(--head);color:var(--color-figure);letter-spacing:-.02em;margin:0 0 10px}
+.price p{margin:0 0 8px}
+.go{padding-top:8px;padding-bottom:88px}
+code{white-space:nowrap}
+
+footer{border-top:1px solid var(--color-tint-3);padding:28px 0 40px;font-size:.9rem;color:var(--color-text-muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px}
+footer nav{gap:18px;flex-wrap:wrap}
+footer a{color:var(--color-text)}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding-top:44px;padding-bottom:56px}
+  .how .grid,.price .grid,.two .grid{grid-template-columns:1fr}
+  .how,.price{padding-top:48px}
+  .how{padding-bottom:56px}
+  nav{gap:14px}
+}
+@media (max-width:420px){
+  body{font-size:16px}
+  header nav a:nth-child(n+3){display:none}
+  details summary{grid-template-columns:1fr}
+  .eq{font-size:.88rem}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="logo">Tallyroll</span>
+    <nav aria-label="Primary"><a href="#">Docs</a><a href="#pricing">Pricing</a><a href="#">Book a demo</a></nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <div>
+    <h1>Every cent traces back to an event.</h1>
+    <p class="sub">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+    <div class="actions">
+      <a class="btn" href="#">Read the docs</a>
+      <a class="link2" href="#">Book a demo</a>
+    </div>
+  </div>
+
+  <div class="inv" aria-label="Example invoice line">
+    <div class="inv-head"><span>Invoice line · March</span><span>Open it up</span></div>
+    <details>
+      <summary>
+        <span class="eq">API calls, March:<br>1,204,388 calls × $0.0004</span>
+        <span class="total">= $481.76</span>
+        <span class="tog"><span class="c">Show the 31 daily totals</span><span class="o">Hide the daily totals</span></span>
+      </summary>
+      <div class="days"><table>
+<tr><td>Sun Mar 1</td><td>20,348</td></tr>
+<tr><td>Mon Mar 2</td><td>42,742</td></tr>
+<tr><td>Tue Mar 3</td><td>49,904</td></tr>
+<tr><td>Wed Mar 4</td><td>41,618</td></tr>
+<tr><td>Thu Mar 5</td><td>48,256</td></tr>
+<tr><td>Fri Mar 6</td><td>45,819</td></tr>
+<tr><td>Sat Mar 7</td><td>18,635</td></tr>
+<tr><td>Sun Mar 8</td><td>21,532</td></tr>
+<tr><td>Mon Mar 9</td><td>41,118</td></tr>
+<tr><td>Tue Mar 10</td><td>46,792</td></tr>
+<tr><td>Wed Mar 11</td><td>41,581</td></tr>
+<tr><td>Thu Mar 12</td><td>41,880</td></tr>
+<tr><td>Fri Mar 13</td><td>46,661</td></tr>
+<tr><td>Sat Mar 14</td><td>23,590</td></tr>
+<tr><td>Sun Mar 15</td><td>19,059</td></tr>
+<tr><td>Mon Mar 16</td><td>43,778</td></tr>
+<tr><td>Tue Mar 17</td><td>49,568</td></tr>
+<tr><td>Wed Mar 18</td><td>54,155</td></tr>
+<tr><td>Thu Mar 19</td><td>48,847</td></tr>
+<tr><td>Fri Mar 20</td><td>46,263</td></tr>
+<tr><td>Sat Mar 21</td><td>24,553</td></tr>
+<tr><td>Sun Mar 22</td><td>18,561</td></tr>
+<tr><td>Mon Mar 23</td><td>52,877</td></tr>
+<tr><td>Tue Mar 24</td><td>44,729</td></tr>
+<tr><td>Wed Mar 25</td><td>42,647</td></tr>
+<tr><td>Thu Mar 26</td><td>42,268</td></tr>
+<tr><td>Fri Mar 27</td><td>44,999</td></tr>
+<tr><td>Sat Mar 28</td><td>23,521</td></tr>
+<tr><td>Sun Mar 29</td><td>19,426</td></tr>
+<tr><td>Mon Mar 30</td><td>48,911</td></tr>
+<tr><td>Tue Mar 31</td><td>49,750</td></tr>
+<tr class="sum"><td>31 days</td><td>1,204,388</td></tr>
+      </table></div>
+      <p class="note">Illustrative daily totals for the example line.</p>
+    </details>
+  </div>
+</div>
+
+<section class="s how" aria-labelledby="how">
+  <div class="wrap grid">
+    <h2 id="how">How it works</h2>
+    <ol>
+      <li><span class="n">01</span><div><h3>Send events.</h3><p>Post usage events from your product as they happen: <code>POST /v1/events</code>.</p></div></li>
+      <li><span class="n">02</span><div><h3>Define pricing.</h3><p>Tiers, minimums, credits and commitments, written as rules you can read.</p></div></li>
+      <li><span class="n">03</span><div><h3>Invoice.</h3><p>Each line on an invoice opens up into the events that produced it.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="s two" aria-label="For finance and engineering">
+  <div class="wrap grid">
+    <div>
+      <h2>For finance</h2>
+      <ul><li>Line-level audit trail</li><li>Exports to NetSuite and QuickBooks</li><li>Revenue recognition schedules</li></ul>
+    </div>
+    <div>
+      <h2>For engineering</h2>
+      <ul><li>Idempotent event ingestion</li><li>Webhooks for every invoice state</li><li>SDKs for TypeScript, Python and Go</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="s price" id="pricing" aria-labelledby="pr">
+  <div class="wrap grid">
+    <h2 id="pr">Pricing</h2>
+    <div>
+      <p class="big">0.5% of billed revenue, no platform fee.</p>
+      <p>Free until you bill $10,000 a month.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap go">
+  <div class="actions"><a class="btn" href="#">Read the docs</a><a class="link2" href="#">Book a demo</a></div>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="Footer"><a href="#">Docs</a><a href="#pricing">Pricing</a><a href="#">Status</a><a href="#">Security</a><a href="#">Contact</a></nav>
+    <span>© 2026 Tallyroll</span>
+  </div>
+</footer>
+</body>
+</html>
