@@ -4,13 +4,13 @@ Render AI-built pages in a real browser and measure them.
 
 ```bash
 cd lab/tools && npm install        # once; uses your installed Google Chrome
-npm test                           # calibration: fixtures/slop.html trips every check, fixtures/clean.html none
+npm test                           # calibration: layout/tests/fixtures: slop.html trips every check, clean.html none
 ```
 
 | File | What it does |
 |---|---|
-| `detect.mjs` | Opens pages at 1440×900 and checks nine layout patterns on the rendered page (computed styles, not source). Saves screenshots with `--shots`, full-page ones with `--full` |
-| `fixtures/` | One page with every pattern, one with none. Each check must catch the first and pass the second |
+| `detect.mjs` | Opens pages at 1440×900 and checks the nine layout patterns from `layout/skills/check-layout/scripts/patterns.mjs` on the rendered page (computed styles, not source). Saves screenshots with `--shots`, full-page ones with `--full` |
+| `../../layout/tests/fixtures/` | One page with every pattern, one with none (shared with the layout skill) |
 | `resolve-fonts.mjs` | Finds a hosted stylesheet for each catalog font → `font-sources.json` |
 | `fetch-fonts.mjs` | Downloads the OFL catalog fonts no host serves, into `.font-cache/` (not committed) |
 

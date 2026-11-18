@@ -25,7 +25,7 @@ it. The detector doubles as an automatic check for any lab run.
 
 **Limits:**
 - One company's models. Fable 5.2 needed paid usage credits; other providers weren't installed.
-- The checks are heuristics on computed styles. They're calibrated on [`tools/fixtures/`](tools/fixtures/) and
+- The checks are heuristics on computed styles. They're calibrated on [`layout/tests/fixtures/`](../layout/tests/fixtures/) and
   were spot-checked against screenshots; two false positives found that way were fixed (photo scrims counted as
   gradients; blue buttons counted as purple).
 - One generic line per brief invites generic pages. The briefs in [`briefs/`](briefs/) are richer on purpose.

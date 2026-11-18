@@ -1,0 +1,27 @@
+# Runs the layout checker against its calibration pages on every pull request and on main.
+name: layout
+
+on:
+  pull_request:
+    paths: ["layout/**", ".github/workflows/layout.yml"]
+  push:
+    branches: [main]
+    paths: ["layout/**", ".github/workflows/layout.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: layout
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      # ubuntu-latest ships Google Chrome; check_layout.mjs finds it on PATH.
+      - name: Calibration
+        run: node --test tests/
