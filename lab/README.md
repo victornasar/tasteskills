@@ -8,6 +8,8 @@ lab/
   runs/          one folder per run: screenshots at fixed viewports + the agent's notes
   ratings/       blind pairwise picks + free-text critiques
   findings.md    what helped, what didn't, per intervention
+  taste-grilling/  design for a discovery skill: the creative direction format, worked examples,
+                   and the Persona B simulated-client test (not a skill yet; no runs yet)
 ```
 
 ## Protocol
