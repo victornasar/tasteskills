@@ -3,10 +3,10 @@ name: direction
 
 on:
   pull_request:
-    paths: ["direction/**", ".github/workflows/direction.yml"]
+    paths: ["direction/**", "typography/skills/**", "color/skills/**", "layout/skills/**", ".github/workflows/direction.yml"]
   push:
     branches: [main]
-    paths: ["direction/**", ".github/workflows/direction.yml"]
+    paths: ["direction/**", "typography/skills/**", "color/skills/**", "layout/skills/**", ".github/workflows/direction.yml"]
 
 permissions:
   contents: read

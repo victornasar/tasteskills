@@ -14,6 +14,8 @@ Measures, per condition and model:
   - run-to-run variation: the same distance between different runs of one condition, model and brief. A
     structure change only means something when it's clearly above this noise floor
   - convergence: how many different heading fonts and skeletons the runs of one brief produced
+  - provenance: share of pages whose heading and body fonts are in typography's catalog (a font outside it was
+    not picked by find-font), and for condition D, whether DIRECTION.md was written with provenance tags
 
 These are automatic and say nothing about whether people prefer the result. That's what blind ratings are for.
 Standard library only.
@@ -22,7 +24,20 @@ import json
 from pathlib import Path
 
 LAB = Path(__file__).resolve().parent
-AVOID = {a["name"].lower() for a in json.loads((LAB.parent / "typography" / "fonts.json").read_text())["avoid"]}
+FONTS = json.loads((LAB.parent / "typography" / "fonts.json").read_text())
+AVOID = {a["name"].lower() for a in FONTS["avoid"]}
+
+
+def families(name):
+    """Catalog names can hold several families: "Mona Sans / Hubot Sans", "Red Hat Display / Text"."""
+    parts = [p.strip() for p in name.split(" / ")]
+    stem = parts[0].rsplit(" ", 1)[0]
+    return [parts[0]] + [p if " " in p else f"{stem} {p}" for p in parts[1:]]
+
+
+CATALOG = {fam.lower() for f in FONTS["fonts"] for fam in families(f["name"])}
+SYSTEM = ("system-ui", "-apple-system", "ui-", "sans-serif", "serif", "monospace")
+TAGS = ("[client]", "[inferred]", "[engine]", "[agent]", "[approved]")
 NAMES = {"A": "no skills", "B": "font + color skills", "C": "B + check-layout", "D": "C + taste (fast)"}
 
 
@@ -39,8 +54,23 @@ def load():
             "body": (r["fonts"]["body"] or "").strip(),
             "skeleton": r.get("skeleton", []),
             "fonts_loaded": r["fonts"].get("loaded", {}),
+            "direction": direction_info(LAB.parent / Path(r["file"]).parent / "DIRECTION.md"),
         }
     return rows
+
+
+def direction_info(path):
+    """For runs that wrote DIRECTION.md: whether it exists and which provenance tags it uses."""
+    if not path.exists():
+        return None
+    text = path.read_text().lower()
+    return {"tags": [t for t in TAGS if t in text]}
+
+
+def from_catalog(font):
+    """True when a font is in typography's curated catalog (or is a system stack, which needs no pick)."""
+    f = font.lower()
+    return not f or f in CATALOG or f.startswith(SYSTEM)
 
 
 def distance(a, b):
@@ -106,6 +136,9 @@ def main():
                 "default_font_share": mean((r["heading"].lower() in AVOID or r["body"].lower() in AVOID) for r in rs),
                 "structure_change_from_A": struct_change(c, model) if c != "A" else None,
                 "run_to_run_variation": run_to_run(c, model),
+                "catalog_font_share": mean(from_catalog(r["heading"]) and from_catalog(r["body"]) for r in rs),
+                "direction_written_share": mean(r["direction"] is not None for r in rs),
+                "direction_tagged_share": mean(bool(r["direction"] and len(r["direction"]["tags"]) >= 3) for r in rs),
             }
         measures[label] = m
         lines += [
@@ -114,6 +147,10 @@ def main():
             f"| Pages using an avoid-list font | {label} | " + " | ".join(fmt(m[c]["default_font_share"], True) for c in conds) + " |",
             f"| Structure change from A (0 same, 1 different) | {label} | " + " | ".join(fmt(m[c]["structure_change_from_A"]) for c in conds) + " |",
             f"| Run-to-run structure variation (noise floor) | {label} | " + " | ".join(fmt(m[c]["run_to_run_variation"]) for c in conds) + " |",
+            f"| Heading and body fonts from the catalog | {label} | " + " | ".join(fmt(m[c]["catalog_font_share"], True) for c in conds) + " |",
+            f"| Wrote DIRECTION.md (with 3+ provenance tags) | {label} | " + " | ".join(
+                "–" if not m[c]["direction_written_share"] else
+                f'{m[c]["direction_written_share"]:.0%} ({m[c]["direction_tagged_share"]:.0%})' for c in conds) + " |",
         ]
 
     lines += ["", "## Convergence within a brief", "",

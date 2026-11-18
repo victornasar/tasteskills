@@ -9,21 +9,29 @@ Conditions: **A** no skills; **B** font + color skills; **C** B + check-layout. 
 | Pages using an avoid-list font | all models | 50% | 0% | 0% |
 | Structure change from A (0 same, 1 different) | all models | – | 0.47 | 0.65 |
 | Run-to-run structure variation (noise floor) | all models | 0.45 | 0.45 | 0.59 |
+| Heading and body fonts from the catalog | all models | 50% | 100% | 100% |
+| Wrote DIRECTION.md (with 3+ provenance tags) | all models | – | – | – |
 | Pages | haiku-5-5 | 6 | 6 | 6 |
 | Layout slop patterns per page (of 9) | haiku-5-5 | 2.17 | 1.00 | 0.17 |
 | Pages using an avoid-list font | haiku-5-5 | 50% | 0% | 0% |
 | Structure change from A (0 same, 1 different) | haiku-5-5 | – | 0.64 | 0.69 |
 | Run-to-run structure variation (noise floor) | haiku-5-5 | 0.64 | 0.65 | 0.70 |
+| Heading and body fonts from the catalog | haiku-5-5 | 50% | 100% | 100% |
+| Wrote DIRECTION.md (with 3+ provenance tags) | haiku-5-5 | – | – | – |
 | Pages | opus-5-5 | 6 | 6 | 6 |
 | Layout slop patterns per page (of 9) | opus-5-5 | 1.33 | 1.00 | 0.00 |
 | Pages using an avoid-list font | opus-5-5 | 50% | 0% | 0% |
 | Structure change from A (0 same, 1 different) | opus-5-5 | – | 0.44 | 0.65 |
 | Run-to-run structure variation (noise floor) | opus-5-5 | 0.41 | 0.30 | 0.60 |
+| Heading and body fonts from the catalog | opus-5-5 | 50% | 100% | 100% |
+| Wrote DIRECTION.md (with 3+ provenance tags) | opus-5-5 | – | – | – |
 | Pages | sonnet-5-5 | 6 | 6 | 6 |
 | Layout slop patterns per page (of 9) | sonnet-5-5 | 2.00 | 2.00 | 0.00 |
 | Pages using an avoid-list font | sonnet-5-5 | 50% | 0% | 0% |
 | Structure change from A (0 same, 1 different) | sonnet-5-5 | – | 0.32 | 0.61 |
 | Run-to-run structure variation (noise floor) | sonnet-5-5 | 0.30 | 0.39 | 0.49 |
+| Heading and body fonts from the catalog | sonnet-5-5 | 50% | 100% | 100% |
+| Wrote DIRECTION.md (with 3+ provenance tags) | sonnet-5-5 | – | – | – |
 
 ## Convergence within a brief
 
@@ -36,7 +44,7 @@ Across all runs of one brief (3 models × 3 runs): how many different heading fo
 | fennel-street | C | 3 | 9 | Synonym (5 of 9) |
 | tallyroll | A | 2 | 9 | IBM Plex Sans (8 of 9) |
 | tallyroll | B | 5 | 8 | Steps Mono (4 of 9) |
-| tallyroll | C | 6 | 8 | Technor (2 of 9) |
+| tallyroll | C | 6 | 8 | IBM Plex Serif (2 of 9) |
 
 ## Every run
 

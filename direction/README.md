@@ -53,7 +53,7 @@ capped at two rounds.
 | `skills/taste/SKILL.md` | The conductor: phases, gates, skip rules, provenance |
 | `skills/taste/references/direction-template.md` | Creative-direction format (single source for the repo) |
 | `skills/taste/references/interviewing.md` | Guided-mode questions: open, no style labels |
-| `tests/` | Static checks: `node --test tests/*.test.mjs` |
+| `tests/` | Static checks: `node --test tests/test_skill.mjs` |
 
 Design for the discovery test (answer keys included) stays under [`lab/taste-grilling/`](../lab/taste-grilling/).
 Do not ship those files with the skill.
@@ -61,5 +61,5 @@ Do not ship those files with the skill.
 ## Checks
 
 ```bash
-cd direction && node --test tests/*.test.mjs
+cd direction && node --test tests/test_skill.mjs
 ```

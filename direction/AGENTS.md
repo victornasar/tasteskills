@@ -19,7 +19,7 @@ their engines.
 1. Edit `skills/taste/SKILL.md` and the files under `skills/taste/references/`.
 2. Keep `lab/taste-grilling/examples.md` and `persona-b.md` out of this folder — they are answer keys.
 3. `lab/taste-grilling/direction-spec.md` points here; do not fork a second template.
-4. Run `node --test tests/*.test.mjs` from this folder. Tests are static: no model calls.
+4. Run `node --test tests/test_skill.mjs` from this folder. Tests are static: no model calls.
 5. Do not add font family names, curated color direction names, or HEX/OKLCH values to `SKILL.md`. Those come
    from sibling engines at run time.
 
