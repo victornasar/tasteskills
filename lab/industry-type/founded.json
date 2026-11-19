@@ -1,0 +1,85 @@
+{
+  "_doc": "Founding years for fintech candidates found only in the App Store Finance chart (no YC Fintech or Wikidata fintech classification). Such a candidate counts as fintech only if founded in 2000 or later (methodology.md \u00a71). Added only for candidates the selector actually reaches; each year has a source. A year is recorded only when the Wikidata entry's official website (P856) matches the domain; other candidates are resolved one by one if reached.",
+  "founded": {
+    "schwab.com": {
+      "year": 1971,
+      "source": "Wikidata Q1066028 P571"
+    },
+    "fidelity.com": {
+      "year": 1946,
+      "source": "Wikidata Q1411292 P571"
+    },
+    "creditkarma.com": {
+      "year": 2007,
+      "source": "Wikidata Q5183722 P571"
+    },
+    "robinhood.com": {
+      "year": 2013,
+      "source": "Wikidata Q18155123 P571 (entry's official website matches the domain)"
+    },
+    "eastmoney.com": {
+      "year": 2005,
+      "source": "Wikidata Q24836492 P571 (entry's official website matches the domain)"
+    },
+    "progressive.com": {
+      "year": 1937,
+      "source": "Wikidata Q7248721 P571 (entry's official website matches the domain)"
+    },
+    "experian.com": {
+      "year": 1980,
+      "source": "Wikidata Q692157 P571 (entry's official website matches the domain)"
+    },
+    "remitly.com": {
+      "year": 2011,
+      "source": "Wikidata Q65073425 P571 (entry's official website matches the domain)"
+    },
+    "equifax.com": {
+      "year": 1899,
+      "source": "Wikidata Q5384453 P571 (entry's official website matches the domain)"
+    },
+    "ally.com": {
+      "year": 1919,
+      "source": "Wikidata Q2032800 P571 (entry's official website matches the domain)"
+    },
+    "geico.com": {
+      "year": 1936,
+      "source": "Wikidata Q1498689 P571 (entry's official website matches the domain)"
+    },
+    "lpl.com": {
+      "year": 1968,
+      "source": "Wikidata Q6459734 P571 (entry's official website matches the domain)"
+    },
+    "citibank.com": {
+      "year": 1812,
+      "source": "Wikidata Q857063 P571 (entry's official website matches the domain)"
+    },
+    "creditonebank.com": {
+      "year": 1984,
+      "source": "Wikidata Q5183728 P571 (entry's official website matches the domain)"
+    },
+    "super.com": {
+      "year": 2016,
+      "source": "Wikidata Q115910171 P571 (entry's official website matches the domain)"
+    },
+    "healthequity.com": {
+      "year": 2002,
+      "source": "Wikidata Q5690370 P571 (entry's official website matches the domain)"
+    },
+    "acorns.com": {
+      "year": 2012,
+      "source": "English Wikipedia 'Acorns (company)' infobox (website field matches the domain)"
+    },
+    "cash.app": {
+      "year": 2013,
+      "source": "English Wikipedia 'Cash App' infobox (website field matches the domain)"
+    },
+    "sofi.com": {
+      "year": 2011,
+      "source": "English Wikipedia 'SoFi' infobox (website field matches the domain)"
+    },
+    "revolut.com": {
+      "year": 2015,
+      "source": "English Wikipedia 'Revolut' infobox (website field matches the domain)"
+    }
+  }
+}

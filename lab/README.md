@@ -22,6 +22,7 @@ open. Results so far are in [`findings.md`](findings.md).
 | [`analyze.py`](analyze.py) | Automatic measures for the runs → [`runs/measures.md`](runs/measures.md) |
 | [`ratings/`](ratings/) | The blind rating page (A vs B and B vs C), its answer key and the scoring script |
 | [`tools/`](tools/) | Renders pages in Chrome and detects layout slop; calibrated on fixtures |
+| [`industry-type/`](industry-type/) | How real companies in 8 industries set type versus AI pages for the same industries. Site list frozen 2026-11-19, not yet measured |
 | [`taste-grilling/`](taste-grilling/) | Discovery-test design for `/taste` (persona B not yet calibrated; guided mode experimental) |
 
 ## Run it yourself

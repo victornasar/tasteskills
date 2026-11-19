@@ -1,0 +1,271 @@
+{
+  "_doc": "Category strikes made before freezing. A struck domain can't be selected for that industry; the selector's walk continues to the next candidate by the same rule, so the replacement is never hand-picked. Criterion: the organization's main business is outside that industry's definition in methodology.md §1. 'requested_by' records who asked for the strike.",
+  "strikes": [
+    {
+      "domain": "ycombinator.com",
+      "industry": "fintech",
+      "date": "2026-11-18",
+      "requested_by": "user",
+      "reason": "startup accelerator and investor, not a financial-services technology company"
+    },
+    {
+      "domain": "anglehealth.com",
+      "industry": "fintech",
+      "date": "2026-11-18",
+      "requested_by": "user",
+      "reason": "health insurer; belongs to health, not fintech"
+    },
+    {
+      "domain": "sixflags.com",
+      "industry": "food-hospitality",
+      "date": "2026-11-18",
+      "requested_by": "user",
+      "reason": "theme-park operator, not a restaurant, hotel or hospitality company"
+    },
+    {
+      "domain": "pullandbear.com",
+      "industry": "luxury-fashion",
+      "date": "2026-11-18",
+      "requested_by": "user",
+      "reason": "mass-market fast-fashion retailer (Inditex), not a high-end fashion house or luxury brand"
+    },
+    {
+      "domain": "design.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "user",
+      "reason": "logo-maker software, not an architecture firm or design agency"
+    },
+    {
+      "domain": "visme.co",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "user",
+      "reason": "presentation and graphics software, not an architecture firm or design agency"
+    },
+    {
+      "domain": "biorender.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "user",
+      "reason": "scientific-illustration software, not an architecture firm or design agency"
+    },
+    {
+      "domain": "fatboy.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "user review, struck by Claude",
+      "reason": "furniture and lifestyle product brand, not an architecture firm or design agency"
+    },
+    {
+      "domain": "p22.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "user review, struck by Claude",
+      "reason": "type foundry selling retail fonts, not an architecture firm or design agency"
+    },
+    {
+      "domain": "apple.com.cn",
+      "industry": "dev-tools",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "Apple's China regional site; a consumer-electronics company drawn because it develops programming tools"
+    },
+    {
+      "domain": "about.google",
+      "industry": "dev-tools",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "Google's corporate site; a conglomerate drawn because it develops programming tools"
+    },
+    {
+      "domain": "sekai.ai",
+      "industry": "dev-tools",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "AI interactive-story app listed in the Developer Tools chart; not software for developers"
+    },
+    {
+      "domain": "massimodutti.com",
+      "industry": "luxury-fashion",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "Inditex premium-mass retailer, same reason as Pull&Bear"
+    },
+    {
+      "domain": "l-t.de",
+      "industry": "luxury-fashion",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "multi-brand fashion department store, not a fashion house or luxury brand"
+    },
+    {
+      "domain": "quooker.nl",
+      "industry": "luxury-fashion",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "boiling-water tap manufacturer; premium appliance, not luxury goods in the §1 sense"
+    },
+    {
+      "domain": "naver.com",
+      "industry": "editorial-media",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "Korean web portal; the magazine's entry points at the portal, not its own site"
+    },
+    {
+      "domain": "designcrowd.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "crowdsourcing marketplace for design jobs, not a design agency"
+    },
+    {
+      "domain": "parsons.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "engineering and defense contractor, not an architecture firm or design agency"
+    },
+    {
+      "domain": "daaily.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "architecture media and publishing platform, not an architecture firm or design agency"
+    },
+    {
+      "domain": "7brew.com",
+      "industry": "consumer-apps",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "drive-thru coffee chain; a food business, not consumer software"
+    },
+    {
+      "domain": "deepmind.google",
+      "industry": "dev-tools",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "AI research lab (Google), drawn because it develops programming tools; not a developer-tools company"
+    },
+    {
+      "domain": "veepai.com",
+      "industry": "dev-tools",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "IoT security-camera maker whose camera app is filed under Developer Tools"
+    },
+    {
+      "domain": "hotpepper.jp",
+      "industry": "editorial-media",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "Recruit's restaurant and salon coupon and booking portal; not editorial, and owned (Wikidata lacks the publisher)"
+    },
+    {
+      "domain": "typography.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "type foundry selling retail fonts, same reason as P22"
+    },
+    {
+      "domain": "muse.ai",
+      "industry": "consumer-apps",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "App Store seller URL for 'Muse from Meta' points to an unrelated company's domain"
+    },
+    {
+      "domain": "microsoft.com",
+      "industry": "dev-tools",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "conglomerate's corporate site, same reason as Apple and Google"
+    },
+    {
+      "domain": "campari.com",
+      "industry": "luxury-fashion",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "spirits producer (Altagamma member); not fashion or luxury goods in the §1 sense"
+    },
+    {
+      "domain": "airbnb.com",
+      "industry": "food-hospitality",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "lodging marketplace, not an operator; same reason delivery platforms were left out of food"
+    },
+    {
+      "domain": "serendipity3.com",
+      "industry": "luxury-fashion",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "New York restaurant mislabelled as a fashion house on Wikidata"
+    },
+    {
+      "domain": "fodzyme.com",
+      "industry": "health",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "digestive-enzyme supplement maker; a consumer product, not healthcare provision, insurance or health technology"
+    },
+    {
+      "domain": "ixia.es",
+      "industry": "food-hospitality",
+      "date": "2026-11-18",
+      "requested_by": "Claude, category review of the protocol 2 draft",
+      "reason": "furniture distributor that supplies hotels, not a hospitality company"
+    },
+    {
+      "domain": "olafureliasson.net",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "user review (classification questions), criterion applied by Claude",
+      "reason": "artist's studio centred on one artist's own works; §1 covers practices whose main output is client-commissioned architecture or design services"
+    },
+    {
+      "domain": "studioroosegaarde.net",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "user review (classification questions), criterion applied by Claude",
+      "reason": "artist-led studio centred on one artist's own works, same criterion as Studio Olafur Eliasson"
+    },
+    {
+      "domain": "ia.net",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "user review (classification questions), criterion applied by Claude",
+      "reason": "main output is its own software (iA Writer, iA Presenter), not client design services; same criterion"
+    },
+    {
+      "domain": "stanzaliving.com",
+      "industry": "food-hospitality",
+      "date": "2026-11-18",
+      "requested_by": "user review (classification questions), criterion applied by Claude",
+      "reason": "co-living is long-term residential rental (real estate), not short-stay lodging or food service"
+    },
+    {
+      "domain": "godaddy.com",
+      "industry": "fintech",
+      "date": "2026-11-18",
+      "requested_by": "Claude, applying §1 criteria to replacements",
+      "reason": "domain registrar and web host; Wikidata's fintech tag is a mislabel (it offers payments as a side product)"
+    },
+    {
+      "domain": "magnific.com",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "Claude, applying §1 criteria to replacements",
+      "reason": "Freepik's stock-asset and AI image platform; a product, not client design services (criterion A)"
+    },
+    {
+      "domain": "thelocalproject.com.au",
+      "industry": "architecture-design",
+      "date": "2026-11-18",
+      "requested_by": "Claude, applying §1 criteria to replacements",
+      "reason": "architecture and design publication; media, not client design services (criterion A)"
+    }
+  ]
+}

@@ -1,0 +1,3773 @@
+{
+"acorns.com": {
+"reason": null,
+"info": {
+"lang": "en-us",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:53:51"
+},
+"adagp.fr": {
+"reason": null,
+"info": {
+"lang": "fr",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:16"
+},
+"adisyo.com": {
+"reason": null,
+"info": {
+"lang": "tr",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:36"
+},
+"affirm.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:44"
+},
+"aftonbladet.se": {
+"reason": null,
+"info": {
+"lang": "sv",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:32:13"
+},
+"akqa.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:38:13"
+},
+"alessi.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:10:23"
+},
+"alfaromeo.com": {
+"reason": "homepage failed 3 times: curl exit 60, HTTP 000",
+"info": null,
+"checked": "2026-11-18T22:01:31"
+},
+"alinea-invest.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:48"
+},
+"alivecor.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:01:07"
+},
+"allergyasthmanetwork.org": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:02:13"
+},
+"amarujala.com": {
+"reason": null,
+"info": {
+"lang": "hi",
+"scripts": [
+"Devanagari",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:19:56"
+},
+"answerthis.io": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:41:20"
+},
+"apahotel.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:04:32"
+},
+"applebees.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:04:32"
+},
+"aquashard.co.uk": {
+"reason": null,
+"info": {
+"lang": "en-GB",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:39"
+},
+"artcom.de": {
+"reason": null,
+"info": {
+"lang": "de-DE",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:37:13"
+},
+"artnexus.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:33:13"
+},
+"arup.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:36:11"
+},
+"arzak.es": {
+"reason": null,
+"info": {
+"lang": "es-ES",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:39"
+},
+"asha.health": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:06"
+},
+"asiae.co.kr": {
+"reason": null,
+"info": {
+"lang": "ko",
+"scripts": [
+"Hangul"
+]
+},
+"checked": "2026-11-18T21:27:07"
+},
+"aspendental.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:00:08"
+},
+"atriumhealth.org": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:07"
+},
+"azathabar.com": {
+"reason": null,
+"info": {
+"lang": "tk",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:21:00"
+},
+"b1tv.ro": {
+"reason": null,
+"info": {
+"lang": "ro",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:22:59"
+},
+"babycenter.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:05"
+},
+"balmain.com": {
+"reason": null,
+"info": {
+"lang": "fr",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:13:29"
+},
+"bartaco.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:33"
+},
+"basedesign.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:14"
+},
+"beckgroup.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:39"
+},
+"benihana.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:41"
+},
+"big.dk": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:36:11"
+},
+"blinkdrama.life": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:21"
+},
+"blond-amsterdam.com": {
+"reason": null,
+"info": {
+"lang": "nl",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:38:13"
+},
+"blueberrypediatrics.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:06"
+},
+"bluesunhotels.com": {
+"reason": null,
+"info": {
+"lang": "hr",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:36"
+},
+"boots.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:57:00"
+},
+"bottegaveneta.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:00:29"
+},
+"brunellocucinelli.com": {
+"reason": "homepage failed 3 times: curl exit 28, HTTP 000",
+"info": null,
+"checked": "2026-11-18T21:59:26"
+},
+"bswhealth.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:00:08"
+},
+"buffalowildwings.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:32"
+},
+"bulgari.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:56:27"
+},
+"burberry.com": {
+"reason": null,
+"info": {
+"lang": "en-GB",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:03:17"
+},
+"businessinsider.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:20:58"
+},
+"businessmirror.com.ph": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:37"
+},
+"businesstoday.in": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:04"
+},
+"buxfer.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:48"
+},
+"cankaoxiaoxi.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:19:56"
+},
+"capitaland.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:36"
+},
+"carecredit.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:53:51"
+},
+"cecam.org": {
+"reason": "homepage failed 3 times: curl exit 6, HTTP 000",
+"info": null,
+"checked": "2026-11-18T22:05:34"
+},
+"celsius.network": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:50"
+},
+"centene.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:57:01"
+},
+"cfmoller.com": {
+"reason": "homepage failed 3 times: curl exit 6, HTTP 000",
+"info": null,
+"checked": "2026-11-18T22:10:11"
+},
+"chicagobusiness.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:36"
+},
+"chipotle.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:14:33"
+},
+"chloe.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:07:18"
+},
+"circleup.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:50"
+},
+"cityam.com": {
+"reason": null,
+"info": {
+"lang": "en-GB",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:04"
+},
+"civilbeat.org": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:22:59"
+},
+"claude.ai": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:10:11"
+},
+"clueso.io": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:57"
+},
+"cnbc.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:20:58"
+},
+"cochrane.org": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:57:01"
+},
+"coinbase.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:32"
+},
+"conductor.build": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:58"
+},
+"context.dev": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"cossa.ru": {
+"reason": null,
+"info": {
+"lang": "ru",
+"scripts": [
+"Cyrillic",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:35:10"
+},
+"crackerbarrel.com": {
+"reason": "homepage failed 3 times: curl exit 0, HTTP 429",
+"info": null,
+"checked": "2026-11-18T22:04:32"
+},
+"crainsdetroit.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:37"
+},
+"creditgenie.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:53:51"
+},
+"creditkarma.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:47"
+},
+"cslplasma.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:00:08"
+},
+"current.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:54:52"
+},
+"cursor.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:54"
+},
+"cvs.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:35"
+},
+"dailymail.co.uk": {
+"reason": "redirects off-domain to www.dailymail.com",
+"info": null,
+"checked": "2026-11-18T22:04:34"
+},
+"dairyqueen.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:02:34"
+},
+"danubiushotels.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:36"
+},
+"davidchipperfield.com": {
+"reason": null,
+"info": {
+"lang": "en-GB",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:36:11"
+},
+"davines.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:10:24"
+},
+"decentro.tech": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"dedar.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:12:27"
+},
+"dexcom.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:57:00"
+},
+"digiday.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:35:10"
+},
+"discord.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:20"
+},
+"disfrutarbarcelona.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:18:51"
+},
+"dishoom.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:33"
+},
+"dkny.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:13:30"
+},
+"dlrgroup.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:18"
+},
+"dn.no": {
+"reason": null,
+"info": {
+"lang": "nb",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:30:07"
+},
+"docker.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:54"
+},
+"doctolib.fr": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:36"
+},
+"doctoreto.com": {
+"reason": null,
+"info": {
+"lang": "fa",
+"scripts": [
+"Arabic",
+"Latin"
+]
+},
+"checked": "2026-11-18T20:57:00"
+},
+"dolcegabbana.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:04:16"
+},
+"doordash.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:11:12"
+},
+"droog.com": {
+"reason": null,
+"info": {
+"lang": "en-GB",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:38:13"
+},
+"drugs.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:35"
+},
+"dsrny.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:16"
+},
+"duarte.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:14"
+},
+"duolingo.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:26"
+},
+"eastmoney.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Han",
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:47"
+},
+"economist.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:05:35"
+},
+"egmnow.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:33:13"
+},
+"elite.se": {
+"reason": null,
+"info": {
+"lang": "sv",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:43"
+},
+"elysiumhealthcare.co.uk": {
+"reason": "homepage failed 3 times: curl exit 28, HTTP 000",
+"info": null,
+"checked": "2026-11-18T21:47:37"
+},
+"eremnews.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:04:34"
+},
+"etro.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:07:18"
+},
+"exclaim.ca": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:32:13"
+},
+"exlyapp.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:42:20"
+},
+"expo.dev": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"famigliacristiana.it": {
+"reason": "homepage failed 3 times: curl exit 6, HTTP 000",
+"info": null,
+"checked": "2026-11-18T22:08:35"
+},
+"fampay.in": {
+"reason": "redirects off-domain to www.famapp.in",
+"info": null,
+"checked": "2026-11-18T21:45:33"
+},
+"fantini.it": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:10:24"
+},
+"fidelity.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:44"
+},
+"financialexpress.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:04"
+},
+"financialmirror.com": {
+"reason": null,
+"info": {
+"lang": "en-GB",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:30:07"
+},
+"financialpost.com": {
+"reason": null,
+"info": {
+"lang": "en-CA",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:03"
+},
+"firegiant.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:57"
+},
+"floot.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"floridatrend.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:26:01"
+},
+"fontanaarte.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:59:28"
+},
+"fontawesome.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:54"
+},
+"forbes.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:04:34"
+},
+"fortune.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:24:01"
+},
+"fosterandpartners.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:39"
+},
+"franchisetimes.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:30:07"
+},
+"freestyle.sh": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:55"
+},
+"ftd.de": {
+"reason": null,
+"info": {
+"lang": "de",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:29:05"
+},
+"fullon-hotels.com.tw": {
+"reason": null,
+"info": {
+"lang": "zh-Hant-",
+"scripts": [
+"Han",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:19:55"
+},
+"fursac.com": {
+"reason": null,
+"info": {
+"lang": "fr",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:07:18"
+},
+"gensler.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:36:11"
+},
+"gentivahs.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:02:12"
+},
+"gessi.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:10:24"
+},
+"get-carrot.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:05"
+},
+"getbalance.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:48"
+},
+"getmoshi.app": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"ginkgobioworks.com": {
+"reason": "redirects off-domain to www.ginkgo.bio",
+"info": null,
+"checked": "2026-11-18T21:45:36"
+},
+"ginori1735.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:59:28"
+},
+"gitarrebass.de": {
+"reason": null,
+"info": {
+"lang": "de-DE",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:33:13"
+},
+"gitlab.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:54"
+},
+"gmail.com": {
+"reason": "redirects off-domain to accounts.google.com",
+"info": null,
+"checked": "2026-11-18T22:08:38"
+},
+"go2bank.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:50"
+},
+"godaddy.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:31"
+},
+"gracery.com": {
+"reason": null,
+"info": {
+"lang": "ja",
+"scripts": [
+"Kana",
+"Han",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:34"
+},
+"grandchancellorhotels.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:34"
+},
+"grantcash.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:53:51"
+},
+"grottapalazzese.it": {
+"reason": null,
+"info": {
+"lang": "it-IT",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:39"
+},
+"groww.in": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:45"
+},
+"gucci.com": {
+"reason": "homepage failed 3 times: curl exit 92, HTTP 301",
+"info": null,
+"checked": "2026-11-18T21:56:27"
+},
+"gulfbusiness.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:37"
+},
+"h1.co": {
+"reason": "redirects off-domain to h1.com",
+"info": null,
+"checked": "2026-11-18T21:45:36"
+},
+"hackaday.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:32:13"
+},
+"hama-sushi.co.jp": {
+"reason": "homepage failed 3 times: curl exit 6, HTTP 000",
+"info": null,
+"checked": "2026-11-18T22:02:34"
+},
+"hamstudy.org": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:27"
+},
+"harpersbazaar.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:26:02"
+},
+"harpersbazaar.fr": {
+"reason": null,
+"info": {
+"lang": "fr",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:26:01"
+},
+"hbr.org": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:23:01"
+},
+"hbrarabic.com": {
+"reason": null,
+"info": {
+"lang": "ar",
+"scripts": [
+"Arabic"
+]
+},
+"checked": "2026-11-18T21:26:01"
+},
+"hdrinc.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:36:11"
+},
+"headlinerhub.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:26:01"
+},
+"healow.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+]
+},
+"checked": "2026-11-18T20:57:00"
+},
+"healthgrades.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:57:01"
+},
+"healthsherpa.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:02:12"
+},
+"hennnahotel.com": {
+"reason": null,
+"info": {
+"lang": "ja",
+"scripts": [
+"Kana",
+"Han",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:35"
+},
+"hepster.com": {
+"reason": null,
+"info": {
+"lang": "de-DE",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:50"
+},
+"heptabase.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:26"
+},
+"herdr.dev": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"hermes.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:56:27"
+},
+"hksinc.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:39"
+},
+"hok.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:13"
+},
+"holeymoley.com.au": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:33"
+},
+"holzweileroslo.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:07:18"
+},
+"honestgreens.com": {
+"reason": null,
+"info": {
+"lang": "es",
+"scripts": [
+"unknown"
+]
+},
+"checked": "2026-11-18T21:17:41"
+},
+"hopkins.co.uk": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:36:13"
+},
+"hotel-bb.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:15:33"
+},
+"hotelindigo.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:04:32"
+},
+"houseandgarden.co.uk": {
+"reason": null,
+"info": {
+"lang": "en-GB",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:26:01"
+},
+"houseind.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:40"
+},
+"hugoboss.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:03:17"
+},
+"humanevents.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:21:59"
+},
+"iberostar.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:03:32"
+},
+"idexx.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:57:01"
+},
+"ihop.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:04:32"
+},
+"incrussia.ru": {
+"reason": null,
+"info": {
+"lang": "ru-RU",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:28:06"
+},
+"indeed.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:10:11"
+},
+"independent.co.uk": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:20:58"
+},
+"infront.co": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:50"
+},
+"inito.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:06"
+},
+"inscribe.ai": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"inven.co.kr": {
+"reason": null,
+"info": {
+"lang": "ko",
+"scripts": [
+"Hangul",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:32:13"
+},
+"irealpro.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:21"
+},
+"jaeger-lecoultre.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:08:24"
+},
+"jagran.com": {
+"reason": null,
+"info": {
+"lang": "hi",
+"scripts": [
+"Devanagari",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:19:56"
+},
+"jerseymikes.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:02:34"
+},
+"jet2holidays.com": {
+"reason": "homepage failed 3 times: curl exit 92, HTTP 302",
+"info": null,
+"checked": "2026-11-18T22:02:34"
+},
+"joesstonecrab.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:37"
+},
+"joingerald.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:54:51"
+},
+"jointcommission.org": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:37"
+},
+"jumo.world": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:34"
+},
+"kaspi.kz": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Cyrillic",
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:44"
+},
+"kertvar.hu": {
+"reason": null,
+"info": {
+"lang": "hu",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:35:10"
+},
+"kick.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:28"
+},
+"kicker.de": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:05:35"
+},
+"kindredhospitals.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:00:06"
+},
+"klara.com": {
+"reason": "redirects off-domain to www.modmed.com",
+"info": null,
+"checked": "2026-11-18T21:55:26"
+},
+"klarify.ca": {
+"reason": null,
+"info": {
+"lang": "en-CA",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:01:08"
+},
+"kodinkuvalehti.fi": {
+"reason": null,
+"info": {
+"lang": "fi",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:26:02"
+},
+"labcorp.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:05"
+},
+"larkhotels.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:04:33"
+},
+"lendinvest.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:34"
+},
+"lesindustry.ru": {
+"reason": null,
+"info": {
+"lang": "ru-RU",
+"scripts": [
+"Cyrillic",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:32:14"
+},
+"lfcarry.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:25"
+},
+"lily.fi": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:35"
+},
+"linkedbyair.net": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:38:13"
+},
+"litnet.com": {
+"reason": null,
+"info": {
+"lang": "ru-RU",
+"scripts": [
+"Cyrillic"
+]
+},
+"checked": "2026-11-18T21:32:13"
+},
+"livemint.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:03"
+},
+"loewshotels.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:34"
+},
+"logansroadhouse.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:33"
+},
+"louisvuitton.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:55:26"
+},
+"lpl.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:34"
+},
+"lugg.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:42:20"
+},
+"luisaviaroma.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:59:28"
+},
+"madridiario.es": {
+"reason": null,
+"info": {
+"lang": "es",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:21:00"
+},
+"magnific.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:39"
+},
+"manager-magazin.de": {
+"reason": null,
+"info": {
+"lang": "de",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:07"
+},
+"marcjacobs.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:05:18"
+},
+"marni.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:59:28"
+},
+"massive.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:50"
+},
+"maybourne.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:34"
+},
+"mayoclinic.org": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:34"
+},
+"mcmenamins.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:35"
+},
+"meaww.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:22:59"
+},
+"mediazona.ca": {
+"reason": null,
+"info": {
+"lang": "ru",
+"scripts": [
+"Cyrillic"
+]
+},
+"checked": "2026-11-18T21:22:59"
+},
+"memberstack.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:54:53"
+},
+"midwestliving.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:36"
+},
+"minfin.com.ua": {
+"reason": null,
+"info": {
+"lang": "uk",
+"scripts": [
+"Cyrillic"
+]
+},
+"checked": "2026-11-18T20:52:50"
+},
+"missoni.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:59:28"
+},
+"mk.co.kr": {
+"reason": null,
+"info": {
+"lang": "ko",
+"scripts": [
+"Hangul",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:04"
+},
+"montblanc.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:04:17"
+},
+"montereycountynow.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:22:59"
+},
+"mosaic.so": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:42:20"
+},
+"mux.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:54"
+},
+"mvrdv.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:17"
+},
+"mydramawave.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"unknown"
+]
+},
+"checked": "2026-11-18T21:43:21"
+},
+"mypatientvisit.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"unknown"
+]
+},
+"checked": "2026-11-18T21:01:07"
+},
+"napolitoday.it": {
+"reason": null,
+"info": {
+"lang": "it",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:21:59"
+},
+"nbbj.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:19"
+},
+"nchmd.org": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:00:06"
+},
+"ncregister.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:19:56"
+},
+"newlinesmag.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:33:13"
+},
+"neworleanscitybusiness.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:30:07"
+},
+"newyorker.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:25:00"
+},
+"nimblerx.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:02:14"
+},
+"normcph.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:38:13"
+},
+"nssurge.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"nyp.org": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:07"
+},
+"obj.ca": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:29:05"
+},
+"olivegarden.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:32"
+},
+"omnihotels.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:02:34"
+},
+"onetext.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:48"
+},
+"osteriafrancescana.it": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:39"
+},
+"pagani.com": {
+"reason": "homepage failed 3 times: curl exit 0, HTTP 429",
+"info": null,
+"checked": "2026-11-18T22:00:29"
+},
+"panerabread.com": {
+"reason": "homepage failed 3 times: curl exit 28, HTTP 000",
+"info": null,
+"checked": "2026-11-18T22:03:31"
+},
+"papa.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:02:15"
+},
+"patou.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:03:17"
+},
+"patrika.com": {
+"reason": null,
+"info": {
+"lang": "hi",
+"scripts": [
+"Devanagari",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:19:56"
+},
+"paxhistoria.co": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:42:20"
+},
+"paypal.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:32"
+},
+"pazi.ai": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:55"
+},
+"pentagram.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:36:11"
+},
+"perkinswill.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:37:12"
+},
+"pestisracok.hu": {
+"reason": null,
+"info": {
+"lang": "hu",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:21:59"
+},
+"physicstoday.org": {
+"reason": "redirects off-domain to physicstoday.aip.org",
+"info": null,
+"checked": "2026-11-18T22:08:35"
+},
+"piaget.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:08:24"
+},
+"pinterest.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:20"
+},
+"pizzahut.com": {
+"reason": "homepage failed 3 times: curl exit 92, HTTP 301",
+"info": null,
+"checked": "2026-11-18T22:02:34"
+},
+"populous.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:13"
+},
+"postranchinn.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:37"
+},
+"ppt-design.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:14"
+},
+"princehotels.co.jp": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Kana",
+"Han",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:15:32"
+},
+"prodigaltech.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:48"
+},
+"progressive.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:47"
+},
+"propelauth.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:51:00"
+},
+"proxyman.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:59"
+},
+"psychologytoday.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:32:13"
+},
+"qventus.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:06"
+},
+"railway.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"razon.com.mx": {
+"reason": null,
+"info": {
+"lang": "es",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:22:59"
+},
+"razorpay.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:45"
+},
+"readme.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:55"
+},
+"reelshort.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:42:22"
+},
+"replit.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:54"
+},
+"revenuecat.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:54"
+},
+"rivercafe.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:36"
+},
+"robadadonne.it": {
+"reason": null,
+"info": {
+"lang": "it-IT",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:21:59"
+},
+"robinhood.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:44"
+},
+"robinson.com": {
+"reason": null,
+"info": {
+"lang": "de-DE",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:46"
+},
+"rockol.it": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:38"
+},
+"rootly.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"rpbw.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:37:12"
+},
+"sante.quebec": {
+"reason": null,
+"info": {
+"lang": "fr",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:02:13"
+},
+"schwab.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:44"
+},
+"sendbird.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:54"
+},
+"septudio.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"sercotelhoteles.com": {
+"reason": null,
+"info": {
+"lang": "es",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:34"
+},
+"sergiorossi.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:09:22"
+},
+"seva.org": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:00:06"
+},
+"sgh.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T22:09:11"
+},
+"shiftkey.com": {
+"reason": "homepage failed 3 times: curl exit 56, HTTP 200",
+"info": null,
+"checked": "2026-11-18T21:55:24"
+},
+"simplepractice.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:00:08"
+},
+"sina.com.cn": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"Han",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:20:58"
+},
+"slate.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:32:13"
+},
+"sloveniatimes.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:38"
+},
+"smartasset.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:55:54"
+},
+"smithgill.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:16"
+},
+"smithgroup.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:13"
+},
+"snapchat.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:20"
+},
+"snaptrade.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:48"
+},
+"snohetta.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:18"
+},
+"socomec.fr": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:55:25"
+},
+"som.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:13"
+},
+"spotify.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:20"
+},
+"storyworth.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:28"
+},
+"stripe.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:01"
+},
+"studiomakkinkbey.nl": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:37:15"
+},
+"suiteness.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:41:20"
+},
+"sumup.com": {
+"reason": null,
+"info": {
+"lang": "en-us",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:47"
+},
+"suno.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:22"
+},
+"surplusmagazin.de": {
+"reason": null,
+"info": {
+"lang": "de",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:29:05"
+},
+"swiss-belhotel.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:35"
+},
+"t-online.de": {
+"reason": null,
+"info": {
+"lang": "de",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:19:58"
+},
+"t3.codes": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"tab.travel": {
+"reason": "homepage failed 3 times: curl exit 56, HTTP 200",
+"info": null,
+"checked": "2026-11-18T22:11:12"
+},
+"techcrunch.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:20:58"
+},
+"technologyreview.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:32:13"
+},
+"telegraph.co.uk": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:23:01"
+},
+"terra.cl": {
+"reason": null,
+"info": {
+"lang": "es-CL",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:23:00"
+},
+"theargumentmag.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:35:10"
+},
+"thebiblechat.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:21"
+},
+"thedesertreview.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:22:59"
+},
+"thelocalproject.com.au": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:09:11"
+},
+"thenarwhal.ca": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:33:14"
+},
+"thewolseley.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:39"
+},
+"threema.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:24"
+},
+"tiktok.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:20"
+},
+"timberjacks.com": {
+"reason": null,
+"info": {
+"lang": "de",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:33"
+},
+"time.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:23:00"
+},
+"todaysparent.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:36"
+},
+"tonalenergy.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:21"
+},
+"toryburch.com": {
+"reason": null,
+"info": {
+"lang": "en-us",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:04:17"
+},
+"transilvaniareporter.ro": {
+"reason": null,
+"info": {
+"lang": "en-GB",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:35:10"
+},
+"true-gaming.net": {
+"reason": null,
+"info": {
+"lang": "ar",
+"scripts": [
+"Arabic",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:21:59"
+},
+"truelinkfinancial.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:48"
+},
+"type.ai": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:42:20"
+},
+"typotheque.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:18"
+},
+"uhc.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:45:34"
+},
+"unstudio.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:39:13"
+},
+"unz.com": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T22:08:38"
+},
+"urac.org": {
+"reason": null,
+"info": {
+"lang": null,
+"scripts": [
+"unknown"
+],
+"precheck_blocked": true
+},
+"checked": "2026-11-18T21:47:37"
+},
+"urbanplates.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:33"
+},
+"usmagazine.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:03"
+},
+"usnews.com": {
+"reason": "homepage failed 3 times: curl exit 28, HTTP 000",
+"info": null,
+"checked": "2026-11-18T22:07:35"
+},
+"v0.app": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:56"
+},
+"valentino.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:05:18"
+},
+"vanityfair.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:26:02"
+},
+"varomoney.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:55:54"
+},
+"venmo.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:52:45"
+},
+"versace.com": {
+"reason": "homepage failed 3 times: curl exit 28, HTTP 000",
+"info": null,
+"checked": "2026-11-18T21:57:26"
+},
+"versemedical.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:58:06"
+},
+"voiceos.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:22"
+},
+"warpbuild.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:50:59"
+},
+"washington-hotels.jp": {
+"reason": null,
+"info": {
+"lang": "ja",
+"scripts": [
+"Kana",
+"Han",
+"Latin"
+]
+},
+"checked": "2026-11-18T21:17:35"
+},
+"watg.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:37:12"
+},
+"whatsapp.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:40:20"
+},
+"wired.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:20:58"
+},
+"womenshealthmag.com": {
+"reason": null,
+"info": {
+"lang": "en-US",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:27:03"
+},
+"yogurtland.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:16:33"
+},
+"youart.ai": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T21:43:25"
+},
+"zaha-hadid.com": {
+"reason": "redirects off-domain to www.zha.com",
+"info": null,
+"checked": "2026-11-18T22:08:39"
+},
+"zulutrade.com": {
+"reason": null,
+"info": {
+"lang": "en",
+"scripts": [
+"Latin"
+]
+},
+"checked": "2026-11-18T20:54:52"
+}
+}

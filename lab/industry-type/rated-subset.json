@@ -1,0 +1,84 @@
+{
+ "seed": "20261118-ratings",
+ "list_sha256": "60f81c18341fde24474cadece27744630e8483788da315233b4ec6eb3b1cdfc1",
+ "industries": {
+  "dev-tools": {
+   "leaders": [
+    "fontawesome.com",
+    "sendbird.com"
+   ],
+   "sampled": [
+    "railway.com",
+    "firegiant.com",
+    "decentro.tech"
+   ],
+   "ai_pages": [
+    "claude-haiku-5-5/run1",
+    "claude-haiku-5-5/run3",
+    "claude-sonnet-5-5/run2",
+    "claude-sonnet-5-5/run1",
+    "claude-opus-5-5/run1"
+   ]
+  },
+  "fintech": {
+   "leaders": [
+    "coinbase.com",
+    "paypal.com"
+   ],
+   "sampled": [
+    "grantcash.com",
+    "hepster.com",
+    "truelinkfinancial.com"
+   ],
+   "ai_pages": [
+    "claude-opus-5-5/run3",
+    "claude-sonnet-5-5/run3",
+    "claude-haiku-5-5/run3",
+    "claude-opus-5-5/run2",
+    "claude-sonnet-5-5/run2"
+   ]
+  },
+  "health": {
+   "leaders": [
+    "cvs.com",
+    "doctolib.fr"
+   ],
+   "sampled": [
+    "nyp.org",
+    "aspendental.com",
+    "jointcommission.org"
+   ],
+   "ai_pages": [
+    "claude-haiku-5-5/run2",
+    "claude-sonnet-5-5/run3",
+    "claude-sonnet-5-5/run1",
+    "claude-haiku-5-5/run3",
+    "claude-opus-5-5/run2"
+   ]
+  },
+  "food-hospitality": {
+   "leaders": [
+    "chipotle.com",
+    "jerseymikes.com"
+   ],
+   "sampled": [
+    "apahotel.com",
+    "mcmenamins.com",
+    "swiss-belhotel.com"
+   ],
+   "ai_pages": [
+    "claude-opus-5-5/run1",
+    "claude-opus-5-5/run2",
+    "claude-sonnet-5-5/run3",
+    "claude-sonnet-5-5/run1",
+    "claude-opus-5-5/run3"
+   ]
+  }
+ },
+ "drawn_order": [
+  "dev-tools",
+  "health",
+  "food-hospitality",
+  "fintech"
+ ]
+}

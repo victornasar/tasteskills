@@ -1,0 +1,430 @@
+{
+ "study": "tasteskills lab/industry-type",
+ "built": "2026-11-19",
+ "access": "Zenodo, restricted file access (metadata public, files on request)",
+ "attribution": "Wikidata (CC0). Wikipedia list membership from 'List of architecture firms', 'List of magazines by circulation', 'List of newspapers by circulation' (English Wikipedia, CC BY-SA 4.0).",
+ "files": [
+  {
+   "file": "altagamma-members.html",
+   "sha256": "9065bd1411e7ea72053958a656241d4f6658ec84a24af5dd9e48b9952663fc35",
+   "bytes": 79145,
+   "source": "Altagamma members web page",
+   "terms": "Copyright Altagamma (all rights reserved)",
+   "deposited": false,
+   "why": "a copyrighted web page",
+   "private_raw_copy": false,
+   "retrieval": {
+    "url": "https://altagamma.it/en/members/",
+    "retrieved": "2026-11-18T16:09:15-08:00",
+    "parameters": "one GET with User-Agent Mozilla/5.0"
+   },
+   "extract": {
+    "file": "altagamma-members.extract.json",
+    "sha256": "deeda46441704040f2ec88b560f3004ed7d09705ad7dc27bb6d3f44372d25b84",
+    "fields": "identifiers, names and URLs only"
+   }
+  },
+  {
+   "file": "appstore-all.json",
+   "sha256": "9b59a3840af4397805911c07e77484010e43097226e2ef31a143a05ec494e1a2",
+   "bytes": 2116553,
+   "source": "Apple App Store RSS charts and iTunes lookup API responses",
+   "terms": "Apple Media Services terms; includes app descriptions and artwork links owned by developers",
+   "deposited": false,
+   "why": "API responses with copyrighted descriptions; no redistribution grant",
+   "private_raw_copy": false,
+   "retrieval": {
+    "url": "https://itunes.apple.com/us/rss/{topfreeapplications,toppaidapplications}/limit=100/json, then https://itunes.apple.com/lookup?id=...",
+    "retrieved": "2026-11-18T16:30:49-08:00",
+    "parameters": "US store, all genres, top 100 free + top 100 paid"
+   },
+   "extract": {
+    "file": "appstore-all.extract.json",
+    "sha256": "b6a4ae7d0311dd051fb2bd0406b50b59b93c1fc4d917a5babde2a0078270bdb9",
+    "fields": "identifiers, names and URLs only"
+   }
+  },
+  {
+   "file": "appstore-dev.json",
+   "sha256": "c61fa94a1064cc14b9f9575e17d2acd24e74b234cbed200f3ee0870ca4199080",
+   "bytes": 1967010,
+   "source": "Apple App Store RSS charts and iTunes lookup API responses",
+   "terms": "Apple Media Services terms; includes app descriptions and artwork links owned by developers",
+   "deposited": false,
+   "why": "API responses with copyrighted descriptions; no redistribution grant",
+   "private_raw_copy": false,
+   "retrieval": {
+    "url": "same endpoints with /genre=6026",
+    "retrieved": "2026-11-18T16:08:48-08:00",
+    "parameters": "US store, Developer Tools"
+   },
+   "extract": {
+    "file": "appstore-dev.extract.json",
+    "sha256": "7a7338628043780b6e68217333bab2fdcd5c827c13a490b95306dd4fe061c9cf",
+    "fields": "identifiers, names and URLs only"
+   }
+  },
+  {
+   "file": "appstore-finance.json",
+   "sha256": "05eadcb03746faf70e7ac5fe1de19c1d36212607874515ff2f3e7077a671ec5e",
+   "bytes": 2076865,
+   "source": "Apple App Store RSS charts and iTunes lookup API responses",
+   "terms": "Apple Media Services terms; includes app descriptions and artwork links owned by developers",
+   "deposited": false,
+   "why": "API responses with copyrighted descriptions; no redistribution grant",
+   "private_raw_copy": false,
+   "retrieval": {
+    "url": "same endpoints with /genre=6015",
+    "retrieved": "2026-11-18T16:08:58-08:00",
+    "parameters": "US store, Finance"
+   },
+   "extract": {
+    "file": "appstore-finance.extract.json",
+    "sha256": "3b5d4e12dc3ba9b82d434328959992c2d67b822ca6a0a9d29525026c6b3397c7",
+    "fields": "identifiers, names and URLs only"
+   }
+  },
+  {
+   "file": "appstore-health.json",
+   "sha256": "d1213b81ef73087acbfb467542083aeae9def402a15218ddc15ee6fd84253e38",
+   "bytes": 1954204,
+   "source": "Apple App Store RSS charts and iTunes lookup API responses",
+   "terms": "Apple Media Services terms; includes app descriptions and artwork links owned by developers",
+   "deposited": false,
+   "why": "API responses with copyrighted descriptions; no redistribution grant",
+   "private_raw_copy": false,
+   "retrieval": {
+    "url": "same endpoints with /genre=6020",
+    "retrieved": "2026-11-18T17:18:43-08:00",
+    "parameters": "US store, Medical"
+   },
+   "extract": {
+    "file": "appstore-health.extract.json",
+    "sha256": "56eda9c744fc7878f0a52e9a090f6efc34411be6aff063107a5c851b00a8be3e",
+    "fields": "identifiers, names and URLs only"
+   }
+  },
+  {
+   "file": "michelin.csv",
+   "sha256": "8aac201a6ff6a0a652b274231c9cd545e15dbfa01270dd9352edebc8e6919452",
+   "bytes": 18331818,
+   "source": "ngshiheng/michelin-my-maps dataset",
+   "terms": "Repository is MIT, but the rows (including review text) are scraped from the Michelin Guide, whose content is Michelin's",
+   "deposited": false,
+   "why": "the MIT grant can't cover Michelin's review text",
+   "private_raw_copy": false,
+   "retrieval": {
+    "url": "https://raw.githubusercontent.com/ngshiheng/michelin-my-maps/main/data/michelin_my_maps.csv",
+    "retrieved": "2026-11-18T16:09:16-08:00",
+    "parameters": "main branch at retrieval time"
+   },
+   "extract": {
+    "file": "michelin.extract.json",
+    "sha256": "17bdb559f585e41e7f796ab7cf0ff8c535c7ea77c4cac76ea0c330921b23af9e",
+    "fields": "identifiers, names and URLs only"
+   }
+  },
+  {
+   "file": "tranco-V38GN.csv",
+   "sha256": "ee857f6047e8c1397d1401addf251c8ea1505b3096067165a0dced1bdbd60554",
+   "bytes": 22664474,
+   "source": "Tranco research ranking, list V38GN",
+   "terms": "Composite of Cisco Umbrella (free of charge, no stated license), Majestic (CC BY 3.0), Farsight (proprietary), Chrome UX Report (CC BY-SA 4.0) and Cloudflare Radar (CC BY-NC 4.0)",
+   "deposited": false,
+   "why": "mixed and partly proprietary terms; the frozen list stays downloadable by its id, so the id and checksum suffice",
+   "private_raw_copy": true,
+   "retrieval": {
+    "url": "https://tranco-list.eu/download_daily/V38GN (top-1m.csv inside the zip)",
+    "retrieved": "2026-11-18T15:20:30-08:00",
+    "parameters": "list id V38GN; re-download: https://tranco-list.eu/list/V38GN"
+   }
+  },
+  {
+   "file": "wikidata-P31-Q11032.json",
+   "sha256": "ff436946287b9368ceee3464f8a426fd9b54ab23bbc62cc451a896e3c5ee93cd",
+   "bytes": 3487173,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P31-Q1200676.json",
+   "sha256": "fbd3e8336294a6d159afc9e97f0e14d7687069c27a836291717065e8e20b143d",
+   "bytes": 109795,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P31-Q1631129.json",
+   "sha256": "1b4371c280ec0574f403a44f844ba16072b57551bb8e342848798a7e3ebc4d1c",
+   "bytes": 181630,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P31-Q18534542.json",
+   "sha256": "21ecab8cb69fae319d1b55333e766746ab75d4eb7925d592eb1bf652a4cbe82d",
+   "bytes": 525532,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P31-Q1941779.json",
+   "sha256": "a3b00f6f4ec789d6a6763ee31f205218e97ad489fc0f125f560887ff6aae711f",
+   "bytes": 48184,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P31-Q41298.json",
+   "sha256": "47b7320081509056e28728a9b8eabd5b0ebecb5189ff410e4d0a1a2862225175",
+   "bytes": 4675786,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P31-Q4387609.json",
+   "sha256": "9eda017afa20d4254725fe88472e052ee5c35cc0ca001920e92392eb3dd283e5",
+   "bytes": 463965,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P452-Q12271.json",
+   "sha256": "fa473b1e648b511d109d2b3cb77e0ca8767b95a54bf68f94f7c68b8257559700",
+   "bytes": 110833,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P452-Q1495452.json",
+   "sha256": "fa1d0698b50929899ac6557e0129e15d5095869573efd4941764c26d57587ebf",
+   "bytes": 397376,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P452-Q16319025.json",
+   "sha256": "3e9b010684c6a31a77a611dab73d547362603adff0babe30d5ad3c0c352616e6",
+   "bytes": 232113,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P452-Q185925.json",
+   "sha256": "720f89187a885fce3d02d54e83f50f27e4841d4de92c55266098c2c20f12c1d3",
+   "bytes": 26148,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P452-Q31207.json",
+   "sha256": "f6aba3776f1c02304d3001cfc5a5094c3e7fe51034103c127f1d646ba9d4d99a",
+   "bytes": 300618,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-P452-Q949715.json",
+   "sha256": "7b9772631f8eb2c03e44039fa36426e8b13b3e363f30dca4c022260f199b05a0",
+   "bytes": 7542,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-business-newspaper.json",
+   "sha256": "eb4a7a708518d1760f53497e3fad8edd3d1f857645f220820d6ee423f31708f8",
+   "bytes": 18139,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-business-periodical.json",
+   "sha256": "853cd97922ebcf7f89c12ec2e8d66e33888b48a10dcae5f46c53fd32d09fa00c",
+   "bytes": 5469,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-magazine-independent.json",
+   "sha256": "0324b9e628df994128f0bd8c6af4de5cfced3cbf4211a637defbbcab07743fdb",
+   "bytes": 3246266,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-magazine-with-publisher.json",
+   "sha256": "97bec228739ee0d83503540e691303424a2cac127e25b248b33522743425c9b6",
+   "bytes": 1700681,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-national-newspaper.json",
+   "sha256": "77e5d1d653ead93e3441650fdcdae12b7bd98aa95af79d9082134d042e4be250",
+   "bytes": 453,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-news-website.json",
+   "sha256": "8475cc369ff6ed4e3128a1e168ec5ec2e48244b347b27e646aeea252832b0363",
+   "bytes": 562564,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-online-magazine.json",
+   "sha256": "04b31bf5443adc5c6750b0f8c8b4c97bcdb0a9925883df18d9687997e03c9e6d",
+   "bytes": 376055,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-online-newspaper.json",
+   "sha256": "a0c2c5721bee6db0a755793c4550337bb7308e89f278f71fd0efff375ac29779",
+   "bytes": 694940,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wikidata-programming-tool-developer.json",
+   "sha256": "c68ac6bb4b5470bb410b0b7ff665e3417f11b8fa2c934b3da145b1cdbc9d7102",
+   "bytes": 321320,
+   "source": "Wikidata SPARQL results",
+   "terms": "CC0 1.0 (Wikidata structured data)",
+   "deposited": true,
+   "why": "public-domain dedication; redistribution allowed",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wplist-architecture-firms.json",
+   "sha256": "97a89031860686b0b05c28d57009c8e6a4290413fa0bb31f150071120de7b318",
+   "bytes": 26272,
+   "source": "Wikipedia list pages resolved to Wikidata entities",
+   "terms": "Wikidata entity data CC0 1.0; list membership taken from English Wikipedia (CC BY-SA 4.0), attributed in the manifest",
+   "deposited": true,
+   "why": "contains only Wikidata claims and labels plus the list's title and link count",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wplist-magazines-by-circulation.json",
+   "sha256": "7f5721b4d97d1a10415eb69ec62b2d2b948635b99f1002177fd9e5514a3cc996",
+   "bytes": 100109,
+   "source": "Wikipedia list pages resolved to Wikidata entities",
+   "terms": "Wikidata entity data CC0 1.0; list membership taken from English Wikipedia (CC BY-SA 4.0), attributed in the manifest",
+   "deposited": true,
+   "why": "contains only Wikidata claims and labels plus the list's title and link count",
+   "private_raw_copy": false
+  },
+  {
+   "file": "wplist-newspapers-by-circulation.json",
+   "sha256": "6c9777b87d54f5a577b11e483ed009a93ecf7bc9e5de1208b7be0e821c61423f",
+   "bytes": 6230,
+   "source": "Wikipedia list pages resolved to Wikidata entities",
+   "terms": "Wikidata entity data CC0 1.0; list membership taken from English Wikipedia (CC BY-SA 4.0), attributed in the manifest",
+   "deposited": true,
+   "why": "contains only Wikidata claims and labels plus the list's title and link count",
+   "private_raw_copy": false
+  },
+  {
+   "file": "yc-all.json",
+   "sha256": "7ebd0ac655e7ee0d73f73b0139726b72e7baa6d6660f9132d5472f13e602c284",
+   "bytes": 10956430,
+   "source": "yc-oss.github.io mirror of the Y Combinator company directory",
+   "terms": "No license on the mirror; content is Y Combinator's directory (its site terms)",
+   "deposited": false,
+   "why": "third-party content without a redistribution grant; no license, so no grant to retain a copy either",
+   "private_raw_copy": false,
+   "retrieval": {
+    "url": "https://yc-oss.github.io/api/companies/all.json",
+    "retrieved": "2026-11-18T15:20:31-08:00",
+    "parameters": "full directory; the selector keeps status Active or Public with a website and a matching industry"
+   },
+   "extract": {
+    "file": "yc-all.extract.json",
+    "sha256": "7a0320e5fff59532d756a7c4d7452b9f9656dc68fd942416bd4d423955dc518a",
+    "fields": "identifiers, names and URLs only"
+   }
+  }
+ ],
+ "extracts_reproduce_selection": true,
+ "selection_outputs": {
+  "proposed-sites.json": "60f81c18341fde24474cadece27744630e8483788da315233b4ec6eb3b1cdfc1",
+  "proposed-sites.v1.json": "7524e1c24c50a756957c6000b48e0342f5588539fbee8a842f9a836eb209449f",
+  "strikes.json": "1334254668f92908656a122cb6588610bc024ace065b8fc4317261c2cf8d51bb",
+  "founded.json": "2c7cf861707f3f590425ce1f0ba6331a934102f2b71f48d80d97908a1ea96cd2",
+  "prechecks.json": "2d956b1178de71c92e492492ff28266f41ed1a4ce6004176cd5c58044c2e9aea",
+  "rated-subset.json": "f493b0d9ae3fabb6c380b5159f68490ee9a637a94008b9ffecd1d26063ddeef7",
+  "pick_sites.py": "187f76f34f924f911b1c1244629bf09cbaa7f7881594d62154a22b2750058e5d",
+  "draw_ratings.py": "a61081e4d1038cd29c452f6a68db301ed0ed3899fdd7da171751436d8e511369",
+  "methodology.md": "22a6821169de51df40a8f4e7cb69c2898af830ee29415212246a3f8035c56324"
+ },
+ "deposit_archive": {
+  "file": "industry-type-deposit-2026-11-19.tar.gz",
+  "sha256": "190660ae4837ec603e9788853f46359f1c2419f68c5da9cd394096e3eac27879",
+  "bytes": 2442048
+ }
+}
