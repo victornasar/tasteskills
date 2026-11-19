@@ -42,9 +42,11 @@ Or paste a written brief and use fast mode:
 
 ## What you get
 
-A `DIRECTION.md` in the project: context and values with provenance tags, 2–3 directions with trade-offs,
-engine-backed type and color, a small design system, pass/fail constraints, an avoid list, and a critique pass
-capped at two rounds.
+A `DIRECTION.md` in the project: context, values and positioning (category, alternatives, conventions to
+adopt or challenge, intended perception, sophistication) with provenance tags; 2–3 directions that differ on
+at least three of six visual axes, each checked against Taste's own house style; engine-backed type and color;
+a small design system with an imagery plan; pass/fail constraints, an avoid list, and a critique pass capped at
+two rounds.
 
 ## Files
 
@@ -53,6 +55,7 @@ capped at two rounds.
 | `skills/taste/SKILL.md` | The conductor: phases, gates, skip rules, provenance |
 | `skills/taste/references/direction-template.md` | Creative-direction format (single source for the repo) |
 | `skills/taste/references/interviewing.md` | Guided-mode questions: open, no style labels |
+| `skills/taste/references/visual-direction.md` | Six visual axes, the difference rule, the house-style check, the imagery plan |
 | `tests/` | Static checks: `node --test tests/test_skill.mjs` |
 
 Design for the discovery test (answer keys included) stays under [`lab/taste-grilling/`](../lab/taste-grilling/).

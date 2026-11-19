@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery · Bread at seven, tarts by nine, gone by two</title>
+<meta name="description" content="Neighbourhood bakery on Fennel Street, E8. Sourdough, Portuguese pastries and seasonal cakes. Open Wednesday to Sunday, 7:00 to 14:00.">
+<style>
+/* Fonts: Synonym (headlines) and Sentient (body), Fontshare FFL, self-hosted.
+   Place the downloaded files in ./fonts/. Until then, the fallbacks below render. */
+@font-face { font-family: "Synonym"; src: url("./fonts/Synonym.woff2") format("woff2"); font-weight: 200 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sentient"; src: url("./fonts/Sentient.woff2") format("woff2"); font-weight: 200 700; font-style: normal; font-display: swap; }
+
+:root {
+  color-scheme: light;
+  /* Clay and Linen (find-color lib.clay-and-linen), engine values */
+  --color-ground: #F5EDE4;
+  --color-figure: #8D5951;
+  --color-text: #3D3832;
+  --color-text-muted: #6C6761;
+  --color-tint-2: #CBA199;
+  --color-tint-3: #E1CAC6;
+
+  --font-head: "Synonym", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Sentient", Georgia, "Times New Roman", serif;
+
+  --gutter: 16px;
+  --radius: 12px;
+  --section-gap: 88px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: var(--color-figure); text-underline-offset: 3px; }
+a:hover { color: var(--color-text); }
+a:focus-visible { outline: 2px solid var(--color-figure); outline-offset: 3px; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
+
+/* Header */
+.site-head { padding-top: 20px; }
+.site-head .row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+.brand { font-family: var(--font-head); font-weight: 600; font-size: 22px; color: var(--color-figure); text-decoration: none; letter-spacing: -0.01em; }
+.nav { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-head); font-size: 16px; }
+.nav a { color: var(--color-text); text-decoration: none; }
+.nav a:hover { color: var(--color-figure); text-decoration: underline; }
+
+/* Status line: the first thing a phone shows */
+.status {
+  margin-top: 18px;
+  padding: 14px 0;
+  border-top: 1px solid var(--color-tint-2);
+  border-bottom: 1px solid var(--color-tint-2);
+  font-family: var(--font-head);
+  font-size: 19px;
+  display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline;
+}
+.status .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--color-tint-2); transform: translateY(1px); }
+.status.is-open .dot { background: var(--color-figure); }
+.status .hours-note { font-family: var(--font-body); font-size: 16px; color: var(--color-text-muted); }
+
+/* Hero */
+.hero { padding-top: 48px; }
+.hero h1 {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: clamp(40px, 7.4vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin: 0;
+  max-width: 14ch;
+  color: var(--color-text);
+}
+.hero h1 em { font-style: normal; color: var(--color-figure); }
+.lede { margin: 22px 0 0; max-width: 44ch; font-size: 19px; color: var(--color-text); }
+
+.clock { margin: 40px 0 0; max-width: 640px; }
+.clock svg text { font-family: var(--font-head); fill: var(--color-text); }
+.clock svg .muted { fill: var(--color-text-muted); font-family: var(--font-body); }
+
+/* Two-column ledger on desktop: status and place on the left, the day's list on the right */
+.ledger { display: grid; gap: 40px; grid-template-columns: 1fr; margin-top: var(--section-gap); }
+@media (min-width: 880px) {
+  .ledger { grid-template-columns: 0.42fr 0.58fr; gap: 64px; }
+  .ledger-side { position: sticky; top: 24px; align-self: start; }
+}
+.ledger-side h2, .section h2 {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.15;
+  margin: 0 0 14px;
+}
+.ledger-side p { margin: 0 0 12px; }
+.muted { color: var(--color-text-muted); }
+
+/* Day's list as ruled rows */
+.list { list-style: none; margin: 0; padding: 0; }
+.list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 20px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-top: 1px solid var(--color-tint-2);
+}
+.list li:last-child { border-bottom: 1px solid var(--color-tint-2); }
+.list .name { font-family: var(--font-head); font-size: 22px; font-weight: 500; line-height: 1.25; }
+.list .price { font-family: var(--font-head); font-size: 19px; color: var(--color-figure); white-space: nowrap; }
+.list .note { grid-column: 1 / -1; font-size: 16px; color: var(--color-text-muted); margin: 0; }
+
+/* Season section */
+.section { margin-top: var(--section-gap); }
+.season { display: grid; gap: 16px; grid-template-columns: 1fr; }
+.season article {
+  background: var(--color-tint-3);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.season h3 { font-family: var(--font-head); font-weight: 500; font-size: 26px; margin: 0 0 6px; line-height: 1.15; }
+.season .price { font-family: var(--font-head); color: var(--color-figure); font-size: 19px; margin: 0 0 10px; }
+.season p { margin: 0; }
+@media (min-width: 700px) { .season { grid-template-columns: 1fr 1fr; } }
+
+/* About, with a labelled photo slot */
+.about { display: grid; gap: 28px; grid-template-columns: 1fr; align-items: center; }
+@media (min-width: 800px) { .about { grid-template-columns: 0.9fr 1.1fr; gap: 56px; } }
+.frame {
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  border: 1px dashed var(--color-figure);
+  background: var(--color-tint-3);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--color-figure);
+  font-family: var(--font-head);
+  font-size: 16px;
+}
+.frame small { display: block; font-family: var(--font-body); color: var(--color-text-muted); margin-top: 8px; font-size: 15px; }
+.about h2 { font-size: clamp(30px, 4vw, 40px); }
+.about p { margin: 0 0 14px; }
+
+/* Cake orders: the one loud band */
+.cakes {
+  margin-top: var(--section-gap);
+  background: var(--color-figure);
+  color: var(--color-ground);
+  border-radius: var(--radius);
+  padding: clamp(28px, 5vw, 56px);
+}
+.cakes h2 { color: var(--color-ground); font-size: clamp(32px, 5vw, 48px); }
+.cakes p { margin: 0 0 12px; max-width: 46ch; }
+.cakes a { color: var(--color-ground); }
+.cakes a:hover { color: var(--color-tint-3); }
+.cakes .tel {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-head);
+  font-size: clamp(26px, 4.4vw, 40px);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-ground);
+  padding-bottom: 2px;
+}
+.cakes .small { font-size: 16px; opacity: 0.92; }
+
+/* Find us and hours */
+.find { display: grid; gap: 28px; grid-template-columns: 1fr; }
+@media (min-width: 800px) { .find { grid-template-columns: 1fr 1fr; gap: 56px; } }
+.find dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 22px; }
+.find dt { font-family: var(--font-head); color: var(--color-text-muted); }
+.find dd { margin: 0; }
+
+/* Footer */
+.site-foot {
+  margin-top: var(--section-gap);
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--color-tint-2);
+  font-family: var(--font-head);
+  font-size: 16px;
+}
+.site-foot .row { display: flex; flex-wrap: wrap; gap: 10px 22px; justify-content: space-between; align-items: baseline; }
+.site-foot nav { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.site-foot a { color: var(--color-text); text-decoration: none; }
+.site-foot a:hover { color: var(--color-figure); text-decoration: underline; }
+.site-foot .copy { color: var(--color-text-muted); }
+
+/* Phone: tighter rhythm, no horizontal scroll */
+@media (max-width: 480px) {
+  body { font-size: 17px; }
+  :root { --section-gap: 64px; }
+  .list .name { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap site-head">
+  <div class="row">
+    <a class="brand" href="#top">Fennel Street Bakery</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#today">Today</a>
+      <a href="#season">This season</a>
+      <a href="#cakes">Cake orders</a>
+      <a href="#find-us">Find us</a>
+    </nav>
+  </div>
+
+  <div class="status" id="status" role="status" aria-live="polite">
+    <span class="dot" aria-hidden="true"></span>
+    <span id="status-text">Wednesday to Sunday, 7:00 to 14:00, or until we sell out</span>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">Bread at seven, <em>tarts by nine,</em> gone by two.</h1>
+    <p class="lede">A neighbourhood bakery run by two sisters. Ana bakes the bread. Rita does everything with custard.</p>
+
+    <figure class="clock" aria-label="Bake day: bread at 7:00, tarts at 9:00, gone by 14:00">
+      <svg viewBox="0 0 520 132" width="100%" height="auto" role="img" aria-hidden="true" focusable="false">
+        <!-- ruled bake-day line, scaled to hours: 7:00 at 0, 9:00 at 149, 14:00 at 520 -->
+        <line x1="0" y1="56" x2="520" y2="56" stroke="#CBA199" stroke-width="2"/>
+        <line x1="0" y1="56" x2="149" y2="56" stroke="#8D5951" stroke-width="8"/>
+        <g stroke="#8D5951" stroke-width="2">
+          <line x1="1" y1="44" x2="1" y2="68"/>
+          <line x1="149" y1="44" x2="149" y2="68"/>
+          <line x1="519" y1="44" x2="519" y2="68"/>
+        </g>
+        <!-- labels -->
+        <text x="0" y="30" font-size="24" font-weight="500">7:00</text>
+        <text x="0" y="98" font-size="24" font-weight="500">Bread</text>
+        <text x="149" y="30" font-size="24" font-weight="500">9:00</text>
+        <text x="149" y="98" font-size="24" font-weight="500">Tarts</text>
+        <text x="520" y="30" font-size="24" font-weight="500" text-anchor="end">14:00</text>
+        <text x="520" y="98" font-size="24" font-weight="500" text-anchor="end">Gone</text>
+        <text x="0" y="128" font-size="20" class="muted">Wed to Sun. Closed Mon and Tue.</text>
+      </svg>
+    </figure>
+  </section>
+
+  <div class="wrap ledger">
+    <aside class="ledger-side" aria-label="Where and when">
+      <h2>Open this week</h2>
+      <p>Wednesday to Sunday, 7:00 to 14:00, or until we sell out. Closed Monday and Tuesday.</p>
+      <p><strong>14 Fennel Street, London E8</strong></p>
+      <p class="muted">Most people walk in. Some order a cake ahead; see below.</p>
+    </aside>
+
+    <div id="today">
+      <h2 class="section-title" style="font-family:var(--font-head);font-weight:500;font-size:30px;margin:0 0 14px;">Today's bake</h2>
+      <ul class="list">
+        <li><span class="name">Country sourdough</span><span class="price">£5.20</span></li>
+        <li><span class="name">Seeded rye</span><span class="price">£5.60</span></li>
+        <li><span class="name">Pastel de nata</span><span class="price">£2.10 · six for £11</span></li>
+        <li><span class="name">Cardamom buns</span><span class="price">£3.00</span></li>
+        <li><span class="name">Olive oil focaccia</span><span class="price">£2.80 a slice</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="wrap section" id="season" aria-labelledby="season-title">
+    <h2 id="season-title">This season</h2>
+    <div class="season">
+      <article>
+        <h3>Orange and almond cake</h3>
+        <p class="price">Whole £28 · slice £4</p>
+        <p class="muted">Whole cakes can be ordered ahead.</p>
+      </article>
+      <article>
+        <h3>Fig and walnut loaf</h3>
+        <p class="price">£6.40</p>
+        <p class="muted">This season's cakes and loaves.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap section about" aria-labelledby="about-title">
+    <figure class="frame" role="img" aria-label="Photo placeholder: Ana and Rita at the oven">
+      <span>Photo to come<small>Ana and Rita at the oven, morning light. Shot list item 1.</small></span>
+    </figure>
+    <div>
+      <h2 id="about-title">Two sisters, one oven</h2>
+      <p>Ana bakes the bread. Rita does everything with custard. We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+      <p class="muted">Bread at seven, tarts by nine, gone by two.</p>
+    </div>
+  </section>
+
+  <section class="wrap" id="cakes" aria-labelledby="cakes-title">
+    <div class="cakes">
+      <h2 id="cakes-title">Cake orders</h2>
+      <p>Whole cakes with 48 hours' notice.</p>
+      <p>Message us or call</p>
+      <a class="tel" href="tel:+442079460381">020 7946 0381</a>
+      <p class="small" style="margin-top:14px;">Orange and almond cake, whole £28. Fig and walnut loaf, £6.40.</p>
+    </div>
+  </section>
+
+  <section class="wrap section find" id="find-us" aria-labelledby="find-title">
+    <div>
+      <h2 id="find-title">Find us</h2>
+      <dl>
+        <dt>Address</dt><dd>14 Fennel Street, London E8</dd>
+        <dt>Open</dt><dd>Wednesday to Sunday, 7:00 to 14:00, or until we sell out</dd>
+        <dt>Closed</dt><dd>Monday and Tuesday</dd>
+        <dt>Phone</dt><dd><a href="tel:+442079460381">020 7946 0381</a></dd>
+      </dl>
+    </div>
+    <figure class="frame" role="img" aria-label="Photo placeholder: the shop front at 7:00">
+      <span>Photo to come<small>The shop front at 7:00. Shot list item 3.</small></span>
+    </figure>
+  </section>
+
+</main>
+
+<footer class="wrap site-foot">
+  <div class="row">
+    <nav aria-label="Footer">
+      <a href="#">Instagram</a>
+      <a href="#cakes">Order a cake</a>
+      <a href="#find-us">Find us</a>
+    </nav>
+    <span class="copy">© 2026 Fennel Street Bakery.</span>
+  </div>
+</footer>
+
+<script>
+/* Open/closed status from London clock time. Static text stays if this fails. */
+(function () {
+  var el = document.getElementById('status');
+  var txt = document.getElementById('status-text');
+  if (!el || !txt) return;
+  try {
+    var parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/London', weekday: 'short', hour: 'numeric', hour12: false
+    }).formatToParts(new Date());
+    var wd = '', hr = 0;
+    parts.forEach(function (p) {
+      if (p.type === 'weekday') wd = p.value;
+      if (p.type === 'hour') hr = parseInt(p.value, 10) % 24;
+    });
+    var days = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    var today = days[wd];
+    var openDay = function (d) { return d !== 1 && d !== 2; };
+    var names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    if (today !== undefined && openDay(today) && hr >= 7 && hr < 14) {
+      el.classList.add('is-open');
+      txt.textContent = 'Open now, until 14:00 or until we sell out';
+      return;
+    }
+    el.classList.remove('is-open');
+    var label = 'Closed now';
+    for (var i = 0; i < 8; i++) {
+      var d = (today + i) % 7;
+      if (!openDay(d)) continue;
+      if (i === 0 && hr < 7) { label += ', opens today at 7:00'; break; }
+      if (i === 0) continue;
+      if (i === 1) { label += ', opens tomorrow at 7:00'; break; }
+      label += ', opens ' + names[d] + ' at 7:00';
+      break;
+    }
+    txt.textContent = label;
+  } catch (e) { /* keep the static hours line */ }
+})();
+</script>
+</body>
+</html>

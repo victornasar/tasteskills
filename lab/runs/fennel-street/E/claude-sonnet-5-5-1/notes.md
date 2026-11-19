@@ -1,0 +1,7 @@
+- **Lead with the clock:** a live open/closed line sits above the tagline. A 7:00 / 9:00 / 14:00 day strip with a "now" marker follows it, because phone visitors mostly want to know if the shop is open.
+- **Colour:** I took Butter and Chocolate from find-color, with a 10.92:1 figure-on-ground ratio. It is a butter ground with chocolate figure and one inverted band.
+- **Fonts:** Recursive for headlines and Source Sans 3 for body, both picked by find-font. I did not embed font files, so the page tries locally installed copies and otherwise falls back to system fonts. To get the intended look, self-host the two woff2 files.
+- **Imagery:** an SVG loaf and tart sit in the hero. The three photo spots are dashed frames labelled "Photo placeholder", and the page works with them empty.
+- **Copy and open items:** I added no claims or prices. Instagram links to `#` because the brief gave no handle. Cake orders offer a call button only, because "message us" had no channel. Both are listed under Open decisions in `DIRECTION.md`, which is still a draft. I also couldn't read `tallyroll.md`, so "the opposite" was taken as cool and technical versus warm and handmade.
+
+I used one critique round and fixed the hero headline wrapping on desktop. Hours and address sit near the page foot on phones, so they're reached by the top-bar link and the status line. check-layout still flags rounded boxes, which I kept as the handmade surface. Files are `DIRECTION.md` and `index.html` in `/private/var/folders/rh/c3zlwpy56yd7gcc101pb318w0000gn/T/tmplw5p95w6`.

@@ -3,6 +3,65 @@
 What the lab has measured, newest first. Each finding names its evidence and its limits. A finding here is what
 allows a new skill or rule elsewhere in the repo.
 
+## 2026-11-19 · Taste has a house style: type-only, pale, ruled and flat, whatever the brief
+
+**Evidence:** all 36 skill-built pages, conditions C (check-layout) and D (/taste fast), both briefs, three
+models, three runs each. Reviewed as screenshots side by side (first screen and full page), plus counts from the
+page source. This is one reviewer's reading, not a blind rating, and the reviewer helped build the skills.
+
+The two briefs are written as opposites: a warm, local, handmade bakery and a technical usage-billing API.
+Fonts and colours differ between them; the form doesn't. Nearly all 36 pages are built from the same
+parts:
+
+| Marker | Pages |
+|---|---|
+| No image, illustration or SVG at all | 36 of 36 |
+| A labelled placeholder box where photography should be (bakery) | 18 of 18 |
+| Corners at 4px or less everywhere | 35 of 36 |
+| Hairline rules and small letter-spaced capitals carry the structure | nearly all, by eye |
+| One big left-aligned headline (the brief's line), then a document of small text | nearly all, by eye |
+| Pale ground (cream, linen or white) with one muted figure colour; bakery adds one dark band | nearly all, by eye |
+
+- **The pages read like printed documents:** bakery pages are a price list with dotted leaders, an hours table
+  or a 7:00 / 9:00 / 14:00 timeline, and a hatched or pink empty photo box; Tallyroll pages are an invoice
+  card beside the headline, then "How it works" as numbered 01/02/03 rows. Below the first screen, type size and
+  density hardly change.
+- **The look is tasteful and legible, and that's the problem:** it is appropriate to neither brief in
+  particular. It is what's left when the overused patterns are removed (rounded boxes, gradients, cards, emoji,
+  centered heroes) and nothing positive replaces them: the skills subtract, and the agent's restraint becomes the
+  new default.
+- **Imagery is never designed.** The copy rule ("don't add claims") and the lack of photos led every run to an
+  empty frame instead of an image direction: no illustration, no type as image, no drawn map or pattern.
+- **Directions differed by font and colour only.** `DIRECTION.md` asked for a font pair, a colour direction and
+  "one structural idea", so nothing made directions differ in composition, scale, imagery or surface.
+
+**What it allows:** `/taste` now reads positioning (category, alternatives, conventions, intended perception,
+sophistication), describes each direction on six visual axes and requires directions to differ on three, checks
+directions and the render against these six markers (4 or more = the house style, kept only with a reason
+from positioning), and requires an imagery plan. See
+[`direction/skills/taste/references/visual-direction.md`](../direction/skills/taste/references/visual-direction.md).
+
+**First test (condition E, one run per model per brief, same prompt as D):** `runs/*/E/`.
+
+- **Run 1** (as first written): the bakery moved on Opus (a cobalt Portuguese-tile pattern drawn in SVG, a
+  staggered headline; it challenged the "rustic cream" convention) and Sonnet (an SVG loaf, warm colour
+  bands), but all three bakery pages still carried 2–4 large empty photo frames, which the "art-directed frame"
+  allowance let through. Haiku's bakery was still the house style while its `DIRECTION.md` claimed 2 markers.
+  Tallyroll's directions claimed 3 markers each, just under the threshold; the renders show about 5.
+- **Fix:** removed the frame allowance ("never ship an empty image frame") and made the house-style count come
+  from the screenshot, one marker at a time, with hesitation counting as yes. No new sections.
+- **Run 2:** no empty frames on any page. Both Opus and Sonnet bakeries read as a bakery, with drawn tarts, a
+  street-sign device for the address and dark full-width bands, and look nothing like Tallyroll. Haiku's
+  bakery improved only slightly (the headline sits in a coloured card; the rest is still a ruled list).
+  **Tallyroll barely changed:** all three are a left headline beside an invoice card, then numbered steps, much
+  like D. They do look like a billing API, but like every dev-tool site.
+- **The self-count is unreliable.** Only Opus counted markers on its render; four of six counted the plan.
+  Haiku's bakery claims 1 marker against roughly 4 visible. The agent grading itself can't be the gate, which
+  is the case for an outside check in a later milestone.
+
+**Limits:** two briefs, one run per model; one reviewer, not blind, who also wrote the change. Six pages show
+direction, not proof; the rating page is what can show people prefer them.
+
 ## 2026-11-18 · /taste keeps C's gains and writes an honest direction, but doesn't move the page further yet
 
 **Evidence:** 18 runs, condition D: C plus [`taste`](../direction/) in fast mode, asked to write `DIRECTION.md`

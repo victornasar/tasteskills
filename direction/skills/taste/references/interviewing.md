@@ -28,6 +28,8 @@ Stop the interview when you can fill, without guessing silently:
 - Audience (who decides, who uses)
 - The one job of the page
 - 2–5 values in the client's words (or clearly tagged `[inferred]` with confirmation pending)
+- Positioning: the category, the alternatives the audience weighs, what those alternatives all do, the three
+  things a visitor should take away in five seconds, and the price or care level (DIRECTION.md §3)
 - What to avoid (observable)
 - How to read any references they gave
 
@@ -41,11 +43,30 @@ Everything else can stay inferred or open.
 - "What would make this site feel like it belongs to someone else?"
 - "When someone leaves after one visit, what should they believe or do?"
 
+## Positioning questions
+
+Ask these after audience and the page's job are clear, one at a time. Two or three are usually enough; skip any
+the brief already answers.
+
+- "If someone didn't choose you, where would they go instead?" (alternatives)
+- "What do all of those places do on their sites that customers rely on? And what do they all do that makes
+  them blur together?" (conventions: the first half is Adopt, the second is Challenge or Avoid)
+- "Someone looks at your page for five seconds and closes it. What three things should they be able to tell a
+  friend about you?" (intended perception)
+- "What do people pay you, compared with those alternatives, and what are they paying for?" (sophistication;
+  never offer "premium" or "budget" as choices)
+- "What's true about you that none of them could say?" (differentiate on)
+
+Record the answers as `[client]`. Marking conventions Adopt, Challenge or Avoid stays `[agent]` until the user
+confirms it at Gate 1.
+
 ## Question shapes that fail
 
 - "Is the business playful and energetic, or calm and nurturing?"
 - "Do you want a minimal premium look or something warmer?"
 - "Would you say the brand is more Swiss or more editorial?"
+- "Are you more premium or more affordable than the others?"
+- "Should the site look like your competitors or stand out?" (asks for a verdict instead of facts)
 - Any multiple-choice of style labels
 
 ## When the user already has a brief
