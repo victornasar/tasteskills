@@ -19,6 +19,7 @@ const SKILL = join(ROOT, "skills", "taste");
 const SKILL_MD = join(SKILL, "SKILL.md");
 const TEMPLATE = join(SKILL, "references", "direction-template.md");
 const INTERVIEWING = join(SKILL, "references", "interviewing.md");
+const VISUAL = join(SKILL, "references", "visual-direction.md");
 
 const FIND_FONT = join(REPO, "typography", "skills", "find-font", "scripts", "find_font.py");
 const FIND_COLOR = join(REPO, "color", "skills", "find-color", "scripts", "find-color.mjs");
@@ -28,11 +29,42 @@ function read(path) {
   return readFileSync(path, "utf8");
 }
 
+function catalogNames() {
+  const fonts = JSON.parse(read(join(REPO, "typography", "fonts.json")));
+  const names = new Set();
+  for (const f of fonts.fonts) {
+    names.add(f.name.toLowerCase());
+    if (f.id) names.add(String(f.id).toLowerCase());
+  }
+  for (const a of fonts.avoid) {
+    names.add(a.name.toLowerCase());
+  }
+  // Common CDN defaults the typography skill also rejects in CSS — keep the conductor clean of them.
+  for (const extra of ["inter", "geist", "poppins", "roboto", "arial", "helvetica", "montserrat", "open sans"]) {
+    names.add(extra);
+  }
+  const directions = JSON.parse(read(join(REPO, "color", "library", "directions.json")));
+  const list = directions.directions || [];
+  for (const d of list) {
+    if (d && d.name) names.add(String(d.name).toLowerCase());
+    if (d && d.id) names.add(String(d.id).toLowerCase());
+  }
+  return names;
+}
+
 describe("taste skill files", () => {
-  it("ships SKILL.md and both reference files", () => {
+  it("ships SKILL.md and its reference files", () => {
     assert.ok(existsSync(SKILL_MD), "SKILL.md missing");
     assert.ok(existsSync(TEMPLATE), "direction-template.md missing");
     assert.ok(existsSync(INTERVIEWING), "interviewing.md missing");
+    assert.ok(existsSync(VISUAL), "visual-direction.md missing");
+  });
+
+  it("SKILL.md names every reference file", () => {
+    const md = read(SKILL_MD);
+    for (const f of ["direction-template.md", "interviewing.md", "visual-direction.md"]) {
+      assert.ok(md.includes(`references/${f}`), `SKILL.md does not reference ${f}`);
+    }
   });
 
   it("has skill frontmatter name taste", () => {
@@ -84,16 +116,17 @@ describe("direction template", () => {
   const requiredHeadings = [
     "## 1. Context",
     "## 2. Values",
-    "## 3. Opening vocabulary",
-    "## 4. References",
-    "## 5. Directions explored",
-    "## 6. Selected direction",
-    "## 7. Design system",
-    "## 8. Constraints",
-    "## 9. Avoid",
-    "## 10. Decisions log",
-    "## 11. Open decisions",
-    "## 12. Checkpoints",
+    "## 3. Positioning",
+    "## 4. Opening vocabulary",
+    "## 5. References",
+    "## 6. Directions explored",
+    "## 7. Selected direction",
+    "## 8. Design system",
+    "## 9. Constraints",
+    "## 10. Avoid",
+    "## 11. Decisions log",
+    "## 12. Open decisions",
+    "## 13. Checkpoints",
   ];
 
   it("defines every section the skill workflow writes", () => {
@@ -107,6 +140,29 @@ describe("direction template", () => {
     const t = read(TEMPLATE);
     for (const tag of ["client", "inferred", "engine", "agent", "approved"]) {
       assert.match(t, new RegExp(`\`${tag}\`|\\b${tag}\\b`));
+    }
+  });
+
+  it("Positioning covers category, alternatives, conventions, perception and sophistication", () => {
+    const t = read(TEMPLATE);
+    const pos = t.slice(t.indexOf("## 3. Positioning"), t.indexOf("## 4. Opening vocabulary"));
+    for (const field of ["Category:", "Alternatives:", "Conventions", "Adopt / Challenge / Avoid",
+      "Intended perception:", "Sophistication:", "Differentiate on:"]) {
+      assert.ok(pos.includes(field), `Positioning missing ${field}`);
+    }
+  });
+
+  it("Directions carry the six axes and the design system an imagery plan", () => {
+    const t = read(TEMPLATE);
+    const dirs = t.slice(t.indexOf("## 6. Directions explored"), t.indexOf("## 7. Selected direction"));
+    for (const axis of ["Composition", "Scale", "Imagery", "Signature device", "Colour proportion", "Surface",
+      "House-style markers", "Distinct on"]) {
+      assert.ok(dirs.includes(axis), `Directions table missing ${axis}`);
+    }
+    const ds = t.slice(t.indexOf("## 8. Design system"), t.indexOf("## 9. Constraints"));
+    assert.match(ds, /### Imagery plan/);
+    for (const f of ["Job:", "Kind:", "Shot list:", "Treatment:", "Ships now:"]) {
+      assert.ok(ds.includes(f), `Imagery plan missing ${f}`);
     }
   });
 
@@ -156,28 +212,6 @@ describe("SKILL.md conductor rules", () => {
 });
 
 describe("no steered catalog picks in conductor prose", () => {
-  function catalogNames() {
-    const fonts = JSON.parse(read(join(REPO, "typography", "fonts.json")));
-    const names = new Set();
-    for (const f of fonts.fonts) {
-      names.add(f.name.toLowerCase());
-      if (f.id) names.add(String(f.id).toLowerCase());
-    }
-    for (const a of fonts.avoid) {
-      names.add(a.name.toLowerCase());
-    }
-    // Common CDN defaults the typography skill also rejects in CSS — keep the conductor clean of them.
-    for (const extra of ["inter", "geist", "poppins", "roboto", "arial", "helvetica", "montserrat", "open sans"]) {
-      names.add(extra);
-    }
-    const directions = JSON.parse(read(join(REPO, "color", "library", "directions.json")));
-    const list = directions.directions || [];
-    for (const d of list) {
-      if (d && d.name) names.add(String(d.name).toLowerCase());
-      if (d && d.id) names.add(String(d.id).toLowerCase());
-    }
-    return names;
-  }
 
   it("SKILL.md contains no curated font or color-direction names", () => {
     const md = read(SKILL_MD).toLowerCase();
@@ -197,6 +231,36 @@ describe("no steered catalog picks in conductor prose", () => {
   });
 });
 
+describe("visual direction rules", () => {
+  it("defines six axes, the three-axis difference rule, the house-style check and the imagery plan", () => {
+    const v = read(VISUAL);
+    for (const axis of ["Composition", "Scale", "Imagery", "Signature device", "Colour proportion", "Surface"]) {
+      assert.match(v, new RegExp(`\\*\\*\\d\\. ${axis}\\*\\*`), `axis ${axis} missing`);
+    }
+    assert.match(v, /at least three of the six axes/i);
+    for (const m of ["H1", "H2", "H3", "H4", "H5", "H6"]) assert.ok(v.includes(`| ${m} |`), `marker ${m} missing`);
+    assert.match(v, /4 or more markers/i);
+    assert.match(v, /House style kept because/);
+    assert.match(v, /## Imagery plan/);
+    assert.match(v, /Never ship an empty image frame/);
+  });
+
+  it("SKILL.md applies the difference rule and the house-style check", () => {
+    const md = read(SKILL_MD);
+    assert.match(md, /at least three axes/i);
+    assert.match(md, /House-style check/i);
+    assert.match(md, /Gate 1\.\*\* Show Context, Values and Positioning/);
+    assert.match(md, /Never present a guessed competitor as a client fact/i);
+  });
+
+  it("names no curated font or colour direction in visual-direction.md", () => {
+    const prose = read(VISUAL).toLowerCase();
+    const hits = [...catalogNames()].filter((n) => n.length >= 4 &&
+      new RegExp(`(^|[^a-z0-9-])${n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9-]|$)`).test(prose));
+    assert.deepEqual(hits, [], `visual-direction.md steers engines with: ${hits.join(", ")}`);
+  });
+});
+
 describe("interviewing rules", () => {
   it("bans style-label choices and recommended answers on values", () => {
     const md = read(INTERVIEWING);
@@ -204,5 +268,14 @@ describe("interviewing rules", () => {
     assert.match(md, /No recommended answer/i);
     assert.match(md, /Silence is not approval/i);
     assert.match(md, /experimental/i);
+  });
+
+  it("asks positioning questions without offering price or style labels as choices", () => {
+    const md = read(INTERVIEWING);
+    assert.match(md, /## Positioning questions/);
+    const qs = md.slice(md.indexOf("## Positioning questions"), md.indexOf("## Question shapes that fail"));
+    assert.match(qs, /where would they go instead/i);
+    assert.match(qs, /five seconds/i);
+    assert.match(qs, /never offer "premium" or "budget" as choices/i);
   });
 });

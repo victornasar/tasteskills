@@ -12,6 +12,8 @@ Conditions:
      Also gets Write and Edit, because it must save the page to check it.
   D  C plus taste in fast mode: write DIRECTION.md from the brief, coordinate the sibling skills, build and
      critique against that file (non-interactive; labelled inferences, no interview).
+  E  D's prompt and skills, with the revised taste skill (positioning, six visual axes, house-style check,
+     imagery plan; 2026-11-19).
 
 Both conditions get the same prompt, the same tools and an empty project with personal settings, plugins and
 skills off. Each run is saved as runs/<brief>/<condition>/<model>-<n>/ with index.html (the page), notes.md
@@ -39,6 +41,7 @@ CONDITION_SKILLS = {
     "B": ["find-font", "find-color"],
     "C": ["find-font", "find-color", "check-layout"],
     "D": ["find-font", "find-color", "check-layout", "taste"],
+    "E": ["find-font", "find-color", "check-layout", "taste"],
 }
 MODELS = ["claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"]
 BASE = ("Build the website described in this brief. Reply with the complete page as a single HTML file in one "
@@ -55,7 +58,7 @@ USE_TASTE = (" Use the taste skill in fast mode: write DIRECTION.md from this br
              "non-interactive: do not wait for approval; leave unconfirmed items tagged inferred or in Open "
              "decisions. Save DIRECTION.md and index.html in the project.")
 TOOLS = ["Read", "Glob", "Grep", "Bash(python3:*)", "Bash(node:*)"]
-EXTRA_TOOLS = {"C": ["Write", "Edit"], "D": ["Write", "Edit"]}
+EXTRA_TOOLS = {"C": ["Write", "Edit"], "D": ["Write", "Edit"], "E": ["Write", "Edit"]}
 
 
 def prompt(brief_text, condition):
@@ -64,6 +67,7 @@ def prompt(brief_text, condition):
         "B": USE_SKILLS,
         "C": USE_SKILLS + USE_LAYOUT,
         "D": USE_TASTE,
+        "E": USE_TASTE,
     }[condition]
     return BASE + extra + "\n\n" + brief_text
 

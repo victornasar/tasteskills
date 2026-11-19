@@ -53,6 +53,7 @@ picks into a creative direction is `[agent]`.
 | --- | --- |
 | `references/direction-template.md` | The only creative-direction format. Write `DIRECTION.md` from it. |
 | `references/interviewing.md` | Guided-mode questions. Open questions only; no style-label choices. |
+| `references/visual-direction.md` | The six visual axes, the difference rule, the house-style check and the imagery plan. |
 
 ## Provenance
 
@@ -77,20 +78,46 @@ act.
 Business and creative discovery together.
 
 - **Guided:** one open question at a time per `references/interviewing.md`. Stop when audience, one job of the
-  page, 2–5 values, avoid-list seeds and reference readings are known.
+  page, 2–5 values, positioning, avoid-list seeds and reference readings are known.
 - **Fast:** extract the same from the written brief. Tag gaps `[inferred]` or list them under Open decisions.
 
-**Gate 1.** Show Context and Values with tags. Wait for confirmation in interactive sessions. In non-interactive
+**Positioning** (DIRECTION.md §3) is how the brand stands against its alternatives. Build it in this order:
+
+1. **Category** in the buyer's words, not the founder's.
+2. **Alternatives:** what the audience would choose instead. Name companies only when the brief or user names
+   them (`[client]`); otherwise describe them by kind ("a freelancer from a marketplace", "doing it themselves") and
+   tag `[inferred]`. Never present a guessed competitor as a client fact.
+3. **Conventions:** 3–5 things the category's sites commonly do, each observable in a screenshot. Marking each
+   Adopt, Challenge or Avoid is `[agent]`, with the reason tied to a value, the audience or a perception quality.
+   Adopt what the audience relies on to act (the facts they came to check); challenge what makes the alternatives
+   interchangeable.
+4. **Intended perception:** three qualities a stranger should report after five seconds, each with a screenshot
+   check. Derive them from Values and the page's job; tag `[inferred]` unless the user said them.
+5. **Sophistication** (everyday, considered, premium, luxury) from price, audience and setting signals in the
+   brief, with the signal named. No signal: `[inferred]` and an Open decision.
+6. **Differentiate on:** the one thing this page will communicate that the alternatives don't.
+
+**Gate 1.** Show Context, Values and Positioning with tags. Wait for confirmation in interactive sessions. In non-interactive
 fast runs, proceed with tags left as `inferred` where unconfirmed and note that in Open decisions.
 
 ### Phase 2 — Directions
 
-Build 2–3 distinct directions. Each one is a font pair, a color direction and a structural idea, with trade-offs.
+Build 2–3 distinct directions. Each one is a font pair, a color direction and a position on each of the six
+visual axes in `references/visual-direction.md` (composition, scale, imagery, signature device, colour
+proportion, surface), with trade-offs.
 
 1. Follow the `find-font` skill; run its `recommend` (and `vocab` / `avoid` only as that skill requires).
 2. Follow the `find-color` skill; run its `recommend` (interactive or autonomous as that skill defines).
-3. Combine results into directions. Label the combination `[agent]`. Do not invent engine rows.
-4. Explain trade-offs in plain qualities tied to the brief. Do not default every industry to the same look.
+3. Combine results into directions. Label the combination `[agent]`. Do not invent engine rows. Pass
+   Positioning into the engines where they take it: find-color's `--convention follow|avoid` follows the
+   colour conventions marked Adopt or Avoid; find-font's feel tags come from the perception qualities as well as
+   the brief's words.
+4. Fill the axis table: every position reads `<position> — because <Positioning or Value>`.
+5. **Difference rule:** directions differ on at least three axes, and at least one challenges a convention
+   Positioning marks Challenge. Fewer than three: merge or rework.
+6. **House-style check:** count markers H1–H6 for each direction. At least one direction scores 3 or fewer. A
+   direction with 4 or more may be chosen only with `House style kept because <reason>` grounded in Positioning.
+7. Explain trade-offs in plain qualities tied to the brief. Do not default every industry to the same look.
 
 **Gate 2.** The user picks one direction, or rejects. Rejections are final: log them and never re-offer in other
 words. Silence is not a pick. In non-interactive fast runs, choose the direction that best serves the stated
@@ -100,9 +127,11 @@ page job, tag the selection `[agent]`, and record why under Decisions log.
 
 Write `DIRECTION.md` from `references/direction-template.md` for the selected direction.
 
-1. Fill Design system: typography and color from engines; layout plan from check-layout step 1 (plan only);
-   judgment tokens (spacing, radii, imagery, motion) few, explained, brief-tied, tagged `[agent]`.
-2. Write 4–8 pass/fail Constraints and an Avoid list (≤6, observable).
+1. Fill Design system: typography and color from engines; layout plan from check-layout step 1 (plan only)
+   plus the selected axis positions; the Imagery plan (`references/visual-direction.md`); judgment tokens
+   (spacing, radii, motion) few, explained, brief-tied, tagged `[agent]`.
+2. Write 4–8 pass/fail Constraints (at least one checks a perception quality) and an Avoid list (≤6,
+   observable).
 3. List Open decisions with the checkpoint where each gets decided.
 
 **Gate 3.** User approves the spec in interactive sessions. Non-interactive fast runs keep `Status: draft` and
@@ -110,7 +139,8 @@ build against it, noting the missing approval in Open decisions.
 
 ### Phase 4 — Build
 
-Implement in the project's existing stack. Re-read `DIRECTION.md` before each major section. Settled decisions
+Implement in the project's existing stack. Re-read `DIRECTION.md` before each major section. Build the
+Imagery plan's "ships now" visuals. Never ship an empty image frame or placeholder box. Settled decisions
 are not reopened unasked. Open decisions stay open (placeholder or ask at the named checkpoint). Preserve the
 user's creative intent; do not "improve" values away.
 
@@ -118,7 +148,9 @@ user's creative intent; do not "improve" values away.
 
 1. Render on desktop and phone.
 2. Follow `check-layout` steps 2–4 on the rendered page.
-3. Score each Constraint in `DIRECTION.md` pass or fail on the screenshots.
+3. Score each Constraint in `DIRECTION.md` pass or fail on the screenshots. Count house-style markers on the
+   screenshot, yes or no for each with what you see; hesitation counts as yes. 4 or more without a recorded
+   `House style kept because` is a bug: move two marked axes, as the direction table planned.
 4. Fix at most **two** rounds total (same cap as check-layout). Then stop and report what you kept and why.
 5. Checkpoints: bug → fix the code; lesson → reopen with the user; never edit constraints silently.
 
@@ -130,7 +162,7 @@ user's creative intent; do not "improve" values away.
 - `DIRECTION.md` is the source of truth for build and critique — not chat memory.
 - Two-round critique cap.
 - Fast mode is not generic mode: use the brief and labelled inferences; do not fall back to one familiar formula.
-- Business context, audience and personality drive sophistication and composition. Every visual decision has a
+- Positioning, business context, audience and personality drive sophistication and composition. Every visual decision has a
   reason. Novelty for its own sake is out. The same visual formula for every industry is out.
 
 ## Output the user should see
