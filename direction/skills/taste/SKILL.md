@@ -87,7 +87,9 @@ Business and creative discovery together.
 2. **Alternatives:** what the audience would choose instead. Name companies only when the brief or user names
    them (`[client]`); otherwise describe them by kind ("a freelancer from a marketplace", "doing it themselves") and
    tag `[inferred]`. Never present a guessed competitor as a client fact.
-3. **Conventions:** 3–5 things the category's sites commonly do, each observable in a screenshot. Marking each
+3. **Conventions:** 3–5 things the category's sites commonly do, each observable in a screenshot. Include the
+   layout most of them share (their usual first screen and section order). Patterns check-layout already flags
+   (gradient heroes, card rows, stat rows, pill badges) are not category conventions; leave them out. Marking each
    Adopt, Challenge or Avoid is `[agent]`, with the reason tied to a value, the audience or a perception quality.
    Adopt what the audience relies on to act (the facts they came to check); challenge what makes the alternatives
    interchangeable.
@@ -121,7 +123,8 @@ proportion, surface), with trade-offs.
 
 **Gate 2.** The user picks one direction, or rejects. Rejections are final: log them and never re-offer in other
 words. Silence is not a pick. In non-interactive fast runs, choose the direction that best serves the stated
-page job, tag the selection `[agent]`, and record why under Decisions log.
+page job; when more than one does, choose the one that departs most from the category's shared layout. Tag the
+selection `[agent]` and record why under Decisions log.
 
 ### Phase 3 — Spec
 

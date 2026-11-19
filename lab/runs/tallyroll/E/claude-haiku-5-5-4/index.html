@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyroll · Every cent traces back to an event</title>
+<meta name="description" content="Tallyroll turns raw usage into invoices your finance team can reconcile line by line.">
+<style>
+/* Fonts (find-font picks, self-hosted). Files go in ./fonts/. Until they are added, the system stacks below render. */
+@font-face { font-family: "Overpass"; src: url("./fonts/Overpass.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("./fonts/IBMPlexSans.woff2") format("woff2"); font-weight: 100 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Iosevka"; src: url("./fonts/Iosevka.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+
+:root {
+  /* Graphite and Signal (find-color, lib.graphite-and-signal) */
+  --ground: #F9FAFB;
+  --figure: #15181E;
+  --text: #3C3F46;
+  --muted: #6B6F76;
+  --accent: #0E6EE6;
+
+  --font-head: "Overpass", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-code: "Iosevka", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --gutter: 16px;
+  --unit: 8px;
+  --measure: 60ch;
+}
+
+@media (min-width: 900px) { :root { --gutter: 48px; } }
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--figure); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:focus-visible, summary:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
+
+/* Header */
+.top {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--unit);
+  padding: calc(var(--unit) * 3) 0;
+  border-bottom: 1px solid var(--muted);
+}
+.wordmark { font-family: var(--font-head); font-weight: 700; font-size: 1.125rem; color: var(--figure); text-decoration: none; letter-spacing: -0.01em; }
+.top nav { display: flex; gap: calc(var(--unit) * 3); font-size: 0.9375rem; }
+.top nav a { color: var(--text); text-decoration: none; }
+.top nav a:hover { text-decoration: underline; }
+
+/* Hero: headline left, the invoice line on the right */
+.hero {
+  display: grid; gap: calc(var(--unit) * 6);
+  padding: calc(var(--unit) * 10) 0 calc(var(--unit) * 12);
+}
+@media (min-width: 900px) {
+  .hero { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+h1 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 5.6vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--figure);
+  margin: 0 0 calc(var(--unit) * 3);
+  max-width: 11ch;
+}
+.sub { font-size: 1.1875rem; max-width: var(--measure); margin: 0 0 calc(var(--unit) * 4); color: var(--text); }
+
+.actions { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 2); align-items: center; }
+.btn {
+  display: inline-block; font-family: var(--font-body); font-size: 1rem; font-weight: 600;
+  padding: calc(var(--unit) * 1.5) calc(var(--unit) * 3); border-radius: 2px;
+  text-decoration: none; border: 1px solid var(--figure); line-height: 1.2;
+}
+.btn-primary { background: var(--figure); color: var(--ground); }
+.btn-secondary { background: transparent; color: var(--figure); }
+.btn-secondary:hover, .btn-primary:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* The invoice line, built in HTML */
+.sheet {
+  border: 1px solid var(--muted);
+  border-radius: 2px;
+  background: var(--ground);
+  padding: calc(var(--unit) * 3);
+}
+.sheet-head {
+  display: flex; justify-content: space-between; gap: var(--unit);
+  font-size: 0.875rem; color: var(--muted);
+  padding-bottom: calc(var(--unit) * 2); border-bottom: 1px solid var(--muted);
+}
+.line { padding: calc(var(--unit) * 2) 0; }
+.line-label { display: block; font-weight: 600; color: var(--figure); margin-bottom: var(--unit); }
+.equation {
+  font-family: var(--font-code);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--figure);
+  line-height: 1.5;
+}
+.equation .n { white-space: nowrap; }
+.equation .total { font-weight: 700; }
+
+details.expand { margin-top: var(--unit); }
+details.expand summary {
+  cursor: pointer; font-size: 0.9375rem; color: var(--text);
+  list-style: none; padding: var(--unit) 0; display: inline-flex; gap: var(--unit); align-items: center;
+}
+details.expand summary::-webkit-details-marker { display: none; }
+details.expand summary::before { content: "+"; font-family: var(--font-code); color: var(--figure); width: 1ch; }
+details.expand[open] summary::before { content: "\2212"; }
+details.expand summary:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.trace {
+  margin: var(--unit) 0 0;
+  padding: var(--unit) 0 var(--unit) calc(var(--unit) * 2);
+  border-left: 1px solid var(--accent);
+}
+.days {
+  display: flex; flex-wrap: wrap; gap: 3px; margin: var(--unit) 0;
+}
+.days span {
+  display: block; width: 6px; height: 20px; background: var(--figure);
+}
+.trace-note { font-size: 0.9375rem; color: var(--muted); margin: 0; }
+
+.sheet-foot {
+  display: flex; justify-content: space-between; gap: var(--unit); flex-wrap: wrap;
+  font-size: 0.875rem; color: var(--muted);
+  padding-top: calc(var(--unit) * 2); border-top: 1px solid var(--muted); margin-top: calc(var(--unit) * 2);
+}
+
+/* Sections: ruled, not carded */
+section { padding: calc(var(--unit) * 10) 0; border-top: 1px solid var(--muted); }
+h2 {
+  font-family: var(--font-head); font-weight: 600; font-size: 1.5rem; letter-spacing: -0.01em;
+  color: var(--figure); margin: 0 0 calc(var(--unit) * 5); line-height: 1.2;
+}
+
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.steps li {
+  display: grid; gap: var(--unit) calc(var(--unit) * 4);
+  padding: calc(var(--unit) * 3) 0; border-top: 1px solid var(--muted);
+}
+.steps li:last-child { border-bottom: 1px solid var(--muted); }
+@media (min-width: 900px) { .steps li { grid-template-columns: 14rem 1fr; } }
+.step-name { font-family: var(--font-head); font-weight: 600; color: var(--figure); font-size: 1.125rem; }
+.step-name::before { counter-increment: step; content: counter(step) "  "; color: var(--muted); font-family: var(--font-code); font-weight: 400; }
+.steps p { margin: 0; max-width: var(--measure); }
+code.endpoint {
+  font-family: var(--font-code); font-size: 0.9375rem; color: var(--figure);
+  border: 1px solid var(--muted); border-radius: 2px; padding: 2px 6px; white-space: nowrap;
+}
+
+.two { display: grid; gap: calc(var(--unit) * 6); }
+@media (min-width: 900px) { .two { grid-template-columns: 1fr 1fr; gap: calc(var(--unit) * 8); } }
+.two h3 {
+  font-family: var(--font-head); font-weight: 600; font-size: 1.125rem; color: var(--figure);
+  margin: 0 0 calc(var(--unit) * 2); padding-bottom: var(--unit); border-bottom: 1px solid var(--muted);
+}
+.two ul { list-style: none; margin: 0; padding: 0; }
+.two li { padding: var(--unit) 0; border-bottom: 1px solid var(--muted); }
+.two li:last-child { border-bottom: 0; }
+
+.price p { margin: 0; font-size: 1.25rem; color: var(--figure); max-width: 42ch; line-height: 1.45; }
+.price p + p { font-size: 1rem; color: var(--text); margin-top: var(--unit); }
+
+.close { padding: calc(var(--unit) * 10) 0 calc(var(--unit) * 8); border-top: 1px solid var(--muted); }
+.close .actions { margin-top: calc(var(--unit) * 1); }
+
+footer {
+  border-top: 1px solid var(--muted); padding: calc(var(--unit) * 4) 0;
+  font-size: 0.9375rem; color: var(--muted);
+}
+footer .wrap { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1) calc(var(--unit) * 3); justify-content: space-between; }
+footer nav { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1) calc(var(--unit) * 2); }
+footer a { color: var(--text); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 480px) {
+  .top nav { gap: calc(var(--unit) * 2); font-size: 0.875rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="wordmark" href="#">Tallyroll</a>
+    <nav aria-label="Primary">
+      <a href="#docs">Docs</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#security">Security</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>Every cent traces back to an event.</h1>
+        <p class="sub">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+        <div class="actions">
+          <a class="btn btn-primary" id="docs" href="#">Read the docs</a>
+          <a class="btn btn-secondary" href="#">Book a demo</a>
+        </div>
+      </div>
+
+      <figure class="sheet" aria-label="Example invoice line">
+        <div class="sheet-head"><span>Invoice line</span><span>Usage, March</span></div>
+        <div class="line">
+          <span class="line-label">API calls, March</span>
+          <div class="equation">
+            <span class="n">1,204,388 calls</span>
+            <span class="n">× $0.0004</span>
+            <span class="n">= <span class="total">$481.76</span></span>
+          </div>
+          <details class="expand" open>
+            <summary>31 daily totals behind this line</summary>
+            <div class="trace">
+              <div class="days" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <p class="trace-note">One tick per day of March. Each daily total is built from the events that produced it.</p>
+            </div>
+          </details>
+        </div>
+        <div class="sheet-foot"><span>Each line opens into its events</span><span>Line-level audit trail</span></div>
+      </figure>
+    </div>
+  </main>
+</div>
+
+<div class="wrap">
+  <section aria-labelledby="how">
+    <h2 id="how">How it works</h2>
+    <ol class="steps">
+      <li>
+        <div class="step-name">Send events</div>
+        <p>Post usage events from your product as they happen: <code class="endpoint">POST /v1/events</code></p>
+      </li>
+      <li>
+        <div class="step-name">Define pricing</div>
+        <p>Tiers, minimums, credits and commitments, written as rules you can read.</p>
+      </li>
+      <li>
+        <div class="step-name">Invoice</div>
+        <p>Each line on an invoice opens up into the events that produced it.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="who">
+    <h2 id="who">Built for both sides of the invoice</h2>
+    <div class="two">
+      <div>
+        <h3>For finance</h3>
+        <ul>
+          <li>Line-level audit trail</li>
+          <li>Exports to NetSuite and QuickBooks</li>
+          <li>Revenue recognition schedules</li>
+        </ul>
+      </div>
+      <div>
+        <h3>For engineering</h3>
+        <ul>
+          <li>Idempotent event ingestion</li>
+          <li>Webhooks for every invoice state</li>
+          <li>SDKs for TypeScript, Python and Go</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="price" aria-labelledby="pricing-h">
+    <h2 id="pricing-h">Pricing</h2>
+    <p>0.5% of billed revenue, no platform fee.</p>
+    <p>Free until you bill $10,000 a month.</p>
+  </section>
+
+  <section class="close" aria-label="Next steps">
+    <div class="actions">
+      <a class="btn btn-primary" href="#">Read the docs</a>
+      <a class="btn btn-secondary" href="#">Book a demo</a>
+    </div>
+  </section>
+</div>
+
+<footer id="security">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="#">Docs</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#">Status</a>
+      <a href="#security">Security</a>
+      <a href="#">Contact</a>
+    </nav>
+    <span>© 2026 Tallyroll.</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -6,7 +6,8 @@ Usage:
   python3 lab/ratings/build.py page             write page.html from page.template.html + uploads.json
   python3 lab/ratings/build.py score votes.json score exported votes → results.md
 
-A pair is two runs with the same brief, model and run number from two conditions (A vs B, then B vs C). Left/right
+A pair is two runs with the same brief, model and run number from two conditions (A vs B, B vs C, D vs E).
+D vs E pairs D's runs 1-3 with E's runs 3-5: E's runs 1-2 were earlier drafts of the revised taste skill. Left/right
 and the order of pairs are shuffled with a fixed seed. The page only ever says "left" and "right"; key.json
 (kept in the repo, never in the page) says which side was which condition. Standard library only.
 """
@@ -22,21 +23,26 @@ SHOTS = RUNS / "shots"
 SEED = 20261117
 
 
-# Each comparison is (first condition, second condition, seed). Earlier comparisons keep their pair ids when
-# later ones are added, so votes already cast stay valid.
-COMPARISONS = [("A", "B", SEED), ("B", "C", SEED + 1)]
+# Each comparison is (first condition, second condition, seed, second's run number for first's run n). Earlier
+# comparisons keep their pair ids when later ones are added, so votes already cast stay valid.
+SAME = {1: 1, 2: 2, 3: 3}
+COMPARISONS = [("A", "B", SEED, SAME), ("B", "C", SEED + 1, SAME), ("D", "E", SEED + 2, {1: 3, 2: 4, 3: 5})]
 
 
 def pairs():
     found = []
-    for first, second, seed in COMPARISONS:
+    for first, second, seed, runmap in COMPARISONS:
         batch = []
         for a in sorted(RUNS.glob(f"*/{first}/*/index.html")):
             brief, run = a.parts[-4], a.parts[-2]
-            if not (RUNS / brief / second / run / "index.html").exists():
+            model_, n_ = run.rsplit("-", 1)
+            if int(n_) not in runmap:
                 continue
-            shots = {c: {"fold": SHOTS / brief / c / run / "index.jpg", "full": SHOTS / brief / c / run / "index-full.jpg"}
-                     for c in (first, second)}
+            runs = {first: run, second: f"{model_}-{runmap[int(n_)]}"}
+            if not (RUNS / brief / second / runs[second] / "index.html").exists():
+                continue
+            shots = {c: {"fold": SHOTS / brief / c / runs[c] / "index.jpg",
+                         "full": SHOTS / brief / c / runs[c] / "index-full.jpg"} for c in (first, second)}
             if all(p.exists() for s in shots.values() for p in s.values()):
                 model, n = run.rsplit("-", 1)
                 batch.append({"brief": brief, "model": model, "run": int(n), "shots": shots, "conditions": (first, second)})
@@ -107,7 +113,8 @@ def cmd_score(path):
                 loser = {comp[0]: comp[1], comp[1]: comp[0]}.get(winner, "either")
                 notes[(comp, loser)].append(f"{k['brief']} / {k['model']}: {v['note']}")
     lines = ["# Blind ratings: results", "",
-             f"{raters} raters. A = no skills, B = find-font + find-color, C = B + check-layout.", ""]
+             f"{raters} raters. A = no skills, B = find-font + find-color, C = B + check-layout, D = C + taste, "
+             "E = D with the revised taste skill (positioning, visual axes).", ""]
     for comp in sorted({c for c, _ in tally}):
         x, y = comp
         lines += [f"## {x} vs {y}", "", f"| Group | {y} preferred | {x} preferred | Can't separate | Votes |",

@@ -38,14 +38,16 @@ reason is unfinished.
 In the lab's 36 skill-built pages (two opposite briefs, three models), the same look came back whatever the
 brief said: Taste's own default. These are its markers:
 
-| # | Marker | Observable as |
-| --- | --- | --- |
-| H1 | Type only | No photography, illustration or graphic beyond a product mock or a labelled placeholder box |
-| H2 | Pale ground, one muted figure | Off-white, cream or white ground covers almost everything; one desaturated colour does the rest |
-| H3 | Rules and small capitals as structure | Hairline dividers and small, letter-spaced uppercase labels carry the hierarchy |
-| H4 | Square and flat everywhere | Corners at 0–4px, no shadows, no texture, no depth |
-| H5 | Left headline, then a document | One big left-aligned headline, then sections of small text that read like a printed list or spec sheet |
-| H6 | Flat after the hero | Below the first screen, text sizes and density barely change from section to section |
+| # | Marker | Observable as | In a plan, it counts when the axis says |
+| --- | --- | --- | --- |
+| H1 | Type only | No photography, illustration or graphic beyond a product mock, a single diagram or a labelled placeholder box | Imagery: type only, a product mock alone, or one diagram |
+| H2 | Pale ground, one muted figure | Off-white, cream or white ground covers almost everything; one desaturated colour does the rest | Colour proportion: ground "almost everywhere" with one figure colour |
+| H3 | Rules and small capitals as structure | Hairline dividers and small, letter-spaced uppercase labels carry the hierarchy | Signature device or Surface: rules, hairlines or a ruled list |
+| H4 | Square and flat everywhere | Corners at 0–4px, no shadows, no texture, no depth | Surface: flat, square or no shadows, even if one element is rounded |
+| H5 | Left headline, then a document | One big left-aligned headline, then sections of small text that read like a printed list or spec sheet | Composition: one reading column, or a headline then lists |
+| H6 | Flat after the hero | Below the first screen, text sizes and density barely change from section to section | Scale: one big moment, "everything else small" or a flat scale |
+
+Count from the words in your own axis cells, using the last column, not from how the direction feels.
 
 **Rule.** Count the markers for each direction (Phase 2) and again on the screenshot (Phase 5). On the
 screenshot, write yes or no for each marker with what you see; a marker you hesitate over counts as yes. The

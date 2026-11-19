@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fennel Street Bakery</title>
+<meta name="description" content="Bread at seven, tarts by nine, gone by two. A neighbourhood bakery at 14 Fennel Street, London E8.">
+<style>
+/* Fonts: Cormorant (headlines) and Source Sans 3 (body), OFL, self-hosted.
+   The .woff2 files are not bundled yet; until they are, the fallbacks render. */
+@font-face { font-family: "Cormorant"; src: url("./fonts/Cormorant.woff2") format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("./fonts/SourceSans3.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
+
+:root {
+  --ground: #F5EDE4;      /* Linen (engine) */
+  --figure: #8D5951;      /* Rose Clay (engine), headings, rules, links; never body copy */
+  --text: #3D3832;       /* body text, 10:1 on Linen (engine) */
+  --muted: #6C6761;      /* captions, 4.83:1 on Linen (engine) */
+  --head: "Cormorant", Georgia, "Times New Roman", serif;
+  --body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --s1: 8px; --s2: 16px; --s3: 32px; --s4: 64px;
+  --radius: 6px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font: 400 1.0625rem/1.6 var(--body);
+}
+a { color: var(--figure); text-underline-offset: 3px; }
+.wrap { max-width: 34rem; margin: 0 auto; padding: 0 16px; }
+
+/* Hero: name, line, then the three things a visitor checks first */
+.hero { padding-top: var(--s3); padding-bottom: var(--s3); }
+.hero h1 {
+  margin: 0;
+  font: 300 clamp(3rem, 14vw, 6.5rem)/0.92 var(--head);
+  color: var(--figure);
+  letter-spacing: -0.01em;
+}
+.line {
+  margin: var(--s2) 0 0;
+  font: 500 clamp(1.5rem, 6vw, 2.1rem)/1.2 var(--head);
+  color: var(--text);
+}
+.facts { margin: var(--s3) 0 0; padding: 0; list-style: none; }
+.facts li { padding: var(--s1) 0; border-top: 1px solid rgba(141,89,81,.35); }
+.facts li:last-child { border-bottom: 1px solid rgba(141,89,81,.35); }
+#status { font-weight: 600; color: var(--text); }
+.fact-label { color: var(--muted); font-size: .9375rem; display: block; }
+
+/* Day timeline: the signature device, drawn from the brief's three times */
+.day { padding: var(--s3) 0; }
+.day svg { display: block; width: 100%; height: auto; }
+.day figcaption { color: var(--muted); font-size: .9375rem; margin-top: var(--s1); }
+
+h2 {
+  margin: 0 0 var(--s2);
+  font: 500 2rem/1.1 var(--head);
+  color: var(--figure);
+}
+section { padding: var(--s3) 0 var(--s2); }
+
+/* Ruled price list */
+.menu { list-style: none; margin: 0; padding: 0; }
+.menu li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--s2);
+  padding: var(--s1) 0; border-top: 1px solid rgba(141,89,81,.35);
+}
+.menu li:last-child { border-bottom: 1px solid rgba(141,89,81,.35); }
+.menu .price { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.menu .note { display: block; color: var(--muted); font-size: .9375rem; }
+
+/* Cake orders */
+.order {
+  padding: var(--s2);
+  border: 1px solid var(--figure);
+  border-radius: var(--radius);
+}
+.order p { margin: 0 0 var(--s2); }
+.order .call {
+  display: inline-block;
+  background: var(--figure);
+  color: var(--ground);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+}
+
+.about p { margin: 0 0 var(--s2); }
+
+footer {
+  padding: var(--s3) 0 var(--s4);
+  border-top: 1px solid rgba(141,89,81,.35);
+  color: var(--muted);
+  font-size: .9375rem;
+}
+footer nav a { margin-right: var(--s2); }
+footer p { margin: var(--s2) 0 0; }
+
+@media (min-width: 720px) {
+  .wrap { max-width: 40rem; }
+  .hero { padding-top: var(--s4); }
+}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <h1>Fennel Street Bakery</h1>
+  <p class="line">Bread at seven, tarts by nine, gone by two.</p>
+
+  <ul class="facts">
+    <li><span class="fact-label">Right now</span><span id="status">Wednesday to Sunday, 7:00 to 14:00, or until we sell out</span></li>
+    <li><span class="fact-label">Hours</span>Wednesday to Sunday, 7:00 to 14:00, or until we sell out. Closed Monday and Tuesday.</li>
+    <li><span class="fact-label">Address</span><a href="https://www.google.com/maps/search/?api=1&amp;query=14+Fennel+Street+London+E8">14 Fennel Street, London E8</a></li>
+  </ul>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <figure class="day" aria-label="The day at Fennel Street">
+      <svg viewBox="0 0 320 110" role="img" aria-label="Bread at seven, tarts by nine, gone by two">
+        <line x1="20" y1="40" x2="300" y2="40" stroke="#8D5951" stroke-width="2"/>
+        <g stroke="#8D5951" stroke-width="2">
+          <line x1="20" y1="30" x2="20" y2="50"/>
+          <line x1="165" y1="30" x2="165" y2="50"/>
+          <line x1="300" y1="30" x2="300" y2="50"/>
+        </g>
+        <g font-family="Cormorant, Georgia, serif" font-size="22" fill="#8D5951">
+          <text x="20" y="84" text-anchor="start">7:00</text>
+          <text x="165" y="84" text-anchor="middle">9:00</text>
+          <text x="300" y="84" text-anchor="end">14:00</text>
+        </g>
+        <g font-family="Source Sans 3, system-ui, sans-serif" font-size="13" fill="#6C6761">
+          <text x="20" y="20" text-anchor="start">Bread</text>
+          <text x="165" y="20" text-anchor="middle">Tarts</text>
+          <text x="300" y="20" text-anchor="end">Gone</text>
+        </g>
+      </svg>
+      <figcaption>The shop's day, from the first loaf.</figcaption>
+    </figure>
+
+    <section class="about" id="about" aria-labelledby="about-h">
+      <h2 id="about-h">About</h2>
+      <p>Ana bakes the bread. Rita does everything with custard.</p>
+      <p>We opened on Fennel Street in 2019 with one oven and still only have one.</p>
+    </section>
+
+    <section id="daily" aria-labelledby="daily-h">
+      <h2 id="daily-h">Daily</h2>
+      <ul class="menu">
+        <li><span>Country sourdough</span><span class="price">£5.20</span></li>
+        <li><span>Seeded rye</span><span class="price">£5.60</span></li>
+        <li><span>Pastel de nata<span class="note">Six for £11</span></span><span class="price">£2.10</span></li>
+        <li><span>Cardamom buns</span><span class="price">£3.00</span></li>
+        <li><span>Olive oil focaccia<span class="note">By the slice</span></span><span class="price">£2.80</span></li>
+      </ul>
+    </section>
+
+    <section id="season" aria-labelledby="season-h">
+      <h2 id="season-h">This season</h2>
+      <ul class="menu">
+        <li><span>Orange and almond cake<span class="note">Slice</span></span><span class="price">£4</span></li>
+        <li><span>Orange and almond cake<span class="note">Whole</span></span><span class="price">£28</span></li>
+        <li><span>Fig and walnut loaf</span><span class="price">£6.40</span></li>
+      </ul>
+    </section>
+
+    <section id="cake-orders" aria-labelledby="cake-h">
+      <h2 id="cake-h">Cake orders</h2>
+      <div class="order">
+        <p>Whole cakes with 48 hours' notice. Message us or call 020 7946 0381.</p>
+        <a class="call" href="tel:+442079460381">Call 020 7946 0381</a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav>
+      <a href="#">Instagram</a>
+      <a href="#cake-orders">Order a cake</a>
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=14+Fennel+Street+London+E8">Find us</a>
+    </nav>
+    <p>© 2026 Fennel Street Bakery.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var el = document.getElementById('status');
+  try {
+    var parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/London', weekday: 'short', hour: 'numeric', minute: 'numeric', hourCycle: 'h23'
+    }).formatToParts(new Date());
+    var get = function (t) { return parts.filter(function (p) { return p.type === t; })[0].value; };
+    var day = get('weekday');
+    var mins = parseInt(get('hour'), 10) * 60 + parseInt(get('minute'), 10);
+    var openDay = ['Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(day) > -1;
+    el.textContent = (openDay && mins >= 420 && mins < 840)
+      ? 'Open now until 14:00, or until we sell out'
+      : 'Closed now. Open Wednesday to Sunday, 7:00 to 14:00';
+  } catch (e) {
+    /* Keep the static hours line if Intl or time zones are unavailable. */
+  }
+})();
+</script>
+</body>
+</html>

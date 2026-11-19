@@ -59,8 +59,25 @@ from positioning), and requires an imagery plan. See
   Haiku's bakery claims 1 marker against roughly 4 visible. The agent grading itself can't be the gate, which
   is the case for an outside check in a later milestone.
 
-**Limits:** two briefs, one run per model; one reviewer, not blind, who also wrote the change. Six pages show
-direction, not proof; the rating page is what can show people prefer them.
+- **Round 3: why Tallyroll converges.** Every Tallyroll direction filled "Challenge" with patterns check-layout
+  already bans (gradient heroes, card rows, stat rows) and adopted the category's real convention, a headline
+  beside a product card and then numbered steps; the fast-mode pick rule then chose that safe direction. Two
+  edits: conventions must include the category's shared layout and exclude check-layout's patterns, and fast
+  runs pick, among directions that serve the page job, the one that departs most from the shared layout. A
+  third edit tied each house-style marker to the words in the plan's axis cells, after Haiku counted 1 marker
+  for a plan that said "one reading column", "flat and small" and "no shadows".
+  - Tallyroll: only Sonnet moved (one column, a mono headline, a cream ledger). Opus redefined the convention as
+    "split hero with an abstract dashboard" and "challenged" it by changing the content, not the layout. Haiku
+    still listed check-layout's patterns as conventions.
+  - Bakery: Opus is the strongest so far (drawn tart, bread, cake and oven, wavy band edges); Sonnet good.
+    Haiku got worse: pale, thin serif, rules, a timeline, while claiming 3 markers.
+  - **Conclusion: more prose stops working here.** The agents reinterpret rules to keep the safe layout, and
+    Haiku can't score itself. These three edits stay (no harm seen), but the next lever isn't another rule.
+- **Blind ratings:** E's runs 3–5 (all the round-3 skill) are paired with D's runs 1–3 on the rating page: 18 D
+  vs E pairs, after the 36 existing ones. Results go in `ratings/results.md`.
+
+**Limits:** two briefs, one run per model per round; one reviewer, not blind, who also wrote the change. These
+pages show direction, not proof; the ratings are what can show people prefer them.
 
 ## 2026-11-18 · /taste keeps C's gains and writes an honest direction, but doesn't move the page further yet
 

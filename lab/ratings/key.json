@@ -286,5 +286,149 @@
     "compares": "BC",
     "left": "B",
     "right": "C"
+  },
+  "p37": {
+    "brief": "fennel-street",
+    "model": "claude-opus-5-5",
+    "run": 1,
+    "compares": "DE",
+    "left": "E",
+    "right": "D"
+  },
+  "p38": {
+    "brief": "tallyroll",
+    "model": "claude-sonnet-5-5",
+    "run": 3,
+    "compares": "DE",
+    "left": "E",
+    "right": "D"
+  },
+  "p39": {
+    "brief": "tallyroll",
+    "model": "claude-haiku-5-5",
+    "run": 3,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p40": {
+    "brief": "fennel-street",
+    "model": "claude-haiku-5-5",
+    "run": 3,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p41": {
+    "brief": "fennel-street",
+    "model": "claude-haiku-5-5",
+    "run": 2,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p42": {
+    "brief": "fennel-street",
+    "model": "claude-sonnet-5-5",
+    "run": 3,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p43": {
+    "brief": "tallyroll",
+    "model": "claude-haiku-5-5",
+    "run": 2,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p44": {
+    "brief": "tallyroll",
+    "model": "claude-opus-5-5",
+    "run": 1,
+    "compares": "DE",
+    "left": "E",
+    "right": "D"
+  },
+  "p45": {
+    "brief": "tallyroll",
+    "model": "claude-opus-5-5",
+    "run": 3,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p46": {
+    "brief": "fennel-street",
+    "model": "claude-opus-5-5",
+    "run": 3,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p47": {
+    "brief": "fennel-street",
+    "model": "claude-sonnet-5-5",
+    "run": 2,
+    "compares": "DE",
+    "left": "E",
+    "right": "D"
+  },
+  "p48": {
+    "brief": "tallyroll",
+    "model": "claude-haiku-5-5",
+    "run": 1,
+    "compares": "DE",
+    "left": "E",
+    "right": "D"
+  },
+  "p49": {
+    "brief": "fennel-street",
+    "model": "claude-opus-5-5",
+    "run": 2,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p50": {
+    "brief": "fennel-street",
+    "model": "claude-haiku-5-5",
+    "run": 1,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p51": {
+    "brief": "tallyroll",
+    "model": "claude-opus-5-5",
+    "run": 2,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p52": {
+    "brief": "fennel-street",
+    "model": "claude-sonnet-5-5",
+    "run": 1,
+    "compares": "DE",
+    "left": "E",
+    "right": "D"
+  },
+  "p53": {
+    "brief": "tallyroll",
+    "model": "claude-sonnet-5-5",
+    "run": 2,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
+  },
+  "p54": {
+    "brief": "tallyroll",
+    "model": "claude-sonnet-5-5",
+    "run": 1,
+    "compares": "DE",
+    "left": "D",
+    "right": "E"
   }
 }

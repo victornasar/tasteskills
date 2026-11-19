@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallyroll — usage-based billing API</title>
+<meta name="description" content="Tallyroll turns raw usage into invoices your finance team can reconcile line by line.">
+<!-- Fonts: IBM Plex Serif, IBM Plex Sans, Commit Mono (all OFL), via @fontsource on jsdelivr. Self-host before launch. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-serif@5.2.5/latin-500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/latin-400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/latin-600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/commit-mono@5.2.5/latin-400.css">
+<style>
+:root{
+  /* find-color: Graphite and Signal (lib.graphite-and-signal) */
+  --ground:#F9FAFB;          /* oklch(0.985 0.002 250) */
+  --figure:#15181E;          /* oklch(0.21 0.012 260) */
+  --accent:#0E6EE6;          /* oklch(0.56 0.2 258) */
+  --ground:oklch(0.985 0.002 250);
+  --figure:oklch(0.21 0.012 260);
+  --accent:oklch(0.56 0.2 258);
+  --muted:color-mix(in oklch, var(--figure) 68%, var(--ground));
+  --line:color-mix(in oklch, var(--figure) 14%, var(--ground));
+  --tint:color-mix(in oklch, var(--figure) 4%, var(--ground));
+  --on-dark-muted:color-mix(in oklch, var(--ground) 70%, var(--figure));
+  --on-dark-line:color-mix(in oklch, var(--ground) 16%, var(--figure));
+  --serif:"IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"Commit Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --gutter:clamp(16px, 4vw, 56px);
+  --max:1240px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--figure);font:400 17px/1.6 var(--sans);}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.num,code,pre{font-family:var(--mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;padding-top:22px;padding-bottom:22px}
+.mark{font:500 20px/1 var(--serif);text-decoration:none;letter-spacing:-.01em}
+.top nav{display:flex;gap:28px;font-size:15px}
+.top nav a{text-decoration:none;color:var(--muted)}
+.top nav a:hover{color:var(--figure)}
+
+/* buttons */
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-block;font:600 16px/1 var(--sans);padding:15px 22px;border-radius:6px;text-decoration:none;border:1px solid transparent}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:color-mix(in oklch, var(--accent) 86%, var(--figure))}
+.btn-secondary{border-color:currentColor}
+.btn-secondary:hover{background:color-mix(in oklch, currentColor 8%, transparent)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding-top:72px;padding-bottom:120px;align-items:start}
+.hero-copy{grid-column:1 / span 5;padding-top:24px}
+h1{font:500 clamp(40px,5.4vw,68px)/1.04 var(--serif);letter-spacing:-.022em;margin:0}
+.sub{font-size:20px;line-height:1.5;color:var(--muted);margin:24px 0 0;max-width:30ch}
+.invoice{margin:0;grid-column:6 / span 7;background:#fff;border:1px solid var(--line);border-radius:6px;
+  box-shadow:0 1px 2px color-mix(in oklch,var(--figure) 6%,transparent),0 12px 32px -12px color-mix(in oklch,var(--figure) 18%,transparent)}
+
+/* invoice */
+.inv-head{display:flex;justify-content:space-between;gap:16px;padding:20px 24px;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
+.inv-head strong{color:var(--figure);font-weight:600}
+.inv-cols{display:flex;justify-content:space-between;padding:12px 24px 0;font-size:13px;color:var(--muted)}
+.line{all:unset;box-sizing:border-box;display:grid;grid-template-columns:20px 1fr auto;gap:12px;align-items:baseline;width:100%;padding:18px 24px;cursor:pointer}
+.line:hover{background:var(--tint)}
+.line:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.caret{font-family:var(--mono);color:var(--accent);transition:transform .18s ease;display:inline-block}
+.line[aria-expanded="true"] .caret{transform:rotate(90deg)}
+.line-name{font-weight:600}
+.line-expr{display:block;white-space:nowrap;font:400 14px/1.5 var(--mono);color:var(--muted);margin-top:4px}
+.line-total{font:400 30px/1 var(--mono);letter-spacing:-.02em}
+.hint{grid-column:2 / -1;font-size:14px;color:var(--accent)}
+.line[aria-expanded="true"] .hint{display:none}
+.detail{border-top:1px solid var(--line);margin-left:24px;padding:16px 24px 20px 20px;border-left:2px solid var(--accent)}
+.detail[hidden]{display:none}
+.detail-cap{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);margin-bottom:10px}
+.bars{display:grid;grid-template-columns:repeat(31,1fr);gap:2px;align-items:end;height:72px;margin-bottom:14px}
+.bars span{display:block;background:color-mix(in oklch,var(--figure) 28%,var(--ground));min-height:2px}
+.bars span.on{background:var(--accent)}
+.days{display:grid;grid-template-columns:repeat(2,1fr);column-gap:24px;font:400 13px/1.85 var(--mono);max-height:201px;overflow:auto;margin:0;padding:0;list-style:none}
+.days li{display:flex;justify-content:space-between;border-bottom:1px solid var(--tint);cursor:default}
+.days li.on{color:var(--accent)}
+.days .d{color:var(--muted)}
+.sum{display:flex;justify-content:space-between;font:400 13px/1.5 var(--mono);border-top:1px solid var(--figure);margin-top:10px;padding-top:8px}
+.inv-foot{display:flex;justify-content:space-between;padding:18px 24px;border-top:1px solid var(--line)}
+.inv-foot .num{font-size:18px}
+.note{font-size:13px;color:var(--muted);padding:0 24px 18px;margin:0}
+
+/* how it works */
+section h2{font:500 clamp(30px,3.4vw,42px)/1.12 var(--serif);letter-spacing:-.015em;margin:0}
+.how{padding-bottom:140px}
+.how-head{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-bottom:56px}
+.how-head h2{grid-column:1 / span 5}
+.how-head p{grid-column:7 / span 5;margin:0;color:var(--muted);align-self:end}
+.steps{list-style:none;margin:0;padding:0;position:relative}
+.steps::before{content:"";position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:var(--accent)}
+.step{display:grid;grid-template-columns:32px minmax(0,5fr) minmax(0,7fr);gap:24px 40px;padding-bottom:64px;position:relative}
+.step:last-child{padding-bottom:0}
+.dot{width:32px;height:32px;border-radius:50%;background:var(--ground);border:2px solid var(--accent);font:400 14px/28px var(--mono);text-align:center;color:var(--accent);position:relative}
+.step h3{font:600 20px/1.3 var(--sans);margin:2px 0 8px}
+.step p{margin:0;color:var(--muted);max-width:40ch}
+.step p code{color:var(--figure);font-size:.92em}
+pre{margin:0;background:var(--figure);color:var(--ground);border-radius:6px;padding:20px 22px;font-size:13.5px;line-height:1.7;overflow:auto}
+pre .k{color:var(--on-dark-muted)}
+.rule{border:1px solid var(--line);border-radius:6px;padding:18px 22px;font:400 14.5px/1.8 var(--mono);background:#fff}
+.rule .c{color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-top:8px}
+.back{color:var(--accent);text-decoration:none;font-weight:600}
+.back:hover{text-decoration:underline}
+
+/* finance */
+.finance{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding-bottom:120px}
+.finance h2{grid-column:1 / span 4}
+.finance dl{grid-column:6 / span 7;margin:0}
+.audience dt{font:600 19px/1.3 var(--sans);padding-top:20px}
+.audience dd{margin:6px 0 0;padding-bottom:20px;border-bottom:1px solid var(--line);color:var(--muted)}
+.audience dt:first-child{padding-top:0}
+.audience dt{padding-bottom:20px;border-bottom:1px solid var(--line);font-size:21px}
+.band .audience dt{border-color:var(--on-dark-line)}
+.audience dt:last-child{border-bottom:0}
+
+/* dark band */
+.band{background:var(--figure);color:var(--ground);padding:120px 0 128px}
+.band .audience dd{border-color:var(--on-dark-line);color:var(--on-dark-muted)}
+.eng{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding-bottom:120px}
+.eng h2{grid-column:1 / span 4}
+.eng dl{grid-column:6 / span 7;margin:0}
+.sdk{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.sdk code{font-size:13px;padding:3px 8px;border:1px solid var(--on-dark-line);border-radius:4px;color:var(--ground)}
+.pricing{border-top:1px solid var(--on-dark-line);padding-top:64px;display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.pricing h2{grid-column:1 / span 4}
+.price{grid-column:6 / span 7}
+.price .rate{font:500 clamp(44px,6vw,80px)/1 var(--serif);letter-spacing:-.025em;margin:0}
+.price .rate span{font:400 clamp(20px,2vw,26px)/1.3 var(--sans);letter-spacing:0;display:block;margin-top:14px}
+.price .free{font-size:20px;margin:24px 0 0}
+.price .free .num{font-size:.95em}
+.band .btn-primary{background:var(--accent)}
+
+footer{padding:40px 0 56px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+footer nav{display:flex;gap:24px;flex-wrap:wrap}
+footer a{text-decoration:none}
+footer a:hover{color:var(--figure)}
+
+@media (max-width: 980px){
+  .hero{grid-template-columns:1fr;padding-top:40px;padding-bottom:88px;gap:40px}
+  .hero-copy,.invoice{grid-column:1 / -1}
+  .hero-copy{padding-top:0}
+  .how-head,.finance,.eng,.pricing{grid-template-columns:1fr;gap:20px}
+  .how-head h2,.how-head p,.finance h2,.finance dl,.eng h2,.eng dl,.pricing h2,.price{grid-column:1 / -1}
+  .step{grid-template-columns:32px minmax(0,1fr);gap:16px 20px}
+  .step > .ex{grid-column:2}
+  .band{padding:88px 0}
+}
+@media (max-width: 560px){
+  body{font-size:16px}
+  .top nav a:not(.keep){display:none}
+  .inv-head,.inv-cols,.line,.inv-foot{padding-left:16px;padding-right:16px}
+  .note{padding:0 16px 16px}
+  .line{grid-template-columns:16px 1fr;row-gap:8px}
+  .line-total{grid-column:2;font-size:26px}
+  .line-expr{white-space:normal}
+  .line-expr > span{white-space:nowrap}
+  .detail{margin-left:16px;padding:14px 16px 16px 14px}
+  .days{grid-template-columns:1fr}
+  .sub{font-size:18px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="mark" href="#">Tallyroll</a>
+  <nav aria-label="Primary">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a class="keep" href="#docs">Docs</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero" aria-labelledby="h1">
+    <div class="hero-copy">
+      <h1 id="h1">Every cent traces back to an event.</h1>
+      <p class="sub">Tallyroll turns raw usage into invoices your finance team can reconcile line by line.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#docs">Read the docs</a>
+        <a class="btn btn-secondary" href="#demo">Book a demo</a>
+      </div>
+    </div>
+
+    <figure class="invoice" id="invoice" aria-label="Example invoice">
+      <div class="inv-head"><span><strong>Invoice</strong> · March 2026</span><span>Example</span></div>
+      <div class="inv-cols"><span>Line</span><span>Amount</span></div>
+      <button class="line" id="lineBtn" aria-expanded="false" aria-controls="detail">
+        <span class="caret" aria-hidden="true">›</span>
+        <span><span class="line-name">API calls, March</span>
+          <span class="line-expr"><span>1,204,388 calls × $0.0004</span> <span>= $481.76</span></span></span>
+        <span class="line-total num">$481.76</span>
+        <span class="hint">Open the 31 daily totals behind this line</span>
+      </button>
+      <div class="detail" id="detail" hidden>
+        <div class="detail-cap"><span>Calls per day, 1–31 March</span><span id="readout" class="num" aria-live="polite"></span></div>
+        <div class="bars" id="bars" aria-hidden="true"></div>
+        <ul class="days" id="days"></ul>
+        <div class="sum"><span>31 days</span><span>1,204,388 calls</span></div>
+      </div>
+      <div class="inv-foot"><span>Total due</span><span class="num">$481.76</span></div>
+      <p class="note">Example data. Daily figures are illustrative.</p>
+    </figure>
+  </section>
+
+  <section class="wrap how" id="how" aria-labelledby="how-h">
+    <div class="how-head">
+      <h2 id="how-h">How that line was made</h2>
+      <p>Three steps, from the event your product sends to the line your finance team signs off.</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <span class="dot" aria-hidden="true">1</span>
+        <div><h3>Send events</h3><p>Post usage events from your product as they happen: <code>POST /v1/events</code>.</p></div>
+        <div class="ex">
+<pre><span class="k">POST</span> /v1/events
+{
+  <span class="k">"customer"</span>: "acme",
+  <span class="k">"metric"</span>:   "api_calls",
+  <span class="k">"quantity"</span>: 1,
+  <span class="k">"time"</span>:     "2026-03-14T09:21:07Z"
+}</pre>
+          <p class="cap">Illustrative payload. The docs have the full schema.</p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="dot" aria-hidden="true">2</span>
+        <div><h3>Define pricing</h3><p>Tiers, minimums, credits and commitments, written as rules you can read.</p></div>
+        <div class="ex">
+          <div class="rule"><span class="c">rule</span> API calls<br><span class="c">metric</span>&nbsp;&nbsp;api_calls<br><span class="c">price</span>&nbsp;&nbsp;&nbsp;$0.0004 per call</div>
+          <p class="cap">The rule behind the example line above. Illustrative syntax.</p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="dot" aria-hidden="true">3</span>
+        <div><h3>Invoice</h3><p>Each line on an invoice opens up into the events that produced it.</p></div>
+        <div class="ex"><p><a class="back" href="#invoice" id="openLine">Open the example line ↑</a></p></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="wrap finance" aria-labelledby="fin-h">
+    <h2 id="fin-h">For finance</h2>
+    <dl class="audience">
+      <dt>Line-level audit trail</dt>
+      <dt>Exports to NetSuite and QuickBooks</dt>
+      <dt>Revenue recognition schedules</dt>
+    </dl>
+  </section>
+
+  <div class="band">
+    <section class="wrap eng" aria-labelledby="eng-h" id="docs">
+      <h2 id="eng-h">For engineering</h2>
+      <dl class="audience">
+        <dt>Idempotent event ingestion</dt>
+        <dt>Webhooks for every invoice state</dt>
+        <dt>SDKs for TypeScript, Python and Go</dt>
+      </dl>
+    </section>
+
+    <section class="wrap pricing" id="pricing" aria-labelledby="price-h">
+      <h2 id="price-h">Pricing</h2>
+      <div class="price">
+        <p class="rate">0.5% of billed revenue<span>No platform fee.</span></p>
+        <p class="free">Free until you bill <span class="num">$10,000</span> a month.</p>
+        <div class="actions" id="demo">
+          <a class="btn btn-primary" href="#docs">Read the docs</a>
+          <a class="btn btn-secondary" href="#demo">Book a demo</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="#docs">Docs</a><a href="#pricing">Pricing</a><a href="#status">Status</a><a href="#security">Security</a><a href="#contact">Contact</a>
+    </nav>
+    <span>© 2026 Tallyroll</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Illustrative daily totals for March 2026; they sum to 1,204,388.
+  var v=[25485,43315,40904,39672,42793,43600,25183,25388,44242,43429,40693,42593,45230,26664,25604,44353,45657,42614,42459,45938,28251,26369,44062,47098,45142,42963,45869,29565,27689,43986,47578];
+  var max=Math.max.apply(null,v), fmt=function(n){return n.toLocaleString('en-US')};
+  var bars=document.getElementById('bars'), days=document.getElementById('days'), readout=document.getElementById('readout');
+  var wk=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  v.forEach(function(n,i){
+    var b=document.createElement('span'); b.style.height=(n/max*100)+'%'; bars.appendChild(b);
+    var li=document.createElement('li');
+    li.innerHTML='<span class="d">'+wk[i%7]+' '+(i+1)+' Mar</span><span>'+fmt(n)+'</span>';
+    li.addEventListener('mouseenter',function(){mark(i)});
+    li.addEventListener('mouseleave',function(){mark(-1)});
+    days.appendChild(li);
+    b.addEventListener('mouseenter',function(){mark(i)});
+    b.addEventListener('mouseleave',function(){mark(-1)});
+  });
+  bars.removeAttribute('aria-hidden');
+  function mark(i){
+    [].forEach.call(bars.children,function(b,j){b.classList.toggle('on',j===i)});
+    [].forEach.call(days.children,function(l,j){l.classList.toggle('on',j===i)});
+    readout.textContent = i<0 ? '' : (i+1)+' Mar: '+fmt(v[i])+' calls = $'+(v[i]*0.0004).toFixed(2);
+  }
+  var btn=document.getElementById('lineBtn'), det=document.getElementById('detail');
+  function set(open){btn.setAttribute('aria-expanded',open);det.hidden=!open;}
+  btn.addEventListener('click',function(){set(btn.getAttribute('aria-expanded')!=='true')});
+  document.getElementById('openLine').addEventListener('click',function(){set(true)});
+  if(location.hash==='#open' || window.matchMedia('(min-width: 981px)').matches) set(true);
+})();
+</script>
+</body>
+</html>
