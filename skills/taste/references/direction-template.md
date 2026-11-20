@@ -56,6 +56,9 @@ House style: <marker count>; if 4 or more, "House style kept because <reason>"
 - Text pairs checked: <pair> <ratio>:1 for <use>
 ### Layout
 - Visitor's questions in order, what the page leads with, what was cut
+### Composition
+- Focal order (desktop / phone) · key relationships · balance · grid and deviations · scale · space · pacing ·
+  layering · phone changes, each with its reason (see the composition skill's plan)
 ### Imagery
 - Job · Kind · Shot list · Treatment · Ships now (see visual-direction.md)
 ### Other decisions
