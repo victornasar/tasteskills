@@ -82,8 +82,12 @@ For type, colour, layout and composition, use the sibling skills if they're inst
 (typography), **find-color** (colour), **check-layout** (which sections, in what order) and **composition** (the
 visual relationships inside that structure: balance, hierarchy, flow, space, scale, grid, grouping, pacing,
 layering). They're Markdown expertise, not engines. Use composition here to make each direction's Composition
-and Scale positions concrete enough to differ visibly, not just in name. If one isn't installed, do that part yourself with the same care, and tell the user the install
-command:
+and Scale positions concrete enough to differ visibly, not just in name. When building, the other installed
+skills take their own parts: **visual-hierarchy**, **content-design** and **imagery** for what the page says and
+shows; **responsive-design**, **interaction-design**, **motion-design**, **component-craft** and
+**iconography** for how it adapts and behaves; **design-systems** to write the direction down as tokens;
+**web-accessibility**, **data-visualization** and **web-performance** where they apply. If one isn't installed,
+do that part yourself with the same care, and tell the user the install command:
 
 ```bash
 npx skills add https://github.com/victornasar/tasteskills --skill find-font
@@ -106,8 +110,8 @@ In an interactive session, get the user's go-ahead before building. Working alon
 
 Build in the project's existing stack. Re-read `DIRECTION.md` before each major section. Before building
 the selected direction, write composition's plan (focal order, relationships, balance, grid, scale, space,
-pacing, layering, phone) into `DIRECTION.md`, so the composition follows the direction instead of a default. Build the imagery
-plan's "ships now" visuals. Never ship an empty image frame or a "photo goes here" box. Keep open decisions
+pacing, layering, phone) into `DIRECTION.md`, so the composition follows the direction instead of a default.
+Build the imagery plan's "ships now" visuals. Never ship an empty image frame or a "photo goes here" box. Keep open decisions
 open, and don't "improve" the user's choices away.
 
 ### 5. Critique the render
@@ -122,7 +126,9 @@ open, and don't "improve" the user's choices away.
    major visible choice, name the part of the brief, audience or positioning that led to it; "clean and
    modern" doesn't count. Treat a failure of either test as a failed constraint.
 5. Check type with find-font's render check, structure with check-layout's and composition with composition's
-   render critique (blur, eye path, balance, space, edges, pacing, layering), if installed.
+   render critique (blur, eye path, balance, space, edges, pacing, layering), if installed. Run the render
+   checks of any other installed skill whose area the page touches; web-accessibility's keyboard and automated
+   checks apply to every page.
 6. Fix what fails. Stop after two rounds of fixes and report what passed, what you changed and anything that
    needs a human decision. Fix code to match the direction; if the direction itself looks wrong on screen,
    raise it with the user instead of quietly changing the constraints.
