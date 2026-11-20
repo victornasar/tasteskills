@@ -1,6 +1,6 @@
 ---
 name: find-font
-description: Choose, pair and critique typography for a website, product or brand like a typographic art director. Reads the brief and positioning into type roles (display, heading, body, UI, editorial, monospace), judges real candidates by their letterforms, weights and variable axes, checks them on a rendered proof, and avoids the fonts AI-built sites overuse. Use when choosing fonts or a pairing, replacing a default like Inter, or reviewing a page's typography.
+description: Choose, pair and critique typography for a website, product or brand like a typographic art director. Reads the brief and positioning into type roles (display, heading, body, UI, editorial, monospace), judges real candidates by their letterforms, weights and variable axes, checks them on a rendered proof, and looks past the fonts AI-built sites overuse unless the brief gives a reason for one. Use when choosing fonts or a pairing, replacing a default like Inter, or reviewing a page's typography.
 argument-hint: "[brief, e.g. cozy bakery website]"
 ---
 
@@ -26,7 +26,7 @@ loads) and say what you inferred.
   for a code-heavy page, a headline face that "reads technical" for a bakery. Tags describe a font in general.
   Only setting it in the brief's copy shows whether it fits this page.
 - **Swapping one default for another.** Replacing every default with the same "tasteful" alternative on every
-  brief is a new default.
+  brief is a new default. So is ruling out a good font only because it's popular.
 
 ## 1. Read the brief into a type brief
 
@@ -81,11 +81,23 @@ tracked-capitals "luxury" look and the geometric sans of "modern startup" are de
 - Start with what's given: fonts the brand already uses, or ones the user names.
 - Look beyond your first instincts. `references/fonts.md` is a curated list of free, self-hostable faces that
   don't read as AI-generated, unranked and grouped by category. Your own knowledge is welcome too.
-- Treat the avoid list in `references/fonts.md` as defaults to look past, unless the brand already uses one.
+- Treat the avoid list in `references/fonts.md` as defaults to look past, not as bad fonts (see below).
 - Shortlist two to four candidates per role.
 - Take facts from the font's source page or files, never from memory: weights, italics, variable axes, scripts,
   licence, and features such as tabular figures and small caps. If you can't check a fact, say it's unverified
   and don't plan around it.
+
+**Fonts on the avoid list.** The list marks what models reach for without thinking, not what's bad.
+
+- An existing brand identity comes first. If the brand uses one of these fonts, use it.
+- Otherwise, a listed font needs a reason from this brief, of the kinds noted under *Contextual exceptions* in
+  `references/fonts.md`: a functional need (a script, platform continuity, dense data, long reading), a role it
+  does unusually well, or a position its letterforms carry. A category gives permission to consider a font,
+  never a reason to pick it.
+- Keep it to the roles it suits. A display face stays at display sizes, whatever the category.
+- Shortlist it next to at least one less-overused face for the same role, and let the proof decide.
+- If the reason would fit any brief ("clean", "safe", "readable"), or the rest of the page has landed on
+  defaults too, it's the default talking, not an exception.
 
 ## 3. Judge the letterforms
 
@@ -149,6 +161,7 @@ Keep it short:
 
 - **Per role:** the font, the weights and sizes, and one or two sentences on why it fits, in the brief's words.
 - **Pairing:** what contrasts and what's shared.
+- **If a font is on the avoid list:** the reason from the brief, and the less-overused face it beat on the proof.
 - **Rejected:** the candidates that nearly made it, each with a plain reason ("no true italic, and the body needs
   emphasis"; "wraps the headline into five lines on a phone").
 - **Licence and source** for each font, and how to self-host it: `@font-face` pointing at the project's own
