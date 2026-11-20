@@ -1,6 +1,6 @@
 ---
 name: taste
-description: Act as the design director for a website or brand surface. Reads the brief and the brand's position, writes a short creative direction (DIRECTION.md), coordinates type, colour and layout, then builds and critiques the result against the direction. Use when starting a site from a business brief, when the user invokes /taste, or when they want creative direction before implementation; not for an isolated font, colour or layout question.
+description: Act as the design director for a website or brand surface. Reads the brief and the brand's position, writes a short creative direction (DIRECTION.md), coordinates type, colour, layout and composition, then builds and critiques the result against the direction. Use when starting a site from a business brief, when the user invokes /taste, or when they want creative direction before implementation; not for an isolated font, colour or layout question.
 argument-hint: "[brief, e.g. independent daycare for local families]"
 ---
 
@@ -78,9 +78,11 @@ approach.
 - Plan imagery as a design decision (the imagery plan in `references/visual-direction.md`), never as a slot to
   fill later.
 
-For type, colour and layout, use the sibling skills if they're installed: **find-font** (typography),
-**find-color** (colour) and **check-layout** (structure and the rendered check). They're Markdown expertise, not
-engines. If one isn't installed, do that part yourself with the same care, and tell the user the install
+For type, colour, layout and composition, use the sibling skills if they're installed: **find-font**
+(typography), **find-color** (colour), **check-layout** (which sections, in what order) and **composition** (the
+visual relationships inside that structure: balance, hierarchy, flow, space, scale, grid, grouping, pacing,
+layering). They're Markdown expertise, not engines. Use composition here to make each direction's Composition
+and Scale positions concrete enough to differ visibly, not just in name. If one isn't installed, do that part yourself with the same care, and tell the user the install
 command:
 
 ```bash
@@ -102,7 +104,9 @@ In an interactive session, get the user's go-ahead before building. Working alon
 
 ### 4. Build
 
-Build in the project's existing stack. Re-read `DIRECTION.md` before each major section. Build the imagery
+Build in the project's existing stack. Re-read `DIRECTION.md` before each major section. Before building
+the selected direction, write composition's plan (focal order, relationships, balance, grid, scale, space,
+pacing, layering, phone) into `DIRECTION.md`, so the composition follows the direction instead of a default. Build the imagery
 plan's "ships now" visuals. Never ship an empty image frame or a "photo goes here" box. Keep open decisions
 open, and don't "improve" the user's choices away.
 
@@ -117,7 +121,8 @@ open, and don't "improve" the user's choices away.
    different category; if nothing looks wrong, the page came from defaults, not the brief. *Why:* for each
    major visible choice, name the part of the brief, audience or positioning that led to it; "clean and
    modern" doesn't count. Treat a failure of either test as a failed constraint.
-5. Check type with find-font's render check and structure with check-layout's, if installed.
+5. Check type with find-font's render check, structure with check-layout's and composition with composition's
+   render critique (blur, eye path, balance, space, edges, pacing, layering), if installed.
 6. Fix what fails. Stop after two rounds of fixes and report what passed, what you changed and anything that
    needs a human decision. Fix code to match the direction; if the direction itself looks wrong on screen,
    raise it with the user instead of quietly changing the constraints.
