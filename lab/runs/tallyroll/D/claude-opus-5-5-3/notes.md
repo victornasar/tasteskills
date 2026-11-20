@@ -1,9 +1,0 @@
-I saved `DIRECTION.md` and `index.html` in the project root. The layout checker found none of its nine overused patterns on desktop or phone. After one fix round, all six constraints in `DIRECTION.md` pass on the screenshots, including with the invoice line opened. That round fixed a footer that overlapped the pricing section, a nav rule wider than the content, a one-word last line in the subhead, and a heading I had made up ("How it works" now replaces it). The spec is still a draft that nobody has approved, and the unconfirmed items are listed under Open decisions.
-
-
-
-- **The invoice line is the hero.** It sits on the first screen and opens into 31 daily totals that add up to exactly 1,204,388. The brief gives no daily figures, so those are generated and labelled "Example data"; swap in a real sample.
-- **Fonts:** IBM Plex Serif for headlines, IBM Plex Sans for text, Commit Mono for figures, all from find-font. I used Plex Serif instead of the engine's top headline pick, Technor, because that font is described as "sci-fi", which isn't calm. Plex loads from jsDelivr, so the file isn't fully self-contained; self-host it before launch. Commit Mono only shows if it's installed locally or placed at `fonts/CommitMono.woff2`; otherwise figures fall back to the system mono.
-- **Colors:** Graphite and Signal from find-color. The "Read the docs" button is graphite and blue is kept for links, focus and the expand control. The page is light-only because the engine returned no dark colors.
-- **Structure follows the reader's questions:** what it is, the proof, how it works, a two-column list for finance and engineering, then pricing as one sentence. There are no cards, stat rows or testimonials.
-- **Still open:** `fennel-street.md` wasn't in the project, so I couldn't read what the page is meant to be the opposite of. All links are `#` placeholders.

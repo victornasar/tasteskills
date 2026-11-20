@@ -1,5 +1,0 @@
-- **The proof is the hero.** The invoice line sits beside the headline and opens by default into 31 daily totals. They sum to 1,204,388, and 1,204,388 × $0.0004 rounds to $481.76. The daily split is invented and labelled as illustrative.
-- **Calm and technical.** Warm paper background, one muted teal accent, hairline rules, and tabular monospace figures. There is no decoration, and dark mode follows the system setting.
-- **Copy is the brief's only.** I added no claims, numbers or testimonials. The pricing section just restates the two pricing facts, and the closing section repeats the two actions.
-- **Fonts.** IBM Plex Sans and IBM Plex Mono load from Google Fonts, with system fallbacks if they fail. There are no images and no JavaScript.
-- **Placeholders.** The nav, footer and button links all point to `#` anchors, so swap in real URLs for the docs and demo booking.

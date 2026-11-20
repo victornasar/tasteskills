@@ -1,5 +1,0 @@
-- **Fonts:** Fraunces for headings and prices, Figtree for body text, both loaded from Google Fonts with Georgia and system-sans fallbacks. The page still works if they don't load.
-- **Open/closed pill:** The top of the page has a live "Open now" or "Closed · opens Wednesday at 7:00" pill. It uses London time and the real hours, because most visitors are checking whether the shop is open.
-- **Cake orders:** Cake orders have their own full-width green block with a tap-to-call number.
-- **Placeholders:** Photos and the map are dashed, labelled CSS placeholders. I added no prices, reviews or claims beyond your copy. The "Message us" and Instagram links point to `#` because the brief gives no handle.
-- **Look:** Cream paper, crust-orange and fennel-green, dotted menu leaders and a serif voice keep it handmade and local. It is built mobile-first and has a dark-mode palette.

@@ -1,5 +1,0 @@
-- **Structure:** the invoice line is the hero, beside the headline. It expands to show the days behind it. The bars are illustrative and carry no figures, because the brief gives none.
-- **Fonts:** Technor for headlines and IBM Plex Sans for body, both self-hosted from `./fonts/`. The font files aren't in this single file, so system fallbacks render until you add them. I passed over Kola, the top headline pick, because it reads as playful.
-- **Color:** Graphite and Signal. Signal Blue is only for links and focus, and the primary button is graphite, not purple.
-- **Layout:** I left out the default stats row, testimonials and CTA band, since the brief gives no numbers or quotes. The three-step row stays because the steps are an ordered sequence. The checker flags it as a row of three; that is the one pattern I kept.
-- **Copy:** only the brief's copy is used, with no added claims. The file is saved at `/private/var/folders/rh/c3zlwpy56yd7gcc101pb318w0000gn/T/tmpmdrezsez/index.html`.

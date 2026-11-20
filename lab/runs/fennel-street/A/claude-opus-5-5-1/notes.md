@@ -1,5 +1,0 @@
-- **Open or closed comes first:** a sticky bar at the top works out the shop's status in London time ("Open now · until 14:00 or sell-out" / "Closed · opens Wednesday at 7:00"), and today's row is highlighted in the hours table.
-- **Cake orders are short and tappable:** the phone number is large, with a call button, and the page works out the earliest collection day from the 48-hour notice rule and the open days.
-- **Look:** cream flour, crust brown and a custard-yellow cake band, with the menu laid out like a chalkboard (dotted leaders, prices on the right). I used only the brief's prices and copy.
-- **Fonts:** Fraunces for headings and Karla for body text, both from Google Fonts.
-- **Placeholders:** the hero photo and the map are drawn in CSS and labelled. The brief has no Instagram handle, so "Message us" and the Instagram link point to `#` and need the real URL.

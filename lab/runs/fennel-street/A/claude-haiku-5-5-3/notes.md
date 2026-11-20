@@ -1,5 +1,0 @@
-- Warm flour, crust and ochre palette with Fraunces for headings and Figtree for body text, both loaded from Google Fonts.
-- The "Open now" badge is computed from the stated hours in London time, so it stays correct without a backend.
-- Menu items use dotted leaders so prices scan like a handwritten board; the cake-order call and message buttons sit in one card.
-- The brief gave no Instagram URL, so that footer item is unlinked, with a comment marking where to add it.
-- The photo is a labelled CSS placeholder; no external images are used.

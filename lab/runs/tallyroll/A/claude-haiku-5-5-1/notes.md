@@ -1,5 +1,0 @@
-- **Register:** flat off-white surfaces, one muted teal accent, and no imagery, so the page reads as a technical document.
-- **Hero proof:** the invoice line is built in HTML/CSS. It expands with `<details>`, so it works without JavaScript.
-- **Placeholders:** the 31 daily totals are labelled placeholders, since the brief gave no figures for them and I didn't invent any.
-- **Fonts:** IBM Plex Sans for text and IBM Plex Mono for code and figures, both loaded from Google Fonts.
-- **Dark mode:** colors are tokens on `:root`, with a dark set under `prefers-color-scheme` and `data-theme`. Layout collapses to one column below 800px.

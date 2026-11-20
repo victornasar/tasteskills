@@ -1,5 +1,0 @@
-- The page is built around the example invoice line, which works. Clicking it opens the 31 daily totals, and the page adds them up live to show they reach exactly 1,204,388. That proves the headline instead of just stating it.
-- The look is plain and calm: an off-white background, one muted green accent, thin divider lines and very little decoration. Dark mode is supported.
-- Fonts: IBM Plex Sans and IBM Plex Mono, loaded from Google Fonts. All numbers, code and invoice figures are in the monospaced font with fixed-width digits so columns line up.
-- The copy is yours with nothing added. The only text I wrote is labels such as "Example invoice", "Built for the two people who sign off" and the closing line above the final buttons.
-- The docs and demo links are placeholders that jump within the page. Swap in the real URLs before launch.

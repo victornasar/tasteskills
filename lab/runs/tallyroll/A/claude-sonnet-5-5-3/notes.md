@@ -1,5 +1,0 @@
-- **Fonts:** IBM Plex Sans and IBM Plex Mono, loaded from Google Fonts, with system-font fallbacks. Mono carries the numbers and endpoints, so they read as data.
-- **Hero:** The invoice line is the hero. It expands into 31 daily totals that sum exactly to 1,204,388. The arithmetic checks out: 1,204,388 × $0.0004 = $481.76 after rounding. The daily figures are generated sample data and labelled as such.
-- **Copy:** I kept to your copy and added no claims, numbers or testimonials. I added a short closing line ("Check the work before you trust it.") and a sketch pricing rule marked "not exact syntax". Cut either if you want it strictly verbatim.
-- **Look:** One deep-green accent on warm off-white, with hairline rules and no gradients or illustrations. It follows the system's dark mode.
-- **Page:** The page is one column of plain sections, and the docs and demo buttons appear twice, at the top and again at the close. Links point to placeholder paths (`/docs`, `/demo`, `/status`, `/security`, `/contact`).

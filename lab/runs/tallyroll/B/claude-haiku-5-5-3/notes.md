@@ -1,5 +1,0 @@
-- **Fonts:** IBM Plex Sans for all text and IBM Plex Mono for the invoice line, endpoint and code. Both are OFL and self-hosted from `./fonts/`; the files still need downloading from github.com/IBM/plex.
-- **Colors:** Graphite and Signal (light), with Signal Blue kept to links, focus and the one accent. Body text is 10.09:1 and muted text 4.82:1 on the ground.
-- **Status colors:** the direction has none, so I did not invent any. Reconciled and open states should be marked with text or glyphs instead.
-- **Invoice:** built in HTML. The disclosure opens to 31 day cells with no values, since the brief gives no daily figures.
-- **Copy:** only the supplied copy is used, with two added section headings ("From usage to invoice, in three steps." and "Reconcile without a spreadsheet.") and one closing line, "Check the rules against your own usage.", which you may want to cut.
