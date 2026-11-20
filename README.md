@@ -98,6 +98,8 @@ skills/
 
 To change a skill, edit its Markdown. Keep the advice judgement-based: explain the reasoning and the evidence,
 give examples rather than recipes, and don't add lookup tables that map a kind of business to a font or colour.
+Don't treat a convention as slop just because it's common: the skills use one when the brief calls for it and
+break it when the brief calls for something else.
 
 ## License
 
