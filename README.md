@@ -1,162 +1,80 @@
 # tasteskills
 
-Tools that help AI coding agents make websites that look designed, not generated.
+Design skills for AI coding agents, so the websites they build look designed, not generated.
 
-Ask an AI agent to build a site and it reaches for the same choices every time: Inter for the font, a purple
-or blue gradient, a centered hero, three feature cards. None of it is wrong. All of it looks like every other
-AI-built site. People call this look **AI slop**.
+Ask an agent to build a site and it reaches for the same choices every time: Inter, a blue-to-purple gradient, a
+centred hero, three feature cards. None of it is wrong, but all of it looks like every other AI-built site. These
+skills teach the agent to think like a design director instead: read the brief, work out what the brand needs,
+make choices it can defend, and check the rendered result.
 
-This repo gives agents better defaults to reach for, and the evidence for why they're better:
+They're plain Markdown. There are no engines, catalogs to query or scripts to run; the agent does the thinking.
 
-- **Curated choices.** A short list of fonts and color pairs, each picked by a person, tagged so an agent can
-  match them to a brief.
-- **Avoid lists.** The fonts and patterns agents overuse, measured from real AI output.
-- **Skills.** Commands an agent runs (`/taste`, `/find-font`, `/find-color`, `/check-layout`) that turn a brief
-  into a direction and specific picks, with reasons.
-- **Evals.** Checks that the picks avoid the defaults and that different briefs get different answers.
+## The skills
 
-## Quick start
+| Skill | What it does |
+| --- | --- |
+| [`taste`](skills/taste/SKILL.md) | The design director. Reads the brief and the brand's positioning, writes a short `DIRECTION.md`, coordinates the skills below, builds, and critiques the render against the direction |
+| [`find-font`](skills/find-font/SKILL.md) | Typography: type roles, category conventions, letterforms, weights and variable axes, pairing, a rendered type proof, and a curated list of fonts plus the AI defaults to avoid |
+| [`find-color`](skills/find-color/SKILL.md) | Colour: directions built from positioning, honest conventions, OKLCH, calculated contrast, a working token system, and 51 curated directions as starting points |
+| [`check-layout`](skills/check-layout/SKILL.md) | Layout: plan the page from the visitor's questions, then look at the render and fix the layout patterns AI-built sites overuse |
 
-Four skills are ready to use today. All work in Claude Code, Cursor, Codex and any agent that supports skills.
-The three engines ship with their data and a small script, so the picks are the same every time for the same
-brief. `/taste` coordinates them.
+Each works on its own. `taste` uses the other three when they're installed.
 
-### Design direction: `/taste`
+## Install
 
-Orchestrates the skills below into one workflow: discover the brief, write `DIRECTION.md`, pick type and color
-from the engines, plan layout, build, then critique against the direction (at most two fix rounds). Needs the
-sibling skills installed for full runs; if one is missing it says so and does not invent replacements.
+Works with Claude Code, Cursor, Codex and any agent that supports the [Agent Skills](https://agentskills.io)
+format.
 
 ```bash
-npx skills add https://github.com/victornasar/tasteskills --skill taste
-npx skills add https://github.com/victornasar/tasteskills --skill find-font
-npx skills add https://github.com/victornasar/tasteskills --skill find-color
-npx skills add https://github.com/victornasar/tasteskills --skill check-layout
+npx skills add https://github.com/victornasar/tasteskills            # choose from the list
+npx skills add https://github.com/victornasar/tasteskills --skill '*' # all four
+npx skills add https://github.com/victornasar/tasteskills --skill taste --skill find-font
 ```
 
 Then ask your agent:
 
 ```
 /taste independent daycare for local families
-```
-
-Fast mode (written brief, no interview) is the primary path and what the lab measures. Guided mode
-(conversational discovery) ships labelled **experimental**. More in [`direction/README.md`](direction/README.md).
-
-### Pick colors: `/find-color`
-
-Needs [Node.js](https://nodejs.org) 18 or later. No clone, no API keys.
-
-```bash
-npx skills add https://github.com/victornasar/tasteskills --skill find-color
-```
-
-Then ask your agent:
-
-```
+/find-font cozy bakery website
 /find-color neighbourhood bakery
 ```
 
-You get 3–5 clearly different color directions (for this brief: Espresso and Milk, Oxblood and Pistachio,
-Bronze Monochrome, Clay and Linen), each with contrast numbers and a note on when to choose it. Pick one and
-the agent writes it into your project as CSS variables, a Tailwind theme or design tokens. More in
-[`color/README.md`](color/README.md).
+Or ask it to build or review a page "with check-layout".
 
-### Pick fonts: `/find-font`
+Agent without skills support? Point it at a skill's `SKILL.md` and give it the brief.
 
-Needs Python 3.8 or later. No clone, no API keys.
+## What the skills are based on
 
-```bash
-npx skills add https://github.com/victornasar/tasteskills --skill find-font
+The skills came out of experiments that are no longer in the repo (they're in git history, tagged
+`pre-simplify`). What they found:
+
+- **AI defaults are real and measurable.** In 90 sites built by three Claude models from one-line briefs, landing
+  pages had rounded boxes everywhere 100% of the time, a pill badge above the headline 93% and a decorative
+  gradient 87%. Inter was on 72% of the pages that load a web font, and Fraunces on 50%.
+- **Better fonts and colours don't change the page.** With type and colour skills, default fonts disappeared,
+  but page structure stayed within normal run-to-run variation. Planning the structure from the brief and
+  checking the render is what moved it.
+- **Removing slop leaves a new default.** Once the overused patterns were gone, skill-built pages converged on a
+  pale, type-only, ruled look whatever the brief said. `taste` now plans directions on six visual axes and checks
+  the render for that house style.
+- **Judgement beats ranking.** A font recommender that ranked by metadata picked faces a person rejects on sight;
+  models that looked at the fonts caught them. That's why the skills ask the agent to look rather than look up.
+- **Not yet proven:** that people prefer the sites the skills produce. Blind ratings had only an AI rater when
+  this version was written.
+
+## Repository layout
+
+```text
+skills/
+  taste/          SKILL.md, references/direction-template.md, references/visual-direction.md
+  find-font/      SKILL.md, references/fonts.md
+  find-color/     SKILL.md, references/directions.md
+  check-layout/   SKILL.md
 ```
 
-Then ask your agent:
-
-```
-/find-font cozy bakery website
-```
-
-You get a top pick per role (for this brief, Synonym for headlines and Sentient for body text), two
-alternatives each, the license, where to download it and the CSS to self-host it. More in
-[`typography/README.md`](typography/README.md).
-
-### Check the layout: `/check-layout`
-
-Needs Node 22 or later and Chrome (or Chromium, Edge, Brave). No clone, no API keys.
-
-```bash
-npx skills add https://github.com/victornasar/tasteskills --skill check-layout
-```
-
-Ask your agent to build or review a page "with check-layout". Before building, it plans the page from the brief
-instead of the usual template. After building, it renders the page, checks for the patterns AI-built sites
-overuse (pill badges, emoji icons, rounded boxes everywhere and six more) and fixes the ones the brief doesn't
-justify. More in [`layout/README.md`](layout/README.md).
-
-Agent without skills support? Point it at the skill's `SKILL.md` (in [`direction/skills/`](direction/skills/),
-[`color/skills/`](color/skills/), [`typography/skills/`](typography/skills/) or
-[`layout/skills/`](layout/skills/)) and give it the brief.
-
-## What's in the repo
-
-| Folder | What it is | Status |
-| --- | --- | --- |
-| [`direction/`](direction/) | The `/taste` skill: design-director workflow that writes `DIRECTION.md` and coordinates the engines below | Ready to use (guided mode experimental) |
-| [`color/`](color/) | 51 curated color directions, a script that picks and applies them, and research on 6,295 award-winning sites | Ready to use |
-| [`typography/`](typography/) | 63 curated free fonts, an avoid list of 27 overused ones, and the `/find-font` skill | Ready to use |
-| [`layout/`](layout/) | The `check-layout` skill: plans page structure from the brief and checks the rendered page for nine overused layout patterns | Ready to use |
-| [`lab/`](lab/) | Experiments on whole-page design: a measured corpus of AI defaults, a with/without-skills experiment, blind ratings | First results in |
-
-Each folder works on its own, with its own data, scripts and checks. Start with the folder's `README.md`;
-agents start with its `AGENTS.md`.
-
-## What's proven and what isn't
-
-- **Proven:** the skills pick from the curated lists, avoid the overused defaults, and give different answers
-  to different briefs. Both areas have automated checks for this, including tests that fail if one font or
-  color starts winning most briefs.
-- **Measured:** in 90 AI-built sites, landing pages show rounded boxes everywhere 100% of the time, a pill badge
-  above the headline 93% and a decorative gradient 87%. With the skills, default fonts vanish (without them,
-  every bakery page in the experiment used Fraunces) and layout patterns drop by about a quarter. See
-  [`lab/findings.md`](lab/findings.md).
-- **Layout:** adding `check-layout` cut the overused layout patterns from 1.33 per page to 0.06 and changed page
-  structure beyond normal run-to-run variation for Opus and Sonnet (not yet for Haiku).
-- **Not yet proven:** that people prefer the sites built with the skills. Blind ratings are open. Guided-mode
-  discovery for `/taste` is designed but not scored (persona-B calibration pending). In fast mode on the lab's
-  two rich briefs, `/taste` wrote an honestly tagged `DIRECTION.md` every time and kept check-layout's gains,
-  but didn't change pages beyond what check-layout already does.
-
-## Words used here
-
-| Word | Meaning |
-| --- | --- |
-| Slop | The default look of AI-built sites: the same fonts, colors and layouts every time |
-| Brief | A short description of the project: "cozy bakery website", "dashboard for a fintech" |
-| Skill | Instructions (and sometimes a script) an AI agent loads to do one job well |
-| Ground, figure | In color: the background color and the main color on top of it (type, logo) |
-| OKLCH | A way of writing colors that matches how people see lightness; this repo stores colors in it |
-| Eval | An automated test of an agent's or skill's output |
-
-## Contributing
-
-Work in one folder at a time and follow its `AGENTS.md`. Before committing, run that folder's checks:
-
-```bash
-# Direction: static checks for the /taste conductor (no model calls)
-cd direction && node --test tests/test_skill.mjs
-
-# Typography: validates the catalog and regenerates its README
-cd typography && python3 scripts/build.py --check && python3 -m unittest discover -s tests -q
-
-# Color: rebuilds the library and runs the golden briefs; nothing should change
-cd color && node tools/build.mjs all && git diff --exit-code
-```
-
-To run the typography check automatically on every commit: `git config core.hooksPath .githooks`.
-
-One rule covers the whole repo: a new skill or rule needs evidence behind it, from an area's evals or from a
-finding in `lab/`.
+To change a skill, edit its Markdown. Keep the advice judgement-based: explain the reasoning and the evidence,
+give examples rather than recipes, and don't add lookup tables that map a kind of business to a font or colour.
 
 ## License
 
-[MIT](LICENSE). Fonts keep their own licenses (OFL or Fontshare's FFL); the repo stores no font files.
+[MIT](LICENSE). Fonts keep their own licences (OFL or Fontshare's FFL); the repo stores no font files.

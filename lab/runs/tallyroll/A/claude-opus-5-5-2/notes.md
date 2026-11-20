@@ -1,5 +1,0 @@
-- **Fonts:** IBM Plex Sans for text and IBM Plex Mono for numbers and code, both loaded from Google Fonts. Every figure uses tabular numerals so columns of numbers line up.
-- **Proof first:** the example invoice line sits in the hero and starts expanded. It shows the 31 daily totals, and they add up exactly to 1,204,388 calls, which × $0.0004 gives $481.76. The daily figures are invented sample data, and the page says so in a note under the invoice.
-- **Calm palette:** off-white paper, near-black ink and a single muted green used for actions and data. There is a matching dark mode, no gradients and no decoration. Structure comes from thin rules and a grid.
-- **Finance and engineering side by side:** their bullet lists sit in two equal columns of one panel, matching the joint sign-off described in the brief.
-- **Copy:** only the brief's claims and numbers are used. Docs and demo actions appear in the hero and again at the bottom of the page. Links point to placeholder `#` targets, so the real URLs still need to go in.

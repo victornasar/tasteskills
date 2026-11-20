@@ -1,5 +1,0 @@
-- **Fonts:** Fraunces for headings and DM Sans for body, both loaded from Google Fonts, with Georgia and system sans as fallbacks.
-- **Phone-first:** a status bar at the top answers "are they open?" straight away. It's computed in London time and the current day is highlighted in the hours table. The hours, address and phone number are all easy to reach.
-- **Cake orders:** a terracotta block with three short steps and a tap-to-call button, so it stands out from the rest of the page.
-- **Placeholders and copy:** photos and the map are labelled dashed boxes. I added no new claims or prices. The Instagram links point to `#` because the brief gave no handle. The "Message us" button also uses `#`, since the brief gave no message channel, so swap in the real handle.
-- **Tone:** cream, crust and butter colours, dotted price leaders like a chalkboard menu, and a dark mode.

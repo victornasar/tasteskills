@@ -1,5 +1,0 @@
-- **Lead with the artifact:** the invoice line sits in the first screen and opens to 31 daily totals that sum to 1,204,388. The daily figures are my illustrative data, since the brief gave none, and the block is labelled "Example". Left-aligned, cream ledger paper, hairline rules, no cards, gradients or testimonials.
-- **Fonts (engine picks, self-host):** Steps Mono for headlines, IBM Plex Serif for body, and Iosevka for figures and code, because Steps Mono lacks `=`. The `.woff2` files aren't bundled, so the page uses system fallbacks until you add them to `./fonts/`.
-- **Colour (engine pick):** Bottle Green Ledger, with ground #F6F2E7 and figure #194430. Body text contrast is 10.01:1. The engine gave no accent, so green is the action colour.
-- **Checks:** check-layout found none of the nine patterns at desktop or phone width. One fix round: I aligned the hero's left edge with the header.
-- **Open in `DIRECTION.md` (status draft, nothing approved):** the direction choice, the unprovided fennel-street.md, and the docs/demo/footer link targets, which are placeholder anchors.

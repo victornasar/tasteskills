@@ -1,5 +1,0 @@
-- **Direction:** a "bake board". Today's status, hours and address come first, then the priced bake list. The About copy sits last.
-- **Fonts:** Synonym for headlines and Sentient for body, both Fontshare FFL, self-hosted from `./fonts/`. The font files aren't included, so the page uses system-ui and Georgia until they're added.
-- **Colour:** Clay and Linen from find-color, with Linen ground and Rose Clay as the one figure colour.
-- **Imagery:** no photos were supplied, so there are no placeholder frames. The visuals are the daily line in type and an inline SVG tile band. The photo shot list is in DIRECTION.md.
-- **Files:** `/private/var/folders/rh/c3zlwpy56yd7gcc101pb318w0000gn/T/tmpai1z58l9/index.html` and `/private/var/folders/rh/c3zlwpy56yd7gcc101pb318w0000gn/T/tmpai1z58l9/DIRECTION.md`. The Instagram link is a placeholder, and `tallyroll.md` isn't in the project, so I couldn't read it.

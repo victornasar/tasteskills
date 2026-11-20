@@ -1,5 +1,0 @@
-- I put a live "open now / closed, opens Wednesday at 7:00" bar at the top. It stays visible as you scroll and works on London time, because most visitors are on their phones checking whether the shop is open. Today's row is also highlighted in the hours table.
-- Fonts are Fraunces (headings, an old-style serif) and Karla (body text), both loaded from Google Fonts. The colours are crust brown, custard yellow and fennel green on a flour-white background, to keep it warm and handmade.
-- Cake orders get their own dark block with a large tap-to-call number and the 48-hour notice as a badge. The seasonal cakes sit in a custard-coloured card next to the daily menu.
-- The photo spot is a dashed placeholder with a label, and the map is a simple CSS drawing marked "Illustration, not to scale", with a link to Google Maps for directions.
-- The brief doesn't give an Instagram handle, so the Instagram links are placeholders marked in the code. I didn't make one up.

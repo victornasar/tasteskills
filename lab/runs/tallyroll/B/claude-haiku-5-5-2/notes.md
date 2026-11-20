@@ -1,5 +1,0 @@
-- **Typography:** Mona Sans (OFL, variable, self-hosted from `./fonts/MonaSans.woff2`) for headlines and body. Its catalog caveat is that it reads as GitHub, so check that before launch. The invoice figures use tabular numerals on the same family, and the endpoint uses a system monospace stack, because no catalog mono was calm enough.
-- **Color:** Graphite and Signal. Paper White ground, Graphite for headings and the primary button, Signal Blue only for links and focus. All values come from the find-color output.
-- **Invoice line:** built in HTML and CSS. The expansion shows 31 placeholder day rows, since no daily totals were supplied.
-- **Links:** `#docs`, `#demo`, `#pricing`, `#status`, `#security`, and `#contact` are placeholders to replace with real URLs.
-- **Scope:** the page is self-contained apart from the font file. Without `./fonts/`, it falls back to the system UI font.

@@ -1,6 +1,0 @@
-# Regenerable from the committed HTML with tools/detect.mjs --shots
-runs/shots/
-corpus/shots/
-# Font files fetched for renders only (tools/fetch-fonts.mjs)
-tools/.font-cache/
-tools/font-local.json

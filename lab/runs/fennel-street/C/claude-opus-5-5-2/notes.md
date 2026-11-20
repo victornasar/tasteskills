@@ -1,5 +1,0 @@
-- **Layout:** the first screen pairs the line with a live hours board that says "Open now" or "Closed now" in London time and highlights today, plus the address and a directions link. That answers a phone visitor's first question. The prices sit below as a dark menu board, and cake orders get one tap-to-call button. I cut testimonials, stats and feature cards.
-- **Fonts:** Synonym for headings and Sentient for body text, both from Fontshare. They're self-hosted: put the woff2 files in `./fonts/` next to the page, or it falls back to system sans and Georgia. That folder is the only part that isn't inside the one file. Fontshare's licence means the font files shouldn't go in a public repo.
-- **Colours:** Clay and Linen, a linen background with rose clay for headings, links and the button. Rose clay on linen measures 4.92:1 and body text 10:1.
-- **Layout check:** none of the nine overused patterns showed up. The phone render showed the cake, about and footer sections touching the screen edge; I fixed that and checked again.
-- **To fill in:** the brief gives no Instagram handle, so those links go to instagram.com for now. The photo is a labelled placeholder.

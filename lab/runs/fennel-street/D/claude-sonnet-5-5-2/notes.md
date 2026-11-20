@@ -1,5 +1,0 @@
-- **Open first:** the page leads with a live open/closed line (London time) and a week hours board, because visitors are mostly on phones checking if the shop is open.
-- **Price board, no cards:** the menu is ruled lists with dotted leaders, using only the prices in your copy. The `check-layout` run found none of the nine overused patterns. I did not render the desktop layout. The phone render looked right after one fix round.
-- **Fonts:** Synonym for headings and Sentient for body, both from Fontshare and meant to be self-hosted. The font files aren't bundled, so until you add the woff2 files to `./fonts/` the page shows system fonts. In the checker's phone render, that included the headings, which came out in a system sans.
-- **Colour:** Club Cream (cream `#F5E7C3`, burgundy `#5B1D26`), taken from `find-color`.
-- **Open decisions:** there is no Instagram or message link because none was supplied, and the photo and map are labelled placeholders. `DIRECTION.md` and `index.html` are saved in the project, and `DIRECTION.md` is still a draft because this run couldn't get approval.

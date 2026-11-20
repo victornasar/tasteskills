@@ -1,5 +1,0 @@
-- **Direction:** a ruled bake timeline (7:00 bread, 9:00 tarts, 14:00 gone) under the headline, so open status and the day's bake sit in the first phone screen.
-- **Palette:** Clay and Linen from find-color (Linen ground, Rose Clay figure); Rose Clay is the full band for cake orders.
-- **Type:** Bagnard headlines and Source Sans 3 body from find-font, but the `.woff2` files aren't bundled, so the Georgia and system-ui fallbacks are what renders now.
-- **Checks:** check-layout flagged a centred hero on desktop; I moved the column to a left edge. Ana and Rita sat below the cake band, so I moved About above it.
-- **Open items:** Instagram is a `#` placeholder (no handle given), there are no photos (none supplied), and the status line can't know about "until we sell out". DIRECTION.md is saved at `/private/var/folders/rh/c3zlwpy56yd7gcc101pb318w0000gn/T/tmpi9hsln74/DIRECTION.md`, with the page at `/private/var/folders/rh/c3zlwpy56yd7gcc101pb318w0000gn/T/tmpi9hsln74/index.html`.

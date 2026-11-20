@@ -1,5 +1,0 @@
-- The page is the invoice: the first screen shows the example line with its arithmetic, and it opens to the 31 daily ticks, built in HTML with no values invented.
-- Palette is find-color's Graphite and Signal; Signal Blue appears only on focus and the trace line, never on text.
-- Type is Overpass for headlines, IBM Plex Sans for body, Iosevka for code. The font files are not bundled, so the page falls back to system fonts until they are placed in `./fonts/`.
-- Layout challenges the category: left headline, no centered hero, no card rows, demo second to docs, pricing stated as one sentence.
-- Checks: check-layout found none of the nine patterns; one phone fix kept the operator with its figure. `DIRECTION.md` and `index.html` are saved in the project. Gates 1 and 3 were not approved, so the spec stays draft with open decisions listed.

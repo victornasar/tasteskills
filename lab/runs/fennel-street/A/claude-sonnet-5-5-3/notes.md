@@ -1,5 +1,0 @@
-- **Fonts:** Fraunces for headings and Figtree for body, both loaded from Google Fonts, with Georgia and system-ui as fallbacks.
-- **Open or closed:** the status pill at the top uses London time, and today's row in the hours table is highlighted. It only says "until we sell out" because the brief does.
-- **Warm, handmade look:** cream paper, crust-red and custard-yellow accents, offset-shadow cards and dotted price leaders like a chalkboard menu. The hero photo is a labelled placeholder with a few CSS-drawn tarts.
-- **Cake orders:** there is one tap-to-call number and a three-step "how it works" built only from the brief's 48-hour rule.
-- **Placeholder links:** the brief gave no Instagram handle, so "Instagram" and "Message us" point to instagram.com until you supply one. I added no prices, reviews or claims beyond the brief.

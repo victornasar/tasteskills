@@ -1,5 +1,0 @@
-- **Opening status comes first:** a sticky bar works out whether the shop is open from London time (not the phone's own clock) and says when it next opens. Today's row in the hours table is highlighted.
-- **Cake orders:** a dark section with the phone number in large type and a tap-to-call button, since most visitors will be on a phone.
-- **Look:** cream, crust-brown and custard-yellow colours. Fonts are Fraunces (headings and the tagline) and Figtree (body text), both loaded from Google Fonts.
-- **No photos:** the hero is a tray of tarts drawn in CSS and labelled as a photo placeholder. The street map and the oven are CSS drawings too. "Open in Maps" links out to Google Maps.
-- **Things you need to fill in:** the brief gives no Instagram account or other way to message the shop, so the "Message us" button and the footer Instagram link both go to `#` for now. I used only the copy in the brief and added no claims. I didn't open tallyroll.md, so "the opposite of" it is my guess at what it looks like.

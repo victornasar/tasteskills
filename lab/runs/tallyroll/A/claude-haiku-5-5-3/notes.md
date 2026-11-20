@@ -1,5 +1,0 @@
-- **Palette and type:** Neutral paper background, one muted teal accent, and a monospace face for the event endpoint and invoice math. Only system font stacks are used, so the page loads no external fonts or images.
-- **Invoice line:** Built in HTML/CSS. The math is $1,204,388 × $0.0004 = $481.76, matching the brief, and the daily breakdown is a labelled placeholder with no invented values.
-- **Copy:** Uses only the supplied text, including the repeated docs and demo actions. Section labels come from the brief's headings.
-- **Layout:** Three-column steps and two-column audience sections collapse to one column under 760px, with no horizontal scroll.
-- **Dark mode:** Colors are tokens on `:root`, with dark values under both the system preference and `data-theme="dark"`.

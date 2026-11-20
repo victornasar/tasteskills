@@ -1,5 +1,0 @@
-- **Lead with the open check.** A live open/closed line (London time) sits above the headline, then the tagline beside a drawn day strip (7 bread, 9 tarts, 14 gone). Hours and address are on the page, and the phone number is tap-to-call.
-- **Fonts and colour (engine picks).** Synonym for headlines and Sentient for body, both from Fontshare and meant to be self-hosted. Drop the woff2 files in `./fonts/`; until then it falls back to system-ui and Georgia. Colour is Club Cream, a cream ground with two full burgundy bands (seasonal cakes, Find us).
-- **No photos, nothing invented.** Every price comes from the brief and nothing is added. The shot list for Ana, the nata tray and the oven is in DIRECTION.md for later.
-- **Placeholder to resolve.** The Instagram link is `#` because the brief gave no URL. "Message us" points there for the same reason.
-- **Critique.** One fix round was needed (headline wrap, strip height, phone nav, "Gone by 2" label overlap). check-layout then found none of the nine patterns, and by my count the page shows one house-style marker (H4, flat and square). DIRECTION.md stays `draft` and is saved alongside `index.html`.

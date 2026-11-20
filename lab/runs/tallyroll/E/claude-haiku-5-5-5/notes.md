@@ -1,5 +1,0 @@
-- Direction: graphite ledger. Engine picks are Technor and IBM Plex Sans, with Graphite and Signal colours. Blue is held to links and focus, and the 31 bars are labelled illustrative because no daily data was supplied.
-- Saved to `/private/var/folders/rh/c3zlwpy56yd7gcc101pb318w0000gn/T/tmpazzgpjib/index.html` and `/private/var/folders/rh/c3zlwpy56yd7gcc101pb318w0000gn/T/tmpazzgpjib/DIRECTION.md` (status draft, with the decision log and checkpoints).
-- Fonts are declared but not bundled. The woff2 downloads were not approved in this run, so the page renders in system fallbacks until `./fonts/` is added.
-- Checks: the desktop and phone renders pass the check-layout patterns. One fix round removed the blue bars, cut house-style markers from 4 to 3, and varied the section spacing.
-- Open: constraint C2 (headline at least 4× body) fails on phone at 2.75×. Whether it applies to desktop only is for the client to decide. `fennel-street.md` was not in the project, so the opposite register was taken from the brief alone.

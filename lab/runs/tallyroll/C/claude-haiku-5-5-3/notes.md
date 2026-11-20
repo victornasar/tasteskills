@@ -1,5 +1,0 @@
-- **Palette:** Bottle Green Ledger from find-color: cream ground, bottle green for headings, links and the primary button. No blue or purple, and no separate accent.
-- **Type:** Steps Mono for headings, IBM Plex Serif for body, Commit Mono for code and invoice figures. All three are free and self-hosted. Place the woff2 files in `fonts/` next to `index.html`; without them the page falls back to system monospace and serif.
-- **Layout:** left-aligned hero with the expandable invoice line beside it, since the line is the one thing only this brief has. Steps are a numbered list, not cards. Finance and engineering are two ruled columns. Pricing is sentences, not big numbers.
-- **Check-layout:** none of the nine overused patterns were found at desktop or phone width. The one fix was resetting the steps list's default indent.
-- **Invoice bars:** the 31 bars are illustrative shape only, labelled as such, because the brief gives no daily figures.
