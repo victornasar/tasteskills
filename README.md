@@ -42,8 +42,44 @@ Two tests, used throughout the skills:
 | [`find-color`](skills/find-color/SKILL.md) | Colour: directions built from positioning, honest conventions, OKLCH, calculated contrast, a working token system, and 51 curated directions as starting points |
 | [`check-layout`](skills/check-layout/SKILL.md) | Layout: plan the page from the visitor's questions, then look at the render and fix the layout patterns AI-built sites overuse |
 | [`composition`](skills/composition/SKILL.md) | Composition: the visual relationships inside the page's structure (weight and balance, hierarchy and focal points, eye flow, space, scale, grids and deviations, grouping, density and pacing, layering), planned from the content and checked on the desktop and phone render |
+| [`visual-hierarchy`](skills/visual-hierarchy/SKILL.md) | Hierarchy: rank information from the visitor's task, pair headlines with their support, spend emphasis deliberately, design for scanning, and check the ranking survives blur, grayscale and a phone |
+| [`imagery`](skills/imagery/SKILL.md) | Imagery: give every image a job, choose photography, illustration, the product or diagrams, write shot lists, set crops and ratios, keep a set consistent, and refuse generic or dishonest stock |
+| [`content-design`](skills/content-design/SKILL.md) | Words: messaging hierarchy, specific headlines, brand voice as decisions, calls to action, microcopy, and a check for generic AI marketing language and invented claims |
+| [`responsive-design`](skills/responsive-design/SKILL.md) | Adaptation: design each context instead of shrinking the desktop; content-led breakpoints, container queries, touch and input, mobile navigation, fluid type, and tables and complex layouts on small screens |
+| [`interaction-design`](skills/interaction-design/SKILL.md) | Behaviour: signifiers, feedback timing, every interaction and view state, navigation behaviour, forms and validation, error prevention and recovery |
+| [`motion-design`](skills/motion-design/SKILL.md) | Motion: animate only with a job, timing and easing by role, transitions, micro-interactions, scroll and loading motion, choreography and reduced motion |
+| [`component-craft`](skills/component-craft/SKILL.md) | Components: buttons, inputs, navigation, cards, menus, dialogs, tabs and tooltips built on native elements, with every state designed and the fine details (heights, radii, borders, focus rings, hit areas) finished |
+| [`iconography`](skills/iconography/SKILL.md) | Icons: whether to use them at all, one consistent family, size, stroke and weight matched to text, optical alignment, and accessible icon-only controls |
+| [`design-systems`](skills/design-systems/SKILL.md) | Systems: tokens in tiers named by role, semantic colour, type and spacing systems, variants by job, theming, and documented exceptions so consistency doesn't flatten the brand |
+| [`web-accessibility`](skills/web-accessibility/SKILL.md) | Accessibility: WCAG 2.2 AA as part of design quality, semantic HTML, keyboard and focus, screen reader names and announcements, contrast, forms, motion, and testing with axe, a keyboard and a screen reader |
+| [`data-visualization`](skills/data-visualization/SKILL.md) | Data: start from the question, choose a sentence, number, table or chart, encode for accuracy, label directly, design dashboards with context, use colour for data and avoid misleading scales |
+| [`web-performance`](skills/web-performance/SKILL.md) | Performance: Core Web Vitals, perceived speed, images, fonts and scripts delivered efficiently, layout stability, smooth animation, and measuring in the lab and the field |
 
-Each works on its own. `taste` uses the other four when they're installed.
+Each works on its own. `taste` uses the others when they're installed.
+
+### Who owns what
+
+The skills divide the work so they don't repeat each other. When two could apply, the owner decides and the other
+refers to it.
+
+| Question | Owner |
+| --- | --- |
+| What should this site feel like, and why? | `taste` |
+| Which sections, in what order? | `check-layout` |
+| How do elements relate in space; what balances? | `composition` |
+| What matters most, and is that what people see first? | `visual-hierarchy` |
+| What do the words say? | `content-design` |
+| What do the images show, and how are they directed? | `imagery` |
+| Which typefaces and colours? | `find-font`, `find-color` |
+| What changes between phone and desktop? | `responsive-design` |
+| What happens when someone acts; which states exist? | `interaction-design` |
+| How do changes move? | `motion-design` |
+| Does each component look finished in every state? | `component-craft` |
+| Icons or words; which icons? | `iconography` |
+| Which values are shared, and what are they called? | `design-systems` |
+| Does it work for disabled people? | `web-accessibility` |
+| How should these numbers be shown? | `data-visualization` |
+| Does it load fast and stay stable? | `web-performance` |
 
 `check-layout` and `composition` divide the page between them: check-layout decides which sections exist and in
 what order; composition decides how the elements inside that structure relate visually: what's seen first, what
@@ -58,9 +94,9 @@ format.
 
 ```bash
 npx skills add https://github.com/victornasar/tasteskills            # choose from the list
-npx skills add https://github.com/victornasar/tasteskills --skill '*' # all five
+npx skills add https://github.com/victornasar/tasteskills --skill '*' # all seventeen
 npx skills add https://github.com/victornasar/tasteskills --skill taste --skill find-font
-npx skills add https://github.com/victornasar/tasteskills --skill composition
+npx skills add https://github.com/victornasar/tasteskills --skill web-accessibility --skill interaction-design
 ```
 
 Then ask your agent:
@@ -70,9 +106,11 @@ Then ask your agent:
 /find-font cozy bakery website
 /find-color neighbourhood bakery
 /composition the homepage hero feels flat and cluttered
+/content-design rewrite the pricing page copy
+/web-accessibility audit the checkout flow
 ```
 
-Or ask it to build or review a page "with check-layout" or "with composition".
+Or ask it to build or review a page "with check-layout", "with composition" or any other skill by name.
 
 Agent without skills support? Point it at a skill's `SKILL.md` and give it the brief.
 
@@ -105,6 +143,18 @@ skills/
   check-layout/   SKILL.md
   composition/    SKILL.md, references/composition-principles.md,
                   references/composition-patterns.md, references/composition-critique.md
+  visual-hierarchy/    SKILL.md, references/reading-and-scanning.md
+  imagery/             SKILL.md, references/art-direction.md
+  content-design/      SKILL.md, references/voice-and-microcopy.md
+  responsive-design/   SKILL.md, references/adaptation-patterns.md
+  interaction-design/  SKILL.md, references/states-and-forms.md
+  motion-design/       SKILL.md, references/timing-and-easing.md
+  component-craft/     SKILL.md, references/component-specs.md
+  iconography/         SKILL.md
+  design-systems/      SKILL.md, references/token-architecture.md
+  web-accessibility/   SKILL.md, references/testing-checklist.md
+  data-visualization/  SKILL.md, references/chart-guide.md
+  web-performance/     SKILL.md, references/measuring.md
 ```
 
 To change a skill, edit its Markdown. Keep the advice judgement-based: explain the reasoning and the evidence,
