@@ -38,7 +38,7 @@ Two tests, used throughout the skills:
 | Skill | What it does |
 | --- | --- |
 | [`taste`](skills/taste/SKILL.md) | The design director. Reads the brief and the brand's positioning, writes a short `DIRECTION.md`, coordinates the skills below, builds, and critiques the render against the direction |
-| [`find-font`](skills/find-font/SKILL.md) | Typography: type roles, category conventions, letterforms, weights and variable axes, pairing, a rendered type proof, and a curated list of fonts plus the AI defaults to avoid |
+| [`find-font`](skills/find-font/SKILL.md) | Typography: type roles, category conventions, letterforms, weights and variable axes, pairing, a rendered type proof, and a curated list of fonts, plus the AI defaults to look past and when one can still be right |
 | [`find-color`](skills/find-color/SKILL.md) | Colour: directions built from positioning, honest conventions, OKLCH, calculated contrast, a working token system, and 51 curated directions as starting points |
 | [`check-layout`](skills/check-layout/SKILL.md) | Layout: plan the page from the visitor's questions, then look at the render and fix the layout patterns AI-built sites overuse |
 

@@ -17,8 +17,15 @@ breaks the GDPR).
 
 Fonts AI-built sites and templates overuse. In the lab's corpus of 90 AI-built sites, Inter was on 72% of the
 pages that load a web font and Fraunces on 50%; with no skill, every bakery page in the experiment used
-Fraunces for headings. Using one of these is fine when the client's brand already does; otherwise treat it as
-a default to look past. "Instead" names are places to start looking, not swaps.
+Fraunces for headings.
+
+These are defaults, not bad fonts. Several are excellent at a specific job, and being popular doesn't rule a
+font out. What the list flags is reaching for one without a reason. So:
+
+- If the client's brand already uses one, use it.
+- Otherwise, choose one only when the brief gives a reason (see *Contextual exceptions* below), and shortlist it
+  next to at least one less-overused face for the same role. Decide on the rendered proof.
+- "Instead" names are places to start looking, not swaps.
 
 | Font | Why it reads as a default | Instead, look at |
 |---|---|---|
@@ -54,6 +61,83 @@ a default to look past. "Instead" names are places to start looking, not swaps.
 
 Also worth knowing: in technical briefs, models converge on IBM Plex Sans for body text (8 of 9 pages without
 skills, 6 of 9 with them). It's a good font and in the list below, but treat it as a default too.
+
+## Contextual exceptions
+
+Notes on avoid-list fonts that have real uses. A category named here gives you permission to *consider* the
+font, never a recommendation. Two businesses in the same category can need opposite type, and the category
+where a font is most at home is often where it's most overused (Fraunces in bakeries, Inter in SaaS), so the
+bar is higher there, not lower. Fonts without a note follow the same rules: brand first, then a reason from the
+brief, then the proof.
+
+An exception doesn't hold if the reason would fit any brief ("clean", "modern", "safe", "readable"), or if the
+rest of the page has landed on defaults too. Then the font is part of the slop, not an exception to it.
+
+- **Inter** — Roles: UI, body, data.
+  *Overused because:* it's the default of nearly every SaaS template and AI-generated UI.
+  *Can work:* interfaces people use for hours and where numbers matter, such as enterprise software, admin
+  tools and clinical or operational dashboards. Tabular figures, many OpenType options and broad script
+  coverage make it a strong working face.
+  *Justified when:* the job is dense, functional UI, and the brand's voice lives elsewhere (a display face,
+  colour, imagery). Not as the voice of yet another SaaS landing page.
+- **Roboto** — Roles: UI, body.
+  *Overused because:* it's Android's and Material's system font, so it reads as "no decision made".
+  *Can work:* a web app that should feel continuous with its Android app or a Material-based product.
+  *Justified when:* platform continuity is a stated requirement. That's a functional reason, not a brand voice.
+- **Poppins** — Roles: heading, UI.
+  *Overused because:* it's the web's most common geometric sans.
+  *Can work:* brands that set Latin and Devanagari side by side, since one family covers both with matched
+  design.
+  *Justified when:* the page needs both scripts. For Latin alone, its geometric friendliness is the template
+  default.
+- **Nunito** — Roles: heading, UI, short body.
+  *Overused because:* it's the default "rounded friendly" sans.
+  *Can work:* products for young children or for anxious, non-technical audiences, where soft terminals help.
+  *Justified when:* softness is something the audience needs, not just a guess about "friendly". Compare it
+  with a humanist face with open apertures before settling.
+- **Merriweather** — Roles: body, editorial.
+  *Overused because:* it's the default "readable screen serif" of free templates.
+  *Can work:* long reading on screens for a broad audience, such as public information, journalism or
+  nonprofit reports. A large x-height and sturdy serifs hold up at small sizes.
+  *Justified when:* long-form reading is the main job and the brand wants a serif's authority.
+- **Playfair Display** — Roles: display only.
+  *Overused because:* it's the default "elegant serif" of free templates.
+  *Can work:* fashion, weddings, fine dining and editorial headlines, at large sizes.
+  *Justified when:* high-contrast elegance is the position and the face stays at display sizes. Its hairlines
+  fail as body text.
+- **Cormorant Garamond** — Roles: display, pull quotes.
+  *Overused because:* it's Claude's default "elegant serif".
+  *Can work:* luxury hospitality, weddings and heritage brands, at large sizes.
+  *Justified when:* delicate classical detail is the point, it's paired with a sturdier body face, and the
+  thin, tracked-capitals "luxury" cliché is avoided around it.
+- **Fraunces** — Roles: display, heading.
+  *Overused because:* it's Claude's default "warm editorial" serif, and the default for food in particular.
+  *Can work:* artisanal food, specialty bakeries and hospitality. Its optical-size, softness and "wonk" axes
+  give a range from soft and round to sharp and quirky.
+  *Justified when:* the direction uses those axes on purpose, not the default setting, and it beat a
+  less-seen serif on the proof.
+- **Instrument Serif** — Roles: display only.
+  *Overused because:* it's the default "tasteful serif" of AI landing pages.
+  *Can work:* editorial, fashion and luxury headlines, where its condensed width and italic give pace.
+  *Justified when:* the headline needs a narrow, refined serif. It has one weight plus italic, so it can't
+  carry headings and body on its own.
+- **Bebas Neue** — Roles: display only.
+  *Overused because:* it's the default condensed all-caps poster font.
+  *Can work:* sports campaigns, athletic brands, events and promotional headlines.
+  *Justified when:* loud, compact capitals are the voice. Capitals and a single weight only, so never body or
+  UI.
+- **Oswald** — Roles: display, heading, labels.
+  *Overused because:* it's the default condensed headline font.
+  *Can work:* sport, transport and signage-like pages where space is tight, such as fixtures, timetables and
+  scoreboards.
+  *Justified when:* you need a condensed face with lowercase and several weights, which Bebas Neue lacks.
+- **JetBrains Mono** — Roles: monospace.
+  *Overused because:* it's the default mono of AI-generated code UIs.
+  *Can work:* developer tools, code-heavy docs and technical products. It was built for code, with a tall
+  x-height and clear look-alikes.
+  *Justified when:* the page shows real code and the mono is a working face, not a "techy" decoration.
+  Its code ligatures turn `!=` or `=>` into single symbols, which can mislead readers: consider switching them
+  off in samples.
 
 ## Sans-serif
 
