@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Split sources/ into what may be deposited (Zenodo, restricted access) and what stays withheld, and write the
+"""Split sources/ into what may go in the deposit archive (kept privately, not distributed) and what stays withheld, and write the
 manifest. Nothing is uploaded here.
 
 Usage:
@@ -169,7 +169,7 @@ def main():
     manifest = {
         "study": "tasteskills lab/industry-type",
         "built": stamp,
-        "access": "Zenodo, restricted file access (metadata public, files on request)",
+        "access": "Private copy, not distributed (the planned Zenodo deposit was dropped)",
         "attribution": "Wikidata (CC0). Wikipedia list membership from 'List of architecture firms', 'List of "
                        "magazines by circulation', 'List of newspapers by circulation' (English Wikipedia, CC BY-SA 4.0).",
         "files": files,
@@ -185,7 +185,7 @@ def main():
     lines = ["# Withheld sources: provenance", "",
              "Not deposited (see archive-manifest.json for each source's terms). A raw copy is kept here only where",
              "noted; otherwise the raw file is held in no archive, and its checksum, retrieval details and the factual",
-             "extract in the Zenodo deposit are what remain. The extracts hold every field the selector reads, checked",
+             "extract in the deposit archive are what remain. The extracts hold every field the selector reads, checked",
              f"by archive.py on {stamp}. Deposit archive: {tar.name}, SHA-256 {manifest['deposit_archive']['sha256']}.", ""]
     for name, url, when, params, digest, size, keep in prov:
         lines += [f"## {name}", "", f"- Retrieved: {when}", f"- From: {url}", f"- Parameters: {params}",

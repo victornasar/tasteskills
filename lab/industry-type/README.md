@@ -20,9 +20,9 @@ or Phase 2.
 | [`draw_ratings.py`](draw_ratings.py) | Draws the human-rated subset by seed from the frozen list (methodology §9) |
 | `rated-subset.json` | Its output, drawn at freezing before any measurement |
 | `prechecks.json` | Every homepage pre-check: time, outcome, `lang`, writing systems, bot-protection flag |
-| [`archive.py`](archive.py) | Audits each source's license, splits deposit from withheld, writes `archive-manifest.json`. Uploads nothing |
+| [`archive.py`](archive.py) | Audits each source's license, splits deposit from withheld, builds the deposit archive, writes `archive-manifest.json`. Uploads nothing |
 | `archive-manifest.json` | Every source file's SHA-256, source, terms and whether it is deposited, plus the deposit archive's checksum |
-| `sources/` | Working cache of source snapshots. Not committed; deposited, privately kept or checksum-only per methodology §6 |
+| `sources/` | Working cache of source snapshots, deleted after the archive was built (methodology §6). `archive.py` needs it, so the archive can't be rebuilt without re-downloading |
 
 ## Principle
 

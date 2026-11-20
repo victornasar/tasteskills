@@ -150,18 +150,20 @@ protocol-1 site and what happened to it.
 
 ## 6. Raw source archive
 
-The cached sources (74 MB) stay out of git. Each was audited for its license or terms (`archive.py`, recorded per
+The cached sources (74 MB) stay out of git, and the working cache was deleted once the archive was built. Each was audited for its license or terms (`archive.py`, recorded per
 file with SHA-256, terms and retrieval details in `archive-manifest.json`) and goes to one of three places:
 
 | Where | What |
 |---|---|
-| **Zenodo deposit, restricted file access** (metadata public, files on request) | Wikidata query results (CC0); Wikipedia-list files (Wikidata data, CC0, list membership attributed to English Wikipedia, CC BY-SA 4.0); selection outputs (`proposed-sites.json`, `proposed-sites.v1.json`, `strikes.json`, `founded.json`, `prechecks.json`, `rated-subset.json`, `pick_sites.py`, `draw_ratings.py`, `methodology.md`); factual extracts of every withheld source |
-| **Private copy, not distributed** (outside the repository, read-only, with `SHA256SUMS`) | The Tranco list `V38GN` (published for research download; also re-downloadable by id), `PROVENANCE.md` with each withheld source's URL, retrieval time, query parameters and checksum, and a copy of the deposit archive |
+| **Deposit archive** (`industry-type-deposit-2026-11-19.tar.gz`, kept with the private copy, not distributed) | Wikidata query results (CC0); Wikipedia-list files (Wikidata data, CC0, list membership attributed to English Wikipedia, CC BY-SA 4.0); selection outputs (`proposed-sites.json`, `proposed-sites.v1.json`, `strikes.json`, `founded.json`, `prechecks.json`, `rated-subset.json`, `pick_sites.py`, `draw_ratings.py`, `methodology.md`); factual extracts of every withheld source |
+| **Private copy, not distributed** (outside the repository, read-only, with `SHA256SUMS`) | The Tranco list `V38GN` (published for research download; also re-downloadable by id), `PROVENANCE.md` with each withheld source's URL, retrieval time, query parameters and checksum, and the deposit archive |
 | **Checksum, provenance and extract only** | YC directory mirror (no license, so no grant to retain a copy); App Store API responses (Apple's terms, developers' descriptions); Altagamma page (copyright); Michelin dataset (MIT repo, but the rows are Michelin's text) |
 
 The extracts hold only facts (identifiers, names, URLs, status, categories, genre ids) and every field the selector
 reads. `archive.py` checks, before writing anything, that each extract gives the selector exactly the entries the
-raw file gives, so the deposit plus the Tranco list rebuild every candidate pool and this list.
+raw file gives, so the deposit plus the Tranco list rebuild every candidate pool and this list. The archive was
+first meant for a restricted Zenodo deposit; that was dropped (see Protocol changes), so its own `MANIFEST.json`
+and its copy of this file still name Zenodo.
 
 ## 7. Measurement protocol (applies after freezing)
 
@@ -245,6 +247,11 @@ Stored with the findings: protocol version, seed, Tranco id, source archive loca
 exact prompts, Chrome and Playwright versions, measurement dates.
 
 ## Protocol changes
+
+After freezing (2026-11-19, nothing measured):
+
+- **No Zenodo deposit.** The deposit archive stays with the private copy (§6) instead of going to Zenodo with
+  restricted access. Its contents and checksum are unchanged; only where it is held changed. No site changed.
 
 At freezing (2026-11-19, nothing measured):
 
