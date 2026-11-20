@@ -9,6 +9,30 @@ make choices it can defend, and check the rendered result.
 
 They're plain Markdown. There are no engines, catalogs to query or scripts to run; the agent does the thinking.
 
+## What we mean by AI slop
+
+AI slop is design that would have come out the same regardless of the brief.
+
+It isn't necessarily bad design. It can be polished, accessible, functional and visually appealing. What makes it
+slop is the absence of real design decisions: the type, colour, layout, imagery and composition are there because
+they're familiar defaults, not because they suit this business, its audience and its content.
+
+No single choice is slop on its own. Inter, a centred hero or a gradient can each be right when the brief leads
+there. A choice becomes slop when it would have appeared whatever the context.
+
+The fix isn't to make everything look unique. A daycare doesn't need to look unlike every other daycare; warmth,
+familiarity and trust may be exactly what its families expect. The aim is a page that looks right for its brief,
+and looks that way because the brief called for it.
+
+Two tests, used throughout the skills:
+
+- **The swap test.** Put another business's name on the page, ideally one from a different category. If nothing
+  looks wrong, the design came from defaults, not the brief.
+- **The why test.** For each major choice, name the part of the brief that led to it. "Clean and modern" doesn't
+  count.
+
+**The ethos: take the design from the brief, not from the defaults.**
+
 ## The skills
 
 | Skill | What it does |
