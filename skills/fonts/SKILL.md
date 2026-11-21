@@ -137,7 +137,37 @@ actually see.
 - Where faces share a line (inline code in body text, a label beside a number), match their x-heights with
   `size-adjust` or the size itself.
 
-## 4. See it before deciding
+## 4. Set the type
+
+Choosing faces is half the job. `hierarchy` and `design-system` both expect this skill to hand over each role
+as size, line height, weight and tracking. Without that, a good pairing still looks generated.
+
+- **A small scale with a ratio you can name.** Choose a base (the body size) and one ratio, and take every size
+  from it. Small ratios (about 1.125–1.2) suit dense products and minimal brands; large ones (1.333–1.5 and up)
+  suit editorial and expressive pages. The brand position picks the ratio. Most pages use five or six steps;
+  if two steps look the same, drop one. Make big steps fluid with `clamp()`, with the phone end checked
+  separately, because a ratio that works at desktop often blows up phone headings.
+- **Each heading sits one step below the heading that holds it.** A card title is a step below its section's
+  heading, and a section heading a step below the hero. A card title the same size as its section heading
+  breaks the ranking, and `hierarchy` can't fix that with emphasis alone.
+- **Tracking tightens as size grows.** Fonts are spaced for text sizes, so large type looks loose: tighten it
+  gradually with size (display often needs about −0.01 to −0.03em; check the font, since some display cuts
+  are already tight). Leave body at the font's default. Open up all-caps labels and small caps slightly
+  (about +0.02 to +0.08em), since capitals set tight run together. Use `em`, so tracking scales with the size.
+- **Line height falls as size grows.** Body needs room to find the next line, about 1.4–1.6 (more for a small
+  x-height or long lines). Large headings need less, about 1.0–1.15, or the lines drift apart into separate
+  statements. Headings between these sit between them. Set line height without units so it follows the size.
+- **Wrap on purpose.** `text-wrap: balance` on headings so lines come out even; `text-wrap: pretty` on body to
+  avoid a lone word on the last line. Then read the real headline at phone width: balancing can't fix a
+  headline that's too long or a size that's too big.
+- **Weights come from the faces and the brief.** Use the weight steps the faces actually have (step 3), with a
+  visible difference between heading and body. Whether headings are regular, bold, italic or capitals is the
+  brand's call, not a rule. Write it down once per role so every heading follows it.
+
+Write the result as a table, one row per role in use: size (phone to desktop), line height, weight, tracking
+and wrap. That's what the proof shows, and what `design-system` turns into tokens.
+
+## 5. See it before deciding
 
 Names and descriptions are hypotheses. Look at the shortlist before choosing.
 
@@ -155,12 +185,13 @@ Names and descriptions are hypotheses. Look at the shortlist before choosing.
    specimen page if you can. Otherwise say the choice is unseen, decide from the facts you can verify, and check
    it first on the built page. Never describe how a font looks as if you'd seen it when you haven't.
 
-## 5. Answer
+## 6. Answer
 
 Keep it short:
 
 - **Per role:** the font, the weights and sizes, and one or two sentences on why it fits, in the brief's words.
 - **Pairing:** what contrasts and what's shared.
+- **Type settings:** the scale's base and ratio, and the role table from step 4.
 - **If a font is on the avoid list:** the reason from the brief, and the less-overused face it beat on the proof.
 - **Rejected:** the candidates that nearly made it, each with a plain reason ("no true italic, and the body needs
   emphasis"; "wraps the headline into five lines on a phone").
@@ -170,7 +201,7 @@ Keep it short:
 
 When writing into a project, write the `@font-face` rules and family variables into its existing styles.
 
-## 6. Check the built page
+## 7. Check the built page
 
 Answer yes or no for each, with what you see on desktop and phone screenshots:
 
@@ -180,9 +211,11 @@ Answer yes or no for each, with what you see on desktop and phone screenshots:
 3. Body text is at least 16px on a phone, with lines of roughly 45–80 characters and line-height suited to the
    x-height.
 4. No faked bold or italic.
-5. The hierarchy reads in a few clear steps, not many near-identical ones.
+5. The hierarchy reads in a few clear steps, not many near-identical ones, and every card title is smaller
+   than the section heading above it.
 6. Numbers people compare use tabular figures and line up.
-7. The display face never appears at small sizes.
+7. The display face never appears at small sizes. Big headings are tracked tighter and set with tighter line
+   height than body; capitals in labels aren't crammed.
 8. In a five-second look, the type supports what the brand should feel like. Say which quality and how.
 
 ## Examples
