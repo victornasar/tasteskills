@@ -421,6 +421,9 @@ Müller-Brockmann's *Grid Systems in Graphic Design* (1981) remains the clearest
 - Use `subgrid` so the parts of repeated items (title, description, price) align across a row.
 - Make deviations few and purposeful. Name, for each: the line it leaves, what it points at, and what would be
   lost without it.
+- Fix the container, not the item. Edges are shared when the padding that makes them lives on the parent. When one
+  element sits off its line, find the cause (its own margin, a different container, an icon setting its own
+  width) and fix it there. A one-off nudge makes that instance right and leaves the next one wrong.
 
 **When to be strict or loose.** Strict grids with rare deviations suit precise, technical, institutional and
 catalogue brands, and anything people compare. More deviation suits editorial, cultural and campaign work. But
@@ -432,7 +435,8 @@ repeated items misalign; icons visibly off their text.
 
 **Check on the render.** Outline every element and screenshot (the critique reference shows how). Run the edge
 audit: list the left edges of visible blocks; any two within 1–8px of each other are almost certainly a bug. List
-each deviation with its reason.
+each deviation with its reason. To see whether things sit on the lines you meant, draw them with the guide-line
+overlay in `inspect`'s `references/capture.md`.
 
 ---
 

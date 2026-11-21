@@ -92,6 +92,8 @@ Use `references/component-specs.md` for per-component detail. The cross-cutting 
 - No layout shift when hover, focus, bold-on-select or loading states apply (bold text changes width: reserve it
   or use a different signal).
 - Icon and text baselines line up across a row of components.
+- In sidebars, lists and toolbars: one icon column, one text line, headers on the icon edge, one centre line per
+  toolbar, all fixed on the container (see "Sidebars, lists and toolbars" in `references/component-specs.md`).
 - Truncation is deliberate: `text-overflow: ellipsis` with the full text available (a tooltip or `title` is not
   enough on touch); multi-line clamps where titles vary.
 - Placeholder images and missing data have designed fallbacks (initials avatar, neutral thumbnail), never broken
@@ -127,3 +129,5 @@ Report each component's variants and states, the surface decisions and their rea
 - Custom dropdowns and checkboxes rebuilt from divs without keyboard support.
 - Text clipped by fixed heights; truncation with no way to see the full text.
 - Icons mis-sized against text, sitting on the line box instead of the optical centre.
+- Sidebar labels starting at different x because each icon sets its own width; one row nudged with a negative
+  margin instead of fixing the list's padding.

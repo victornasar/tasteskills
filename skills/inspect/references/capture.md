@@ -107,6 +107,31 @@ new PerformanceObserver(list => list.getEntries().forEach(e =>
 **Left edges** on a screen: collect `getBoundingClientRect().left` of visible text blocks, round to whole pixels
 and count them. Edges a few pixels apart are almost always unintended.
 
+**Guide lines.** Outlines show boxes; guide lines show whether things sit on the lines that were meant. Pick the
+lines from the intent (the content edge, a sidebar's icon edge and text line, a toolbar's centre), draw them over
+the page, screenshot and zoom in. Anything near a line but not on it is the finding.
+
+```js
+const guide = (pos, axis = 'x', colour = 'rgb(255 0 128 / 0.6)') => {
+  const line = document.createElement('div');
+  line.dataset.guide = '';
+  line.style.cssText = `position:fixed;z-index:2147483647;pointer-events:none;background:${colour};` +
+    (axis === 'x' ? `left:${pos}px;top:0;bottom:0;width:1px` : `top:${pos}px;left:0;right:0;height:1px`);
+  document.body.append(line);
+};
+// Example: a sidebar. Take the lines from the first row, then see who misses them.
+const row = document.querySelector('nav a');
+const icon = row.querySelector('svg, img').getBoundingClientRect();
+const label = [...row.childNodes].find(n => n.nodeType === 3 && n.textContent.trim()) ?? row.querySelector('span');
+const range = document.createRange(); range.selectNodeContents(label);
+guide(icon.left); guide(range.getBoundingClientRect().left);
+// A toolbar's centre line: guide(bar.getBoundingClientRect().top + bar.offsetHeight / 2, 'y');
+// Remove: document.querySelectorAll('[data-guide]').forEach(el => el.remove());
+```
+
+Measure text with a `Range`, not the element's box: the box includes padding, the text's first glyph is what the
+eye sees. Remove the guides before any screenshot that isn't for alignment.
+
 ## Before and after
 
 Save the before screenshot of each finding under the same name pattern as the after (`card-390-hover-before.png`,

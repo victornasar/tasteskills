@@ -57,6 +57,38 @@ each is built and finished.
   Make sure focused elements aren't hidden under them (WCAG 2.4.11; `scroll-padding-top`).
 - Mobile menu panels: full height, focus trapped, a close button in the same place as the open button.
 
+## Sidebars, lists and toolbars
+
+Dense app chrome is where misalignment shows most: rows repeat, so one item off by 2px stands out against
+twenty that aren't. Each rule names the line things sit on, so you can decide cases these rules don't list.
+
+- **One icon column.** Every row's icon sits in a slot of the same fixed width (`flex: none; width: 1rem` or the
+  icon size), centred in it, whatever the glyph's own width. Icons differ in visual width (a narrow pin beside a
+  wide grid), so sizing the slot rather than the glyph is what keeps the column straight. Rows with no icon either
+  keep an empty slot or are designed to start on the text line. Decide which per list, not row by row.
+- **One text line.** Every label starts at the same x: the icon slot plus one fixed gap. Avatars, checkboxes and
+  status dots take the icon slot's width too, or the labels drift. Nested rows indent to the parent's text line
+  (one whole step), never by an arbitrary amount, so the hierarchy reads as lines and not as noise.
+- **Headers on the icon edge.** Section headers ("Favourites", "Projects") start on the icon column's left edge,
+  not the text line. The group then has one outer edge, the header marks the group's start instead of reading as
+  one more item, and the eye reads down the icons. Pick that or the text line for the whole sidebar. Mixing the
+  two is the bug.
+- **Trailing items on one right edge.** Counts, shortcuts, chevrons and badges share one right edge with
+  `margin-left: auto`, using tabular figures so counts don't change width as they update.
+- **Highlights don't move content.** Hover and selected backgrounds are inset by the container's padding and
+  extend the same distance past the icon on the left as past the trailing item on the right. Switching state
+  changes the colour, never the position or weight of the label.
+- **Toolbars on one centre line.** Every control in a toolbar shares one vertical centre: heights come from the
+  control size set, icon buttons are square at that height, `align-items: center` on the bar, and text, avatars
+  and separators are sized to that height rather than to their content. A toolbar's job is to scan as one row,
+  and one control 2px low breaks that more than any colour choice.
+- **Fix the container, not one item.** Horizontal padding lives on the list or bar, and rows have none of their own.
+  When one row is off, find out why (its own margin, a wider icon, a missing slot) and fix the shared rule. A
+  `margin-left: -2px` on one row fixes that row and leaves the cause in place for the next one.
+
+Check with the guide-line overlay in `inspect`'s `references/capture.md`: draw lines at the icon edge, the text
+line and the toolbar's centre, then look for anything that isn't on one.
+
 ## Cards
 
 - Use a card when the item is an object: a product, an article, a booking. Not as a default container for any
