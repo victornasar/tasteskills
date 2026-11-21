@@ -80,6 +80,13 @@ And three working rules:
 - Every control has an accessible name that matches its visible label (2.5.3): a visible "Search" button is named
   "Search".
 - Icon-only buttons get a name (`aria-label` or visually hidden text).
+- Text animated letter by letter or word by word (split, scrambled or wave reveals) still reads as one phrase.
+  Split spans make screen readers spell it out, and scrambles expose garbage while they run. For headings and
+  running text, keep the complete text in a visually hidden element and set `aria-hidden="true"` on the split
+  spans; `aria-label` on a plain `div`, `span` or heading is prohibited or announced unreliably. Buttons and
+  links can take an `aria-label` that matches the visible text. Either way, the accessible text is the final
+  text from the first frame and never changes during the animation. With reduced motion, render the final
+  text straight away.
 - States are exposed: `aria-expanded` on disclosure triggers, `aria-current` for current page or step,
   `aria-pressed` for toggle buttons, `aria-selected` in tabs, `aria-invalid` on fields in error.
 - Dynamic updates that the user needs to know about are announced: a polite live region (`role="status"`) for

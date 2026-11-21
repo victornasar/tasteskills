@@ -29,7 +29,11 @@ If this is empty, review the motion in the current project.
 1. **Motion needs a job.** The legitimate jobs: **feedback** (the press registered), **continuity** (this panel
    came from that button), **orientation** (you moved forward a step), **attention** (this changed, look here),
    **status** (still working), and occasionally **character** (a brand moment, once). "It looks nicer" is not a
-   job on its own.
+   job on its own, and neither is showing what the code can do.
+   A character moment is the exception, not a slot to fill: at most one per page, only when the direction calls
+   for it, and most pages need none. When there is one, it appears once rather than recurring down the page,
+   never covers the main content or the first action, can be interrupted or skipped, and has a reduced-motion
+   version that keeps its meaning.
 2. **Frequency sets the budget.** Something people do hundreds of times a day (typing, opening a menu, switching
    tabs) should be instant or nearly so. Something seen once (a first-run moment) can take longer. Keyboard-driven
    actions usually shouldn't animate at all.
@@ -95,6 +99,8 @@ desktop movement of the same element. Exits are usually faster than entrances; t
 - For scroll-linked motion, prefer CSS scroll-driven animations (`animation-timeline: view()`) with a fallback
   that shows the content in its final state; never hide content until it animates in, because if the script or
   animation fails, it stays hidden.
+- Text split into letters or words for a reveal or scramble needs the accessible-text handling in `a11y`
+  (Names, roles, states) before it ships.
 - Never animate on page load anything the user needs to read first. Content that fades in as you scroll slows
   reading and makes screenshots, anchors and Find-in-page unreliable.
 
