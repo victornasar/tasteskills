@@ -1,10 +1,10 @@
 ---
-name: color
+name: palette
 description: Develop a colour direction and a working colour system for a website, product or brand. Reads the brief's positioning and setting, proposes clearly different ground + figure directions, checks contrast properly, and writes the palette into the project as CSS variables, a Tailwind theme or design tokens. Use when choosing colours or a palette, replacing a generic default palette, or reviewing a page's colour.
 argument-hint: "[brief, e.g. neighbourhood bakery]"
 ---
 
-# color
+# palette
 
 Choose colour as a design decision that follows from the brand, then make it work as a system: roles, contrast,
 states, light and dark.

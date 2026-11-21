@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: Turn a creative direction into a small, consistent, reusable system of tokens, type, colour roles, spacing, components and variants, so a site stays coherent as it grows without flattening its character into a generic UI kit. Covers token tiers and naming, semantic colour, typography and spacing systems, radii, elevation and motion tokens, component variants, patterns, documentation, and when to break the system. Use when setting up styles for a new project, extracting a system from an existing site, adding a theme or dark mode, or when a site has drifted into inconsistent values. Not for choosing the colours or fonts themselves (`color`, `fonts`) or building individual components (`components`).
+description: Turn a creative direction into a small, consistent, reusable system of tokens, type, colour roles, spacing, components and variants, so a site stays coherent as it grows without flattening its character into a generic UI kit. Covers token tiers and naming, semantic colour, typography and spacing systems, radii, elevation and motion tokens, component variants, patterns, documentation, and when to break the system. Use when setting up styles for a new project, extracting a system from an existing site, adding a theme or dark mode, or when a site has drifted into inconsistent values. Not for choosing the colours or fonts themselves (`palette`, `fonts`) or building individual components (`components`).
 argument-hint: "[project or area to systematise]"
 ---
 
@@ -19,7 +19,7 @@ If this is empty, audit the current project's styles: tokens, repeated values an
 
 ## Where this sits
 
-- `taste` sets the direction; `color` and `fonts` choose the colours and faces (`color` already
+- `taste` sets the direction; `palette` and `fonts` choose the colours and faces (`palette` already
   defines colour tokens by role). This skill organises those choices, plus spacing, radii, elevation and motion,
   into one system with names and rules.
 - `components` builds components from the tokens; `motion` defines motion values; `compose`
@@ -56,7 +56,7 @@ Use `references/token-architecture.md` for tiers, naming and examples. The core 
 
 | Set | Typical size | Notes |
 | --- | --- | --- |
-| Colour roles | ground, surface, text, text-muted, border, action, action-text, focus, plus success, warning, danger, info | From `color`; each text pair checked for contrast on each surface it appears on |
+| Colour roles | ground, surface, text, text-muted, border, action, action-text, focus, plus success, warning, danger, info | From `palette`; each text pair checked for contrast on each surface it appears on |
 | Type roles | display, heading levels in use, body, small, label, code | From `fonts` and `hierarchy`; each role is size + line height + weight + tracking, fluid where needed |
 | Spacing | 6–8 steps named by role or a t-shirt scale | Composition decides which step expresses which relationship |
 | Radii | 2–3 plus "full" | From the direction's Surface position; nested radii stay concentric |

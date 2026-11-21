@@ -37,7 +37,7 @@ Two tests, used throughout the skills:
 
 ## The skills
 
-Seventeen skills, grouped by the part of the work they own. Each answers one question; when two could apply, the
+Nineteen skills, grouped by the part of the work they own. Each answers one question; when two could apply, the
 owner decides and the other refers to it, so the skills don't repeat each other.
 
 **Direction**
@@ -56,7 +56,7 @@ owner decides and the other refers to it, so the skills don't repeat each other.
 | [`content`](skills/content/SKILL.md) | What do the words say? | Messaging hierarchy, specific headlines, brand voice as decisions, calls to action, microcopy, and a check for generic AI marketing language and invented claims |
 | [`images`](skills/images/SKILL.md) | What do the images show? | Give every image a job, choose photography, illustration, the product or diagrams, write shot lists, set crops and ratios, keep a set consistent, refuse generic or dishonest stock |
 | [`fonts`](skills/fonts/SKILL.md) | Which typefaces? | Type roles, category conventions, letterforms, pairing, a rendered type proof, a curated list of fonts, and the AI defaults to look past (and when one can still be right) |
-| [`color`](skills/color/SKILL.md) | Which colours? | Directions built from positioning, honest conventions, OKLCH, calculated contrast, a working token system, and 51 curated directions as starting points |
+| [`palette`](skills/palette/SKILL.md) | Which colours? | Directions built from positioning, honest conventions, OKLCH, calculated contrast, a working token system, and 51 curated directions as starting points |
 
 **The interface: how it adapts and behaves**
 
@@ -69,12 +69,14 @@ owner decides and the other refers to it, so the skills don't repeat each other.
 | [`icons`](skills/icons/SKILL.md) | Icons or words, and which icons? | Whether to use icons at all, one family, weight matched to text, optical alignment, accessible icon-only controls |
 | [`design-system`](skills/design-system/SKILL.md) | Which values are shared, and what are they called? | Tokens named by role, type and spacing systems, variants by job, theming, and documented exceptions so consistency doesn't flatten the brand |
 
-**Quality: whether it works for everyone**
+**Quality: whether it works, and for everyone**
 
 | Skill | Owns | Covers |
 | --- | --- | --- |
 | [`a11y`](skills/a11y/SKILL.md) | Does it work for disabled people? | WCAG 2.2 AA as part of design quality: semantic HTML, keyboard and focus, screen readers, contrast, forms, motion, and testing with axe, a keyboard and a screen reader |
 | [`dataviz`](skills/dataviz/SKILL.md) | How should these numbers be shown? | Start from the question; a sentence, number, table or chart; accurate encodings, direct labels, dashboards with context, honest scales |
+| [`inspect`](skills/inspect/SKILL.md) | Did what we decided actually render, everywhere? | Look at the render, not the code: every width, state and content extreme, checked against the direction; inconsistencies and rendering defects fixed at the cause, then verified on a fresh render |
+| [`conversion`](skills/conversion/SKILL.md) | Will the right visitor act, and what stops them? | Name the goal and the visitor's readiness, walk the whole path to confirmation, map objections to real evidence, count friction, check trust; no generic CRO tactics or dark patterns |
 | [`performance`](skills/performance/SKILL.md) | Does it load fast and stay stable? | Core Web Vitals, perceived speed, images, fonts and scripts delivered efficiently, layout stability, measuring in the lab and the field |
 
 Each works on its own. `taste` uses the others when they're installed. None of them prescribes a look:
@@ -88,8 +90,8 @@ format.
 
 ```bash
 npx skills add https://github.com/victornasar/tasteskills            # choose from the list
-npx skills add https://github.com/victornasar/tasteskills --skill '*' # all seventeen
-npx skills add https://github.com/victornasar/tasteskills --skill taste --skill fonts --skill color \
+npx skills add https://github.com/victornasar/tasteskills --skill '*' # all nineteen
+npx skills add https://github.com/victornasar/tasteskills --skill taste --skill fonts --skill palette \
   --skill layout --skill compose                                     # the core set for a new site
 npx skills add https://github.com/victornasar/tasteskills --skill a11y --skill interaction
 ```
@@ -99,10 +101,12 @@ Then ask your agent:
 ```
 /taste independent daycare for local families
 /fonts cozy bakery website
-/color neighbourhood bakery
+/palette neighbourhood bakery
 /compose the homepage hero feels flat and cluttered
 /content rewrite the pricing page copy
 /a11y audit the checkout flow
+/conversion the pricing page; the goal is starting a trial
+/inspect the checkout on phone and desktop
 ```
 
 Or ask it to build or review a page "with layout", "with compose" or any other skill by name.
@@ -132,7 +136,7 @@ The skills came out of experiments that are no longer in the repo (they're in gi
 - **Not yet proven:** that people prefer the sites the skills produce. Blind ratings had only an AI rater when
   this version was written.
 
-Those experiments covered `taste`, `fonts`, `color` and `layout`. `compose` and the newer
+Those experiments covered `taste`, `fonts`, `palette` and `layout`. `compose` and the newer
 skills haven't been through the lab yet. They draw on established research and practice (Gestalt grouping,
 eye-tracking studies, Cleveland and McGill on chart perception, WCAG 2.2, Core Web Vitals, among others), cited
 where they're used, and on the same lessons: name the default before you depart from it, give every choice a reason
@@ -151,7 +155,7 @@ skills/
   content/         SKILL.md, references/voice-and-microcopy.md
   images/          SKILL.md, references/art-direction.md
   fonts/           SKILL.md, references/fonts.md
-  color/           SKILL.md, references/directions.md
+  palette/         SKILL.md, references/directions.md
 
   responsive/      SKILL.md, references/adaptation-patterns.md
   interaction/     SKILL.md, references/states-and-forms.md
@@ -162,6 +166,8 @@ skills/
 
   a11y/            SKILL.md, references/testing-checklist.md
   dataviz/         SKILL.md, references/chart-guide.md
+  inspect/         SKILL.md, references/capture.md
+  conversion/      SKILL.md
   performance/     SKILL.md, references/measuring.md
 ```
 

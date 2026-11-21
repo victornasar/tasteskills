@@ -20,9 +20,10 @@ If this is empty, audit the current project's main pages and flows.
 ## Where this sits
 
 This skill sets the requirements and test methods. Other skills apply them in their own domain:
-`interaction` (behaviour, errors), `components` (focus rings, states), `color` (contrast
+`interaction` (behaviour, errors), `components` (focus rings, states), `palette` (contrast
 calculation), `motion` (reduced motion), `responsive` (reflow, touch), `images` (alt text),
-`content` (plain language, link text), `dataviz` (accessible charts).
+`content` (plain language, link text), `dataviz` (accessible charts). `inspect` notes visible symptoms on the
+render (missing focus rings, text over busy images) and hands them here for testing.
 
 The legal baseline in many places is WCAG 2.1 or 2.2 at level AA (for example the European Accessibility Act,
 applying since June 2025, and the US ADA Title II rule). Target **WCAG 2.2 AA**.
@@ -88,7 +89,7 @@ And three working rules:
 
 - Text contrast 4.5:1 (3:1 for large text, 24px or 18.66px bold); non-text contrast 3:1 for control boundaries,
   focus indicators, icons that carry meaning and chart elements (1.4.3, 1.4.11). Calculate, don't estimate
-  (`color` shows how).
+  (`palette` shows how).
 - Colour never the only signal: errors, links in body text, status, chart series and required fields need a
   second cue (text, icon, underline, pattern).
 - Images: meaningful `alt`, `alt=""` for decorative ones; complex images (charts, diagrams) get a text

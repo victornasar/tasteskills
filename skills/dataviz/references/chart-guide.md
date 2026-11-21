@@ -98,7 +98,7 @@ executive glancing weekly needs three numbers with context.
 
 - Derive data colours from the brand palette where possible, but don't force the brand's single accent to do
   categorical work.
-- Build ramps in OKLCH so steps are perceptually even (`color` explains OKLCH).
+- Build ramps in OKLCH so steps are perceptually even (`palette` explains OKLCH).
 - Check marks against the background at 3:1, and adjacent categories against each other.
 - Status colours (good, warning, bad) must not collide with category colours.
 - In dark themes, re-tune: saturated colours glow on dark grounds.

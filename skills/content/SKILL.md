@@ -23,6 +23,7 @@ positioning and "differentiate on" line are the raw material.
 - `layout` decides which sections exist from the visitor's questions; this skill writes what each one says.
 - `hierarchy` decides how prominent each piece is; this skill makes sure the prominent pieces are worth it.
 - `interaction` decides when labels, errors and confirmations appear; this skill writes them.
+- `conversion` audits whether the page gets its visitor to act, and routes copy fixes here.
 - taste's copy rule applies throughout: don't invent claims, customers, numbers or testimonials the brief doesn't
   make.
 

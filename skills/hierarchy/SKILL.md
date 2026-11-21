@@ -22,7 +22,8 @@ If this is empty, review the current project's main page. Read `DIRECTION.md` if
 - `compose` decides where things sit and how weight balances (its principles reference explains visual
   weight, focal points and eye flow in depth). This skill decides *what* deserves weight and checks that the
   ranking reads.
-- `fonts` sets the type scale; `color` reserves the accent. This skill decides which content gets them.
+- `fonts` sets the type scale; `palette` reserves the accent. This skill decides which content gets them.
+- `conversion` finds which facts and actions the visitor needs at each point; this skill makes them prominent.
 
 ## Principles
 

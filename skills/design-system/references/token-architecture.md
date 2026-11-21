@@ -33,7 +33,7 @@ Avoid names that describe appearance (`--color-blue`, `--shadow-big`). Avoid nam
 
 ## Colour
 
-`color` builds the palette and the role names. A semantic colour set usually needs:
+`palette` builds the palette and the role names. A semantic colour set usually needs:
 
 - **Ground and surfaces:** the page, raised surfaces (cards, menus), sunken surfaces (wells, code), overlay
   backdrop.

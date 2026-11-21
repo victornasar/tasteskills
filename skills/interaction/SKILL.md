@@ -22,7 +22,8 @@ If this is empty, review the interactive parts of the current project.
   validation runs, what happens on error.
 - `components` makes those states look finished. `motion` decides how changes move.
   `a11y` makes the behaviour work with keyboards, screen readers and other assistive tech.
-  `content` writes the labels, errors and confirmations.
+  `content` writes the labels, errors and confirmations. `conversion` counts the friction along a flow and
+  routes form and step changes here.
 
 ## Principles
 

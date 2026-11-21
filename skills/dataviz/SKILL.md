@@ -21,7 +21,7 @@ If this is empty, review the data displays in the current project.
 
 - `hierarchy` ranks a dashboard's contents; this skill designs each data display and the data-specific
   hierarchy within it.
-- `color` builds the brand palette; this skill derives data colours from it with rules of its own.
+- `palette` builds the brand palette; this skill derives data colours from it with rules of its own.
   `a11y` sets the contrast and text-alternative requirements. `responsive` covers adapting
   charts and tables to small screens.
 - taste's copy rule applies: never invent data. Use the brief's real figures, or clearly labelled sample data the

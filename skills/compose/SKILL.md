@@ -1,6 +1,6 @@
 ---
 name: compose
-description: Decide the visual relationships between the elements of a web page (weight and balance, symmetry, hierarchy and focal points, eye flow, space, scale and contrast, alignment and grids, grouping, density and pacing, layering) so the composition follows the creative direction instead of a default. Plans the composition from how the content relates, builds it, renders it on desktop and phone, and critiques what the eye actually does. Use when composing or reviewing a page, section or hero once its structure is known, when a page feels flat, cluttered, unbalanced or generic, or when taste needs a direction's composition and scale made concrete. Not for deciding which sections a page needs (`layout`) or for type and colour (`fonts`, `color`).
+description: Decide the visual relationships between the elements of a web page (weight and balance, symmetry, hierarchy and focal points, eye flow, space, scale and contrast, alignment and grids, grouping, density and pacing, layering) so the composition follows the creative direction instead of a default. Plans the composition from how the content relates, builds it, renders it on desktop and phone, and critiques what the eye actually does. Use when composing or reviewing a page, section or hero once its structure is known, when a page feels flat, cluttered, unbalanced or generic, or when taste needs a direction's composition and scale made concrete. Not for deciding which sections a page needs (`layout`) or for type and colour (`fonts`, `palette`).
 argument-hint: "[page, section or brief to compose or review]"
 ---
 
@@ -25,7 +25,7 @@ the direction from the brief, copy and existing styles, and say what you inferre
 | `taste` | The creative direction: positioning, perception, positions on six visual axes | "Composition: a catalogue grid of objects, because visitors compare" |
 | `layout` | Structure: which sections exist, in what order, what the page leads with | "Today's hours and bake come first; testimonials are cut" |
 | `compose` | The visual relationships inside that structure | "Today's bake is the focal point; hours and address share a baseline and read as one group; the menu is set dense so the photo can breathe" |
-| `fonts`, `color` | Typefaces, colour and contrast | |
+| `fonts`, `palette` | Typefaces, colour and contrast | |
 
 **The boundary test.** If a change alters what the page says, or the order it says it, it's structure: settle it
 with `layout` or the plan. If it changes how elements relate visually while saying the same things in the

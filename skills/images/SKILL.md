@@ -54,6 +54,10 @@ For each place an image would go, write: the job, the perception quality it supp
 be able to tell from it. Delete slots whose job is "fill the space" or "break up the text": fix those with
 composition, not pictures.
 
+Ask first whether the page needs images at all. A tool whose interface is the product, a statement page or a
+reference document can be better with none; then type, colour and composition carry it. If `DIRECTION.md`
+chose "none", respect it.
+
 ### 2. Choose the kind
 
 | Kind | Does well | Weak at | Good when |
@@ -74,7 +78,9 @@ without a rule reads as a template.
 Write a shot list (or illustration brief) per image. Each line states subject, framing, light, treatment and
 where it sits. "Baker's hands shaping a loaf, tight crop at bench height, window light from the left, warm but
 not orange, full-bleed after the menu" passes. "Bakery photo" fails. `references/art-direction.md` covers
-framing, light, colour treatment, illustration styles, generated imagery and the stock clichés to refuse.
+framing, light, colour treatment, illustration styles and the stock clichés to refuse. If you generate images,
+write the shot-list line first and translate it; the reference's Generated images section covers prompts, the
+generator's own defaults, keeping a set consistent and what to check before using one.
 
 When you have no real photography, ship what you can make honestly (the product built in HTML, diagrams, maps,
 typographic compositions, SVG illustration that serves the signature device) and leave the shot list for the
@@ -124,6 +130,7 @@ Report the job, kind and source of each image, what you couldn't supply and what
   ideas, abstract 3D blobs and gradient meshes.
 - Unsplash-style "nice" photos unrelated to the business, or the same photo every agent picks for the category.
 - Generated images of the business's "team", "office" or "product" presented as real.
+- Accepting a generator's default look: glossy, centred, shallow focus everywhere, teal-and-orange.
 - One ratio for everything, or every image a different ratio by accident.
 - `object-fit: cover` with the default centre crop, cutting off heads and products on phones.
 - Text on the busiest part of a photo, rescued with a black gradient.

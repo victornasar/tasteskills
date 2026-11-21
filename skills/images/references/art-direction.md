@@ -75,13 +75,47 @@ as clip art.
 
 ## Generated images
 
-Image generators are useful for illustration, texture, concept sketches and mood. Rules:
+Image generators are useful for illustration, texture, concept sketches, mood, and things that don't exist yet.
+They are never a substitute for documenting the real business.
+
+**Honesty first.**
 
 - Never present a generated image as the real business, place, product, staff, customer or result.
 - Prefer styles that are clearly illustrative over photorealism when documenting is impossible.
-- Check every generated image at full size for errors (hands, text, product details, impossible architecture).
-- Keep a generated set consistent with the same prompt structure, style terms and seed strategy.
-- Tell the user which images are generated.
+- Tell the user which images are generated, and check the tool's terms for commercial use.
+
+**From shot list to prompt.** Write the shot-list line first (SKILL.md step 3); the prompt is that line plus the
+medium and what to leave out. Keep the parts in a fixed order so a set can share them:
+
+1. Subject and action: what is in the frame, doing what.
+2. Framing and viewpoint: distance, angle, lens feel ("close, at bench height, slightly from above").
+3. Light: direction, hardness, time of day (from the Light table above).
+4. Setting: the specific place, with the ordinary detail that makes it real.
+5. Treatment: the colour grade or palette from the direction.
+6. Medium: photograph, gouache, linocut, line drawing, collage.
+7. Exclusions: text, logos, people, whatever the job doesn't need.
+
+"Flour-dusted hands folding dough on a scarred wooden bench, close, bench height, soft window light from the left,
+overcast morning, muted warm grade, 35mm photograph, no faces, no text" gives the generator decisions to follow.
+"Beautiful artisan bakery, cinematic" leaves every decision to its defaults.
+
+**The generator's own defaults.** Generators have a house style as recognisable as Inter and a purple gradient:
+glossy, over-smoothed surfaces and skin, a centred subject, shallow focus on everything, teal-and-orange grading,
+haze and light rays, saturated colour, "epic" scale. Name ordinary, specific conditions instead: flat noon light,
+overcast, clutter on the bench, a wide aperture only where depth means something. If the result could illustrate
+any brand in the category, it has the same problem as stock.
+
+**Keeping a set consistent.**
+
+- One prompt skeleton for the set; change the subject line and keep the rest word for word.
+- Use a style or reference image where the tool supports it, so the set shares a look across sessions.
+- Generate at the slot's aspect ratio, not square then cropped.
+- Generate more than you need and choose; grade the chosen images together.
+
+**Check every image at full size before using it.** Hands and fingers; garbled text and fake logos; product details
+that don't match the real product; impossible architecture, shadows or reflections; the same face repeated; and
+details that would mislead, such as a dish the bakery doesn't sell. Reject rather than retouch when the error is
+in the subject.
 
 ## Stock imagery
 

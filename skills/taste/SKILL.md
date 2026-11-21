@@ -79,14 +79,15 @@ approach.
   fill later.
 
 For type, colour, layout and composition, use the sibling skills if they're installed: **fonts**
-(typography), **color** (colour), **layout** (which sections, in what order) and **compose** (the
+(typography), **palette** (colour), **layout** (which sections, in what order) and **compose** (the
 visual relationships inside that structure: balance, hierarchy, flow, space, scale, grid, grouping, pacing,
 layering). They're Markdown expertise, not engines. Use `compose` here to make each direction's Composition
 and Scale positions concrete enough to differ visibly, not just in name. When building, the other installed
 skills take their own parts: **hierarchy**, **content** and **images** for what the page says and
 shows; **responsive**, **interaction**, **motion**, **components** and
 **icons** for how it adapts and behaves; **design-system** to write the direction down as tokens;
-**a11y**, **dataviz** and **performance** where they apply. If one isn't installed,
+**a11y**, **dataviz** and **performance** where they apply; **conversion** when the page's job is an action
+(book, buy, sign up); **inspect** to check the render at every width and state. If one isn't installed,
 do that part yourself with the same care, and tell the user the install command:
 
 ```bash
@@ -117,7 +118,7 @@ open, and don't "improve" the user's choices away.
 ### 5. Critique the render
 
 1. Render the page on desktop and phone with whatever browser tooling you have, and look at the screenshots
-   yourself.
+   yourself. `inspect`, if installed, says which widths, states and content to capture and how to verify fixes.
 2. Check each constraint: pass or fail, with what you see.
 3. Count the house-style markers on the screenshot, writing yes or no for each with what you see. If you
    hesitate over one, count it as yes. Four or more without a reason recorded in `DIRECTION.md` is a bug.
@@ -128,7 +129,8 @@ open, and don't "improve" the user's choices away.
 5. Check type with `fonts`' render check, structure with `layout`'s and composition with `compose`'s
    render critique (blur, eye path, balance, space, edges, pacing, layering), if installed. Run the render
    checks of any other installed skill whose area the page touches; `a11y`'s keyboard and automated
-   checks apply to every page.
+   checks apply to every page. If the page asks visitors to act, walk the path with `conversion`, from the
+   first screen to the confirmation.
 6. Fix what fails. Stop after two rounds of fixes and report what passed, what you changed and anything that
    needs a human decision. Fix code to match the direction; if the direction itself looks wrong on screen,
    raise it with the user instead of quietly changing the constraints.
