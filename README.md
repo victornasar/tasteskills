@@ -50,32 +50,32 @@ owner decides and the other refers to it, so the skills don't repeat each other.
 
 | Skill | Owns | Covers |
 | --- | --- | --- |
-| [`check-layout`](skills/check-layout/SKILL.md) | Which sections, in what order? | Plan the page from the visitor's questions, then look at the render and fix the layout patterns AI-built sites overuse |
-| [`composition`](skills/composition/SKILL.md) | How do elements relate in space? | Weight and balance, focal points, eye flow, space, scale, grids and deviations, grouping, density and pacing, layering, planned from the content and checked on desktop and phone |
-| [`visual-hierarchy`](skills/visual-hierarchy/SKILL.md) | What matters most, and is that what people see first? | Rank information from the visitor's task, pair headlines with their support, spend emphasis deliberately, design for scanning |
-| [`content-design`](skills/content-design/SKILL.md) | What do the words say? | Messaging hierarchy, specific headlines, brand voice as decisions, calls to action, microcopy, and a check for generic AI marketing language and invented claims |
-| [`imagery`](skills/imagery/SKILL.md) | What do the images show? | Give every image a job, choose photography, illustration, the product or diagrams, write shot lists, set crops and ratios, keep a set consistent, refuse generic or dishonest stock |
-| [`find-font`](skills/find-font/SKILL.md) | Which typefaces? | Type roles, category conventions, letterforms, pairing, a rendered type proof, a curated list of fonts, and the AI defaults to look past (and when one can still be right) |
-| [`find-color`](skills/find-color/SKILL.md) | Which colours? | Directions built from positioning, honest conventions, OKLCH, calculated contrast, a working token system, and 51 curated directions as starting points |
+| [`layout`](skills/layout/SKILL.md) | Which sections, in what order? | Plan the page from the visitor's questions, then look at the render and fix the layout patterns AI-built sites overuse |
+| [`compose`](skills/compose/SKILL.md) | How do elements relate in space? | Weight and balance, focal points, eye flow, space, scale, grids and deviations, grouping, density and pacing, layering, planned from the content and checked on desktop and phone |
+| [`hierarchy`](skills/hierarchy/SKILL.md) | What matters most, and is that what people see first? | Rank information from the visitor's task, pair headlines with their support, spend emphasis deliberately, design for scanning |
+| [`content`](skills/content/SKILL.md) | What do the words say? | Messaging hierarchy, specific headlines, brand voice as decisions, calls to action, microcopy, and a check for generic AI marketing language and invented claims |
+| [`images`](skills/images/SKILL.md) | What do the images show? | Give every image a job, choose photography, illustration, the product or diagrams, write shot lists, set crops and ratios, keep a set consistent, refuse generic or dishonest stock |
+| [`fonts`](skills/fonts/SKILL.md) | Which typefaces? | Type roles, category conventions, letterforms, pairing, a rendered type proof, a curated list of fonts, and the AI defaults to look past (and when one can still be right) |
+| [`color`](skills/color/SKILL.md) | Which colours? | Directions built from positioning, honest conventions, OKLCH, calculated contrast, a working token system, and 51 curated directions as starting points |
 
 **The interface: how it adapts and behaves**
 
 | Skill | Owns | Covers |
 | --- | --- | --- |
-| [`responsive-design`](skills/responsive-design/SKILL.md) | What changes between phone and desktop? | Design each context instead of shrinking the desktop: content-led breakpoints, container queries, touch and input, mobile navigation, fluid type, complex layouts on small screens |
-| [`interaction-design`](skills/interaction-design/SKILL.md) | What happens when someone acts? | Signifiers, feedback timing, every interaction and view state, navigation behaviour, forms and validation, error prevention and recovery |
-| [`motion-design`](skills/motion-design/SKILL.md) | How do changes move? | Animate only with a job; timing and easing by role, transitions, micro-interactions, scroll and loading motion, reduced motion |
-| [`component-craft`](skills/component-craft/SKILL.md) | Does each component look finished? | Buttons, inputs, navigation, cards, menus, dialogs, tabs and tooltips on native elements, every state designed, the fine details finished |
-| [`iconography`](skills/iconography/SKILL.md) | Icons or words, and which icons? | Whether to use icons at all, one family, weight matched to text, optical alignment, accessible icon-only controls |
-| [`design-systems`](skills/design-systems/SKILL.md) | Which values are shared, and what are they called? | Tokens named by role, type and spacing systems, variants by job, theming, and documented exceptions so consistency doesn't flatten the brand |
+| [`responsive`](skills/responsive/SKILL.md) | What changes between phone and desktop? | Design each context instead of shrinking the desktop: content-led breakpoints, container queries, touch and input, mobile navigation, fluid type, complex layouts on small screens |
+| [`interaction`](skills/interaction/SKILL.md) | What happens when someone acts? | Signifiers, feedback timing, every interaction and view state, navigation behaviour, forms and validation, error prevention and recovery |
+| [`motion`](skills/motion/SKILL.md) | How do changes move? | Animate only with a job; timing and easing by role, transitions, micro-interactions, scroll and loading motion, reduced motion |
+| [`components`](skills/components/SKILL.md) | Does each component look finished? | Buttons, inputs, navigation, cards, menus, dialogs, tabs and tooltips on native elements, every state designed, the fine details finished |
+| [`icons`](skills/icons/SKILL.md) | Icons or words, and which icons? | Whether to use icons at all, one family, weight matched to text, optical alignment, accessible icon-only controls |
+| [`design-system`](skills/design-system/SKILL.md) | Which values are shared, and what are they called? | Tokens named by role, type and spacing systems, variants by job, theming, and documented exceptions so consistency doesn't flatten the brand |
 
 **Quality: whether it works for everyone**
 
 | Skill | Owns | Covers |
 | --- | --- | --- |
-| [`web-accessibility`](skills/web-accessibility/SKILL.md) | Does it work for disabled people? | WCAG 2.2 AA as part of design quality: semantic HTML, keyboard and focus, screen readers, contrast, forms, motion, and testing with axe, a keyboard and a screen reader |
-| [`data-visualization`](skills/data-visualization/SKILL.md) | How should these numbers be shown? | Start from the question; a sentence, number, table or chart; accurate encodings, direct labels, dashboards with context, honest scales |
-| [`web-performance`](skills/web-performance/SKILL.md) | Does it load fast and stay stable? | Core Web Vitals, perceived speed, images, fonts and scripts delivered efficiently, layout stability, measuring in the lab and the field |
+| [`a11y`](skills/a11y/SKILL.md) | Does it work for disabled people? | WCAG 2.2 AA as part of design quality: semantic HTML, keyboard and focus, screen readers, contrast, forms, motion, and testing with axe, a keyboard and a screen reader |
+| [`dataviz`](skills/dataviz/SKILL.md) | How should these numbers be shown? | Start from the question; a sentence, number, table or chart; accurate encodings, direct labels, dashboards with context, honest scales |
+| [`performance`](skills/performance/SKILL.md) | Does it load fast and stay stable? | Core Web Vitals, perceived speed, images, fonts and scripts delivered efficiently, layout stability, measuring in the lab and the field |
 
 Each works on its own. `taste` uses the others when they're installed. None of them prescribes a look:
 asymmetry, oversized type, minimalism, generous whitespace, rounded cards or a centred hero are all choices that
@@ -89,25 +89,29 @@ format.
 ```bash
 npx skills add https://github.com/victornasar/tasteskills            # choose from the list
 npx skills add https://github.com/victornasar/tasteskills --skill '*' # all seventeen
-npx skills add https://github.com/victornasar/tasteskills --skill taste --skill find-font --skill find-color \
-  --skill check-layout --skill composition                              # the core set for a new site
-npx skills add https://github.com/victornasar/tasteskills --skill web-accessibility --skill interaction-design
+npx skills add https://github.com/victornasar/tasteskills --skill taste --skill fonts --skill color \
+  --skill layout --skill compose                                     # the core set for a new site
+npx skills add https://github.com/victornasar/tasteskills --skill a11y --skill interaction
 ```
 
 Then ask your agent:
 
 ```
 /taste independent daycare for local families
-/find-font cozy bakery website
-/find-color neighbourhood bakery
-/composition the homepage hero feels flat and cluttered
-/content-design rewrite the pricing page copy
-/web-accessibility audit the checkout flow
+/fonts cozy bakery website
+/color neighbourhood bakery
+/compose the homepage hero feels flat and cluttered
+/content rewrite the pricing page copy
+/a11y audit the checkout flow
 ```
 
-Or ask it to build or review a page "with check-layout", "with composition" or any other skill by name.
+Or ask it to build or review a page "with layout", "with compose" or any other skill by name.
 
 Agent without skills support? Point it at a skill's `SKILL.md` and give it the brief.
+
+The names are short, so one may match a skill you already have. Some agents ship their own `dataviz`, for
+example. When two installed skills share a name, the agent sees only one of them: installed in a project, this
+repo's `dataviz` replaces the built-in one there. Keep the one you want, or install these per project.
 
 ## What the skills are based on
 
@@ -128,7 +132,7 @@ The skills came out of experiments that are no longer in the repo (they're in gi
 - **Not yet proven:** that people prefer the sites the skills produce. Blind ratings had only an AI rater when
   this version was written.
 
-Those experiments covered `taste`, `find-font`, `find-color` and `check-layout`. `composition` and the newer
+Those experiments covered `taste`, `fonts`, `color` and `layout`. `compose` and the newer
 skills haven't been through the lab yet. They draw on established research and practice (Gestalt grouping,
 eye-tracking studies, Cleveland and McGill on chart perception, WCAG 2.2, Core Web Vitals, among others), cited
 where they're used, and on the same lessons: name the default before you depart from it, give every choice a reason
@@ -138,27 +142,27 @@ from the brief, and look at the render.
 
 ```text
 skills/
-  taste/               SKILL.md, references/direction-template.md, references/visual-direction.md
+  taste/           SKILL.md, references/direction-template.md, references/visual-direction.md
 
-  check-layout/        SKILL.md
-  composition/         SKILL.md, references/composition-principles.md,
-                       references/composition-patterns.md, references/composition-critique.md
-  visual-hierarchy/    SKILL.md, references/reading-and-scanning.md
-  content-design/      SKILL.md, references/voice-and-microcopy.md
-  imagery/             SKILL.md, references/art-direction.md
-  find-font/           SKILL.md, references/fonts.md
-  find-color/          SKILL.md, references/directions.md
+  layout/          SKILL.md
+  compose/         SKILL.md, references/composition-principles.md,
+                   references/composition-patterns.md, references/composition-critique.md
+  hierarchy/       SKILL.md, references/reading-and-scanning.md
+  content/         SKILL.md, references/voice-and-microcopy.md
+  images/          SKILL.md, references/art-direction.md
+  fonts/           SKILL.md, references/fonts.md
+  color/           SKILL.md, references/directions.md
 
-  responsive-design/   SKILL.md, references/adaptation-patterns.md
-  interaction-design/  SKILL.md, references/states-and-forms.md
-  motion-design/       SKILL.md, references/timing-and-easing.md
-  component-craft/     SKILL.md, references/component-specs.md
-  iconography/         SKILL.md
-  design-systems/      SKILL.md, references/token-architecture.md
+  responsive/      SKILL.md, references/adaptation-patterns.md
+  interaction/     SKILL.md, references/states-and-forms.md
+  motion/          SKILL.md, references/timing-and-easing.md
+  components/      SKILL.md, references/component-specs.md
+  icons/           SKILL.md
+  design-system/   SKILL.md, references/token-architecture.md
 
-  web-accessibility/   SKILL.md, references/testing-checklist.md
-  data-visualization/  SKILL.md, references/chart-guide.md
-  web-performance/     SKILL.md, references/measuring.md
+  a11y/            SKILL.md, references/testing-checklist.md
+  dataviz/         SKILL.md, references/chart-guide.md
+  performance/     SKILL.md, references/measuring.md
 ```
 
 To change a skill, edit its Markdown. Keep the advice judgement-based: explain the reasoning and the evidence,

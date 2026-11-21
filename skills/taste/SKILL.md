@@ -78,19 +78,19 @@ approach.
 - Plan imagery as a design decision (the imagery plan in `references/visual-direction.md`), never as a slot to
   fill later.
 
-For type, colour, layout and composition, use the sibling skills if they're installed: **find-font**
-(typography), **find-color** (colour), **check-layout** (which sections, in what order) and **composition** (the
+For type, colour, layout and composition, use the sibling skills if they're installed: **fonts**
+(typography), **color** (colour), **layout** (which sections, in what order) and **compose** (the
 visual relationships inside that structure: balance, hierarchy, flow, space, scale, grid, grouping, pacing,
-layering). They're Markdown expertise, not engines. Use composition here to make each direction's Composition
+layering). They're Markdown expertise, not engines. Use `compose` here to make each direction's Composition
 and Scale positions concrete enough to differ visibly, not just in name. When building, the other installed
-skills take their own parts: **visual-hierarchy**, **content-design** and **imagery** for what the page says and
-shows; **responsive-design**, **interaction-design**, **motion-design**, **component-craft** and
-**iconography** for how it adapts and behaves; **design-systems** to write the direction down as tokens;
-**web-accessibility**, **data-visualization** and **web-performance** where they apply. If one isn't installed,
+skills take their own parts: **hierarchy**, **content** and **images** for what the page says and
+shows; **responsive**, **interaction**, **motion**, **components** and
+**icons** for how it adapts and behaves; **design-system** to write the direction down as tokens;
+**a11y**, **dataviz** and **performance** where they apply. If one isn't installed,
 do that part yourself with the same care, and tell the user the install command:
 
 ```bash
-npx skills add https://github.com/victornasar/tasteskills --skill find-font
+npx skills add https://github.com/victornasar/tasteskills --skill fonts
 ```
 
 Pick one direction. If the user is there, show the directions with their trade-offs in plain qualities tied to
@@ -109,7 +109,7 @@ In an interactive session, get the user's go-ahead before building. Working alon
 ### 4. Build
 
 Build in the project's existing stack. Re-read `DIRECTION.md` before each major section. Before building
-the selected direction, write composition's plan (focal order, relationships, balance, grid, scale, space,
+the selected direction, write `compose`'s plan (focal order, relationships, balance, grid, scale, space,
 pacing, layering, phone) into `DIRECTION.md`, so the composition follows the direction instead of a default.
 Build the imagery plan's "ships now" visuals. Never ship an empty image frame or a "photo goes here" box. Keep open decisions
 open, and don't "improve" the user's choices away.
@@ -125,9 +125,9 @@ open, and don't "improve" the user's choices away.
    different category; if nothing looks wrong, the page came from defaults, not the brief. *Why:* for each
    major visible choice, name the part of the brief, audience or positioning that led to it; "clean and
    modern" doesn't count. Treat a failure of either test as a failed constraint.
-5. Check type with find-font's render check, structure with check-layout's and composition with composition's
+5. Check type with `fonts`' render check, structure with `layout`'s and composition with `compose`'s
    render critique (blur, eye path, balance, space, edges, pacing, layering), if installed. Run the render
-   checks of any other installed skill whose area the page touches; web-accessibility's keyboard and automated
+   checks of any other installed skill whose area the page touches; `a11y`'s keyboard and automated
    checks apply to every page.
 6. Fix what fails. Stop after two rounds of fixes and report what passed, what you changed and anything that
    needs a human decision. Fix code to match the direction; if the direction itself looks wrong on screen,
