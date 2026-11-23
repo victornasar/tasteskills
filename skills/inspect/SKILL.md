@@ -67,7 +67,10 @@ A view is a page or component at one width, in one state, with one set of conten
 - **States:** for each control, the states `interaction` defines (hover, focus-visible, active, disabled,
   loading, error, success, open, selected); for each view, empty, loading, error, partial and full.
 - **Content extremes:** the longest real label, a name with no spaces, one item and fifty, a missing image, and
-  copy about 30% longer, as a translation into German often is.
+  copy about 30% longer, as a translation into German often is. Take lengths from the real limit (the
+  validation schema, the database column, a form's `maxLength`) or from a value a real user could produce; a
+  string of 200 "a"s proves nothing anyone will act on, and a field with no limit is itself a finding. Small
+  values break too: a one-letter name, a count of 0 or 1 ("1 members"), an optional field left empty.
 - **Settings:** dark mode if the site has it, reduced motion, 200% text size, a slow connection for loading
   states.
 

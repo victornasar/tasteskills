@@ -135,6 +135,25 @@ open, and don't "improve" the user's choices away.
    needs a human decision. Fix code to match the direction; if the direction itself looks wrong on screen,
    raise it with the user instead of quietly changing the constraints.
 
+### 6. Keep the user's corrections
+
+Every correction the user made is taste the direction didn't hold, and the next session will repeat the mistake
+unless it's written down. Before finishing an interactive session, propose additions to `DIRECTION.md`'s
+decisions section:
+
+- Look past explicit corrections: values the user changed in files you wrote, a run of nudges ("smaller… still
+  too big… ok", recorded where it settled, not the steps), variants they rejected, non-obvious choices they
+  confirmed.
+- Keep what would apply beyond the element at hand. "This headline says Pricing" isn't taste; "section headings
+  are never centred" is. Name the kind of element, the value or the token, not "the card from earlier".
+- Never invent the reason. If the user gave none, propose one marked `[inferred]` and ask; a wrong reason gets
+  extended to cases it doesn't fit.
+- If a constraint or decision already said it and the build broke it anyway, make that line stricter (a value,
+  a token, "never") instead of adding a second one. If the correction contradicts it, show both and let the user
+  choose.
+
+Write only what the user approves, tagged `[approved]`.
+
 ## Judgement over formula
 
 - Slop is design that would have come out the same whatever the brief said. The aim is a page that looks
