@@ -68,13 +68,24 @@ When you find one, replace it with the specific fact it was standing in for, or 
 | Get started | See prices · Book a visit · Create an account |
 | Trusted by thousands of happy customers | "We've ordered our office bread here for six years." — Ana, Hill Street Dental |
 
+## Over-explained and cut
+
+| Over-explained | Cut |
+| --- | --- |
+| There are no notifications for you at this time. | No notifications |
+| Your changes have been successfully saved. | Saved |
+| Please enter your email address to continue. | Email address (as the label) |
+| Here you can manage all of your account settings. | Account settings (as the heading) |
+| Check your email. If there's a place for this address, a link is on its way. Nothing after a few minutes? Look in spam, or check the address. [Send again] | Check your email · sam@example.com · [Send again in 0:59] [Change address] |
+| You're number 4 on the waitlist. Got an email saying you're in? Sign in with that address, or get a sign-in link sent to it. The link works once, for 30 minutes. | You're number 4. We'll email you when a place opens. [Already invited?] |
+
 ## Microcopy patterns
 
 **Labels**
 
 - Nouns for fields ("Email address"), verbs for buttons ("Save changes").
 - Sentence case. Don't end with a colon in modern UIs unless it's the house style.
-- Hints say what's needed before the user gets it wrong: "We'll only use this to send your receipt."
+- Add a hint only where people would otherwise get it wrong ("Day, month, year"). Most fields need none.
 
 **Buttons**
 
@@ -87,24 +98,24 @@ When you find one, replace it with the specific fact it was standing in for, or 
 | Avoid | Prefer |
 | --- | --- |
 | Invalid input. | Enter a date in the future. |
-| Error 422. | We couldn't save your changes. Check your connection and try again. Your text is still here. |
-| Oops! Something went wrong 🙈 | Payment didn't go through. Your card wasn't charged. Try another card or contact your bank. |
-| You entered an incorrect password. | That password doesn't match this email. Reset your password? |
+| Error 422. | Couldn't save. Check your connection and try again. |
+| Oops! Something went wrong 🙈 | Payment declined. You weren't charged. |
+| You entered an incorrect password. | Wrong password. [Reset it] |
 
 **Empty states**
 
-- What will be here, why it's empty, and the action that fills it: "No invoices yet. Your first invoice takes about a
-  minute. [Create an invoice]".
-- For no search results: what was searched, and how to widen it.
+- What's missing and the action that fills it: "No invoices yet. [Create invoice]". Explain why it's empty only
+  when the reason isn't obvious (a filter, missing permission).
+- For no search results: what was searched, and how to widen it: "No results for "sourdugh". [Clear filters]".
 
 **Confirmations**
 
-- What happened, with the specifics, and what happens next: "Booked: Saturday 14 March, 3pm, for 4 people. A
-  confirmation is on its way to sam@example.com."
+- What happened, with the specifics the person will check: "Booked: Sat 14 March, 3pm, 4 people." Routine
+  actions need a word, or none when the change is visible: "Saved".
 
 **Loading and progress**
 
-- Say what's happening when it takes more than a few seconds: "Checking availability…", "Uploading 3 of 12".
+- Say what's happening only when it takes more than a few seconds: "Checking availability…", "3 of 12".
 
 **Consistency**
 

@@ -13,6 +13,16 @@ each is built and finished.
 - **Sizes:** two or three, matching input heights.
 - **Anatomy:** label, optional leading or trailing icon, optional loading indicator. Icon-only buttons need an
   accessible name and a square hit area.
+- **Which icon, which side:** ask in order and stop at the first yes.
+  1. Does it reveal options or navigate somewhere? A trailing icon that shows where it goes (a chevron for a
+     menu, an arrow for a next step or link out): "Export ⌄".
+  2. Is the action a familiar symbol (add, delete, download, search)? A leading icon: "+ Create".
+  3. Does it sit in a group of actions (a toolbar, a row-actions menu)? Leading icons, so the group scans by
+     shape. Give every member one or none, never a mix.
+  4. Does it need more input before it happens (a dialog or form opens)? An ellipsis on the label, no icon:
+     "Rename…". Use the `…` character. Not for a plain "Are you sure?" confirmation.
+  5. Otherwise, no icon: "Publish". Most standalone buttons, including the primary one, land here. Don't decorate
+     them with an arrow or sparkle.
 - **Details:** `white-space: nowrap` for short labels; allow wrapping for long ones rather than overflowing; a
   minimum width so "OK" isn't a tiny square; consistent letter-spacing; no text shadow.
 - **Loading:** keep the width; overlay the spinner or replace the icon; keep `aria-busy` or an announcement (see

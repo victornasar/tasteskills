@@ -1,6 +1,6 @@
 ---
 name: content
-description: Write and structure the words on a website so they say something specific, in the brand's own voice, in the order visitors need. Covers the messaging hierarchy, headlines, specificity and evidence, clarity and plain language, brand voice, content structure and scannable writing, calls to action, microcopy (labels, errors, empty states, confirmations), storytelling, and removing generic AI-generated marketing language. Use when writing or editing site copy, headlines, CTAs, product descriptions, error messages or UI text, or when a page sounds like every other AI-written site. Not for how prominent each piece looks (`hierarchy`) or which sections exist (`layout`).
+description: Write and structure the words on a website so they say something specific, in the brand's own voice, in the order visitors need. Covers the messaging hierarchy, headlines, specificity and evidence, clarity and plain language, brand voice, content structure and scannable writing, calls to action, microcopy (labels, errors, empty states, confirmations), storytelling, removing generic AI-generated marketing language, and cutting UI text that over-explains. Use when writing or editing site copy, headlines, CTAs, product descriptions, error messages or UI text, when a page sounds like every other AI-written site, or when an interface has too much text. Not for how prominent each piece looks (`hierarchy`) or which sections exist (`layout`).
 argument-hint: "[page, brief or copy to write or edit]"
 ---
 
@@ -43,6 +43,9 @@ positioning and "differentiate on" line are the raw material.
    brand never says.
 6. **Every claim needs evidence on the page, or it goes.** "Trusted by thousands" without names or numbers is
    noise; one real, attributed detail beats ten adjectives. Never invent the evidence.
+7. **Fewer words.** AI-written interfaces over-explain: every screen describes itself, answers questions nobody
+   asked and covers edge cases up front. The fix is cutting, not rephrasing more briefly. A word stays only if
+   the visitor would miss it.
 
 ## How to work
 
@@ -91,7 +94,9 @@ a known thing, claims where they need persuading.
 
 Labels, hints, errors, empty states, confirmations and loading text are where clarity matters most and voice
 matters least. `references/voice-and-microcopy.md` has patterns. The core rules: say what happened and what to do
-next; never blame the user; use the same word for the same thing everywhere; keep jokes out of errors.
+next, unless the screen already shows it; never blame the user; use the same word for the same thing
+everywhere; keep jokes out of errors. Microcopy is the first place over-explaining shows up, so write the
+shortest version first and add words only when something is missing.
 
 ### 6. Tell the story only if there is one
 
@@ -105,7 +110,31 @@ Run the generic-language check in `references/voice-and-microcopy.md`: the words
 AI-written marketing copy. Then the copy swap test: put a competitor's name on the page. Every sentence that
 still works is a candidate for rewriting with a specific fact or cutting.
 
-### 8. Check it in place
+### 8. Cut
+
+Go screen by screen and count the words. Then cut, in this order:
+
+1. **Text the screen already says.** A subheading that restates the heading, a sentence that repeats the label
+   above it, "Check your email" followed by "We've sent a link to your email".
+2. **Text the interface can show instead.** A disabled "Send again in 0:59" replaces "Nothing after a few
+   minutes? You can request another link." A highlighted row replaces a sentence saying which plan is cheapest.
+3. **Instructions for the obvious.** "Click the button below to…", "Enter your email address in the field",
+   "Here you can manage…".
+4. **Edge cases and fine print up front.** Move what few visitors need behind a disclosure, a link or the
+   state where it applies: "Already invited?", "How we compared", a link's expiry time shown only on the expired
+   link page.
+5. **Filler and politeness.** "Please", "successfully", "simply", "just", "at this time", "Don't worry".
+6. **Paragraphs where a phrase works.** "You haven't created any projects yet" → "No projects yet".
+
+Keep the specific fact that answers the visitor's question (their place in line, the address the link went to,
+"$19 vs $30"), the action, anything needed to decide, warnings and legal text. If a cut makes the screen
+ambiguous, put the words back.
+
+There's no target count, and the voice sets how terse the copy can be. But a task screen (sign-in, waitlist,
+settings, confirmation) rarely needs more than a heading, one line and its actions. When an AI-written screen
+loses half its words after this pass, that's normal.
+
+### 9. Check it in place
 
 Read the copy on the rendered page, not in a document:
 
@@ -114,10 +143,11 @@ Read the copy on the rendered page, not in a document:
 3. **Fit.** Does the headline wrap well on a phone? Do buttons fit their labels? Does any text get truncated?
 4. **Swap test** on every headline and the first paragraph of each section.
 5. **Microcopy pass:** trigger every error, empty and success state and read what it says.
-6. **Invented claims:** list every number, name, testimonial and superlative. Is each in the brief? If not, remove
+6. **Word count.** Count the words on each screen. For each sentence: would the visitor miss it? If not, cut it.
+7. **Invented claims:** list every number, name, testimonial and superlative. Is each in the brief? If not, remove
    it or mark it for the client.
 
-Report the messaging hierarchy, the voice decisions, what you cut, and what facts the client needs to supply.
+Report the messaging hierarchy, the voice decisions, what you cut (with word counts before and after), and what facts the client needs to supply.
 
 ## Mistakes agents make
 
@@ -130,6 +160,10 @@ Report the messaging hierarchy, the voice decisions, what you cut, and what fact
 - Headings that are labels ("Our Features") where a claim was needed, or claims where people hunt for a label.
 - "Learn more", "Get started", "Submit" everywhere.
 - Long intros before the point; the important fact in the last sentence.
+- Over-explaining: a description under every heading, helper text under every field, a sentence explaining
+  each button, edge cases and methodology spelled out on the main screen.
+- Saying in words what the interface already shows: a countdown, a disabled state, a highlighted row, the
+  email address in the field.
 - Friendly jokes in error messages; blaming the user ("You entered an invalid…").
 - Inconsistent terms for the same thing (booking, reservation, appointment on one page).
 - Title Case Headlines Everywhere when the brand's voice is plain.
